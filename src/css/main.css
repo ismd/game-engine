@@ -1,0 +1,64 @@
+* {
+    margin-left: auto;
+    margin-right: auto;
+    overflow: auto;
+}
+
+a {
+    text-decoration: none;
+}
+
+fieldset {
+    border: none;
+}
+
+body {
+    width: 1024px;
+    min-height: 650px;
+    border: 4px double black;
+    font-family: Verdana;
+    font-size: 0.9em;
+}
+
+div#left-panel {
+    width: 160px;
+    float: left;
+}
+
+div#logo {
+    height: 140px;
+    background-color: grey;
+}
+
+div#top-menu {
+    height: 30px;
+    margin-right: 100px;
+}
+
+div.top-menu-item {
+    float: right;
+    margin: 0 10px;
+}
+
+div#auth {
+    margin: 5px;
+    text-align: center;
+}
+
+div#content {
+    width: 844px;
+    margin: 0 10px 5px 170px;
+}
+
+div#character {
+    margin: 5px;
+    margin-top: 15px;
+}
+
+div#auth-form {
+    display: none;
+}
+
+div#characters-list {
+    display: none;
+}

@@ -1,0 +1,71 @@
+<?php
+if ( !empty($this->error) && $this->error !== true ) {
+    switch ($this->error) {
+        case User::REG_ERR_LOGIN_EXISTS:
+            $message = 'Такой логин уже занят';
+            break;
+        case User::REG_ERR_LOGIN_LENGTH_MAX:
+            $message = 'Логин не может быть длиннее 30 символов.';
+            break;
+        case User::REG_ERR_LOGIN_LENGTH_MIN:
+            $message = 'Логин не может быть короче 4 символов.';
+            break;
+        case User::REG_ERR_LOGIN_BAD:
+            $message = 'Логин содержит неподдерживаемые символы';
+            break;
+        case User::REG_ERR_PASSWORD_LENGTH_MAX:
+            $message = 'Пароль не может быть длиннее 30 символов';
+            break;
+        case User::REG_ERR_PASSWORD_LENGTH_MIN:
+            $message = 'Пароль не может быть короче 8 символов';
+            break;
+        case User::REG_ERR_PASSWORD_BAD:
+            $message = 'Пароль содержит неподдерживаемые символы';
+            break;
+        case User::REG_ERR_PASSWORD_UNMATCH:
+            $message = 'Пароли не совпадают';
+            break;
+        default:
+            $message = 'При регистрации возникла ошибка. Проверьте введённые данные.';
+            break;
+    }
+    
+    echo '<font color="red">' . $message . '</font>';
+}
+?>
+
+<?php if ( !empty($this->error) && $this->error === true ): ?>
+Вы успешно зарегистрированы, теперь можете зайти на сайт и создать персонажа.
+<?php else: ?>
+<form action="/registration" method="post">
+    <fieldset>
+        <legend>Регистрация пользователя</legend>
+        <p>
+            <label for="login">Логин</label>
+            <input type="text" name="login" id="login" value="<?php echo ( !empty($_POST['login']) ) ? $_POST['login'] : '' ?>" />
+        </p>
+        <p>
+            <label for="password">Пароль</label>
+            <input type="password" name="password" id="password" />
+        </p>
+        <p>
+            <label for="password1">Повтор пароля</label>
+            <input type="password" name="password1" id="password1" />
+        </p>
+        <p>
+            <label for="email">e-mail</label>
+            <input type="text" name="email" id="email" value="<?php echo ( !empty($_POST['email']) ) ? $_POST['email'] : '' ?>" />
+        </p>
+        <p>
+            <label>Инфо <textarea name="info"><?php echo ( !empty($_POST['info']) ) ? $_POST['info'] : '' ?></textarea></label>
+        </p>
+        <p>
+            <label for="site">Сайт</label>
+            <input type="text" name="site" id="site" value="<?php echo ( !empty($_POST['site']) ) ? $_POST['site'] : '' ?>" />
+        </p>
+        <p>
+            <input type="submit" value="Зарегистрироваться" />
+        </p>
+    </fieldset>
+</form>
+<?php endif ?>

@@ -1,0 +1,25 @@
+Список вещей персонажа:<br />
+
+<?php if ( count($this->items) > 0 ): ?>
+<ul>
+    <?php foreach ($this->items as $item): ?>
+    <li>
+        <?php echo $item->title ?>
+        <ul>
+            <li>Тип вещи: <?php echo $item->type ?></li>
+            <li>Описание: <?php echo $item->description ?></li>
+            <li>Цена: <?php echo $item->price ?></li>
+            Аттрибуты вещи:
+            <ul>
+                <?php foreach ($item->attributes as $attribute): ?>
+                <li><?php echo $attribute->title ?> (+<?php echo $attribute->value ?>)</li>
+                <?php endforeach ?>
+            </ul>
+        </ul>
+    </li>
+    <?php endforeach; ?>
+</ul>
+<?php else: ?>
+вещей нет
+<?php endif; ?>
+
