@@ -21,11 +21,11 @@ class AuthController extends DefaultController {
             die('error');
         }
 
-        $login      = $_POST['login'];
-        $password   = $_POST['password'];
+        $login    = $_POST['login'];
+        $password = $_POST['password'];
 
-        $auth   = new Auth;
-        $id     = $auth->login($login, $password);
+        $auth = new Auth;
+        $id   = $auth->login($login, $password);
         
         if ($id) {
             $mapper = new UserMapper;

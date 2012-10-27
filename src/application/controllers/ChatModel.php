@@ -21,9 +21,9 @@ class ChatModel extends DefaultModel {
     }
 
     public function send($id, $message, $type, $idReceiver = null) {
-        $id        = intval($id);
-        $message   = strip_tags(mysql_real_escape_string($message));
-        $type      = intval($type);
+        $id      = intval($id);
+        $message = strip_tags(mysql_real_escape_string($message));
+        $type    = intval($type);
 
         mysql_query("INSERT INTO Chat (message, type, idSender, sended) VALUES ($message, $type, $id, " . time() . ")");
     }

@@ -11,9 +11,9 @@ class RegistrationModel extends DefaultModel {
      * @param mixed $data - массив из формы (post)
      */
     public function check($data) {
-        $login       = mysql_real_escape_string($data['login']);
-        $password    = md5($data['password']);
-        $password1   = md5($data['password1']);
+        $login     = mysql_real_escape_string($data['login']);
+        $password  = md5($data['password']);
+        $password1 = md5($data['password1']);
 
         if (!preg_match('/[[:alpha:]][[:alnum:]]{2,14}/Ui', $login) || $login != $data['login']) {
             return 1;
@@ -38,8 +38,8 @@ class RegistrationModel extends DefaultModel {
     }
 
     public function register($data) {
-        $login      = mysql_real_escape_string($data['login']);
-        $password   = md5($data['password']);
+        $login    = mysql_real_escape_string($data['login']);
+        $password = md5($data['password']);
 
         mysql_query("INSERT INTO `User` (`login`, `password`) VALUES ('$login', '$password')");
     }

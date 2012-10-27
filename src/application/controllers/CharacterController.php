@@ -8,7 +8,7 @@
 class CharacterController extends DefaultAuthController {
 
     public function init() {
-        if ( empty($this->_session->user) ) {
+        if (empty($this->_session->user)) {
             header('Location: /');
             die;
         }
@@ -20,17 +20,21 @@ class CharacterController extends DefaultAuthController {
     }
 
     public function create() {
-        if ( !empty ($_POST) ) {
-            $character = array();
+        if (empty ($_POST)) {
+            return;
+        }
 
-            $character['idUser'] = $this->_session->user->id;
-            $character['name'] = (!empty($_POST['name'])) ? $_POST['name'] : '';
+        $character = array(
+            'idUser' => $this->_session->user->id,
+            'name'   => !empty($_POST['name']) ? $_POST['name'] : '',
+        );
 
-            $character = new Character($character);
-            $character->setDefaultValues();
 
-            $mapper = new CharacterMapper;
-            $this->_template->error = $mapper->save($character);
+        $character = new Character($character);
+        $character->setDefaultValues();
+
+        $mapper = new CharacterMapper;
+        $this->_template->error = $mapper->save($character);
         }
     }
 
@@ -40,7 +44,7 @@ class CharacterController extends DefaultAuthController {
     public function set() {
         $idCharacter = (int)$_GET['id'];
 
-        if ( !$this->_session->user->hasCharacter($idCharacter) ) {
+        if (!$this->_session->user->hasCharacter($idCharacter)) {
             die('error');
         }
 
@@ -51,9 +55,9 @@ class CharacterController extends DefaultAuthController {
         $map = $mapper->getById($this->_session->character->idMap);
 
         $map->currentCell = new MapCell(
-                $this->_session->character->idMap,
-                $this->_session->character->coordinateX,
-                $this->_session->character->coordinateY
+            $this->_session->character->idMap,
+            $this->_session->character->coordinateX,
+            $this->_session->character->coordinateY
         );
 
         $this->_session->map = $map;
@@ -69,8 +73,8 @@ class CharacterController extends DefaultAuthController {
         $y = $_GET['y'];
 
         if ($this->_session->character->move($x, $y)) {
-            $this->_session->map->currentCell->coordinateX = $this->_session->character->coordinateX;
-            $this->_session->map->currentCell->coordinateY = $this->_session->character->coordinateY;
+                $this->_session->map->currentCell->coordinateX = $this->_session->character->coordinateX;
+                $this->_session->map->currentCell->coordinateY = $this->_session->character->coordinateY;
             
             die('ok');
         }

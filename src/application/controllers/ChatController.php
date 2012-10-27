@@ -16,10 +16,10 @@ class ChatController extends DefaultAuthController {
     }
 
     public function send() {
-        $id           = $_SESSION['user']['character']['id'];
-        $message      = $_POST['message'];
-        $type         = $_POST['type'];
-        $idReceiver   = $_POST['idReceiver'];
+        $id         = $_SESSION['user']['character']['id'];
+        $message    = $_POST['message'];
+        $type       = $_POST['type'];
+        $idReceiver = $_POST['idReceiver'];
 
         $this->_model->send($id, $message, $type, $idReceiver);
         die;

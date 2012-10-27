@@ -9,7 +9,7 @@ class WorldController extends DefaultAuthController {
 
     public function init() {
         // У пользователя должен быть выбран персонаж
-        if ( !isset($this->_session->character) ) {
+        if (!isset($this->_session->character)) {
             header('Location: /');
             die;
         }
@@ -29,8 +29,8 @@ class WorldController extends DefaultAuthController {
 
         // FIXME: изображение карты по-другому сделать
         //$this->_template->mapImage      = $this->_session->map->image;
-        $this->_template->coordinateX   = $this->_session->character->coordinateX;
-        $this->_template->coordinateY   = $this->_session->character->coordinateY;
+        $this->_template->coordinateX = $this->_session->character->coordinateX;
+        $this->_template->coordinateY = $this->_session->character->coordinateY;
     }
 
     public function inventory() {

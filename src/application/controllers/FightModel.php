@@ -3,7 +3,7 @@
 class FightModel extends DefaultModel {
 
     public function init($character, $type, $id) {
-        $id = intval($id);
+        $id = (int)$id;
 
         if ($type == 'mob') {
             $query = mysql_query("SELECT MobMap.id, MobMap.hp, Mob.name, Mob.maxHp, Mob.minDamage, Mob.maxDamage, Mob.experience, Mob.strength, Mob.dexterity, Mob.endurance, Mob.level FROM MobMap INNER JOIN Mob ON MobMap.idMob=Mob.id WHERE MobMap.id=$id AND MobMap.idMap=" . $character['idMap'] . " AND MobMap.coordinateX=" . $character['coordinateX'] . " AND MobMap.coordinateY=" . $character['coordinateY'] . " LIMIT 1");

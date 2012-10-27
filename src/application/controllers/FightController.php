@@ -10,14 +10,14 @@ class FightController extends DefaultAuthController {
      * Инициализирует бой
      */
     public function init($args) {
-        if ( isset($_SESSION['user']['character']['fight']) ) {
+        if (isset($_SESSION['user']['character']['fight'])) {
             die('already in fight');
         }
 
-        $type      = $_GET['type'];
-        $idEnemy   = $_GET['id'];
+        $type    = $_GET['type'];
+        $idEnemy = $_GET['id'];
 
-	$fight     = $this->_model->init($_SESSION['user']['character'], $type, $idEnemy);
+        $fight = $this->_model->init($_SESSION['user']['character'], $type, $idEnemy);
 
         if (!$fight) {
             die('error');
@@ -31,13 +31,13 @@ class FightController extends DefaultAuthController {
      * Выводит json, в котором новая инфа о текущем бое
      */
     public function status() {
-        if ( !isset($_SESSION['user']['character']['fight']) ) {
+        if (!isset($_SESSION['user']['character']['fight'])) {
             die('not in fight');
         }
 
         $status = $this->_model->status($_SESSION['user']['character']['fight'], $_SESSION['user']['character']);
 
-        if ( !empty($status['character']['hp']) ) {
+        if (!empty($status['character']['hp'])) {
             $_SESSION['user']['character']['hp'] = $status['character']['hp'];
         }
 
