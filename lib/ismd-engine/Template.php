@@ -50,7 +50,7 @@ class Template {
 
         $route = $this->_registry->router->getRoute();
         $route = ($route != '') ? explode('/', $route) : array('index');
-        $path  = SITEPATH . 'templates/';
+        $path  = SITEPATH . 'application/templates/';
 
         $headers = array();
         $footers = array();

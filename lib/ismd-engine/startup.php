@@ -12,7 +12,7 @@ function __autoload($className) {
     $filename = $className . '.php';
 
     // Класс движка
-    $file = SITEPATH . 'engine/' . $filename;
+    $file = realpath(dirname(__FILE__)) . '/' . $filename;
     if (is_readable($file)) {
         require_once $file;
     }
