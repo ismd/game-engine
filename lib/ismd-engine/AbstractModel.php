@@ -5,7 +5,7 @@
  * @author ismd
  */
 
-abstract class DefaultModel {
+abstract class AbstractModel {
 
     public function __construct(array $options = null) {
         if (is_array($options)) {

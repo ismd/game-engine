@@ -5,7 +5,7 @@
  * @author ismd
  */
 
-abstract class AbstractCharacter extends DefaultModel {
+abstract class AbstractCharacter extends AbstractModel {
 
     protected $_id;       // id в таблице Character (сам персонаж)
     protected $_idUser;   // id в таблице User (пользователь)

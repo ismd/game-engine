@@ -5,7 +5,7 @@
  * @author ismd
  */
 
-abstract class AbstractAttribute extends DefaultModel {
+abstract class AbstractAttribute extends AbstractModel {
 
     protected $_id;
     protected $_title;

@@ -5,7 +5,7 @@
  * @author ismd
  */
 
-abstract class AbstractUser extends DefaultModel {
+abstract class AbstractUser extends AbstractModel {
 
     protected $_id;
     protected $_login;

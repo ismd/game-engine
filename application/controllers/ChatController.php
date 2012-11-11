@@ -1,6 +1,6 @@
 <?php
 
-class ChatController extends DefaultAuthController {
+class ChatController extends AbstractAuthController {
 
     public function index() {
         die;

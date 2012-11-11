@@ -3,7 +3,7 @@
  * Контроллер регистрации
  */
 
-class RegistrationController extends DefaultController {
+class RegistrationController extends AbstractController {
 
     public function init() {
         if (isset($this->_session->user)) {

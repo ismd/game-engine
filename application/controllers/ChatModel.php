@@ -5,7 +5,7 @@ const M_PRIVATE = 2;
 const M_SYSTEM  = 3;
 const M_GLOBAL  = 4;
 
-class ChatModel extends DefaultModel {
+class ChatModel extends AbstractModel {
     public function newMessages($id) {
         $id = intval($id);
 

@@ -5,7 +5,7 @@
  * @author ismd
  */
 
-class AuthController extends DefaultController {
+class AuthController extends AbstractController {
 
     public function index() {
         header('Location: /');

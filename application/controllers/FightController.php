@@ -1,6 +1,6 @@
 <?php
 
-class FightController extends DefaultAuthController {
+class FightController extends AbstractAuthController {
 
     public function index() {
         die;

@@ -5,7 +5,7 @@
  * @author ismd
  */
 
-abstract class AbstractNpc extends DefaultModel {
+abstract class AbstractNpc extends AbstractModel {
 
     protected $_id;      // id в таблице NpcMap (конкретный NPC на карте)
     protected $_idNpc;   // id в таблице Npc (класс NPC)

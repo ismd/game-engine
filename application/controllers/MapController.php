@@ -1,6 +1,6 @@
 <?php
 
-class MapController extends DefaultAuthController {
+class MapController extends AbstractAuthController {
 
     public function index() {
         header('Location: /');

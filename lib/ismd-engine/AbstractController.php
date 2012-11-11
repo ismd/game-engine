@@ -5,7 +5,7 @@
  * @author ismd
  */
 
-abstract class DefaultController {
+abstract class AbstractController {
 
     protected $_registry;
     protected $_session;

@@ -5,7 +5,7 @@
  * @author ismd
  */
 
-class CharacterController extends DefaultAuthController {
+class CharacterController extends AbstractAuthController {
 
     public function init() {
         if (empty($this->_session->user)) {

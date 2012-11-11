@@ -1,6 +1,6 @@
 <?php
 
-class FightModel extends DefaultModel {
+class FightModel extends AbstractModel {
 
     public function init($character, $type, $id) {
         $id = (int)$id;

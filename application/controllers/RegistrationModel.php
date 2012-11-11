@@ -3,7 +3,7 @@
  * Модель регистрации
  */
 
-class RegistrationModel extends DefaultModel {
+class RegistrationModel extends AbstractModel {
 
     /**
      * Проверяет правильность введённых данных

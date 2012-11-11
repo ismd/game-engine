@@ -5,7 +5,7 @@
  * @author ismd
  */
 
-abstract class AbstractMob extends DefaultModel {
+abstract class AbstractMob extends AbstractModel {
 
     protected $_id;      // id в таблице MobMap (конкретный моб на карте)
     protected $_idMob;   // id в таблице Mob (класс моба)

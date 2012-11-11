@@ -5,7 +5,7 @@
  * @author ismd
  */
 
-class UserController extends DefaultController {
+class UserController extends AbstractController {
 
     public function index() {
         header('Location: /');

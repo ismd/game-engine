@@ -20,9 +20,8 @@ $registry = new Registry;
 $registry->session = new Session;
 
 // Подключаемся к базе данных
-if (false == mysqli_connect('localhost', 'root', '123', 'game')) {
-    $registry->db_error = true;
-    $_GET['route']      = 'index';
+if (false == ($registry->db = mysqli_connect('localhost', 'root', '123', 'game'))) {
+    $_GET['route'] = 'index';
 }
 
 // Загружаем router

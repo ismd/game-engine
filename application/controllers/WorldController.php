@@ -5,7 +5,7 @@
  * @author ismd
  */
 
-class WorldController extends DefaultAuthController {
+class WorldController extends AbstractAuthController {
 
     public function init() {
         // У пользователя должен быть выбран персонаж
