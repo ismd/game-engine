@@ -39,3 +39,17 @@ function __autoload($className) {
         }
     }
 }
+
+/**
+ * Подключение к БД
+ *
+ * @return 
+ */
+function dbConnect() {
+    $mysqli = mysqli_init();
+    
+    // int возвращается как int, а не string
+    $mysqli->options(MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1);
+    
+    return $mysqli->real_connect('localhost', 'root', '123', 'game');
+}
