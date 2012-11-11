@@ -12,9 +12,9 @@ abstract class DefaultController {
     protected $_template;
 
     public function __construct($registry) {
-        $this->_registry   = $registry;
-        $this->_session    = $registry->session;
-        $this->_template   = $registry->template;
+        $this->_registry = $registry;
+        $this->_session  = $registry->session;
+        $this->_template = $registry->template;
     }
 
     /**

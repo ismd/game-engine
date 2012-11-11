@@ -9,14 +9,14 @@ class Template {
 
     private $_registry;
     private $_session;
-    private $_data = array();
-    private $_js = array();
-    private $_css = array();
+    private $_data  = array();
+    private $_js    = array();
+    private $_css   = array();
     private $_title = '';
 
     public function __construct($registry) {
-        $this->_registry   = $registry;
-        $this->_session    = $registry->session;
+        $this->_registry = $registry;
+        $this->_session  = $registry->session;
     }
 
     public function __set($key, $value) {
@@ -59,30 +59,30 @@ class Template {
 
         // Ищем нужные нам хэдеры и футеры
         for ($i = 0; $i < $countRoute - 1; $i++) {
-            if ( is_readable($path . 'header.phtml') ) {
+            if (is_readable($path . 'header.phtml')) {
                 $headers[] = $path . 'header.phtml';
             }
 
-            if ( is_readable($path . 'footer.phtml') ) {
+            if (is_readable($path . 'footer.phtml')) {
                 $footers[] = $path . 'footer.phtml';
             }
 
             $path .= $route[$i] . '/';
 
-            if ( !is_dir($path) ) {
+            if (!is_dir($path)) {
                 return;
             }
         }
 
         // Сам файл шаблона и возможно ближайшие хэдер и футер
-        if ( is_dir($path . $route[$countRoute - 1]) ) {
+        if (is_dir($path . $route[$countRoute - 1])) {
             $fileInSubDir = is_readable($path . $route[$countRoute - 1] . '/index.phtml');
 
-            if ( is_readable($path . 'header.phtml') ) {
+            if (is_readable($path . 'header.phtml')) {
                 $headers[] = $path . 'header.phtml';
             }
 
-            if ( $fileInSubDir && is_readable($path . $route[$countRoute - 1] . '/header.phtml') ) {
+            if ($fileInSubDir && is_readable($path . $route[$countRoute - 1] . '/header.phtml')) {
                 $headers[] = $path . $route[$countRoute - 1] . '/header.phtml';
             }
 
@@ -94,25 +94,25 @@ class Template {
                 return;
             }
 
-            if ( is_readable($path . 'footer.phtml') ) {
+            if (is_readable($path . 'footer.phtml')) {
                 $footers[] = $path . 'footer.phtml';
             }
 
-            if ( $fileInSubDir && is_readable($path . $route[$countRoute - 1] . '/footer.phtml') ) {
+            if ($fileInSubDir && is_readable($path . $route[$countRoute - 1] . '/footer.phtml')) {
                 $footers[] = $path . $route[$countRoute - 1] . '/footer.phtml';
             }
         } else {
-            if ( is_readable($path . 'header.phtml') ) {
+            if (is_readable($path . 'header.phtml')) {
                 $headers[] = $path . 'header.phtml';
             }
 
-            if ( is_readable($path . $route[$countRoute - 1] . '.phtml') ) {
+            if (is_readable($path . $route[$countRoute - 1] . '.phtml')) {
                 $filepath = $path . $route[$countRoute - 1] . '.phtml';
             } else {
                 return;
             }
 
-            if ( is_readable($path . 'footer.phtml') ) {
+            if (is_readable($path . 'footer.phtml')) {
                 $footers[] = $path . 'footer.phtml';
             }
         }
