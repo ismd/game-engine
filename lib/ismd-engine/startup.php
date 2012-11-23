@@ -39,3 +39,19 @@ function __autoload($className) {
         }
     }
 }
+
+/**
+ * Подключается к БД
+ *
+ * @param Registry $registry
+ */
+function dbConnect(&$registry) {
+    $config = parse_ini_file(SITEPATH . 'application/configs/application.ini', true);
+
+    $registry->db = mysqli_connect(
+        $config['database']['host'],
+        $config['database']['username'],
+        $config['database']['password'],
+        $config['database']['dbname']
+    );
+}
