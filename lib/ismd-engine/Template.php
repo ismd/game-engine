@@ -13,6 +13,7 @@ class Template {
     protected $_js    = array();
     protected $_css   = array();
     protected $_title = '';
+    protected $_empty = false;
 
     public function __construct($registry) {
         $this->_registry = $registry;
@@ -20,20 +21,44 @@ class Template {
     }
 
     public function __set($key, $value) {
-        $this->_data[$key] = $value;
+        switch($key) {
+            case 'title':
+                $this->setTitle($value);
+                break;
+            
+            case 'empty':
+                $this->setEmpty($value);
+                break;
+            
+            default:
+                $this->_data[$key] = $value;
+                break;
+        }
     }
 
     public function __get($key) {
-        if (!isset($this->_data[$key])) {
-            return null;
+        switch($key) {
+            case 'title':
+                return $this->getTitle();
+                break;
+            
+            case 'empty':
+                return $this->getEmpty();
+                break;
+            
+            default:
+                if (!isset($this->_data[$key])) {
+                    return null;
+                }
+                
+                return $this->_data[$key];
+                break;
         }
-
-        return $this->_data[$key];
     }
 
     public function __unset($key) {
-        if (isset($this->data[$key])) {
-            unset($this->data[$key]);
+        if (isset($this->_data[$key])) {
+            unset($this->_data[$key]);
         }
     }
 
@@ -51,6 +76,19 @@ class Template {
         $route = $this->_registry->router->getRoute();
         $route = ($route != '') ? explode('/', $route) : array('index');
         $path  = SITEPATH . 'application/templates/';
+        
+        $route = array_diff($route, array('..'));
+        
+        // Подключаем только один файл, если надо
+        if ($this->empty == true) {
+            $filename = $path . implode('/', $route);
+            
+            if (is_readable($filename)) {
+                require $filename;
+            }
+            
+            return;
+        }
 
         $headers = array();
         $footers = array();
@@ -123,7 +161,9 @@ class Template {
         }
 
         // Подключаем сам файл шаблона
-        require $filepath;
+        if (is_readable($filepath)) {
+            require $filepath;
+        }
 
         // Подключаем все нужные футеры
         $footers = array_reverse($footers);
@@ -156,7 +196,29 @@ class Template {
         }
     }
 
-    public function setTitle($title) {
-        $this->_title = '::' . $title;
+    /**
+     * Устанавливает заголовок страницы
+     * 
+     * @param string
+     */
+    public function setTitle($value) {
+        $this->_title = '::' . (string)$value;
+    }
+    
+    public function getTitle() {
+        return $this->_title;
+    }
+    
+    /**
+     * Устаналивает необходимость загружать header'ы и footer'ы
+     * 
+     * @param bool
+     */
+    public function setEmpty($value) {
+        $this->_empty = (bool)$value;
+    }
+    
+    public function getEmpty() {
+        return $this->_empty;
     }
 }

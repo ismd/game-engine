@@ -43,15 +43,39 @@ function __autoload($className) {
 /**
  * Подключается к БД
  *
- * @param Registry $registry
+ * @param array $config Данные для подключения
+ * @throws Can't connect to database
+ * @return mysqli
  */
-function dbConnect(&$registry) {
-    $config = parse_ini_file(SITEPATH . 'application/configs/application.ini', true);
-
-    $registry->db = mysqli_connect(
-        $config['database']['host'],
-        $config['database']['username'],
-        $config['database']['password'],
-        $config['database']['dbname']
+function dbConnect($config) {
+    $mysqli = new mysqli(
+        $config['host'],
+        $config['username'],
+        $config['password'],
+        $config['dbname']
     );
+    
+    if ($mysqli->connect_error) {
+        throw new Exception("Can't connect to database");
+    }
+    
+    return $mysqli;
+}
+
+/**
+ * Читает конфиг
+ *
+ * @throws Can't read config file
+ * @return array
+ */
+function readConfig() {
+    $configFilename = SITEPATH . 'application/configs/application.ini';
+    
+    if (!is_readable($configFilename)) {
+        throw new Exception("Can't read config file");
+    }
+    
+    $config = parse_ini_file($configFilename, true);
+    
+    return $config;
 }

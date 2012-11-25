@@ -16,13 +16,22 @@ require SITEPATH . 'lib/ismd-engine/startup.php';
 // Registry, в котором будем хранить глобальные значения
 $registry = new Registry;
 
+// Читаем конфиг и сохраняем в $registry
+try {
+    $registry->config = readConfig();
+} catch (Exception $e) {
+    // Если не удалось прочитать конфиг
+    $_GET['route'] = 'index';
+}
+
 // Инициализируем собственную реализацию сессий с блэкджеком
 $registry->session = new Session;
 
-// Подключаемся к базе данных
-dbConnect($registry);
-
-if ($registry->db == false) {
+// Подключаемся к БД и сохраняем соединение в $registry->db
+try {
+    $registry->db = dbConnect($registry->config['database']);
+} catch (Exception $e) {
+    // Если не удалось подключиться к БД
     $_GET['route'] = 'index';
 }
 
