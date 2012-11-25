@@ -21,39 +21,15 @@ class Template {
     }
 
     public function __set($key, $value) {
-        switch($key) {
-            case 'title':
-                $this->setTitle($value);
-                break;
-            
-            case 'empty':
-                $this->setEmpty($value);
-                break;
-            
-            default:
-                $this->_data[$key] = $value;
-                break;
-        }
+        $this->_data[$key] = $value;
     }
 
     public function __get($key) {
-        switch($key) {
-            case 'title':
-                return $this->getTitle();
-                break;
-            
-            case 'empty':
-                return $this->getEmpty();
-                break;
-            
-            default:
-                if (!isset($this->_data[$key])) {
-                    return null;
-                }
-                
-                return $this->_data[$key];
-                break;
+        if (!isset($this->_data[$key])) {
+            return null;
         }
+
+        return $this->_data[$key];
     }
 
     public function __unset($key) {
