@@ -37,4 +37,6 @@ $registry->template = new Template($registry);
 
 // Выбираем нужный контроллер, определяем действие и выполняем
 $registry->router->delegate();
-$registry->router->showTemplate();
+
+// Отображаем шаблон
+$registry->template->show();

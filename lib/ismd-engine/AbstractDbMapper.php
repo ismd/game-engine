@@ -3,23 +3,15 @@
  * Родительский класс для mapper'ов с подключением к БД
  */
 
-abstract class AbstractDbMapper extends AbstractModel {
+abstract class AbstractDbMapper {
 
-    protected $_db;
+    protected $registry;
+    protected $db;
 
-    public function __construct(array $options = null) {
-        parent::__construct($options);
-
+    public function __construct() {
         global $registry;
-        $this->_db = $registry->db;
-    }
 
-    public function setDb(mysqli $db) {
-        $this->_db = $db;
-        return $this;
-    }
-
-    public function getDb() {
-        return $this->_db;
+        $this->registry = $registry;
+        $this->db       = $registry->db;
     }
 }

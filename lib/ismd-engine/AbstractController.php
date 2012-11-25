@@ -7,14 +7,14 @@
 
 abstract class AbstractController {
 
-    protected $_registry;
-    protected $_session;
-    protected $_template;
+    protected $registry;
+    protected $session;
+    protected $view;
 
     public function __construct($registry) {
-        $this->_registry = $registry;
-        $this->_session  = $registry->session;
-        $this->_template = $registry->template;
+        $this->registry = $registry;
+        $this->session  = $registry->session;
+        $this->view     = $registry->template;
     }
 
     /**

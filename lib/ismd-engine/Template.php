@@ -7,12 +7,12 @@
 
 class Template {
 
-    private $_registry;
-    private $_session;
-    private $_data  = array();
-    private $_js    = array();
-    private $_css   = array();
-    private $_title = '';
+    protected $_registry;
+    protected $_session;
+    protected $_data  = array();
+    protected $_js    = array();
+    protected $_css   = array();
+    protected $_title = '';
 
     public function __construct($registry) {
         $this->_registry = $registry;

@@ -5,25 +5,26 @@
  * @author ismd
  */
 
-class CharacterMapper {
+class CharacterMapper extends AbstractDbMapper {
 
     /**
      * Возвращает персонажа по id
      *
      * @param int $id
+     * @return Character|null
      */
     public function getById($id) {
         $id = (int)$id;
 
-        $result = mysql_query("SELECT id, idUser, name, level, money, idMap, coordinateX, coordinateY, "
-                            . "strength, dexterity, endurance, hp, maxHp, minDamage, maxDamage, image, experience "
-                            . "FROM `Character` WHERE id=$id LIMIT 1");
+        $query = $this->db->query("SELECT id, idUser, name, level, money, idMap, coordinateX, coordinateY, "
+            . "strength, dexterity, endurance, hp, maxHp, minDamage, maxDamage, image, experience "
+            . "FROM `Character` WHERE id = $id LIMIT 1");
 
-        if (mysql_num_rows($result) == 0) {
+        if ($query->num_rows == 0) {
             return null;
         }
 
-        return new Character(mysql_fetch_assoc($result));
+        return new Character($query->fetch_assoc());
     }
 
     /**
@@ -31,17 +32,17 @@ class CharacterMapper {
      * Не рекомендуется использовать данный метод
      * Необходимо использовать только в случае проверки на занятость имени
      *
-     * @param string $name
+     * @param Character|null
      */
     public function getByName($name) {
-        $name = htmlspecialchars(mysql_real_escape_string($name));
+        $name = $this->db->real_escape_string($name);
 
-        $query = mysql_query("SELECT id, idUser, name, level, money, idMap, coordinateX, coordinateY, "
-                            . "strength, dexterity, endurance, hp, maxHp, minDamage, maxDamage, image, experience "
-                            . "FROM `Character` WHERE name='$name' LIMIT 1");
+        $query = $this->db->query("SELECT id, idUser, name, level, money, idMap, coordinateX, coordinateY, "
+            . "strength, dexterity, endurance, hp, maxHp, minDamage, maxDamage, image, experience "
+            . "FROM `Character` WHERE name = '$name' LIMIT 1");
 
-        if (mysql_num_rows($query) == 0) {
-            return null;
+        if ($query->num_rows == 0) {
+            return;
         }
 
         return new Character(mysql_fetch_assoc($query));
@@ -53,18 +54,21 @@ class CharacterMapper {
      * @param int $idMap
      * @param int $x
      * @param int $y
+     * @return array Массив объектов класса Character
      */
     public function getOnCell($idMap, $x, $y) {
-        $idMap   = (int)$idMap;
-        $x       = (int)$x;
-        $y       = (int)$y;
+        $idMap = (int)$idMap;
+        $x     = (int)$x;
+        $y     = (int)$y;
 
-        $query = mysql_query("SELECT id, idUser, name, level, money, idMap, coordinateX, coordinateY, "
-                           . "strength, dexterity, endurance, hp, maxHp, minDamage, maxDamage, image, experience "
-                           . "FROM `Character` WHERE idMap=$idMap AND coordinateX=$x AND coordinateY=$y");
+        $query = $this->db->query("SELECT id, idUser, name, level, money, idMap, "
+            . "coordinateX, coordinateY, strength, dexterity, endurance, "
+            . "hp, maxHp, minDamage, maxDamage, image, experience "
+            . "FROM `Character` "
+            . "WHERE idMap = $idMap AND coordinateX = $x AND coordinateY = $y");
 
         $characters = array();
-        while ($character = mysql_fetch_assoc($query)) {
+        while ($character = $query->fetch_assoc()) {
             $characters[] = new Character($character);
         }
 
@@ -79,41 +83,53 @@ class CharacterMapper {
      * @param int $y
      */
     public function move($idCharacter, $x, $y) {
-        $idCharacter   = (int)$idCharacter;
-        $x             = (int)$x;
-        $y             = (int)$y;
+        $idCharacter = (int)$idCharacter;
+        $x           = (int)$x;
+        $y           = (int)$y;
 
-        mysql_query("UPDATE `Character` SET coordinateX=$x, coordinateY=$y WHERE id=$idCharacter LIMIT 1");
+        mysql_query("UPDATE `Character` SET coordinateX = $x, coordinateY = $y "
+            . "WHERE id = $idCharacter LIMIT 1");
     }
 
+    /**
+     * Создание персонажа в базе
+     *
+     * @param Character $character
+     * @return int|null
+     */
     public function save(Character $character) {
         // TODO: валидация
 
-        if ( mb_strlen($character->name) > 30 ) {
+        if (mb_strlen($character->name) > 30) {
             return Character::CREATE_ERR_NAME_LENGTH_MAX;
         }
 
-        if ( mb_strlen($character->name) < 4 ) {
+        if (mb_strlen($character->name) < 4) {
             return Character::CREATE_ERR_NAME_LENGTH_MIN;
         }
 
         // Проверяем, не занят ли логин
-        if ( $this->getByName($character->name) != null ) {
+        if ($this->getByName($character->name) != null) {
             return Character::CREATE_ERR_NAME_EXISTS;
         }
 
-        $character->name = htmlspecialchars(mysql_real_escape_string($character->name));
+        $character->name = $this->db->real_escape_string($character->name);
 
-        if ( empty($character->id) ) {
-            mysql_query("INSERT INTO `Character` (idUser, name, level, money, idMap, coordinateX, coordinateY, "
-                      . "strength, dexterity, endurance, hp, maxHp, minDamage, maxDamage, image, experience) "
-                      . "VALUES ($character->idUser, '$character->name', $character->level, $character->money, "
-                      . "$character->idMap, $character->coordinateX, $character->coordinateY, $character->strength, "
-                      . "$character->dexterity, $character->endurance, $character->hp, $character->maxHp, "
-                      . "$character->minDamage, $character->maxDamage, '$character->image', $character->experience)");
+        if (!empty($character->id)) {
+            return;
         }
-        // TODO: сделать update, чтобы сохранялся персонаж. но надо ли?
 
-        return true;
+        mysql_query("INSERT INTO `Character` (idUser, name, level, money, idMap, "
+            . "coordinateX, coordinateY, strength, dexterity, endurance, "
+            . "hp, maxHp, minDamage, maxDamage, image, experience) "
+            . "VALUES ($character->idUser, '$character->name', $character->level, "
+            . "$character->money, $character->idMap, $character->coordinateX, "
+            . "$character->coordinateY, $character->strength, $character->dexterity, "
+            . "$character->endurance, $character->hp, $character->maxHp, "
+            . "$character->minDamage, $character->maxDamage, '$character->image', "
+            . "$character->experience)"
+        );
+
+        // TODO: сделать update, чтобы сохранялся персонаж. но надо ли?
     }
 }

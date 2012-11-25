@@ -11,14 +11,14 @@ class AttributeMapper {
      * Возвращает массив аттрибутов вещи
      *
      * @param int $idItem - id вещи
-     * @return array(Attribute)
+     * @return array Массив объектов класса Attribute
      */
     public function getItemAttributes($idItem) {
         $idItem = (int)$idItem;
 
         $query = mysql_query("SELECT ItemAttribute.value, Attribute.id, Attribute.title "
-                           . "FROM ItemAttribute INNER JOIN Attribute ON ItemAttribute.idAttribute=Attribute.id "
-                           . "WHERE ItemAttribute.idItem=$idItem");
+            . "FROM ItemAttribute INNER JOIN Attribute ON ItemAttribute.idAttribute=Attribute.id "
+            . "WHERE ItemAttribute.idItem=$idItem");
 
         $attributes = array();
         while ($attribute = mysql_fetch_assoc($query)) {

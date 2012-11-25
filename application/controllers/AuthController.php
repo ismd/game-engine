@@ -26,7 +26,7 @@ class AuthController extends AbstractController {
 
         $auth = new Auth;
         $id   = $auth->login($login, $password);
-        
+
         if ($id) {
             $mapper = new UserMapper;
             $this->_session->user = $mapper->getById($id);
@@ -45,7 +45,7 @@ class AuthController extends AbstractController {
         //if () {
         //}
 
-        $this->_session->clear();
+        $this->session->clear();
 
         header('Location: /');
         die;

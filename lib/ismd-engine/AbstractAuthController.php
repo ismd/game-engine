@@ -11,7 +11,7 @@ abstract class AbstractAuthController extends AbstractController {
     public function __construct($registry) {
         parent::__construct($registry);
 
-        if (!isset($this->_session->user)) {
+        if (!isset($this->session->user)) {
             header('Location: /');
             die;
         }

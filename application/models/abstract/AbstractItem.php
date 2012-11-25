@@ -12,40 +12,16 @@ abstract class AbstractItem extends AbstractModel {
     protected $_idType;
     protected $_price;
     protected $_description;
-    protected $_type;         // Тип вещи из таблицы ItemType
-    protected $_attributes;   // Аттрибуты вещи. Берутся из таблиц ItemAttribute и Attribute
-
-    public function getId() {
-        return $this->_id;
-    }
-
-    public function getTitle() {
-        return $this->_title;
-    }
-
-    public function getIdType() {
-        return $this->_idType;
-    }
-
-    public function getPrice() {
-        return $this->_price;
-    }
-
-    public function getDescription() {
-        return $this->_description;
-    }
-
-    public function getType() {
-        return $this->_type;
-    }
-
-    public function getAttributes() {
-        return $this->_attributes;
-    }
+    protected $_type;       // Тип вещи из таблицы ItemType
+    protected $_attributes; // Атрибуты вещи. Берутся из таблиц ItemAttribute и Attribute
 
     public function setId($id) {
         $this->_id = (int)$id;
         return $this;
+    }
+
+    public function getId() {
+        return $this->_id;
     }
 
     public function setTitle($title) {
@@ -53,9 +29,17 @@ abstract class AbstractItem extends AbstractModel {
         return $this;
     }
 
+    public function getTitle() {
+        return $this->_title;
+    }
+
     public function setIdType($idType) {
         $this->_idType = (int)$idType;
         return $this;
+    }
+
+    public function getIdType() {
+        return $this->_idType;
     }
 
     public function setPrice($price) {
@@ -63,9 +47,17 @@ abstract class AbstractItem extends AbstractModel {
         return $this;
     }
 
+    public function getPrice() {
+        return $this->_price;
+    }
+
     public function setDescription($description) {
         $this->_description = (string)$description;
         return $this;
+    }
+
+    public function getDescription() {
+        return $this->_description;
     }
 
     public function setType($type) {
@@ -73,10 +65,32 @@ abstract class AbstractItem extends AbstractModel {
         return $this;
     }
 
+    public function getType() {
+        return $this->_type;
+    }
+
     public function setAttributes($attributes) {
         $this->_attributes = (array)$attributes;
         return $this;
     }
+
+    public function getAttributes() {
+        return $this->_attributes;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function toArray() {
         $attributes = array();

@@ -11,16 +11,12 @@ abstract class AbstractAttribute extends AbstractModel {
     protected $_title;
     protected $_value;
 
-    public function getId() {
-        return $this->_id;
-    }
-
-    public function getTitle() {
-        return $this->_title;
-    }
-
-    public function getValue() {
-        return $this->_value;
+    public function toArray() {
+        return array(
+            'id'    => $this->id,
+            'title' => $this->title,
+            'value' => $this->value
+        );
     }
 
     public function setId($id) {
@@ -28,21 +24,25 @@ abstract class AbstractAttribute extends AbstractModel {
         return $this;
     }
 
+    public function getId() {
+        return $this->_id;
+    }
+
     public function setTitle($title) {
         $this->_title = (string)$title;
         return $this;
     }
 
+    public function getTitle() {
+        return $this->_title;
+    }
+
     public function setValue($value) {
-        $this->_value = $value;
+        $this->_value = (float)$value;
         return $this;
     }
 
-    public function toArray() {
-        return array(
-            'id'      => $this->_id,
-            'title'   => $this->_title,
-            'value'   => $this->_value
-        );
+    public function getValue() {
+        return $this->_value;
     }
 }

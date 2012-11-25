@@ -5,7 +5,7 @@
  * @author ismd
  */
 
-class UserMapper {
+class UserMapper extends AbstractDbMapper {
 
     /**
      * Возвращает пользователя по id
@@ -15,14 +15,14 @@ class UserMapper {
     public function getById($id) {
         $id = (int)$id;
 
-        $query = mysql_query("SELECT id, login, email, info, site, registered "
-                           . "FROM `User` WHERE id=$id LIMIT 1");
+        $query = $this->db->query("SELECT id, login, email, info, site, registered "
+            . "FROM `User` WHERE id=$id LIMIT 1");
 
-        if (mysql_num_rows($query) == 0) {
+        if ($query->num_rows == 0) {
             return null;
         }
 
-        return new User(mysql_fetch_assoc($query));
+        return new User($query->fetch_assoc());
     }
 
     /**

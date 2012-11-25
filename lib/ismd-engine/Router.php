@@ -71,9 +71,9 @@ class Router {
      * Определяем контроллер и действие
      */
     protected function getController() {
-        if (empty($this->_route)) {
-            $route = 'index';
-        } else {
+        $route = 'index';
+
+        if (!empty($this->_route)) {
             $route = explode('/', $this->_route);
 
             for ($i = 0; $i < $this->_level; $i++) {
@@ -105,14 +105,20 @@ class Router {
         $this->_registry->args = $args;
     }
 
+    /**
+     * Возвращает текущее действие
+     *
+     * @return string
+     */
     public function getAction() {
         return $this->_action;
     }
 
-    public function showTemplate() {
-        $this->_registry->template->show();
-    }
-
+    /**
+     * Возвращает запрошенный route
+     *
+     * @return string
+     */
     public function getRoute() {
         return $this->_route;
     }

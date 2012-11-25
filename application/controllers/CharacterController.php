@@ -7,26 +7,24 @@
 
 class CharacterController extends AbstractAuthController {
 
-    public function init() {
-        if (empty($this->_session->user)) {
-            header('Location: /');
-            die;
-        }
-    }
-
     public function index() {
         header('Location: /');
         die;
     }
 
+    /**
+     * Создание персонажа
+     *
+     * @return type
+     */
     public function create() {
-        if (empty ($_POST)) {
+        if (empty($_POST)) {
             return;
         }
 
         $character = array(
-            'idUser' => $this->_session->user->id,
-            'name'   => !empty($_POST['name']) ? $_POST['name'] : '',
+            'idUser' => $this->session->user->id,
+            'name'   => !empty($_POST['name']) ? $_POST['name'] : null,
         );
 
 
@@ -34,8 +32,7 @@ class CharacterController extends AbstractAuthController {
         $character->setDefaultValues();
 
         $mapper = new CharacterMapper;
-        $this->_template->error = $mapper->save($character);
-        }
+        $this->template->error = $mapper->save($character);
     }
 
     /**
@@ -50,7 +47,7 @@ class CharacterController extends AbstractAuthController {
 
         $mapper = new CharacterMapper;
         $this->_session->character = $mapper->getById($idCharacter);
-        
+
         $mapper = new MapMapper;
         $map = $mapper->getById($this->_session->character->idMap);
 
@@ -61,7 +58,7 @@ class CharacterController extends AbstractAuthController {
         );
 
         $this->_session->map = $map;
-        
+
         die('ok');
     }
 
@@ -75,10 +72,10 @@ class CharacterController extends AbstractAuthController {
         if ($this->_session->character->move($x, $y)) {
                 $this->_session->map->currentCell->coordinateX = $this->_session->character->coordinateX;
                 $this->_session->map->currentCell->coordinateY = $this->_session->character->coordinateY;
-            
+
             die('ok');
         }
-        
+
         die('error');
     }
 
