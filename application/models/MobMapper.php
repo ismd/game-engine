@@ -5,49 +5,55 @@
  * @author ismd
  */
 
-class MobMapper {
+class MobMapperNotFoundException extends Exception {};
+
+class MobMapper extends AbstractDbMapper {
 
     /**
      * Возвращает моба по id из таблицы MobMap
      *
      * @param int $id
+     * @return Mob
+     * @throws MobMapperNotFoundException
      */
     public function getById($id) {
         $id = (int)$id;
 
-        $query = mysql_query("SELECT MobMap.id, MobMap.idMap, MobMap.coordinateX, MobMap.coordinateY, MobMap.hp, Mob.id as idMob, "
-                           . "Mob.name, Mob.level, Mob.maxHp, Mob.minDamage, Mob.maxDamage, Mob.experience, Mob.image, Mob.strength, "
-                           . "Mob.dexterity, Mob.endurance "
-                           . "FROM MobMap INNER JOIN Mob ON MobMap.idMob=Mob.id LIMIT 1");
+        $query = $this->db->query("SELECT mm.id, mm.idMap, "
+            . "mm.coordinateX, mm.coordinateY, mm.hp, "
+            . "m.id as idMob, m.name, m.level, m.maxHp, m.minDamage, "
+            . "m.maxDamage, m.experience, m.image, m.strength, "
+            . "m.dexterity, m.endurance "
+            . "FROM MobMap mm "
+            . "INNER JOIN Mob m ON mm.idMob = m.id "
+            . "LIMIT 1");
 
-        if (mysql_num_rows($query) == 0) {
-            return null;
+        if ($query->num_rows == 0) {
+            throw new MobMapperNotFoundException;
         }
 
-        return new Mob(mysql_fetch_assoc($query));
+        return new Mob($query->fetch_assoc());
     }
 
     /**
      * Возвращает мобов на клетке
      *
-     * @param int $idMap
-     * @param int $x
-     * @param int $y
-     * @return array Массив мобов
+     * @param MapCell $cell
+     * @return array Массив объектов класса Mob
      */
-    public function getOnCell($idMap, $x, $y) {
-        $idMap   = (int)$idMap;
-        $x       = (int)$x;
-        $y       = (int)$y;
-
-        $query = mysql_query("SELECT MobMap.id, MobMap.idMap, MobMap.coordinateX, MobMap.coordinateY, MobMap.hp, Mob.id as idMob, "
-                           . "Mob.name, Mob.level, Mob.maxHp, Mob.minDamage, Mob.maxDamage, Mob.experience, Mob.image, Mob.strength, "
-                           . "Mob.dexterity, Mob.endurance "
-                           . "FROM MobMap INNER JOIN Mob ON MobMap.idMob=Mob.id "
-                           . "WHERE idMap=$idMap AND coordinateX=$x AND coordinateY=$y");
+    public function getByCell(MapCell $cell) {
+        $query = $this->db->query("SELECT mm.id, mm.idMap, mm.coordinateX, "
+            . "mm.coordinateY, mm.hp, m.id as idMob, "
+            . "m.name, m.level, m.maxHp, m.minDamage, m.maxDamage, "
+            . "m.experience, m.image, m.strength, "
+            . "m.dexterity, m.endurance "
+            . "FROM MobMap mm "
+            . "INNER JOIN Mob m ON mm.idMob = m.id "
+            . "WHERE mm.idMap = $cell->idMap AND mm.coordinateX = $cell->x "
+            . "AND mm.coordinateY = $cell->y");
 
         $mobs = array();
-        while ($mob = mysql_fetch_assoc($query)) {
+        while ($mob = $query->fetch_assoc()) {
             $mobs[] = new Mob($mob);
         }
 

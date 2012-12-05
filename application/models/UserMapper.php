@@ -5,21 +5,28 @@
  * @author ismd
  */
 
+class UserMapperNotFoundException extends Exception {}
+
 class UserMapper extends AbstractDbMapper {
 
     /**
      * Возвращает пользователя по id
      *
      * @param int $id
+     * @return User
+     * @throws UserMapperNotFoundException
      */
     public function getById($id) {
         $id = (int)$id;
 
-        $query = $this->db->query("SELECT id, login, email, info, site, registered "
-            . "FROM `User` WHERE id=$id LIMIT 1");
+        $query = $this->db->query("SELECT id, login, email, info, site, "
+            . "registered "
+            . "FROM User "
+            . "WHERE id = $id "
+            . "LIMIT 1");
 
         if ($query->num_rows == 0) {
-            return null;
+            throw new UserMapperNotFoundException;
         }
 
         return new User($query->fetch_assoc());
@@ -31,39 +38,23 @@ class UserMapper extends AbstractDbMapper {
      * Необходимо использовать только в случае проверки на занятость логина
      *
      * @param string $login
+     * @return User
+     * @throws UserMapperNotFoundException
      */
     public function getByLogin($login) {
-        $login = htmlspecialchars(mysql_real_escape_string($login));
+        $login = $this->db->real_escape_string($login);
 
-        $query = mysql_query("SELECT id, login, email, info, site, registered "
-                           . "FROM `User` WHERE login='$login' LIMIT 1");
+        $query = $this->db->query("SELECT id, login, email, info, site, "
+            . "registered "
+            . "FROM `User` "
+            . "WHERE login = '$login' "
+            . "LIMIT 1");
 
-        if (mysql_num_rows($query) == 0) {
-            return null;
+        if ($query->num_rows == 0) {
+            throw new UserMapperNotFoundException;
         }
 
-        return new User(mysql_fetch_assoc($query));
-    }
-
-    /**
-     * Возвращает массив персонажей пользователя
-     *
-     * @param int $id
-     * @return array
-     */
-    public function getUserCharacters($id) {
-        $id = (int)$id;
-
-        $query = mysql_query("SELECT id, idUser, name, level, money, idMap, coordinateX, coordinateY, "
-                           . "strength, dexterity, endurance, hp, maxHp, minDamage, maxDamage, image, experience "
-                           . "FROM `Character` WHERE idUser=$id");
-
-        $characters = array();
-        while ($character = mysql_fetch_assoc($query)) {
-            $characters[] = new Character($character);
-        }
-
-        return $characters;
+        return new User($query->fetch_assoc());
     }
 
     public function save(User $user) {

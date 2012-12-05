@@ -7,34 +7,38 @@
 
 class User extends AbstractUser {
 
-    const REG_ERR_LOGIN_EXISTS          = 1;
-    const REG_ERR_LOGIN_LENGTH_MAX      = 2;
-    const REG_ERR_LOGIN_LENGTH_MIN      = 3;
-    const REG_ERR_LOGIN_BAD             = 4;
-    const REG_ERR_PASSWORD_LENGTH_MAX   = 5;
-    const REG_ERR_PASSWORD_LENGTH_MIN   = 6;
-    const REG_ERR_PASSWORD_BAD          = 7;
-    const REG_ERR_PASSWORD_UNMATCH      = 8;
+    protected $_characters;
+
+    public function setCharacters($value) {
+        $this->_characters = (array)$value;
+        return $this;
+    }
 
     /**
      * Возвращает массив персонажей пользователя
      *
-     * @return array(Character)
+     * @return array Массив объектов класса Character
      */
     public function getCharacters() {
-        $mapper = new UserMapper;
-        return $mapper->getUserCharacters($this->_id);
+        if (null == $this->_characters) {
+            $mapper           = new CharacterMapper;
+            $this->characters = $mapper->getByUser($this->id);
+        }
+
+        return $this->_characters;
     }
 
     /**
      * Проверяет, есть ли у пользователя персонаж
      *
      * @param int $idCharacter
+     * @return bool
      */
     public function hasCharacter($idCharacter) {
-        $this->getCharacters();
+        $idCharacter = (int)$idCharacter;
+        $characters  = $this->characters;
 
-        foreach ($this->_characters as $character) {
+        foreach ($characters as $character) {
             if ($character->id == $idCharacter) {
                 return true;
             }

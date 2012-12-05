@@ -7,12 +7,30 @@
 
 class Character extends AbstractCharacter {
 
+    protected $_currentCell;  // Клетка, на которой находится персонаж
+    protected $_items;        // Вещи персонажа
     protected $_lastMove = 0; // Используется для проверки задержки между перещениями персонажа
                               // Отсутствует в базе, только в сессии
 
-    const CREATE_ERR_NAME_EXISTS     = 1;
-    const CREATE_ERR_NAME_LENGTH_MAX = 2;
-    const CREATE_ERR_NAME_LENGTH_MIN = 3;
+    /**
+     * Установка начальных значений для персонажа
+     */
+    public function setDefaultValues() {
+        $this->level       = 1;
+        $this->money       = 0;
+        $this->idMap       = 1;
+        $this->coordinateX = 2;
+        $this->coordinateY = 2;
+        $this->strength    = 5;
+        $this->dexterity   = 5;
+        $this->endurance   = 5;
+        $this->hp          = 25;
+        $this->maxHp       = 25;
+        $this->minDamage   = 5;
+        $this->maxDamage   = 10;
+        $this->image       = 'player.png';
+        $this->experience  = 0;
+    }
 
     /**
      * Перемещение персонажа по карте
@@ -49,33 +67,36 @@ class Character extends AbstractCharacter {
         return true;
     }
 
+    public function setItems($value) {
+        $this->_items = (array)$value;
+        return $this;
+    }
+
     /**
      * Возвращает массив вещей персонажа
      *
      * @return array Массив объектов класса Item
      */
     public function getItems() {
-        $mapper = new ItemMapper;
-        return $mapper->getCharacterItems($this->id);
+        if (null == $this->_items) {
+            $mapper      = new ItemMapper;
+            $this->items = $mapper->getByCharacter($this->id);
+        }
+
+        return $this->_items;
+    }
+
+    public function setCurrentCell(MapCell $value) {
+        $this->_currentCell = $value;
+        return $this;
     }
 
     /**
-     * Установка начальных значений для персонажа
+     * Возвращает текущую клетку, на которой находится персонаж
+     *
+     * @return MapCell
      */
-    public function setDefaultValues() {
-        $this->level       = 1;
-        $this->money       = 0;
-        $this->idMap       = 1;
-        $this->coordinateX = 2;
-        $this->coordinateY = 2;
-        $this->strength    = 5;
-        $this->dexterity   = 5;
-        $this->endurance   = 5;
-        $this->hp          = 25;
-        $this->maxHp       = 25;
-        $this->minDamage   = 5;
-        $this->maxDamage   = 10;
-        $this->image       = 'player.png';
-        $this->experience  = 0;
+    public function getCurrentCell() {
+        return $this->_currentCell;
     }
 }

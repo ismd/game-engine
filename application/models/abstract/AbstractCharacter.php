@@ -47,8 +47,8 @@ abstract class AbstractCharacter extends AbstractModel {
         );
     }
 
-    public function setId($id) {
-        $this->_id = (int)$id;
+    public function setId($value) {
+        $this->_id = (int)$value;
         return $this;
     }
 
@@ -56,8 +56,8 @@ abstract class AbstractCharacter extends AbstractModel {
         return $this->_id;
     }
 
-    public function setIdUser($idUser) {
-        $this->_idUser = (int)$idUser;
+    public function setIdUser($value) {
+        $this->_idUser = (int)$value;
         return $this;
     }
 
@@ -65,8 +65,8 @@ abstract class AbstractCharacter extends AbstractModel {
         return $this->_idUser;
     }
 
-    public function setName($name) {
-        $this->_name = (string)$name;
+    public function setName($value) {
+        $this->_name = (string)$value;
         return $this;
     }
 
@@ -74,8 +74,8 @@ abstract class AbstractCharacter extends AbstractModel {
         return $this->_name;
     }
 
-    public function setLevel($level) {
-        $this->_level = (int)$level;
+    public function setLevel($value) {
+        $this->_level = (int)$value;
         return $this;
     }
 
@@ -83,8 +83,8 @@ abstract class AbstractCharacter extends AbstractModel {
         return $this->_level;
     }
 
-    public function setMoney($money) {
-        $this->_money = (int)$money;
+    public function setMoney($value) {
+        $this->_money = (int)$value;
         return $this;
     }
 
@@ -92,8 +92,8 @@ abstract class AbstractCharacter extends AbstractModel {
         return $this->_money;
     }
 
-    public function setHp($hp) {
-        $this->_hp = (int)$hp;
+    public function setHp($value) {
+        $this->_hp = (int)$value;
         return $this;
     }
 
@@ -101,8 +101,8 @@ abstract class AbstractCharacter extends AbstractModel {
         return $this->_hp;
     }
 
-    public function setMaxHp($maxHp) {
-        $this->_maxHp = (int)$maxHp;
+    public function setMaxHp($value) {
+        $this->_maxHp = (int)$value;
         return $this;
     }
 
@@ -110,8 +110,8 @@ abstract class AbstractCharacter extends AbstractModel {
         return $this->_maxHp;
     }
 
-    public function setMinDamage($minDamage) {
-        $this->_minDamage = (int)$minDamage;
+    public function setMinDamage($value) {
+        $this->_minDamage = (int)$value;
         return $this;
     }
 
@@ -119,8 +119,8 @@ abstract class AbstractCharacter extends AbstractModel {
         return $this->_minDamage;
     }
 
-    public function setMaxDamage($maxDamage) {
-        $this->_maxDamage = (int)$maxDamage;
+    public function setMaxDamage($value) {
+        $this->_maxDamage = (int)$value;
         return $this;
     }
 
@@ -128,8 +128,8 @@ abstract class AbstractCharacter extends AbstractModel {
         return $this->_maxDamage;
     }
 
-    public function setExperience($experience) {
-        $this->_experience = (int)$experience;
+    public function setExperience($value) {
+        $this->_experience = (int)$value;
         return $this;
     }
 
@@ -137,8 +137,8 @@ abstract class AbstractCharacter extends AbstractModel {
         return $this->_experience;
     }
 
-    public function setImage($image) {
-        $this->_image = (string)$image;
+    public function setImage($value) {
+        $this->_image = (string)$value;
         return $this;
     }
 
@@ -146,8 +146,8 @@ abstract class AbstractCharacter extends AbstractModel {
         return $this->_image;
     }
 
-    public function setStrength($strength) {
-        $this->_strength = (int)$strength;
+    public function setStrength($value) {
+        $this->_strength = (int)$value;
         return $this;
     }
 
@@ -155,8 +155,8 @@ abstract class AbstractCharacter extends AbstractModel {
         return $this->_strength;
     }
 
-    public function setDexterity($dexterity) {
-        $this->_dexterity = (int)$dexterity;
+    public function setDexterity($value) {
+        $this->_dexterity = (int)$value;
         return $this;
     }
 
@@ -164,8 +164,8 @@ abstract class AbstractCharacter extends AbstractModel {
         return $this->_dexterity;
     }
 
-    public function setEndurance($endurance) {
-        $this->_endurance = (int)$endurance;
+    public function setEndurance($value) {
+        $this->_endurance = (int)$value;
         return $this;
     }
 
@@ -173,8 +173,8 @@ abstract class AbstractCharacter extends AbstractModel {
         return $this->_endurance;
     }
 
-    public function setIdMap($idMap) {
-        $this->_idMap = (int)$idMap;
+    public function setIdMap($value) {
+        $this->_idMap = (int)$value;
         return $this;
     }
 
@@ -182,8 +182,8 @@ abstract class AbstractCharacter extends AbstractModel {
         return $this->_idMap;
     }
 
-    public function setCoordinateX($coordinateX) {
-        $this->_coordinateX = (int)$coordinateX;
+    public function setCoordinateX($value) {
+        $this->_coordinateX = (int)$value;
         return $this;
     }
 
@@ -191,8 +191,8 @@ abstract class AbstractCharacter extends AbstractModel {
         return $this->_coordinateX;
     }
 
-    public function setCoordinateY($coordinateY) {
-        $this->_coordinateY = (int)$coordinateY;
+    public function setCoordinateY($value) {
+        $this->_coordinateY = (int)$value;
         return $this;
     }
 

@@ -5,50 +5,52 @@
  * @author ismd
  */
 
+class ItemMapperNotFoundException extends Exception {};
+
 class ItemMapper {
 
     /**
      * Возвращает вещь по id
      *
      * @param int $id
+     * @return Item
+     * @throws ItemMapperNotFoundException
      */
     public function getById($id) {
         $id = (int)$id;
 
-        $query = mysql_query("SELECT Item.id, Item.title, Item.idType, Item.price, Item.description, ItemType.title AS type "
-                           . "FROM Item INNER JOIN ItemType ON Item.idType=ItemType.id WHERE Item.id=$id LIMIT 1");
+        $query = $this->db->query("SELECT Item.id, Item.title, Item.idType, "
+            . "Item.price, Item.description, ItemType.title AS type "
+            . "FROM Item "
+            . "INNER JOIN ItemType ON Item.idType = ItemType.id "
+            . "WHERE Item.id = $id "
+            . "LIMIT 1");
 
-        if (mysql_num_rows($query) == 0) {
-            return null;
+        if ($query->num_rows == 0) {
+            throw new ItemMapperNotFoundException;
         }
 
-        $item = mysql_fetch_assoc($query);
-
-        $mapper = AttributeMapper;
-        $item['attributes'] = $mapper->getItemAttributes($id);
-
-        return new Item($item);
+        return new Item($query->fetch_assoc());
     }
 
     /**
      * Возвращает массив вещей персонажа
      *
      * @param int $idCharacter - id персонажа
-     * @return array(Item)
+     * @return array Массив объектов класса Item
      */
-    public function getCharacterItems($idCharacter) {
+    public function getByCharacter($idCharacter) {
         $idCharacter = (int)$idCharacter;
 
-        $query = mysql_query("SELECT Item.id, Item.title, Item.idType, Item.price, Item.description, ItemType.title AS type "
-                           . "FROM CharacterItem INNER JOIN Item ON CharacterItem.idItem=Item.id "
-                           . "INNER JOIN ItemType ON Item.idType=ItemType.id "
-                           . "WHERE CharacterItem.idCharacter=$idCharacter");
+        $query = $this->db->query("SELECT i.id, i.title, i.idType, "
+            . "i.price, i.description, it.title AS type "
+            . "FROM CharacterItem ci "
+            . "INNER JOIN Item i ON ci.idItem = i.id "
+            . "INNER JOIN ItemType it ON i.idType = it.id "
+            . "WHERE ci.idCharacter = $idCharacter");
 
         $items = array();
-        $mapper = new AttributeMapper;
-        
-        while ($item = mysql_fetch_assoc($query)) {
-            $item['attributes'] = $mapper->getItemAttributes($item['id']);
+        while ($item = $query->fetch_assoc()) {
             $items[] = new Item($item);
         }
 

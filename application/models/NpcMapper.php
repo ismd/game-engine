@@ -5,47 +5,51 @@
  * @author ismd
  */
 
-class NpcMapper {
+class NpcMapperNotFoundException extends Exception {};
+
+class NpcMapper extends AbstractDbMapper {
 
     /**
      * Возвращает NPC по id из таблицы NpcMap
      *
      * @param int $id
+     * @return Npc
+     * @throws NpcMapperNotFoundException
      */
     public function getById($id) {
         $id = (int)$id;
 
-        $result = mysql_query("SELECT NpcMap.id, NpcMap.idMap, NpcMap.coordinateX, NpcMap.coordinateY, Npc.id as idNpc, "
-                            . "Npc.name, Npc.greeting Npc.image "
-                            . "FROM NpcMap INNER JOIN Npc ON NpcMap.idNpc=Npc.id LIMIT 1");
+        $query = $this->db->query("SELECT nm.id, nm.idMap, nm.coordinateX, "
+            . "nm.coordinateY, n.id as idNpc, "
+            . "n.name, n.greeting, n.image "
+            . "FROM NpcMap nm "
+            . "INNER JOIN Npc n ON nm.idNpc = n.id "
+            . "LIMIT 1");
 
-        if (mysql_num_rows($result) == 0) {
-            return null;
+        if ($query->num_rows == 0) {
+            throw new NpcMapperNotFoundException;
         }
 
-        return new Npc(mysql_fetch_assoc($result));
+        return new Npc($query->fetch_assoc());
     }
 
     /**
      * Возвращает NPC на клетке
      *
-     * @param int $idMap
-     * @param int $x
-     * @param int $y
-     * @return array Массив NPC
+     * @param MapCell $cell
+     * @return array Массив объектов класса Npc
      */
-    public function getOnCell($idMap, $x, $y) {
-        $idMap   = (int)$idMap;
-        $x       = (int)$x;
-        $y       = (int)$y;
-
-        $query = mysql_query("SELECT NpcMap.id, NpcMap.idMap, NpcMap.coordinateX, NpcMap.coordinateY, Npc.id as idNpc, "
-                           . "Npc.name, Npc.greeting, Npc.image "
-                           . "FROM NpcMap INNER JOIN Npc ON NpcMap.idNpc=Npc.id "
-                           . "WHERE idMap=$idMap AND coordinateX=$x AND coordinateY=$y");
+    public function getOnCell(MapCell $cell) {
+        $query = $this->db->query("SELECT nm.id, nm.idMap, nm.coordinateX, "
+            . "nm.coordinateY, n.id as idNpc, "
+            . "n.name, nm.greeting, n.image "
+            . "FROM NpcMap nm "
+            . "INNER JOIN Npc n ON nm.idNpc = n.id "
+            . "WHERE nm.idMap = $cell->idMap AND nm.coordinateX = $cell->x "
+            . "AND nm.coordinateY = $cell->y");
 
         $npcs = array();
-        while ($npc = mysql_fetch_assoc($query)) {
+        while ($npc = $query->fetch_assoc()) {
             $npcs[] = new Npc($npc);
         }
 

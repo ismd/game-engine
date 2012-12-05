@@ -16,75 +16,66 @@ abstract class AbstractUser extends AbstractModel {
     protected $_site;
     protected $_registered;
 
+    public function setId($value) {
+        $this->_id = (int)$value;
+        return $this;
+    }
+
     public function getId() {
         return $this->_id;
+    }
+
+    public function setLogin($value) {
+        $this->_login = (string)$value;
+        return $this;
     }
 
     public function getLogin() {
         return $this->_login;
     }
 
+    public function setPassword($value) {
+        $this->_password = (string)$value;
+        return $this;
+    }
+
     public function getPassword() {
         return $this->_password;
     }
 
-    public function getPassword1() {
-        return $this->_password1;
+    public function setEmail($value) {
+        $this->_email = (string)$value;
+        return $this;
     }
 
     public function getEmail() {
         return $this->_email;
     }
 
+    public function setInfo($value) {
+        $this->_info = (string)$value;
+        return $this;
+    }
+
     public function getInfo() {
         return $this->_info;
+    }
+
+    public function setSite($value) {
+        $this->_site = (string)$value;
+        return $this;
     }
 
     public function getSite() {
         return $this->_site;
     }
 
+    public function setRegistered($value) {
+        $this->_registered = $value;
+        return $this;
+    }
+
     public function getRegistered() {
         return $this->_registered;
-    }
-
-    public function setId($id) {
-        $this->_id = (int)$id;
-        return $this;
-    }
-
-    public function setLogin($login) {
-        $this->_login = (string)$login;
-        return $this;
-    }
-
-    public function setPassword($password) {
-        $this->_password = (string)$password;
-        return $this;
-    }
-
-    public function setPassword1($password1) {
-        $this->_password1 = (string)$password1;
-        return $this;
-    }
-
-    public function setEmail($email) {
-        $this->_email = (string)$email;
-        return $this;
-    }
-
-    public function setInfo($info) {
-        $this->_info = (string)$info;
-        return $this;
-    }
-
-    public function setSite($site) {
-        $this->_site = (string)$site;
-        return $this;
-    }
-
-    public function setRegistered($registered) {
-        $this->_registered = $registered;
-        return $this;
     }
 }

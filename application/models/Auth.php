@@ -7,6 +7,7 @@ class Auth extends AbstractDbMapper {
 
     /**
      * Аутентификация пользователя
+     * FIXME: deprecated may be
      *
      * @param string $login
      * @param string $password
@@ -17,7 +18,8 @@ class Auth extends AbstractDbMapper {
         $password = md5($password);
 
         $query = $this->db->query("SELECT id FROM `User` "
-            . "WHERE `login`='$login' AND `password`='$password' LIMIT 1");
+            . "WHERE `login` = '$login' AND `password` = '$password' "
+            . "LIMIT 1");
 
         if ($query->num_rows == 0) {
             return;

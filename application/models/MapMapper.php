@@ -5,22 +5,29 @@
  * @author ismd
  */
 
+class MapMapperNotFoundException extends Exception {};
+
 class MapMapper {
 
     /**
      * Возвращает карту по id
      *
      * @param int $id
+     * @return Map
+     * @throws MapMapperNotFoundException
      */
     public function getById($id) {
         $id = (int)$id;
 
-        $query = mysql_query("SELECT id, title FROM `Map` WHERE id=$id LIMIT 1");
+        $query = mysql_query("SELECT id, title "
+            . "FROM `Map` "
+            . "WHERE id = $id "
+            . "LIMIT 1");
 
-        if (mysql_num_rows($query) == 0) {
-            return null;
+        if ($query->num_rows == 0) {
+            throw new MapMapperNotFoundException;
         }
 
-        return new Map(mysql_fetch_assoc($query));
+        return new Map($query->fetch_assoc());
     }
 }

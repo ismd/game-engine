@@ -15,12 +15,12 @@ abstract class AbstractAttribute extends AbstractModel {
         return array(
             'id'    => $this->id,
             'title' => $this->title,
-            'value' => $this->value
+            'value' => $this->value,
         );
     }
 
-    public function setId($id) {
-        $this->_id = (int)$id;
+    public function setId($value) {
+        $this->_id = (int)$value;
         return $this;
     }
 
@@ -28,8 +28,8 @@ abstract class AbstractAttribute extends AbstractModel {
         return $this->_id;
     }
 
-    public function setTitle($title) {
-        $this->_title = (string)$title;
+    public function setTitle($value) {
+        $this->_title = (string)$value;
         return $this;
     }
 
@@ -38,7 +38,7 @@ abstract class AbstractAttribute extends AbstractModel {
     }
 
     public function setValue($value) {
-        $this->_value = (float)$value;
+        $this->_value = (int)$value;
         return $this;
     }
 

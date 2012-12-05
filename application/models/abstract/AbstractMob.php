@@ -7,8 +7,8 @@
 
 abstract class AbstractMob extends AbstractModel {
 
-    protected $_id;      // id в таблице MobMap (конкретный моб на карте)
-    protected $_idMob;   // id в таблице Mob (класс моба)
+    protected $_id;    // id в таблице MobMap (конкретный моб на карте)
+    protected $_idMob; // id в таблице Mob (класс моба)
     protected $_name;
     protected $_level;
     protected $_hp;
@@ -24,168 +24,168 @@ abstract class AbstractMob extends AbstractModel {
     protected $_coordinateX;
     protected $_coordinateY;
 
+    public function toArray() {
+        return array(
+            'id'          => $this->id,
+            'idMob'       => $this->idMob,
+            'name'        => $this->name,
+            'level'       => $this->level,
+            'hp'          => $this->hp,
+            'maxHp'       => $this->maxHp,
+            'minDamage'   => $this->minDamage,
+            'maxDamage'   => $this->maxDamage,
+            'experience'  => $this->experience,
+            'image'       => $this->image,
+            'strength'    => $this->strength,
+            'dexterity'   => $this->dexterity,
+            'endurance'   => $this->endurance,
+            'idMap'       => $this->idMap,
+            'coordinateX' => $this->coordinateX,
+            'coordinateY' => $this->coordinateY,
+        );
+    }
+
+    public function setId($value) {
+        $this->_id = (int)$value;
+        return $this;
+    }
+
     public function getId() {
         return $this->_id;
+    }
+
+    public function setIdMob($value) {
+        $this->_idMob = (int)$value;
+        return $this;
     }
 
     public function getIdMob() {
         return $this->_idMob;
     }
 
+    public function setName($value) {
+        $this->_name = (string)$value;
+        return $this;
+    }
+
     public function getName() {
         return $this->_name;
+    }
+
+    public function setLevel($value) {
+        $this->_level = (int)$value;
+        return $this;
     }
 
     public function getLevel() {
         return $this->_level;
     }
 
+    public function setHp($value) {
+        $this->_hp = (int)$value;
+        return $this;
+    }
+
     public function getHp() {
         return $this->_hp;
+    }
+
+    public function setMaxHp($value) {
+        $this->_maxHp = (int)$value;
+        return $this;
     }
 
     public function getMaxHp() {
         return $this->_maxHp;
     }
 
+    public function setMinDamage($value) {
+        $this->_minDamage = (int)$value;
+        return $this;
+    }
+
     public function getMinDamage() {
         return $this->_minDamage;
+    }
+
+    public function setMaxDamage($value) {
+        $this->_maxDamage = (int)$value;
+        return $this;
     }
 
     public function getMaxDamage() {
         return $this->_maxDamage;
     }
 
+    public function setExperience($value) {
+        $this->_experience = (int)$value;
+        return $this;
+    }
+
     public function getExperience() {
         return $this->_experience;
+    }
+
+    public function setImage($value) {
+        $this->_image = (string)$value;
+        return $this;
     }
 
     public function getImage() {
         return $this->_image;
     }
 
+    public function setStrength($value) {
+        $this->_strength = (int)$value;
+        return $this;
+    }
+
     public function getStrength() {
         return $this->_strength;
+    }
+
+    public function setDexterity($value) {
+        $this->_dexterity = (int)$value;
+        return $this;
     }
 
     public function getDexterity() {
         return $this->_dexterity;
     }
 
+    public function setEndurance($value) {
+        $this->_endurance = (int)$value;
+        return $this;
+    }
+
     public function getEndurance() {
         return $this->_endurance;
+    }
+
+    public function setIdMap($value) {
+        $this->_idMap = (int)$value;
+        return $this;
     }
 
     public function getIdMap() {
         return $this->_idMap;
     }
 
+    public function setCoordinateX($value) {
+        $this->_coordinateX = (int)$value;
+        return $this;
+    }
+
     public function getCoordinateX() {
         return $this->_coordinateX;
     }
 
+    public function setCoordinateY($value) {
+        $this->_coordinateY = (int)$value;
+        return $this;
+    }
+
     public function getCoordinateY() {
         return $this->_coordinateY;
-    }
-
-    public function setId($id) {
-        $this->_id = (int)$id;
-        return $this;
-    }
-
-    public function setIdMob($idMob) {
-        $this->_idMob = (int)$idMob;
-        return $this;
-    }
-
-    public function setName($name) {
-        $this->_name = (string)$name;
-        return $this;
-    }
-
-    public function setLevel($level) {
-        $this->_level = (int)$level;
-        return $this;
-    }
-
-    public function setHp($hp) {
-        $this->_hp = (int)$hp;
-        return $this;
-    }
-
-    public function setMaxHp($maxHp) {
-        $this->_maxHp = (int)$maxHp;
-        return $this;
-    }
-
-    public function setMinDamage($minDamage) {
-        $this->_minDamage = (int)$minDamage;
-        return $this;
-    }
-
-    public function setMaxDamage($maxDamage) {
-        $this->_maxDamage = (int)$maxDamage;
-        return $this;
-    }
-
-    public function setExperience($experience) {
-        $this->_experience = (int)$experience;
-        return $this;
-    }
-
-    public function setImage($image) {
-        $this->_image = (string)$image;
-        return $this;
-    }
-
-    public function setStrength($strength) {
-        $this->_strength = (int)$strength;
-        return $this;
-    }
-
-    public function setDexterity($dexterity) {
-        $this->_dexterity = (int)$dexterity;
-        return $this;
-    }
-
-    public function setEndurance($endurance) {
-        $this->_endurance = (int)$endurance;
-        return $this;
-    }
-
-    public function setIdMap($idMap) {
-        $this->_idMap = (int)$idMap;
-        return $this;
-    }
-
-    public function setCoordinateX($coordinateX) {
-        $this->_coordinateX = (int)$coordinateX;
-        return $this;
-    }
-
-    public function setCoordinateY($coordinateY) {
-        $this->_coordinateY = (int)$coordinateY;
-        return $this;
-    }
-
-    public function toArray() {
-        return array(
-            'id'             => $this->_id,
-            'idMob'          => $this->_idMob,
-            'name'           => $this->_name,
-            'level'          => $this->_level,
-            'hp'             => $this->_hp,
-            'maxHp'          => $this->_maxHp,
-            'minDamage'      => $this->_minDamage,
-            'maxDamage'      => $this->_maxDamage,
-            'experience'     => $this->_experience,
-            'image'          => $this->_image,
-            'strength'       => $this->_strength,
-            'dexterity'      => $this->_dexterity,
-            'endurance'      => $this->_endurance,
-            'idMap'          => $this->_idMap,
-            'coordinateX'    => $this->_coordinateX,
-            'coordinateY'    => $this->_coordinateY
-        );
     }
 }

@@ -5,23 +5,22 @@
  * @author ismd
  */
 
-class AttributeMapper {
+class AttributeMapper extends AbstractDbMapper {
 
     /**
-     * Возвращает массив аттрибутов вещи
+     * Возвращает аттрибуты вещи
      *
-     * @param int $idItem - id вещи
+     * @param Item $item
      * @return array Массив объектов класса Attribute
      */
-    public function getItemAttributes($idItem) {
-        $idItem = (int)$idItem;
-
-        $query = mysql_query("SELECT ItemAttribute.value, Attribute.id, Attribute.title "
-            . "FROM ItemAttribute INNER JOIN Attribute ON ItemAttribute.idAttribute=Attribute.id "
-            . "WHERE ItemAttribute.idItem=$idItem");
+    public function getByItem($item) {
+        $query = $this->db->query("SELECT ia.value, a.id, a.title "
+            . "FROM ItemAttribute ia "
+            . "INNER JOIN Attribute a ON ia.idAttribute = a.id "
+            . "WHERE ia.idItem = $item->id");
 
         $attributes = array();
-        while ($attribute = mysql_fetch_assoc($query)) {
+        while ($attribute = $query->fetch_assoc()) {
             $attributes[] = new Attribute($attribute);
         }
 

@@ -10,21 +10,21 @@ abstract class AbstractMap extends AbstractModel {
     protected $_id;
     protected $_title;
 
+    public function setId($value) {
+        $this->_id = (int)$value;
+        return $this;
+    }
+
     public function getId() {
         return $this->_id;
     }
 
+    public function setTitle($value) {
+        $this->_title = (string)$value;
+        return $this;
+    }
+
     public function getTitle() {
         return $this->_title;
-    }
-
-    public function setId($id) {
-        $this->_id = (int)$id;
-        return $this;
-    }
-
-    public function setTitle($title) {
-        $this->_title = (string)$title;
-        return $this;
     }
 }

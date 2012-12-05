@@ -12,11 +12,26 @@ abstract class AbstractItem extends AbstractModel {
     protected $_idType;
     protected $_price;
     protected $_description;
-    protected $_type;       // Тип вещи из таблицы ItemType
-    protected $_attributes; // Атрибуты вещи. Берутся из таблиц ItemAttribute и Attribute
 
-    public function setId($id) {
-        $this->_id = (int)$id;
+    public function toArray() {
+        $attributes = array();
+        foreach ($this->attributes as $attribute) {
+            $attributes[] = $attribute->toArray();
+        }
+
+        return array(
+            'id'          => $this->id,
+            'title'       => $this->title,
+            'idType'      => $this->idType,
+            'price'       => $this->price,
+            'description' => $this->description,
+            'type'        => $this->type,
+            'attributes'  => $attributes,
+        );
+    }
+
+    public function setId($value) {
+        $this->_id = (int)$value;
         return $this;
     }
 
@@ -24,8 +39,8 @@ abstract class AbstractItem extends AbstractModel {
         return $this->_id;
     }
 
-    public function setTitle($title) {
-        $this->_title = (string)$title;
+    public function setTitle($value) {
+        $this->_title = (string)$value;
         return $this;
     }
 
@@ -33,8 +48,8 @@ abstract class AbstractItem extends AbstractModel {
         return $this->_title;
     }
 
-    public function setIdType($idType) {
-        $this->_idType = (int)$idType;
+    public function setIdType($value) {
+        $this->_idType = (int)$value;
         return $this;
     }
 
@@ -42,8 +57,8 @@ abstract class AbstractItem extends AbstractModel {
         return $this->_idType;
     }
 
-    public function setPrice($price) {
-        $this->_price = (int)$price;
+    public function setPrice($value) {
+        $this->_price = (int)$value;
         return $this;
     }
 
@@ -51,61 +66,12 @@ abstract class AbstractItem extends AbstractModel {
         return $this->_price;
     }
 
-    public function setDescription($description) {
-        $this->_description = (string)$description;
+    public function setDescription($value) {
+        $this->_description = (string)$value;
         return $this;
     }
 
     public function getDescription() {
         return $this->_description;
-    }
-
-    public function setType($type) {
-        $this->_type = (string)$type;
-        return $this;
-    }
-
-    public function getType() {
-        return $this->_type;
-    }
-
-    public function setAttributes($attributes) {
-        $this->_attributes = (array)$attributes;
-        return $this;
-    }
-
-    public function getAttributes() {
-        return $this->_attributes;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function toArray() {
-        $attributes = array();
-        foreach ($this->_attributes as $attribute) {
-            $attributes[] = $attribute->toArray();
-        }
-
-        return array(
-            'id'            => $this->_id,
-            'title'         => $this->_title,
-            'idType'        => $this->_idType,
-            'price'         => $this->_price,
-            'description'   => $this->_description,
-            'type'          => $this->_type,
-            'attributes'    => $attributes
-        );
     }
 }
