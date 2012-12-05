@@ -8,14 +8,11 @@
 class CharacterController extends AbstractAuthController {
 
     public function index() {
-        header('Location: /');
-        die;
+        $this->redirect('/');
     }
 
     /**
      * Создание персонажа
-     *
-     * @return type
      */
     public function create() {
         if (empty($_POST)) {
@@ -23,71 +20,69 @@ class CharacterController extends AbstractAuthController {
         }
 
         $character = array(
-            'idUser' => $this->session->user->id,
-            'name'   => !empty($_POST['name']) ? $_POST['name'] : null,
+            'user' => $this->session->user,
+            'name' => $_POST['name'],
         );
-
 
         $character = new Character($character);
         $character->setDefaultValues();
 
         $mapper = new CharacterMapper;
-        $this->template->error = $mapper->save($character);
+
+        try {
+            $mapper->save($character);
+        } catch (Exception $e) {
+            $this->view->error = $e->getMessage();
+        }
     }
 
     /**
      * ajax: устанавливает текущего персонажа для сессии
      */
     public function set() {
+        $this->view->setEmpty(true);
+
         $idCharacter = (int)$_GET['id'];
 
-        if (!$this->_session->user->hasCharacter($idCharacter)) {
-            die('error');
+        if (!$this->session->user->hasCharacter($idCharacter)) {
+            $this->view->result = 'error';
+            return;
         }
 
-        $mapper = new CharacterMapper;
-        $this->_session->character = $mapper->getById($idCharacter);
+        $mapper                   = new CharacterMapper;
+        $this->session->character = $mapper->getById($idCharacter);
 
-        $mapper = new MapMapper;
-        $map = $mapper->getById($this->_session->character->idMap);
-
-        $map->currentCell = new MapCell(
-            $this->_session->character->idMap,
-            $this->_session->character->coordinateX,
-            $this->_session->character->coordinateY
-        );
-
-        $this->_session->map = $map;
-
-        die('ok');
+        $this->view->result = 'ok';
     }
 
     /**
      * Перемещение персонажа
      */
     public function move() {
-        $x = $_GET['x'];
-        $y = $_GET['y'];
+        $x = (int)$_GET['x'];
+        $y = (int)$_GET['y'];
 
-        if ($this->_session->character->move($x, $y)) {
-                $this->_session->map->currentCell->coordinateX = $this->_session->character->coordinateX;
-                $this->_session->map->currentCell->coordinateY = $this->_session->character->coordinateY;
-
-            die('ok');
+        try {
+            $this->session->character->move($x, $y);
+            $this->view->result('ok');
+        } catch (CharacterFastMove $e) {
+            $this->view->result('error: fast moving');
+        } catch (CharacterCantMoveHere $e) {
+            $this->view->result('error: cannot move here');
         }
-
-        die('error');
     }
 
     /**
      * ajax: список вещей персонажа
      */
     public function items() {
-        $items = $this->_session->character->getItems();
-        foreach ($items as $i => $item) {
-            $items[$i] = $item->toArray();
+        $items = $this->session->character->getItems();
+
+        $data = array();
+        foreach ($items as $item) {
+            $data[] = $item->toArray();
         }
 
-        die(json_encode($items));
+        $this->view->data = $data;
     }
 }

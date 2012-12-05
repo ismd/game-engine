@@ -5,7 +5,7 @@
  * @author ismd
  */
 
-class MapCell extends AbstractCell {
+class Cell extends AbstractCell {
 
     /**
      * Возвращает содержимое клетки. Возвращает уже массив массивов, а не массив объектов

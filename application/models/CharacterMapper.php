@@ -5,11 +5,25 @@
  * @author ismd
  */
 
-class CharacterMapperNotFoundException extends Exception {};
-class CharacterMapperLongName extends Exception {};
-class CharacterMapperShortName extends Exception {};
-class CharacterMapperNameExists extends Exception {};
-class CharacterMapperAlreadyHasId extends Exception {};
+class CharacterMapperNotFoundException extends Exception {
+    protected $message = 'Персонаж не найден';
+};
+
+class CharacterMapperLongName extends Exception {
+    protected $message = 'Имя слишком длинное';
+};
+
+class CharacterMapperShortName extends Exception {
+    protected $message = 'Имя слишком короткое';
+};
+
+class CharacterMapperNameExists extends Exception {
+    protected $message = 'Персонаж с таким именем уже существует';
+};
+
+class CharacterMapperAlreadyHasId extends Exception {
+    protected $message = 'Ошибка';
+};
 
 class CharacterMapper extends AbstractDbMapper {
 

@@ -21,4 +21,14 @@ abstract class AbstractController {
      * Обязательное действие index у всех контроллеров (страница по-умолчанию)
      */
     abstract public function index();
+
+    /**
+     * Перенаправляет на другую страницу
+     *
+     * @param string $url
+     */
+    protected function redirect($url) {
+        $this->view->setEmpty(true);
+        header("Location: $url");
+    }
 }

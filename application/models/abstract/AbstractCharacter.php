@@ -22,30 +22,8 @@ abstract class AbstractCharacter extends AbstractModel {
     protected $_dexterity;
     protected $_endurance;
     protected $_idMap;
-    protected $_coordinateX;
-    protected $_coordinateY;
-
-    public function toArray() {
-        return array(
-            'id'          => $this->id,
-            'idUser'      => $this->idUser,
-            'name'        => $this->name,
-            'level'       => $this->level,
-            'money'       => $this->money,
-            'hp'          => $this->hp,
-            'maxHp'       => $this->maxHp,
-            'minDamage'   => $this->minDamage,
-            'maxDamage'   => $this->maxDamage,
-            'experience'  => $this->experience,
-            'image'       => $this->image,
-            'strength'    => $this->strength,
-            'dexterity'   => $this->dexterity,
-            'endurance'   => $this->endurance,
-            'idMap'       => $this->idMap,
-            'coordinateX' => $this->coordinateX,
-            'coordinateY' => $this->coordinateY,
-        );
-    }
+    protected $_x;
+    protected $_y;
 
     public function setId($value) {
         $this->_id = (int)$value;
@@ -182,21 +160,21 @@ abstract class AbstractCharacter extends AbstractModel {
         return $this->_idMap;
     }
 
-    public function setCoordinateX($value) {
-        $this->_coordinateX = (int)$value;
+    public function setX($value) {
+        $this->_x = (int)$value;
         return $this;
     }
 
-    public function getCoordinateX() {
-        return $this->_coordinateX;
+    public function getX() {
+        return $this->_x;
     }
 
-    public function setCoordinateY($value) {
-        $this->_coordinateY = (int)$value;
+    public function setY($value) {
+        $this->_y = (int)$value;
         return $this;
     }
 
-    public function getCoordinateY() {
-        return $this->_coordinateY;
+    public function getY() {
+        return $this->_y;
     }
 }
