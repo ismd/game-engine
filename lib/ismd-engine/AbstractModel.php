@@ -1,6 +1,7 @@
 <?php
 /**
  * Родительский класс для моделей
+ * Автоматически вызывает методы с префиксами set и get
  *
  * @author ismd
  */
@@ -22,7 +23,7 @@ abstract class AbstractModel {
 
         $method = 'set' . implode('', $method);
 
-        if (($name == 'mapper') || !method_exists($this, $method)) {
+        if ($name == 'mapper' || !method_exists($this, $method)) {
             throw new Exception('Invalid model property `' . $name . "'");
         }
 
@@ -38,7 +39,7 @@ abstract class AbstractModel {
 
         $method = 'get' . implode('', $method);
 
-        if (($name == 'mapper') || !method_exists($this, $method)) {
+        if ($name == 'mapper' || !method_exists($this, $method)) {
             throw new Exception('Invalid model property `' . $name . "'");
         }
 

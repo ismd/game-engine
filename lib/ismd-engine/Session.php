@@ -5,41 +5,26 @@
  * @author ismd
  */
 
-class Session {
+class Session extends Object {
 
     public function __construct() {
         foreach ($_SESSION as $key => $value) {
-            $_SESSION[$key] = unserialize($value);
+            $this->$key = unserialize($value);
         }
     }
 
     public function __destruct() {
-        foreach ($_SESSION as $key => $value) {
-            $_SESSION[$key] = serialize($value);
+        $_SESSION = array();
+        $iterator = $this->getIterator();
+
+        while ($iterator->valid()) {
+            $_SESSION[$iterator->key()] = serialize($iterator->current());
+            $iterator->next();
         }
-    }
-
-    public function __set($key, $value) {
-        $_SESSION[$key] = $value;
-    }
-
-    public function __get($key) {
-        if (!isset($_SESSION[$key])) {
-            return null;
-        }
-
-        return $_SESSION[$key];
-    }
-
-    public function __unset($key) {
-        unset($_SESSION[$key]);
-    }
-
-    public function __isset($key) {
-        return isset($_SESSION[$key]);
     }
 
     public function clear() {
         $_SESSION = array();
+        $this->exchangeArray(array());
     }
 }

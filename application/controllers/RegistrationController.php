@@ -6,9 +6,8 @@
 class RegistrationController extends AbstractController {
 
     public function init() {
-        if (isset($this->_session->user)) {
-            header('Location: /');
-            die;
+        if (null == $this->session->user) {
+            $this->redirect('/');
         }
     }
 

@@ -9,31 +9,30 @@ class WorldController extends AbstractAuthController {
 
     public function init() {
         // У пользователя должен быть выбран персонаж
-        if (!isset($this->_session->character)) {
-            header('Location: /');
-            die;
+        if (null == $this->session->character) {
+            $this->redirect('/');
         }
     }
 
     public function index() {
-        $this->_template->setTitle('Мир');
+        $this->view->setTitle('Мир');
 
-        $this->_template->css(array(
+        $this->view->css(array(
             'world'
         ));
 
-        $this->_template->js(array(
+        $this->view->js(array(
             'world/world',
-            'world/actions'
+            'world/actions',
         ));
 
         // FIXME: изображение карты по-другому сделать
         //$this->_template->mapImage      = $this->_session->map->image;
-        $this->_template->coordinateX = $this->_session->character->coordinateX;
-        $this->_template->coordinateY = $this->_session->character->coordinateY;
+        $this->view->x = $this->session->character->cell->x;
+        $this->view->y = $this->session->character->cell->y;
     }
 
     public function inventory() {
-        $this->_template->items = $this->_session->character->getItems();
+        $this->view->items = $this->session->character->getItems();
     }
 }

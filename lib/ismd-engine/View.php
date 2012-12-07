@@ -5,64 +5,41 @@
  * @author ismd
  */
 
-class Template {
+class View extends Object {
 
     protected $_registry;
-    protected $_session;
-    protected $_data  = array();
-    protected $_js    = array();
-    protected $_css   = array();
-    protected $_title = '';
-    protected $_empty = false;
+    
+    protected $_js  = array(); // Массив подключаемых js-файлов
+    protected $_css = array(); // Массив подключаемых css-файлов
+
+    protected $_title = '';    // Заголовок страницы
+    protected $_empty = false; // Необходимость загружать header'ы и footer'ы
 
     public function __construct($registry) {
         $this->_registry = $registry;
-        $this->_session  = $registry->session;
-    }
-
-    public function __set($key, $value) {
-        $this->_data[$key] = $value;
-    }
-
-    public function __get($key) {
-        if (!isset($this->_data[$key])) {
-            return null;
-        }
-
-        return $this->_data[$key];
-    }
-
-    public function __unset($key) {
-        if (isset($this->_data[$key])) {
-            unset($this->_data[$key]);
-        }
-    }
-
-    public function __isset($key) {
-        return isset($this->_data[$key]);
     }
 
     /**
      * Показываем нужный шаблон
      */
-    public function show() {
+    public function render() {
         // Отправляем заголовок с указанием кодировки
         header('Content-Type: text/html; charset=utf-8');
 
         $route = $this->_registry->router->getRoute();
         $route = ($route != '') ? explode('/', $route) : array('index');
-        $path  = SITEPATH . 'application/templates/';
-        
+        $path  = SITEPATH . 'application/views/';
+
         $route = array_diff($route, array('..'));
-        
+
         // Подключаем только один файл, если надо
         if ($this->empty == true) {
             $filename = $path . implode('/', $route);
-            
+
             if (is_readable($filename)) {
                 require $filename;
             }
-            
+
             return;
         }
 
@@ -151,6 +128,9 @@ class Template {
     /**
      * Переданная ссылка будет вставлена в качестве ссылки на javascript-файл
      * Может быть передан массив ссылок
+     *
+     * @param string|array $link Ссылка или массив ссылок на javascript-файлы
+     * @return View
      */
     public function js($link) {
         if (is_array($link)) {
@@ -158,11 +138,16 @@ class Template {
         } else {
             $this->_js[] = $link;
         }
+
+        return $this;
     }
 
     /**
      * Переданная ссылка будет вставлена в качестве ссылки на css-файл
      * Может быть передан массив ссылок
+     *
+     * @param string|array $link Ссылка или массив ссылок на css-файлы
+     * @return View
      */
     public function css($link) {
         if (is_array($link)) {
@@ -170,30 +155,34 @@ class Template {
         } else {
             $this->_css[] = $link;
         }
+
+        return $this;
     }
 
     /**
      * Устанавливает заголовок страницы
-     * 
+     *
      * @param string
      */
     public function setTitle($value) {
         $this->_title = '::' . (string)$value;
     }
-    
+
     public function getTitle() {
         return $this->_title;
     }
-    
+
     /**
      * Устаналивает необходимость загружать header'ы и footer'ы
-     * 
+     *
      * @param bool
+     * @return View
      */
     public function setEmpty($value) {
         $this->_empty = (bool)$value;
+        return $this;
     }
-    
+
     public function getEmpty() {
         return $this->_empty;
     }

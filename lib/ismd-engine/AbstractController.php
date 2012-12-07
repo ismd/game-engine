@@ -28,7 +28,7 @@ abstract class AbstractController {
      * @param string $url
      */
     protected function redirect($url) {
-        $this->view->setEmpty(true);
         header("Location: $url");
+        die;
     }
 }
