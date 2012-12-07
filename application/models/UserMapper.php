@@ -5,7 +5,33 @@
  * @author ismd
  */
 
-class UserMapperNotFoundException extends Exception {}
+class UserMapperNotFoundException extends Exception {
+    protected $message = 'Персонаж не найден';
+};
+
+class UserMapperLongName extends Exception {
+    protected $message = 'Имя слишком длинное';
+};
+
+class UserMapperShortName extends Exception {
+    protected $message = 'Имя слишком короткое';
+};
+
+class UserMapperNameExists extends Exception {
+    protected $message = 'Персонаж с таким именем уже существует';
+};
+
+class UserMapperLongPassword extends Exception {
+    protected $message = 'Пароль слишком длинный';
+};
+
+class UserMapperShortPassword extends Exception {
+    protected $message = 'Пароль слишком короткий';
+};
+
+class UserMapperPasswordsDontMatch extends Exception {
+    protected $message = 'Пароли не совпадают';
+};
 
 class UserMapper extends AbstractDbMapper {
 
@@ -57,58 +83,63 @@ class UserMapper extends AbstractDbMapper {
         return new User($query->fetch_assoc());
     }
 
+    /**
+     * Создаёт либо изменяет пользователя
+     *
+     * @param User $user
+     * @throws UserMapperLongName
+     * @throws UserMapperShortName
+     * @throws UserMapperNameExists
+     * @throws UserMapperLongPassword
+     * @throws UserMapperShortPassword
+     * @throws UserMapperPasswordsDontMatch
+     */
     public function save(User $user) {
-        // TODO: валидация
+        // FIXME: валидация
 
         if (mb_strlen($user->login) > 30) {
-            return User::REG_ERR_LOGIN_LENGTH_MAX;
+            throw new UserMapperLongName;
         }
 
         if (mb_strlen($user->login) < 4) {
-            return User::REG_ERR_LOGIN_LENGTH_MIN;
-        }
-
-        // FIXME: preg_match
-        if (false) {
-            return User::REG_ERR_LOGIN_BAD;
+            throw new UserMapperShortName;
         }
 
         // Проверяем, не занят ли логин
-        if ( $this->getByLogin($user->login) != null ) {
-            return User::REG_ERR_LOGIN_EXISTS;
+        try {
+            $this->getByLogin($user->login);
+            throw new UserMapperNameExists;
+        } catch (UserMapperNotFoundException $e) {
         }
 
         if (mb_strlen($user->password) > 30) {
-            return User::REG_ERR_PASSWORD_LENGTH_MAX;
+            throw new UserMapperLongPassword;
         }
 
         if (mb_strlen($user->password) < 8) {
-            return User::REG_ERR_PASSWORD_LENGTH_MIN;
-        }
-
-        // FIXME: preg_match
-        if (false) {
-            return User::REG_ERR_PASSWORD_BAD;
+            throw new UserMapperShortPassword;
         }
 
         if ($user->password != $user->password1) {
-            return User::REG_ERR_PASSWORD_UNMATCH;
+            throw new UserMapperPasswordsDontMatch;
         }
 
-        $user->login      = htmlspecialchars(mysql_real_escape_string($user->login));
-        $user->password   = md5($user->password);
-        $user->email      = htmlspecialchars(mysql_real_escape_string($user->email));
-        $user->info       = htmlspecialchars(mysql_real_escape_string($user->info));
-        $user->site       = htmlspecialchars(mysql_real_escape_string($user->site));
+        $user->login    = htmlspecialchars($this->db->real_escape_string($user->login));
+        $user->password = md5($user->password);
+        $user->email    = htmlspecialchars($this->db->real_escape_string($user->email));
+        $user->info     = htmlspecialchars($this->db->real_escape_string($user->info));
+        $user->site     = htmlspecialchars($this->db->real_escape_string($user->site));
 
-        if ( empty($user->id) ) {
-            mysql_query("INSERT INTO User (login, password, email, info, site, registered) "
-                    . "VALUES ('$user->login', '$user->password', '$user->email', '$user->info', '$user->site', NOW())");
+        if (null == $user->id) {
+            $this->db->query("INSERT INTO User "
+                . "(login, password, email, info, site, registered) "
+                . "VALUES "
+                . "('$user->login', '$user->password', '$user->email', "
+                . "'$user->info', '$user->site', NOW())");
         } else {
-            mysql_query("UPDATE User SET password='$user->password', email='$user->email', info='$user->info', "
-                      . "site='$user->site'");
+            $this->db->query("UPDATE User "
+                . "SET password = '$user->password', email = '$user->email', "
+                . "info = '$user->info', site = '$user->site'");
         }
-
-        return true;
     }
 }

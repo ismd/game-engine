@@ -14,6 +14,9 @@ class WorldController extends AbstractAuthController {
         }
     }
 
+    /**
+     * Главная страница мира
+     */
     public function index() {
         $this->view->setTitle('Мир');
 
@@ -26,12 +29,12 @@ class WorldController extends AbstractAuthController {
             'world/actions',
         ));
 
-        // FIXME: изображение карты по-другому сделать
-        //$this->_template->mapImage      = $this->_session->map->image;
-        $this->view->x = $this->session->character->cell->x;
-        $this->view->y = $this->session->character->cell->y;
+        $this->view->cell = $this->session->character->cell;
     }
 
+    /**
+     * Страница инвентаря
+     */
     public function inventory() {
         $this->view->items = $this->session->character->getItems();
     }

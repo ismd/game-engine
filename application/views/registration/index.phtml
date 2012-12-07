@@ -1,40 +1,10 @@
 <?php
-if ( !empty($this->error) && $this->error !== true ) {
-    switch ($this->error) {
-        case User::REG_ERR_LOGIN_EXISTS:
-            $message = 'Такой логин уже занят';
-            break;
-        case User::REG_ERR_LOGIN_LENGTH_MAX:
-            $message = 'Логин не может быть длиннее 30 символов.';
-            break;
-        case User::REG_ERR_LOGIN_LENGTH_MIN:
-            $message = 'Логин не может быть короче 4 символов.';
-            break;
-        case User::REG_ERR_LOGIN_BAD:
-            $message = 'Логин содержит неподдерживаемые символы';
-            break;
-        case User::REG_ERR_PASSWORD_LENGTH_MAX:
-            $message = 'Пароль не может быть длиннее 30 символов';
-            break;
-        case User::REG_ERR_PASSWORD_LENGTH_MIN:
-            $message = 'Пароль не может быть короче 8 символов';
-            break;
-        case User::REG_ERR_PASSWORD_BAD:
-            $message = 'Пароль содержит неподдерживаемые символы';
-            break;
-        case User::REG_ERR_PASSWORD_UNMATCH:
-            $message = 'Пароли не совпадают';
-            break;
-        default:
-            $message = 'При регистрации возникла ошибка. Проверьте введённые данные.';
-            break;
-    }
-    
-    echo '<font color="red">' . $message . '</font>';
+if (null != $this->error) {
+    echo '<font color="red">' . $this->error . '</font>';
 }
 ?>
 
-<?php if ( !empty($this->error) && $this->error === true ): ?>
+<?php if (true == $this->registered): ?>
 Вы успешно зарегистрированы, теперь можете зайти на сайт и создать персонажа.
 <?php else: ?>
 <form action="/registration" method="post">

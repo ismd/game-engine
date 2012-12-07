@@ -21,10 +21,6 @@ class CharacterMapperNameExists extends Exception {
     protected $message = 'Персонаж с таким именем уже существует';
 };
 
-class CharacterMapperAlreadyHasId extends Exception {
-    protected $message = 'Ошибка';
-};
-
 class CharacterMapper extends AbstractDbMapper {
 
     /**
@@ -78,16 +74,15 @@ class CharacterMapper extends AbstractDbMapper {
     /**
      * Возвращает массив персонажей пользователя
      *
-     * @param int $idUser id пользователя
-     * @return array Массив объектов типа Character
+     * @param User $user
+     * @return array Массив объектов класса Character
      */
-    public function getByUser($idUser) {
-        $idUser = (int)$idUser;
-
+    public function getByUser(User $user) {
         $query = $this->db->query("SELECT id, idUser, name, level, money, "
             . "idMap, coordinateX, coordinateY, strength, dexterity, "
             . "endurance, hp, maxHp, minDamage, maxDamage, image, experience "
-            . "FROM `Character` WHERE idUser = $id");
+            . "FROM `Character` "
+            . "WHERE idUser = $user->id");
 
         $characters = array();
         while ($character = mysql_fetch_assoc($query)) {
@@ -100,21 +95,16 @@ class CharacterMapper extends AbstractDbMapper {
     /**
      * Возвращает персонажей на клетке
      *
-     * @param int $idMap
-     * @param int $x
-     * @param int $y
+     * @param Cell $cell
      * @return array Массив объектов класса Character
      */
-    public function getOnCell($idMap, $x, $y) {
-        $idMap = (int)$idMap;
-        $x     = (int)$x;
-        $y     = (int)$y;
-
+    public function getOnCell(Cell $cell) {
         $query = $this->db->query("SELECT id, idUser, name, level, money, idMap, "
             . "coordinateX, coordinateY, strength, dexterity, endurance, "
             . "hp, maxHp, minDamage, maxDamage, image, experience "
             . "FROM `Character` "
-            . "WHERE idMap = $idMap AND coordinateX = $x AND coordinateY = $y");
+            . "WHERE idMap = " . $cell->map->id . " "
+            . "AND coordinateX = $cell->x AND coordinateY = $cell->y");
 
         $characters = array();
         while ($character = $query->fetch_assoc()) {
@@ -125,22 +115,17 @@ class CharacterMapper extends AbstractDbMapper {
     }
 
     /**
-     * Перемещает персонажа на заданные координаты в базе
+     * Перемещает персонажа на клетку в базе
      *
-     * @param int $idCharacter
-     * @param int $idMap
-     * @param int $x
-     * @param int $y
+     * @param Character $character
+     * @param Cell $cell
      */
-    public function move($idCharacter, $idMap, $x, $y) {
-        $idCharacter = (int)$idCharacter;
-        $idMap       = (int)$idMap;
-        $x           = (int)$x;
-        $y           = (int)$y;
-
+    public function move(Character $character, Cell $cell) {
         $this->db->query("UPDATE `Character` "
-            . "SET idMap = $idMap, coordinateX = $x, coordinateY = $y "
-            . "WHERE id = $idCharacter LIMIT 1");
+            . "SET idMap = " . $cell->map->id . ", coordinateX = $cell->x, "
+            . "coordinateY = $cell->y "
+            . "WHERE id = $character->id "
+            . "LIMIT 1");
     }
 
     /**
@@ -150,7 +135,6 @@ class CharacterMapper extends AbstractDbMapper {
      * @throws CharacterMapperLongName
      * @throws CharacterMapperShortName
      * @throws CharacterMapperNameExists
-     * @throws CharacterMapperAlreadyHasId
      */
     public function save(Character $character) {
         // TODO: валидация
@@ -169,7 +153,7 @@ class CharacterMapper extends AbstractDbMapper {
         }
 
         if (null != $character->id) {
-            throw new CharacterMapperAlreadyHasId;
+            throw new Exception("CharacterMapper currently can't update rows");
         }
 
         $name = $this->db->real_escape_string($character->name);

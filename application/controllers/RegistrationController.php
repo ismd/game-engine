@@ -6,13 +6,13 @@
 class RegistrationController extends AbstractController {
 
     public function init() {
-        if (null == $this->session->user) {
+        if (null != $this->session->user) {
             $this->redirect('/');
         }
     }
 
     public function index() {
-        if (empty ($_POST)) {
+        if (empty($_POST)) {
             return;
         }
 
@@ -28,6 +28,23 @@ class RegistrationController extends AbstractController {
         $user   = new User($user);
         $mapper = new UserMapper;
 
-        $this->_template->error = $mapper->save($user);
+        try {
+            $mapper->save($user);
+            $this->view->registered = true;
+        } catch (UserMapperLongName $e) {
+            $this->view->error = $e->getMessage();
+        } catch (UserMapperLongPassword $e) {
+            $this->view->error = $e->getMessage();
+        } catch (UserMapperNameExists $e) {
+            $this->view->error = $e->getMessage();
+        } catch (UserMapperPasswordsDontMatch $e) {
+            $this->view->error = $e->getMessage();
+        } catch (UserMapperShortName $e) {
+            $this->view->error = $e->getMessage();
+        } catch (UserMapperShortPassword $e) {
+            $this->view->error = $e->getMessage();
+        } catch (Exception $e) {
+            $this->view_error = 'Ошибка';
+        }
     }
 }
