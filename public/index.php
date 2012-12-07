@@ -29,7 +29,7 @@ $registry->session = new Session;
 
 // Подключаемся к БД и сохраняем соединение в $registry->db
 try {
-    $registry->db = dbConnect($registry->config['database']);
+    $registry->db = dbConnect($registry->config->database);
 } catch (Exception $e) {
     // Если не удалось подключиться к БД
     $_GET['route'] = 'index';

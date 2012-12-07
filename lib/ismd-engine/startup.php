@@ -49,16 +49,16 @@ function __autoload($className) {
  */
 function dbConnect($config) {
     $mysqli = new mysqli(
-        $config['host'],
-        $config['username'],
-        $config['password'],
-        $config['dbname']
+        $config->host,
+        $config->username,
+        $config->password,
+        $config->dbname
     );
-    
+
     if ($mysqli->connect_error) {
         throw new Exception("Can't connect to database");
     }
-    
+
     return $mysqli;
 }
 
@@ -70,12 +70,12 @@ function dbConnect($config) {
  */
 function readConfig() {
     $configFilename = SITEPATH . 'application/configs/application.ini';
-    
+
     if (!is_readable($configFilename)) {
         throw new Exception("Can't read config file");
     }
-    
+
     $config = parse_ini_file($configFilename, true);
-    
-    return $config;
+
+    return new ArrayObject($config);
 }
