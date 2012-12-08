@@ -14,7 +14,7 @@ abstract class AbstractController {
     public function __construct($registry) {
         $this->registry = $registry;
         $this->session  = $registry->session;
-        $this->view     = $registry->template;
+        $this->view     = $registry->view;
     }
 
     /**

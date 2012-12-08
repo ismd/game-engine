@@ -3,7 +3,7 @@
  * Инициализируем всё необходимое и запускаем действие
  */
 
-error_reporting (E_ALL);
+error_reporting(E_ALL);
 
 session_start();
 
@@ -42,10 +42,10 @@ $registry->router = new Router(
 );
 
 // Загружаем класс для работы с шаблонами
-$registry->template = new Template($registry);
+$registry->view = new View($registry);
 
 // Выбираем нужный контроллер, определяем действие и выполняем
 $registry->router->delegate();
 
 // Отображаем шаблон
-$registry->template->show();
+$registry->view->render();

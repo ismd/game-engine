@@ -33,7 +33,7 @@ class View extends Object {
         $route = array_diff($route, array('..'));
 
         // Подключаем только один файл, если надо
-        if ($this->empty == true) {
+        if ($this->_empty == true) {
             $filename = $path . implode('/', $route);
 
             if (is_readable($filename)) {

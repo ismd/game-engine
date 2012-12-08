@@ -48,6 +48,8 @@ function __autoload($className) {
  * @return mysqli
  */
 function dbConnect($config) {
+    $config = (object)$config;
+    
     $mysqli = new mysqli(
         $config->host,
         $config->username,
@@ -77,5 +79,5 @@ function readConfig() {
 
     $config = parse_ini_file($configFilename, true);
 
-    return new ArrayObject($config);
+    return (object)$config;
 }
