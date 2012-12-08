@@ -150,6 +150,9 @@ var Character = {
     }
 };
 
+/**
+ * Содержимое клетки
+ */
 var CellContent = {
     npcs: {},
     characters: {},
