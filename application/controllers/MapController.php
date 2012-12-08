@@ -3,19 +3,18 @@
 class MapController extends AbstractAuthController {
 
     public function index() {
-        header('Location: /');
-        die;
+        $this->redirect('/');
     }
 
     /**
-     * Вызывается через ajax, отдаёт содержимое текущей клетки
+     * ajax: Выводит содержимое текущей клетки
      */
     public function cell() {
-        $content = $this->_session->map->currentCell->getContent();
+        $content = $this->session->character->cell->getContent();
 
         // Убираем текущего играющего персонажа из списка
         foreach ($content['characters'] as $i => $character) {
-            if ($character['id'] == $this->_session->character->id) {
+            if ($character['id'] == $this->session->character->id) {
                 unset($content['characters'][$i]);
                 break;
             }

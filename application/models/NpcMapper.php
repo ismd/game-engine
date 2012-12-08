@@ -36,16 +36,16 @@ class NpcMapper extends AbstractDbMapper {
     /**
      * Возвращает NPC на клетке
      *
-     * @param MapCell $cell
+     * @param Cell $cell
      * @return array Массив объектов класса Npc
      */
-    public function getOnCell(MapCell $cell) {
+    public function getByCell(Cell $cell) {
         $query = $this->db->query("SELECT nm.id, nm.idMap, nm.x, "
             . "nm.y, n.id as idNpc, "
-            . "n.name, nm.greeting, n.image "
+            . "n.name, n.greeting, n.image "
             . "FROM NpcMap nm "
             . "INNER JOIN Npc n ON nm.idNpc = n.id "
-            . "WHERE nm.idMap = $cell->idMap AND nm.x = $cell->x "
+            . "WHERE nm.idMap = " . $cell->map->id . " AND nm.x = $cell->x "
             . "AND nm.y = $cell->y");
 
         $npcs = array();

@@ -38,10 +38,10 @@ class MobMapper extends AbstractDbMapper {
     /**
      * Возвращает мобов на клетке
      *
-     * @param MapCell $cell
+     * @param Cell $cell
      * @return array Массив объектов класса Mob
      */
-    public function getByCell(MapCell $cell) {
+    public function getByCell(Cell $cell) {
         $query = $this->db->query("SELECT mm.id, mm.idMap, mm.x, "
             . "mm.y, mm.hp, m.id as idMob, "
             . "m.name, m.level, m.maxHp, m.minDamage, m.maxDamage, "
@@ -49,7 +49,7 @@ class MobMapper extends AbstractDbMapper {
             . "m.dexterity, m.endurance "
             . "FROM MobMap mm "
             . "INNER JOIN Mob m ON mm.idMob = m.id "
-            . "WHERE mm.idMap = $cell->idMap AND mm.x = $cell->x "
+            . "WHERE mm.idMap = " . $cell->map->id . " AND mm.x = $cell->x "
             . "AND mm.y = $cell->y");
 
         $mobs = array();
