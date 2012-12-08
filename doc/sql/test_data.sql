@@ -34,7 +34,7 @@ INSERT INTO `Attribute` (`id`, `title`) VALUES
 -- Дамп данных таблицы `Character`
 --
 
-INSERT INTO `Character` (`id`, `idUser`, `name`, `level`, `money`, `idMap`, `coordinateX`, `coordinateY`, `strength`, `dexterity`, `endurance`, `hp`, `maxHp`, `minDamage`, `maxDamage`, `image`, `experience`) VALUES
+INSERT INTO `Character` (`id`, `idUser`, `name`, `level`, `money`, `idMap`, `x`, `y`, `strength`, `dexterity`, `endurance`, `hp`, `maxHp`, `minDamage`, `maxDamage`, `image`, `experience`) VALUES
 (3, 4, 'ismd', 2, 10, 1, 3, 0, 10, 10, 10, 100, 100, 5, 10, 'player.png', 0),
 (4, 4, 'ismd1', 1, 10, 1, 2, 2, 10, 10, 10, 100, 100, 5, 10, 'player.png', 0),
 (5, 5, 'test', 1, 0, 1, 2, 2, 5, 5, 5, 25, 25, 5, 10, 'player.png', 0),
@@ -96,7 +96,7 @@ INSERT INTO `Npc` (`id`, `name`, `greeting`, `image`) VALUES
 -- Дамп данных таблицы `NpcMap`
 --
 
-INSERT INTO `NpcMap` (`id`, `idNpc`, `idMap`, `coordinateX`, `coordinateY`) VALUES
+INSERT INTO `NpcMap` (`id`, `idNpc`, `idMap`, `x`, `y`) VALUES
 (1, 1, 1, 3, 1);
 
 --

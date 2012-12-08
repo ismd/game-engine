@@ -47,8 +47,8 @@ CREATE TABLE IF NOT EXISTS `Character` (
   `level` tinyint(4) NOT NULL,
   `money` int(11) NOT NULL,
   `idMap` tinyint(4) NOT NULL,
-  `coordinateX` tinyint(4) NOT NULL,
-  `coordinateY` tinyint(4) NOT NULL,
+  `x` tinyint(4) NOT NULL,
+  `y` tinyint(4) NOT NULL,
   `strength` tinyint(4) NOT NULL,
   `dexterity` tinyint(4) NOT NULL,
   `endurance` tinyint(4) NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `Character` (
   `experience` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `idUser` (`idUser`),
-  KEY `coordinates` (`idMap`,`coordinateX`,`coordinateY`)
+  KEY `coordinates` (`idMap`,`x`,`y`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -172,10 +172,10 @@ CREATE TABLE IF NOT EXISTS `MobCell` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idMob` int(11) NOT NULL,
   `idMap` tinyint(4) NOT NULL,
-  `coordinateX` tinyint(4) NOT NULL,
-  `coordinateY` tinyint(4) NOT NULL,
+  `x` tinyint(4) NOT NULL,
+  `y` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `coordinates` (`idMap`,`coordinateX`,`coordinateY`)
+  KEY `coordinates` (`idMap`,`x`,`y`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -189,11 +189,11 @@ CREATE TABLE IF NOT EXISTS `MobMap` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idMob` int(11) NOT NULL,
   `idMap` tinyint(4) NOT NULL,
-  `coordinateX` tinyint(4) NOT NULL,
-  `coordinateY` tinyint(4) NOT NULL,
+  `x` tinyint(4) NOT NULL,
+  `y` tinyint(4) NOT NULL,
   `hp` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `coordinates` (`idMap`,`coordinateX`,`coordinateY`)
+  KEY `coordinates` (`idMap`,`x`,`y`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -237,10 +237,10 @@ CREATE TABLE IF NOT EXISTS `NpcMap` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idNpc` int(11) NOT NULL,
   `idMap` int(11) NOT NULL,
-  `coordinateX` int(11) NOT NULL,
-  `coordinateY` int(11) NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `coordinates` (`idMap`,`coordinateX`,`coordinateY`)
+  KEY `coordinates` (`idMap`,`x`,`y`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

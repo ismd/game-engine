@@ -3,7 +3,7 @@
  * Инициализируем всё необходимое и запускаем действие
  */
 
-error_reporting(E_ALL);
+error_reporting(E_ALL ^ E_NOTICE);
 
 session_start();
 

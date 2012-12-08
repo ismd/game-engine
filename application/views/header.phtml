@@ -58,14 +58,14 @@
                 </ul>
             </div>
 
-            <?php if ( isset($this->_session->character) ): ?>
+            <?php if (null != $this->_registry->session->character): ?>
             <div id="character">
                 Персонаж:<br />
-                <?php echo $this->_session->character->name ?> - <?php echo $this->_session->character->level ?> уровень<br />
-                hp: <span id="hp"><?php echo $this->_session->character->hp ?></span>/<?php echo $this->_session->character->maxHp ?><br />
-                Сила: <?php echo $this->_session->character->strength ?><br />
-                Ловкость: <?php echo $this->_session->character->dexterity ?><br />
-                Выносливость: <?php echo $this->_session->character->endurance ?><br /><br />
+                <?php echo $this->_registry->session->character->name ?> - <?php echo $this->_registry->session->character->level ?> уровень<br />
+                hp: <span id="hp"><?php echo $this->_registry->session->character->hp ?></span>/<?php echo $this->_registry->session->character->maxHp ?><br />
+                Сила: <?php echo $this->_registry->session->character->strength ?><br />
+                Ловкость: <?php echo $this->_registry->session->character->dexterity ?><br />
+                Выносливость: <?php echo $this->_registry->session->character->endurance ?><br /><br />
                 <a href="/world/inventory">Инвентарь</a>
             </div>
             <?php endif ?>

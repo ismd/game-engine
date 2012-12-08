@@ -22,15 +22,15 @@ class Cell extends AbstractCell {
 
         // Получаем NPC на клетке
         $mapper = new NpcMapper;
-        $npcs   = $mapper->getOnCell($this->_idMap, $this->_coordinateX, $this->_coordinateY);
+        $npcs   = $mapper->getOnCell($this->_idMap, $this->_x, $this->_y);
 
         // Получаем персонажей на клетке
         $mapper     = new CharacterMapper;
-        $characters = $mapper->getOnCell($this->_idMap, $this->_coordinateX, $this->_coordinateY);
+        $characters = $mapper->getOnCell($this->_idMap, $this->_x, $this->_y);
 
         // Получаем мобов на клетке
         $mapper = new MobMapper;
-        $mobs   = $mapper->getOnCell($this->_idMap, $this->_coordinateX, $this->_coordinateY);
+        $mobs   = $mapper->getOnCell($this->_idMap, $this->_x, $this->_y);
 
         // Преобразуем в массив
         foreach ($npcs as $npc) {

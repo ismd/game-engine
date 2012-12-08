@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    var name       = $('div#auth-form input#login'),
-        password   = $('div#auth-form input#password')
+    var name     = $('div#auth-form input#login'),
+        password = $('div#auth-form input#password')
 
     $('a#auth-button').click(function(e) {
         e.preventDefault();
