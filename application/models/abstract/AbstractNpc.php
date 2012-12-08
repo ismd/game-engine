@@ -13,8 +13,8 @@ abstract class AbstractNpc extends AbstractModel {
     protected $_greeting;
     protected $_image;
     protected $_idMap;
-    protected $_coordinateX;
-    protected $_coordinateY;
+    protected $_x;
+    protected $_y;
 
     public function toArray() {
         return array(
@@ -24,8 +24,8 @@ abstract class AbstractNpc extends AbstractModel {
             'greeting'    => $this->greeting,
             'image'       => $this->image,
             'idMap'       => $this->idMap,
-            'coordinateX' => $this->coordinateX,
-            'coordinateY' => $this->coordinateY,
+            'x' => $this->x,
+            'y' => $this->y,
         );
     }
 
@@ -84,20 +84,20 @@ abstract class AbstractNpc extends AbstractModel {
     }
 
     public function setCoordinateX($value) {
-        $this->_coordinateX = (int)$value;
+        $this->_x = (int)$value;
         return $this;
     }
 
     public function getCoordinateX() {
-        return $this->_coordinateX;
+        return $this->_x;
     }
 
     public function setCoordinateY($value) {
-        $this->_coordinateY = (int)$value;
+        $this->_y = (int)$value;
         return $this;
     }
 
     public function getCoordinateY() {
-        return $this->_coordinateY;
+        return $this->_y;
     }
 }

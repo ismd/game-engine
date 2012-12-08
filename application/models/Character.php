@@ -76,9 +76,9 @@ class Character extends AbstractCharacter {
         $this->_lastMove = microtime(true);
 
         // Проверяем, может ли персонаж переместиться на заданную клетку
-        if ((($x == $this->coordinateX && abs($y - $this->coordinateY) != 1)
-                || ($y == $this->coordinateY && abs($x - $this->coordinateX) != 1))
-                || ($x == $this->coordinateX && $y == $this->coordinateY)
+        if ((($x == $this->x && abs($y - $this->y) != 1)
+                || ($y == $this->y && abs($x - $this->x) != 1))
+                || ($x == $this->x && $y == $this->y)
                 || $x < 0 || $y < 0) {
             throw new CharacterCantMoveHere;
         }
@@ -86,8 +86,8 @@ class Character extends AbstractCharacter {
         $mapper = new CharacterMapper;
         $mapper->move($this->id, $x, $y);
 
-        $this->coordinateX = $x;
-        $this->coordinateY = $y;
+        $this->x = $x;
+        $this->y = $y;
     }
 
     public function setItems($value) {

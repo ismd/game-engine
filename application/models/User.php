@@ -22,7 +22,7 @@ class User extends AbstractUser {
     public function getCharacters() {
         if (null == $this->_characters) {
             $mapper           = new CharacterMapper;
-            $this->characters = $mapper->getByUser($this->id);
+            $this->characters = $mapper->getByUser($this);
         }
 
         return $this->_characters;

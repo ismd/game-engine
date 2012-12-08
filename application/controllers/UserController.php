@@ -5,24 +5,25 @@
  * @author ismd
  */
 
-class UserController extends AbstractController {
+class UserController extends AbstractAuthController {
 
     public function index() {
-        header('Location: /');
-        die;
+        $this->redirect('/');
     }
 
     /**
      * ajax: список персонажей игрока
      */
     public function characters() {
-        $characters = $this->_session->user->getCharacters();
+        $this->view->setEmpty(true);
+        
+        $characters = $this->session->user->characters;
 
         // Преобразуем в массив каждого персонажа
         foreach ($characters as $i => $character) {
             $characters[$i] = $character->toArray();
         }
 
-        die(json_encode($characters));
+        $this->view->characters = $characters;
     }
 }

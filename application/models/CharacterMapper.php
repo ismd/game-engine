@@ -34,7 +34,7 @@ class CharacterMapper extends AbstractDbMapper {
         $id = (int)$id;
 
         $query = $this->db->query("SELECT id, idUser, name, level, money, "
-            . "idMap, coordinateX, coordinateY, "
+            . "idMap, x, y, "
             . "strength, dexterity, endurance, hp, maxHp, minDamage, "
             . "maxDamage, image, experience "
             . "FROM `Character` WHERE id = $id LIMIT 1");
@@ -59,7 +59,7 @@ class CharacterMapper extends AbstractDbMapper {
         $name = $this->db->real_escape_string($name);
 
         $query = $this->db->query("SELECT id, idUser, name, level, money, "
-            . "idMap, coordinateX, coordinateY, "
+            . "idMap, x, y, "
             . "strength, dexterity, endurance, hp, maxHp, minDamage, "
             . "maxDamage, image, experience "
             . "FROM `Character` WHERE name = '$name' LIMIT 1");
@@ -79,13 +79,13 @@ class CharacterMapper extends AbstractDbMapper {
      */
     public function getByUser(User $user) {
         $query = $this->db->query("SELECT id, idUser, name, level, money, "
-            . "idMap, coordinateX, coordinateY, strength, dexterity, "
+            . "idMap, x, y, strength, dexterity, "
             . "endurance, hp, maxHp, minDamage, maxDamage, image, experience "
             . "FROM `Character` "
             . "WHERE idUser = $user->id");
 
         $characters = array();
-        while ($character = mysql_fetch_assoc($query)) {
+        while ($character = $query->fetch_assoc()) {
             $characters[] = new Character($character);
         }
 
@@ -98,13 +98,13 @@ class CharacterMapper extends AbstractDbMapper {
      * @param Cell $cell
      * @return array Массив объектов класса Character
      */
-    public function getOnCell(Cell $cell) {
+    public function getByCell(Cell $cell) {
         $query = $this->db->query("SELECT id, idUser, name, level, money, idMap, "
-            . "coordinateX, coordinateY, strength, dexterity, endurance, "
+            . "x, y, strength, dexterity, endurance, "
             . "hp, maxHp, minDamage, maxDamage, image, experience "
             . "FROM `Character` "
             . "WHERE idMap = " . $cell->map->id . " "
-            . "AND coordinateX = $cell->x AND coordinateY = $cell->y");
+            . "AND x = $cell->x AND y = $cell->y");
 
         $characters = array();
         while ($character = $query->fetch_assoc()) {
@@ -122,8 +122,8 @@ class CharacterMapper extends AbstractDbMapper {
      */
     public function move(Character $character, Cell $cell) {
         $this->db->query("UPDATE `Character` "
-            . "SET idMap = " . $cell->map->id . ", coordinateX = $cell->x, "
-            . "coordinateY = $cell->y "
+            . "SET idMap = " . $cell->map->id . ", x = $cell->x, "
+            . "y = $cell->y "
             . "WHERE id = $character->id "
             . "LIMIT 1");
     }
@@ -159,11 +159,11 @@ class CharacterMapper extends AbstractDbMapper {
         $name = $this->db->real_escape_string($character->name);
 
         $this->db->query("INSERT INTO `Character` (idUser, name, level, money, idMap, "
-            . "coordinateX, coordinateY, strength, dexterity, endurance, "
+            . "x, y, strength, dexterity, endurance, "
             . "hp, maxHp, minDamage, maxDamage, image, experience) "
             . "VALUES ($character->idUser, '$name', $character->level, "
-            . "$character->money, $character->idMap, $character->coordinateX, "
-            . "$character->coordinateY, $character->strength, $character->dexterity, "
+            . "$character->money, $character->idMap, $character->x, "
+            . "$character->y, $character->strength, $character->dexterity, "
             . "$character->endurance, $character->hp, $character->maxHp, "
             . "$character->minDamage, $character->maxDamage, '$character->image', "
             . "$character->experience)"

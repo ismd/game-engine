@@ -7,7 +7,7 @@
 
 class MapMapperNotFoundException extends Exception {};
 
-class MapMapper {
+class MapMapper extends AbstractDbMapper {
 
     /**
      * Возвращает карту по id
@@ -19,7 +19,7 @@ class MapMapper {
     public function getById($id) {
         $id = (int)$id;
 
-        $query = mysql_query("SELECT id, title "
+        $query = $this->db->query("SELECT id, title "
             . "FROM `Map` "
             . "WHERE id = $id "
             . "LIMIT 1");

@@ -20,7 +20,7 @@ class MobMapper extends AbstractDbMapper {
         $id = (int)$id;
 
         $query = $this->db->query("SELECT mm.id, mm.idMap, "
-            . "mm.coordinateX, mm.coordinateY, mm.hp, "
+            . "mm.x, mm.y, mm.hp, "
             . "m.id as idMob, m.name, m.level, m.maxHp, m.minDamage, "
             . "m.maxDamage, m.experience, m.image, m.strength, "
             . "m.dexterity, m.endurance "
@@ -42,15 +42,15 @@ class MobMapper extends AbstractDbMapper {
      * @return array Массив объектов класса Mob
      */
     public function getByCell(MapCell $cell) {
-        $query = $this->db->query("SELECT mm.id, mm.idMap, mm.coordinateX, "
-            . "mm.coordinateY, mm.hp, m.id as idMob, "
+        $query = $this->db->query("SELECT mm.id, mm.idMap, mm.x, "
+            . "mm.y, mm.hp, m.id as idMob, "
             . "m.name, m.level, m.maxHp, m.minDamage, m.maxDamage, "
             . "m.experience, m.image, m.strength, "
             . "m.dexterity, m.endurance "
             . "FROM MobMap mm "
             . "INNER JOIN Mob m ON mm.idMob = m.id "
-            . "WHERE mm.idMap = $cell->idMap AND mm.coordinateX = $cell->x "
-            . "AND mm.coordinateY = $cell->y");
+            . "WHERE mm.idMap = $cell->idMap AND mm.x = $cell->x "
+            . "AND mm.y = $cell->y");
 
         $mobs = array();
         while ($mob = $query->fetch_assoc()) {
