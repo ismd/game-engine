@@ -47,8 +47,6 @@ class AuthController extends AbstractController {
         //}
 
         $this->session->clear();
-
-        header('Location: /');
-        die;
+        $this->redirect('/');
     }
 }
