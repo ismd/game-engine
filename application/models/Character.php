@@ -65,7 +65,8 @@ class Character extends AbstractCharacter {
      * Перемещение персонажа по карте
      *
      * @param Cell $cell
-     * @param int $y Новая координата y
+     * @throws CharacterFastMove
+     * @throws CharacterCantMoveHere
      */
     public function move(Cell $cell) {
         // Лимит - секунда
@@ -76,18 +77,17 @@ class Character extends AbstractCharacter {
         $this->_lastMove = microtime(true);
 
         // Проверяем, может ли персонаж переместиться на заданную клетку
-        if ((($x == $this->x && abs($y - $this->y) != 1)
-                || ($y == $this->y && abs($x - $this->x) != 1))
-                || ($x == $this->x && $y == $this->y)
-                || $x < 0 || $y < 0) {
+        if (($cell->x == $this->cell->x && abs($cell->y - $this->cell->y) != 1)
+                || ($cell->y == $this->cell->y && abs($cell->x - $this->cell->x) != 1)
+                || ($cell->x == $this->cell->x && $cell->y == $this->cell->y)
+                || $cell->x < 0 || $cell->y < 0) {
             throw new CharacterCantMoveHere;
         }
 
         $mapper = new CharacterMapper;
-        $mapper->move($this->id, $x, $y);
-
-        $this->x = $x;
-        $this->y = $y;
+        $mapper->move($this, $cell);
+        
+        $this->cell = $cell;
     }
 
     public function setItems($value) {

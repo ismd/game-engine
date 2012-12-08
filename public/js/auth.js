@@ -98,8 +98,10 @@ function getUserCharacters() {
 function setCharacter(id) {
     $.ajax({
         url: '/character/set',
-        type: 'get',
-        data: 'id=' + id,
+        type: 'post',
+        data: {
+            'id': id
+        },
         success: function(data) {
             if (data == 'ok') {
                 window.location.replace('/world')

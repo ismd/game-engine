@@ -22,15 +22,31 @@ var Map = {
 
         $.ajax({
             url: '/character/move',
+            type: 'post',
             data: {
                 'x': newX,
                 'y': newY
             },
             async: false
         }).done(function(data) {
-            if (data != 'ok') {
-                alert('Ошибка при перемещении');
-                return;
+            switch (data) {
+                case 'ok':
+                    break;
+                
+                case 'error: fast moving':
+                    alert('Слишком быстрое перемещение');
+                    return;
+                    break;
+                
+                case 'error: cannot move here':
+                    alert('Невозможно переместиться на заданную клетку');
+                    return;
+                    break;
+                
+                default:
+                    alert('Ошибка при перемещении');
+                    return;
+                    break;
             }
 
             Map.x = newX;

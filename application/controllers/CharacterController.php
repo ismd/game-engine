@@ -42,7 +42,7 @@ class CharacterController extends AbstractAuthController {
     public function set() {
         $this->view->setEmpty(true);
 
-        $idCharacter = (int)$_GET['id'];
+        $idCharacter = (int)$_POST['id'];
 
         if (!$this->session->user->hasCharacter($idCharacter)) {
             $this->view->result = 'error';
@@ -56,19 +56,23 @@ class CharacterController extends AbstractAuthController {
     }
 
     /**
-     * Перемещение персонажа
+     * ajax: Перемещение персонажа
      */
     public function move() {
-        $x = (int)$_GET['x'];
-        $y = (int)$_GET['y'];
+        $this->view->setEmpty(true);
+        
+        $x = (int)$_POST['x'];
+        $y = (int)$_POST['y'];
+        
+        $cell = new Cell($this->session->character->map, $x, $y);
 
         try {
-            $this->session->character->move($x, $y);
-            $this->view->result('ok');
+            $this->session->character->move($cell);
+            $this->view->result = 'ok';
         } catch (CharacterFastMove $e) {
-            $this->view->result('error: fast moving');
+            $this->view->result = 'error: fast moving';
         } catch (CharacterCantMoveHere $e) {
-            $this->view->result('error: cannot move here');
+            $this->view->result = 'error: cannot move here';
         }
     }
 
@@ -76,6 +80,8 @@ class CharacterController extends AbstractAuthController {
      * ajax: список вещей персонажа
      */
     public function items() {
+        $this->view->setEmpty(true);
+        
         $items = $this->session->character->getItems();
 
         $data = array();
