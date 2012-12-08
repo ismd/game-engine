@@ -21,9 +21,9 @@
                 Лого
             </div>
 
-            <?php if ( isset($this->_session->user) ): ?>
+            <?php if (null != $this->_registry->session->user): ?>
             <div id="auth">
-                Добро пожаловать, <?php echo $this->_session->user->login ?><br />
+                Добро пожаловать, <?php echo $this->_registry->session->user->login ?><br />
                 <a href="/auth/logout">Выход</a>
             </div>
 

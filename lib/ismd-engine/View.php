@@ -5,7 +5,7 @@
  * @author ismd
  */
 
-class View extends Object {
+class View extends ArrayObject {
 
     protected $_registry;
     
