@@ -43,13 +43,11 @@ function __autoload($className) {
 /**
  * Подключается к БД
  *
- * @param array $config Данные для подключения
+ * @param object $config Данные для подключения
  * @throws Can't connect to database
  * @return mysqli
  */
 function dbConnect($config) {
-    $config = (object)$config;
-    
     $mysqli = new mysqli(
         $config->host,
         $config->username,
@@ -78,6 +76,10 @@ function readConfig() {
     }
 
     $config = parse_ini_file($configFilename, true);
+    
+    foreach ($config as $i => $c) {
+        $config[$i] = (object)$c;
+    }
 
     return (object)$config;
 }

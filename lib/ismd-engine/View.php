@@ -34,7 +34,7 @@ class View extends Object {
 
         // Подключаем только один файл, если надо
         if ($this->_empty == true) {
-            $filename = $path . implode('/', $route);
+            $filename = $path . implode('/', $route) . '.phtml';
 
             if (is_readable($filename)) {
                 require $filename;

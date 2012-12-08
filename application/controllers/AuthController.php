@@ -8,8 +8,7 @@
 class AuthController extends AbstractController {
 
     public function index() {
-        header('Location: /');
-        die;
+        $this->redirect('/');
     }
 
     /**
@@ -20,20 +19,22 @@ class AuthController extends AbstractController {
         if (empty($_POST['login']) || empty($_POST['password'])) {
             die('error');
         }
+        
+        $this->view->setEmpty(true);
 
         $login    = $_POST['login'];
         $password = $_POST['password'];
 
-        $auth = new Auth;
-        $id   = $auth->login($login, $password);
-
-        if ($id) {
-            $mapper = new UserMapper;
-            $this->_session->user = $mapper->getById($id);
-            die('ok');
+        $mapper = new UserMapper;
+        
+        try {
+            $user = $mapper->getByLoginAndPassword($login, $password);
+            $this->session->user = $user;
+            
+            $this->view->result = 'ok';
+        } catch (UserMapperNotFoundException $e) {
+            $this->view->result = 'error';
         }
-
-        die('error');
     }
 
     /**

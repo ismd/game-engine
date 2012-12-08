@@ -142,4 +142,30 @@ class UserMapper extends AbstractDbMapper {
                 . "info = '$user->info', site = '$user->site'");
         }
     }
+    
+    /**
+     * Возвращает пользователя по логину и паролю
+     * Необходимо использовать только при аутентификации
+     *
+     * @param string $login
+     * @param string $password
+     * @return User
+     * @throws UserMapperNotFoundException
+     */
+    public function getByLoginAndPassword($login, $password) {
+        $login    = $this->db->real_escape_string($login);
+        $password = md5($password);
+
+        $query = $this->db->query("SELECT id, login, email, info, site, "
+            . "registered "
+            . "FROM `User` "
+            . "WHERE login = '$login' AND password = '$password' "
+            . "LIMIT 1");
+
+        if ($query->num_rows == 0) {
+            throw new UserMapperNotFoundException;
+        }
+
+        return new User($query->fetch_assoc());
+    }
 }
