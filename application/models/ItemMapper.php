@@ -7,7 +7,7 @@
 
 class ItemMapperNotFoundException extends Exception {};
 
-class ItemMapper {
+class ItemMapper extends AbstractDbMapper {
 
     /**
      * Возвращает вещь по id
@@ -36,18 +36,16 @@ class ItemMapper {
     /**
      * Возвращает массив вещей персонажа
      *
-     * @param int $idCharacter - id персонажа
+     * @param Character $character
      * @return array Массив объектов класса Item
      */
-    public function getByCharacter($idCharacter) {
-        $idCharacter = (int)$idCharacter;
-
+    public function getByCharacter(Character $character) {
         $query = $this->db->query("SELECT i.id, i.title, i.idType, "
             . "i.price, i.description, it.title AS type "
             . "FROM CharacterItem ci "
             . "INNER JOIN Item i ON ci.idItem = i.id "
             . "INNER JOIN ItemType it ON i.idType = it.id "
-            . "WHERE ci.idCharacter = $idCharacter");
+            . "WHERE ci.idCharacter = $character->id");
 
         $items = array();
         while ($item = $query->fetch_assoc()) {

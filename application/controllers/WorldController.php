@@ -39,6 +39,6 @@ class WorldController extends AbstractAuthController {
      * Страница инвентаря
      */
     public function inventory() {
-        $this->view->items = $this->session->character->getItems();
+        $this->view->items = $this->session->character->items;
     }
 }

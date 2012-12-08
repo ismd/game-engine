@@ -103,7 +103,7 @@ class Character extends AbstractCharacter {
     public function getItems() {
         if (null == $this->_items) {
             $mapper      = new ItemMapper;
-            $this->items = $mapper->getByCharacter($this->id);
+            $this->items = $mapper->getByCharacter($this);
         }
 
         return $this->_items;

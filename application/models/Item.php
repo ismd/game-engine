@@ -26,8 +26,8 @@ class Item extends AbstractItem {
 
     public function getAttributes() {
         if (null == $this->_attributes) {
-            $mapper           = AttributeMapper;
-            $this->attributes = $mapper->getItemAttributes($this->id);
+            $mapper           = new AttributeMapper;
+            $this->attributes = $mapper->getByItem($this);
         }
 
         return $this->_attributes;
