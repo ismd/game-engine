@@ -6,6 +6,7 @@
 
 var Map = {
     // Текущие координаты. Заполняются при инициализации
+    id: null,
     x: null,
     y: null,
 
@@ -76,8 +77,8 @@ var Map = {
      */
     updateImage: function() {
         $('div#map').css({
-            'background-image': 'url(/images/world/maps/1/'
-                + Map.x + 'x' + Map.y + '.png)'
+            'background-image': 'url(/images/world/maps/'
+                + Map.id + '/' + Map.x + 'x' + Map.y + '.png)'
         });
 
         var dx = '-30';
@@ -220,8 +221,11 @@ var CellContent = {
 };
 
 $(document).ready(function() {
-    Map.x = parseInt($('div#world div#map').attr('x'));
-    Map.y = parseInt($('div#world div#map').attr('y'));
+    var map = $('div#world div#map');
+    
+    Map.id = parseInt(map.attr('idMap'));
+    Map.x  = parseInt(map.attr('x'));
+    Map.y  = parseInt(map.attr('y'));
 
     Map.updateImage();
 
