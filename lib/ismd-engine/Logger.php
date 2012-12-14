@@ -19,6 +19,12 @@ class Logger {
     private function __wakeup() {
     }
 
+    /**
+     * Возвращает инстанс логгера
+     *
+     * @global Registry $registry
+     * @return Logger
+     */
     public static function getInstance() {
         if (is_null(self::$_instance)) {
             global $registry;
