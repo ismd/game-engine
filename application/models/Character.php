@@ -10,12 +10,29 @@ class CharacterCantMoveHere extends Exception {};
 
 class Character extends AbstractCharacter {
 
-    protected $_user;         // Пользователь, владеющий персонажем
-    protected $_map;          // Карта, на которой находится персонаж
-    protected $_cell;         // Клетка, на которой находится персонаж
-    protected $_items;        // Вещи персонажа
-    protected $_lastMove = 0; // Используется для проверки задержки между перещениями персонажа
-                              // Отсутствует в базе, только в сессии
+    /**
+     * Пользователь, владеющий персонажем
+     * @var User
+     */
+    protected $_user;
+
+    /**
+     * Клетка, на которой находится персонаж
+     * @var Cell
+     */
+    protected $_cell;
+
+    /**
+     * Вещи персонажа
+     * @var Item[]
+     */
+    protected $_items;
+
+    /**
+     * Используется для проверки задержки между перещениями персонажа
+     * @var int
+     */
+    protected $_lastMove = 0;
 
     public function toArray() {
         return array(
@@ -33,7 +50,7 @@ class Character extends AbstractCharacter {
             'strength'   => $this->strength,
             'dexterity'  => $this->dexterity,
             'endurance'  => $this->endurance,
-            'idMap'      => $this->map->id,
+            'idMap'      => $this->cell->map->id,
             'x'          => $this->cell->x,
             'y'          => $this->cell->y,
         );
@@ -86,7 +103,7 @@ class Character extends AbstractCharacter {
 
         $mapper = new CharacterMapper;
         $mapper->move($this, $cell);
-        
+
         $this->cell = $cell;
     }
 
@@ -97,8 +114,7 @@ class Character extends AbstractCharacter {
 
     /**
      * Возвращает массив вещей персонажа
-     *
-     * @return array Массив объектов класса Item
+     * @return Item[]
      */
     public function getItems() {
         if (null == $this->_items) {
@@ -109,20 +125,6 @@ class Character extends AbstractCharacter {
         return $this->_items;
     }
 
-    public function setMap(Map $value) {
-        $this->_map = $value;
-        return $this;
-    }
-
-    public function getMap() {
-        if (null == $this->_map) {
-            $mapper    = new MapMapper;
-            $this->map = $mapper->getById($this->idMap);
-        }
-
-        return $this->_map;
-    }
-
     public function setCell(Cell $value) {
         $this->_cell = $value;
         return $this;
@@ -130,7 +132,6 @@ class Character extends AbstractCharacter {
 
     /**
      * Возвращает текущую клетку, на которой находится персонаж
-     *
      * @return Cell
      */
     public function getCell() {
@@ -165,6 +166,12 @@ class Character extends AbstractCharacter {
         return $this->cell->y;
     }
 
+    /**
+     * Устанавливает пользователя первонажа
+     *
+     * @param User $value
+     * @return Character
+     */
     public function setUser(User $value) {
         $this->_user = $value;
         return $this;

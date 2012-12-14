@@ -7,8 +7,17 @@
 
 class Item extends AbstractItem {
 
-    protected $_type;       // Тип вещи из таблицы ItemType
-    protected $_attributes; // Атрибуты вещи. Берутся из таблиц ItemAttribute и Attribute
+    /**
+     * Тип вещи из таблицы ItemType
+     * @var string
+     */
+    protected $_type;
+
+    /**
+     * Атрибуты вещи. Берутся из таблиц ItemAttribute и Attribute
+     * @var Attribute[]
+     */
+    protected $_attributes;
 
     public function setType($value) {
         $this->_type = (string)$value;

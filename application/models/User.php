@@ -7,6 +7,10 @@
 
 class User extends AbstractUser {
 
+    /**
+     * Персонажи пользователя
+     * @var Character[]
+     */
     protected $_characters;
 
     public function setCharacters($value) {
@@ -16,8 +20,7 @@ class User extends AbstractUser {
 
     /**
      * Возвращает массив персонажей пользователя
-     *
-     * @return array Массив объектов класса Character
+     * @return Character[]
      */
     public function getCharacters() {
         if (null == $this->_characters) {
@@ -31,6 +34,7 @@ class User extends AbstractUser {
     /**
      * Проверяет, есть ли у пользователя персонаж
      *
+     * @todo Подумать, может переделать или убрать этот метод
      * @param int $idCharacter
      * @return bool
      */

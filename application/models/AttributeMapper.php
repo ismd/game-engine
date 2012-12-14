@@ -9,11 +9,11 @@ class AttributeMapper extends AbstractDbMapper {
 
     /**
      * Возвращает аттрибуты вещи
-     *
+     * 
      * @param Item $item
-     * @return array Массив объектов класса Attribute
+     * @return Attribute[]
      */
-    public function getByItem($item) {
+    public function getByItem(Item $item) {
         $query = $this->db->query("SELECT ia.value, a.id, a.title "
             . "FROM ItemAttribute ia "
             . "INNER JOIN Attribute a ON ia.idAttribute = a.id "

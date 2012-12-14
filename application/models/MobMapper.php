@@ -39,7 +39,7 @@ class MobMapper extends AbstractDbMapper {
      * Возвращает мобов на клетке
      *
      * @param Cell $cell
-     * @return array Массив объектов класса Mob
+     * @return Mob[]
      */
     public function getByCell(Cell $cell) {
         $query = $this->db->query("SELECT mm.id, mm.idMap, mm.x, "

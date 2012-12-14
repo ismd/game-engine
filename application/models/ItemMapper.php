@@ -37,7 +37,7 @@ class ItemMapper extends AbstractDbMapper {
      * Возвращает массив вещей персонажа
      *
      * @param Character $character
-     * @return array Массив объектов класса Item
+     * @return Item[]
      */
     public function getByCharacter(Character $character) {
         $query = $this->db->query("SELECT i.id, i.title, i.idType, "

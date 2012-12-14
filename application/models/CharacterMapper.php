@@ -75,7 +75,7 @@ class CharacterMapper extends AbstractDbMapper {
      * Возвращает массив персонажей пользователя
      *
      * @param User $user
-     * @return array Массив объектов класса Character
+     * @return Character[]
      */
     public function getByUser(User $user) {
         $query = $this->db->query("SELECT id, idUser, name, level, money, "
@@ -96,7 +96,7 @@ class CharacterMapper extends AbstractDbMapper {
      * Возвращает персонажей на клетке
      *
      * @param Cell $cell
-     * @return array Массив объектов класса Character
+     * @return Character[]
      */
     public function getByCell(Cell $cell) {
         $query = $this->db->query("SELECT id, idUser, name, level, money, idMap, "
