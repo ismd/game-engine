@@ -136,7 +136,10 @@ class Character extends AbstractCharacter {
      */
     public function getCell() {
         if (null == $this->_cell) {
-            $this->cell = new Cell($this->map, $this->x, $this->y);
+            $mapper = new MapMapper;
+            $map    = $mapper->getById($this->idMap);
+            
+            $this->cell = new Cell($map, $this->_x, $this->_y);
         }
 
         return $this->_cell;
