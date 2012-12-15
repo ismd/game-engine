@@ -6,40 +6,45 @@
  */
 
 class Session {
+    
+    protected $_data = array();
 
     public function __construct() {
-        array_walk($_SESSION, function(&$value, $key) {
-            $value = unserialize($value);
-        });
+        foreach ($_SESSION as $key => $value) {
+            $this->_data[$key] = unserialize($value);
+        }
     }
 
     public function __destruct() {
-        array_walk($_SESSION, function(&$value, $key) {
-            $value = serialize($value);
-        });
+        $_SESSION = array();
+        
+        foreach ($this->_data as $key => $value) {
+            $_SESSION[$key] = serialize($value);
+        }
     }
 
     public function clear() {
-        $_SESSION = array();
+        $this->_data = array();
+        $_SESSION    = array();
     }
     
     public function __set($name, $value) {
-        $_SESSION[$name] = $value;
+        $this->_data[$name] = $value;
     }
     
     public function __get($name) {
-        if (!isset($_SESSION[$name])) {
+        if (!isset($this->_data[$name])) {
             return null;
         }
         
-        return $_SESSION[$name];
+        return $this->_data[$name];
     }
     
     public function __isset($name) {
-        return isset($_SESSION[$name]);
+        return isset($this->_data[$name]);
     }
     
     public function __unset($name) {
-        unset($_SESSION[$name]);
+        unset($this->_data[$name]);
     }
 }

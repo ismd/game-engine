@@ -31,7 +31,6 @@ class WorldController extends AbstractAuthController {
         
         $character = $this->session->character;
 
-        $this->view->map  = $character->map;
         $this->view->cell = $character->cell;
     }
 

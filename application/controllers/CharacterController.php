@@ -64,7 +64,7 @@ class CharacterController extends AbstractAuthController {
         $x = (int)$_POST['x'];
         $y = (int)$_POST['y'];
         
-        $cell = new Cell($this->session->character->map, $x, $y);
+        $cell = new Cell($this->session->character->cell->map, $x, $y);
 
         try {
             $this->session->character->move($cell);
