@@ -10,10 +10,10 @@
         <script src="/js/jquery-ui.js"></script>
         <script src="/js/bootstrap.min.js"></script>
         <script src="/js/auth.js"></script>
-        <?php foreach ($this->_css as $link): ?>
+        <?php foreach ($this->css as $link): ?>
         <link href="/css/<?php echo $link ?>.css" rel="stylesheet" type="text/css">
         <?php endforeach ?>
-        <?php foreach ($this->_js as $link): ?>
+        <?php foreach ($this->js as $link): ?>
         <script src="/js/<?php echo $link ?>.js"></script>
         <?php endforeach ?>
     </head>
@@ -86,3 +86,7 @@
         </div>
 
         <div id="content">
+            <?php echo $this->content ?>
+        </div>
+    </body>
+</html>

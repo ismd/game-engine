@@ -15,7 +15,7 @@ class UserController extends AbstractAuthController {
      * ajax: список персонажей игрока
      */
     public function characters() {
-        $this->view->setEmpty(true);
+        $this->view->layout = 'empty';
         
         $characters = $this->session->user->characters;
 

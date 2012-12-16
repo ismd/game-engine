@@ -6,6 +6,10 @@
  */
 
 class AuthController extends AbstractController {
+    
+    public function init() {
+        $this->view->layout = 'empty';
+    }
 
     public function index() {
         $this->redirect('/');
@@ -13,14 +17,15 @@ class AuthController extends AbstractController {
 
     /**
      * Залогиниваемся
-     * Вызывается через ajax
+     * 
+     * @post login
+     * @post password
      */
     public function login() {
         if (empty($_POST['login']) || empty($_POST['password'])) {
-            die('error');
+            $this->view->result = 'error';
+            return;
         }
-        
-        $this->view->setEmpty(true);
 
         $login    = $_POST['login'];
         $password = $_POST['password'];

@@ -6,6 +6,10 @@
  */
 
 class CharacterController extends AbstractAuthController {
+    
+    public function init() {
+        $this->view->layout = 'empty';
+    }
 
     public function index() {
         $this->redirect('/');
@@ -13,8 +17,11 @@ class CharacterController extends AbstractAuthController {
 
     /**
      * Создание персонажа
+     * @post name
      */
     public function create() {
+        $this->view->layout = 'default';
+        
         if (empty($_POST)) {
             return;
         }
@@ -37,14 +44,13 @@ class CharacterController extends AbstractAuthController {
     }
 
     /**
-     * ajax: устанавливает текущего персонажа для сессии
+     * Устанавливает текущего персонажа для сессии
+     * @post id
      */
     public function set() {
-        $this->view->setEmpty(true);
-
         $idCharacter = (int)$_POST['id'];
 
-        if (!$this->session->user->hasCharacter($idCharacter)) {
+        if (false == $this->session->user->hasCharacter($idCharacter)) {
             $this->view->result = 'error';
             return;
         }
@@ -56,11 +62,12 @@ class CharacterController extends AbstractAuthController {
     }
 
     /**
-     * ajax: Перемещение персонажа
+     * Перемещение персонажа
+     * 
+     * @post x
+     * @post y
      */
     public function move() {
-        $this->view->setEmpty(true);
-        
         $x = (int)$_POST['x'];
         $y = (int)$_POST['y'];
         
@@ -77,11 +84,9 @@ class CharacterController extends AbstractAuthController {
     }
 
     /**
-     * ajax: список вещей персонажа
+     * Список вещей персонажа
      */
     public function items() {
-        $this->view->setEmpty(true);
-        
         $items = $this->session->character->getItems();
 
         $data = array();
@@ -89,6 +94,6 @@ class CharacterController extends AbstractAuthController {
             $data[] = $item->toArray();
         }
 
-        $this->view->data = $data;
+        $this->view->items = $data;
     }
 }

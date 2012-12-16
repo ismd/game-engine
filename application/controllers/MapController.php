@@ -7,7 +7,9 @@ class MapController extends AbstractAuthController {
     }
 
     /**
-     * ajax: Выводит содержимое текущей клетки
+     * Выводит содержимое текущей клетки
+     * 
+     * @todo Переделать
      */
     public function cell() {
         $content = $this->session->character->cell->getContent();

@@ -18,16 +18,16 @@ class WorldController extends AbstractAuthController {
      * Главная страница мира
      */
     public function index() {
-        $this->view->setTitle('Мир');
+        $this->view->title = 'Мир';
 
-        $this->view->css(array(
+        $this->view->css = array(
             'world'
-        ));
+        );
 
-        $this->view->js(array(
+        $this->view->js = array(
             'world/world',
             'world/actions',
-        ));
+        );
         
         $character = $this->session->character;
 
