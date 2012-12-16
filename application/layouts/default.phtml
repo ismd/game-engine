@@ -19,20 +19,11 @@
     </head>
     <body>
         <div id="left-panel">
-            <div id="logo">
+            <div id="top-left-logo">
                 Лого
             </div>
 
-            <?php if (null != $this->_registry->session->user): ?>
-            <div id="auth">
-                Добро пожаловать, <?php echo $this->_registry->session->user->login ?><br>
-                <a href="/auth/logout">Выход</a>
-            </div>
-
-            <div id="character">
-                <a id="select-character" href="#">Выбрать персонажа</a>
-            </div>
-            <?php else: ?>
+            <?php if (null == $this->_registry->session->user): ?>
             <div id="auth">
                 <a href="#" id="auth-button">Войти в игру</a><br>
                 <br>
@@ -50,6 +41,15 @@
                         </fieldset>
                     </form>
                 </div>
+            </div>
+            <?php else: ?>
+            <div id="auth">
+                Добро пожаловать, <?php echo $this->_registry->session->user->login ?><br>
+                <a href="/auth/logout">Выход</a>
+            </div>
+
+            <div id="character">
+                <a id="select-character" href="#">Выбрать персонажа</a>
             </div>
             <?php endif ?>
 
@@ -75,13 +75,13 @@
 
         <div id="top-menu">
             <div class="top-menu-item">
-                <a href="#">Форум</a>
+                <a href="/">Главная</a>
             </div>
             <div class="top-menu-item">
                 <a href="/world">Мир</a>
             </div>
             <div class="top-menu-item">
-                <a href="/">Главная</a>
+                <a href="#">Форум</a>
             </div>
         </div>
 

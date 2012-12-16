@@ -1,9 +1,13 @@
+body {
+    margin: 10px;
+}
+
 div#left-panel {
-    width: 160px;
+    width: 200px;
     float: left;
 }
 
-div#logo {
+div#top-left-logo {
     height: 140px;
     background-color: grey;
 }
@@ -11,26 +15,26 @@ div#logo {
 div#top-menu {
     height: 30px;
     margin-right: 100px;
-}
-
-div.top-menu-item {
     float: right;
-    margin: 0 10px;
 }
 
-div#auth {
-    margin: 5px;
+div#top-menu div.top-menu-item {
+    margin: 0 10px;
+    display: inline;
+}
+
+div#left-panel div#auth {
+    margin-top: 10px;
     text-align: center;
 }
 
 div#content {
-    width: 844px;
-    margin: 0 10px 5px 170px;
+    padding-top: 40px;
+    margin-left: 210px;
 }
 
-div#character {
-    margin: 5px;
-    margin-top: 15px;
+div#left-panel div#character {
+    margin: 15px 10px;
 }
 
 div#auth-form {
