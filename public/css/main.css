@@ -1,7 +1,6 @@
-* {
-    margin-left: auto;
-    margin-right: auto;
-    overflow: auto;
+body {
+    min-height: 650px;
+    border: 4px double black;
 }
 
 a {
@@ -10,14 +9,6 @@ a {
 
 fieldset {
     border: none;
-}
-
-body {
-    width: 1024px;
-    min-height: 650px;
-    border: 4px double black;
-    font-family: Verdana;
-    font-size: 0.9em;
 }
 
 div#left-panel {

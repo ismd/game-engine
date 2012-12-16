@@ -1,18 +1,20 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE html>
+<html lang="ru">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta charset=utf-8>
         <title>ismd-game<?php echo $this->_title ?></title>
-        <link rel="stylesheet" type="text/css" href="/css/main.css" />
-        <link rel="stylesheet" type="text/css" href="/css/custom-theme/jquery-ui-1.8.20.custom.css" />
-        <script type="text/javascript" src="/js/jquery.js"></script>
-        <script type="text/javascript" src="/js/jquery-ui.js"></script>
-        <script type="text/javascript" src="/js/auth.js"></script>
+        <link href="/css/custom-theme/jquery-ui-1.8.20.custom.css" rel="stylesheet" media="screen">
+        <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="/css/main.css" rel="stylesheet" media="screen">
+        <script src="/js/jquery.js"></script>
+        <script src="/js/jquery-ui.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/auth.js"></script>
         <?php foreach ($this->_css as $link): ?>
-        <link rel="stylesheet" type="text/css" href="/css/<?php echo $link ?>.css" />
+        <link href="/css/<?php echo $link ?>.css" rel="stylesheet" type="text/css">
         <?php endforeach ?>
         <?php foreach ($this->_js as $link): ?>
-        <script type="text/javascript" src="/js/<?php echo $link ?>.js"></script>
+        <script src="/js/<?php echo $link ?>.js"></script>
         <?php endforeach ?>
     </head>
     <body>
@@ -23,7 +25,7 @@
 
             <?php if (null != $this->_registry->session->user): ?>
             <div id="auth">
-                Добро пожаловать, <?php echo $this->_registry->session->user->login ?><br />
+                Добро пожаловать, <?php echo $this->_registry->session->user->login ?><br>
                 <a href="/auth/logout">Выход</a>
             </div>
 
@@ -32,9 +34,9 @@
             </div>
             <?php else: ?>
             <div id="auth">
-                <a href="#" id="auth-button">Войти в игру</a><br />
-                <br />
-                <a href="/registration">Регистрация</a><br />
+                <a href="#" id="auth-button">Войти в игру</a><br>
+                <br>
+                <a href="/registration">Регистрация</a><br>
                 <a href="#">Забыли пароль</a>
 
                 <!-- Форма аутентификации -->
@@ -42,9 +44,9 @@
                     <form>
                         <fieldset>
                             <label for="login">Логин</label>
-                            <input type="text" name="login" id="login" class="text ui-widget-content ui-corner-all" />
+                            <input type="text" name="login" id="login" class="text ui-widget-content ui-corner-all">
                             <label for="password">Пароль</label>
-                            <input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all" />
+                            <input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all">
                         </fieldset>
                     </form>
                 </div>
@@ -60,12 +62,12 @@
 
             <?php if (null != $this->_registry->session->character): ?>
             <div id="character">
-                Персонаж:<br />
-                <?php echo $this->_registry->session->character->name ?> - <?php echo $this->_registry->session->character->level ?> уровень<br />
-                hp: <span id="hp"><?php echo $this->_registry->session->character->hp ?></span>/<?php echo $this->_registry->session->character->maxHp ?><br />
-                Сила: <?php echo $this->_registry->session->character->strength ?><br />
-                Ловкость: <?php echo $this->_registry->session->character->dexterity ?><br />
-                Выносливость: <?php echo $this->_registry->session->character->endurance ?><br /><br />
+                Персонаж:<br>
+                <?php echo $this->_registry->session->character->name ?> - <?php echo $this->_registry->session->character->level ?> уровень<br>
+                hp: <span id="hp"><?php echo $this->_registry->session->character->hp ?></span>/<?php echo $this->_registry->session->character->maxHp ?><br>
+                Сила: <?php echo $this->_registry->session->character->strength ?><br>
+                Ловкость: <?php echo $this->_registry->session->character->dexterity ?><br>
+                Выносливость: <?php echo $this->_registry->session->character->endurance ?><br><br>
                 <a href="/world/inventory">Инвентарь</a>
             </div>
             <?php endif ?>

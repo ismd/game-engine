@@ -93,7 +93,7 @@ var Map = {
      */
     updateImage: function() {
         $('div#map').css({
-            'background-image': 'url(/images/world/maps/'
+            'background-image': 'url(/img/world/maps/'
                 + Map.id + '/' + Map.x + 'x' + Map.y + '.png)'
         });
 
@@ -208,8 +208,8 @@ var CellContent = {
         }
 
         CellContent.npcs[npc.id] = npc;
-        $('div#cell-content').append('Npc: <img src="/images/world/npcs/'
-            + npc.image + '" />' + npc.name + '<br />');
+        $('div#cell-content').append('Npc: <img src="/img/world/npcs/'
+            + npc.image + '">' + npc.name + '<br>');
     },
 
     /**
@@ -221,8 +221,8 @@ var CellContent = {
         }
 
         CellContent.characters[character.id] = character;
-        $('div#cell-content').append('Персонаж: <img src="/images/world/characters/'
-            + character.image + '" />' + character.name + '<br />');
+        $('div#cell-content').append('Персонаж: <img src="/img/world/characters/'
+            + character.image + '">' + character.name + '<br>');
     },
 
     /**
@@ -234,8 +234,8 @@ var CellContent = {
         }
 
         CellContent.mobs[mob.id] = mob;
-        $('div#cell-content').append('Моб: <img src="/images/world/mobs/'
-            + mob.image + '" />' + mob.name + '<br />');
+        $('div#cell-content').append('Моб: <img src="/img/world/mobs/'
+            + mob.image + '">' + mob.name + '<br>');
     }
 };
 
