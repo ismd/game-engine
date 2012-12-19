@@ -6,9 +6,9 @@
  */
 
 class AuthController extends AbstractController {
-    
+
     public function init() {
-        $this->view->layout = 'empty';
+        $this->view->setLayout('empty');
     }
 
     public function index() {
@@ -17,7 +17,7 @@ class AuthController extends AbstractController {
 
     /**
      * Залогиниваемся
-     * 
+     *
      * @post login
      * @post password
      */
@@ -31,11 +31,11 @@ class AuthController extends AbstractController {
         $password = $_POST['password'];
 
         $mapper = new UserMapper;
-        
+
         try {
             $user = $mapper->getByLoginAndPassword($login, $password);
             $this->session->user = $user;
-            
+
             $this->view->result = 'ok';
         } catch (UserMapperNotFoundException $e) {
             $this->view->result = 'error';

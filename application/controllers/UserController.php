@@ -12,11 +12,11 @@ class UserController extends AbstractAuthController {
     }
 
     /**
-     * ajax: список персонажей игрока
+     * Список персонажей игрока
      */
     public function characters() {
-        $this->view->layout = 'empty';
-        
+        $this->view->setLayout('empty');
+
         $characters = $this->session->user->characters;
 
         // Преобразуем в массив каждого персонажа

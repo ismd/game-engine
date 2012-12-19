@@ -6,9 +6,9 @@
  */
 
 class CharacterController extends AbstractAuthController {
-    
+
     public function init() {
-        $this->view->layout = 'empty';
+        $this->view->setLayout('empty');
     }
 
     public function index() {
@@ -20,8 +20,8 @@ class CharacterController extends AbstractAuthController {
      * @post name
      */
     public function create() {
-        $this->view->layout = 'default';
-        
+        $this->view->setLayout('default');
+
         if (empty($_POST)) {
             return;
         }
@@ -63,14 +63,14 @@ class CharacterController extends AbstractAuthController {
 
     /**
      * Перемещение персонажа
-     * 
+     *
      * @post x
      * @post y
      */
     public function move() {
         $x = (int)$_POST['x'];
         $y = (int)$_POST['y'];
-        
+
         $cell = new Cell($this->session->character->cell->map, $x, $y);
 
         try {
