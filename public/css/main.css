@@ -1,46 +1,12 @@
 body {
-    margin: 10px;
+    margin: 10px 0;
 }
 
-div#left-panel {
-    width: 200px;
-    float: left;
+.sidebar-nav-fixed {
+    position: fixed;
+    width: 14.5%;
 }
 
-div#top-left-logo {
-    height: 140px;
+div#logo {
     background-color: grey;
-}
-
-div#top-menu {
-    height: 30px;
-    margin-right: 100px;
-    float: right;
-}
-
-div#top-menu div.top-menu-item {
-    margin: 0 10px;
-    display: inline;
-}
-
-div#left-panel div#auth {
-    margin-top: 10px;
-    text-align: center;
-}
-
-div#content {
-    padding-top: 40px;
-    margin-left: 210px;
-}
-
-div#left-panel div#character {
-    margin: 15px 10px;
-}
-
-div#auth-form {
-    display: none;
-}
-
-div#characters-list {
-    display: none;
 }

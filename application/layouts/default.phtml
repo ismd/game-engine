@@ -4,11 +4,11 @@
         <meta charset=utf-8>
         <title>ismd-game<?php echo $this->getTitle() ?></title>
         <link href="/css/custom-theme/jquery-ui-1.8.20.custom.css" rel="stylesheet" media="screen">
-        <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="/css/bootstrap.css" rel="stylesheet" media="screen">
         <link href="/css/main.css" rel="stylesheet" media="screen">
         <script src="/js/jquery.js"></script>
         <script src="/js/jquery-ui.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/bootstrap.js"></script>
         <script src="/js/auth.js"></script>
         <?php foreach ($this->getCss() as $link): ?>
         <link href="/css/<?php echo $link ?>.css" rel="stylesheet" type="text/css">
@@ -18,75 +18,135 @@
         <?php endforeach ?>
     </head>
     <body>
-        <div id="left-panel">
-            <div id="top-left-logo">
-                Лого
-            </div>
+        <div class="container">
+            <div class="row">
+                <div class="span2">
+                    <div class="sidebar-nav-fixed">
+                        <div class="row">
+                            <div class="span2" id="logo">
+                                Лого
+                            </div>
+                        </div>
 
-            <?php if (null == $this->_registry->session->user): ?>
-            <div id="auth">
-                <a href="#" id="auth-button">Войти в игру</a><br>
-                <br>
-                <a href="/registration">Регистрация</a><br>
-                <a href="#">Забыли пароль</a>
+                        <?php if (null == $this->_registry->session->user): ?>
+                        <div class="row">
+                            <div class="span2">
+                                <a href="#" id="auth-button" class="btn">Войти в игру</a><br>
+                                <br>
+                                <a href="/registration" class="btn">Регистрация</a><br>
+                                <a href="#" class="btn">Забыли пароль</a>
 
-                <!-- Форма аутентификации -->
-                <div id="auth-form" title="Вход в игру">
-                    <form>
-                        <fieldset>
-                            <label for="login">Логин</label>
-                            <input type="text" name="login" id="login" class="text ui-widget-content ui-corner-all">
-                            <label for="password">Пароль</label>
-                            <input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all">
-                        </fieldset>
-                    </form>
+                                <!-- Форма аутентификации -->
+                                <div id="auth-form" class="hide" title="Вход в игру">
+                                    <form>
+                                        <fieldset>
+                                            <label for="login">Логин</label>
+                                            <input type="text" name="login" id="login" class="text ui-widget-content ui-corner-all">
+                                            <label for="password">Пароль</label>
+                                            <input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all">
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <?php else: ?>
+                        <div class="row">
+                            <div class="span2">
+                                Добро пожаловать, <?php echo $this->_registry->session->user->login ?><br>
+                                <a href="/auth/logout" class="btn">
+                                    Выход
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="span2">
+                                <a id="select-character" href="#" class="btn">
+                                    Выбрать персонажа
+                                </a>
+                            </div>
+                        </div>
+
+                        <?php if (null != $this->_registry->session->character): ?>
+                        <!-- Инфа о персонаже -->
+                        <div class="row">
+                            <div class="span2">
+                                Персонаж:<br>
+                                <?php echo $this->_registry->session->character->name ?> - <?php echo $this->_registry->session->character->level ?> уровень<br>
+                                hp: <span id="hp"><?php echo $this->_registry->session->character->hp ?></span>/<?php echo $this->_registry->session->character->maxHp ?><br>
+                                Сила: <?php echo $this->_registry->session->character->strength ?><br>
+                                Ловкость: <?php echo $this->_registry->session->character->dexterity ?><br>
+                                Выносливость: <?php echo $this->_registry->session->character->endurance ?><br><br>
+                                <a href="/world/inventory" class="btn">
+                                    Инвентарь
+                                </a>
+                            </div>
+                        </div>
+                        <?php endif ?>
+                        <?php endif ?>
+                    </div>
+                </div>
+
+                <div class="span10">
+                    <div class="span10">
+                        <div class="navbar">
+                            <div class="navbar-inner">
+                                <ul class="nav">
+                                    <?php if ('index' == $this->_registry->router->getController()): ?>
+                                    <li class="active">
+                                    <?php else: ?>
+                                    <li>
+                                    <?php endif ?>
+                                        <a href="/">Главная</a>
+                                    </li>
+                                    <?php if ('world' == $this->_registry->router->getController()): ?>
+                                    <li class="dropdown active">
+                                    <?php else: ?>
+                                    <li class="dropdown">
+                                    <?php endif ?>
+                                        <a href="/world" class="dropdown-toggle"
+                                           data-toggle="dropdown" data-target="#">
+                                            Игра
+                                            <b class="caret"></b>
+                                        </a>
+
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="/world">
+                                                    Мир
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/world/inventory">
+                                                    Инвентарь
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            Форум
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="span10">
+                            <?php echo $this->content() ?>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <?php else: ?>
-            <div id="auth">
-                Добро пожаловать, <?php echo $this->_registry->session->user->login ?><br>
-                <a href="/auth/logout">Выход</a>
-            </div>
-
-            <div id="character">
-                <a id="select-character" href="#">Выбрать персонажа</a>
-            </div>
-            <?php endif ?>
-
-            <!-- Форма выбора персонажа -->
-            <div id="characters-list">
-                Ваши персонажи:
-                <ul id="characters-list">
-                </ul>
-            </div>
-
-            <?php if (null != $this->_registry->session->character): ?>
-            <div id="character">
-                Персонаж:<br>
-                <?php echo $this->_registry->session->character->name ?> - <?php echo $this->_registry->session->character->level ?> уровень<br>
-                hp: <span id="hp"><?php echo $this->_registry->session->character->hp ?></span>/<?php echo $this->_registry->session->character->maxHp ?><br>
-                Сила: <?php echo $this->_registry->session->character->strength ?><br>
-                Ловкость: <?php echo $this->_registry->session->character->dexterity ?><br>
-                Выносливость: <?php echo $this->_registry->session->character->endurance ?><br><br>
-                <a href="/world/inventory">Инвентарь</a>
-            </div>
-            <?php endif ?>
         </div>
 
-        <div id="top-menu">
-            <div class="top-menu-item">
-                <a href="/">Главная</a>
-            </div>
-            <div class="top-menu-item">
-                <a href="/world">Мир</a>
-            </div>
-            <div class="top-menu-item">
-                <a href="#">Форум</a>
-            </div>
-        </div>
-
-        <div id="content">
-            <?php echo $this->content() ?>
+        <!-- Форма выбора персонажа -->
+        <div id="characters-list" class="hide">
+            Ваши персонажи:
+            <ul id="characters-list">
+            </ul>
         </div>
     </body>
 </html>

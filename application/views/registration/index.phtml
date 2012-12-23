@@ -1,8 +1,8 @@
-<?php
-if (null != $this->error) {
-    echo '<font color="red">' . $this->error . '</font>';
-}
-?>
+<?php if (null != $this->error): ?>
+<p class="text-error">
+    <?php echo $this->error ?>
+</p>
+<?php endif ?>
 
 <?php if (true == $this->registered): ?>
 Вы успешно зарегистрированы, теперь можете зайти на сайт и создать персонажа.
