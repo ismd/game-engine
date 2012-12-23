@@ -23,11 +23,25 @@
     </div>
     
     <!-- Правый верхний угол -->
-    <div id="top-right" class="span5" idMap="<?php echo $this->cell->map->id ?>" x="<?php echo $this->cell->x ?>" y="<?php echo $this->cell->y ?>">
-        <div id="map" class="span12">
+    <div id="top-right" class="span5">
+        <div class="span12">
+            <input id="coordinates" type="hidden"
+                   idMap="<?php echo $this->cell->map->id ?>"
+                   x="<?php echo $this->cell->x ?>"
+                   y="<?php echo $this->cell->y ?>">
+            
             <canvas id="map" width="350" height="250">
                 Обновите браузер
             </canvas>
+            
+            <div id="right-of-map">
+                <i class="icon-star"></i>
+                <i class="icon-tag"></i>
+                <i class="icon-pencil"></i>
+                <i class="icon-eye-open"></i>
+                <i class="icon-wrench"></i>
+                <i class="icon-fullscreen"></i>
+            </div>
         </div>
         
         <script>

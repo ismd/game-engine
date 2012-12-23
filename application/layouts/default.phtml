@@ -128,7 +128,7 @@
                     </div>
                 </div>
 
-                <!-- Header -->
+                <!-- Navbar -->
                 <div class="span10">
                     <div class="navbar">
                         <div class="navbar-inner">
@@ -138,7 +138,10 @@
                                 <?php else: ?>
                                 <li>
                                 <?php endif ?>
-                                    <a href="/">Главная</a>
+                                    <a href="/">
+                                        <i class="icon-home"></i>
+                                        Главная
+                                    </a>
                                 </li>
                                 <?php if (null != $this->_registry->session->character): ?>
                                 <?php if ('world' == $this->_registry->router->getController()): ?>
@@ -187,7 +190,7 @@
                         </div>
                     </div>
 
-                    <div class="row-fluid" style="width: 98%; margin-left: 1%;">
+                    <div id="centered-content" class="row-fluid">
                         <div class="span12">
                             <?php echo $this->content() ?>
                         </div>

@@ -13,18 +13,28 @@ div#cell-content img {
 
 div#main-panel,
 div#location-info {
-    height: 131px;
-}
-
-div#map {
-    text-align: right;
+    height: 136px;
+    border-top: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    padding: 5px;
 }
 
 div#move-buttons {
     text-align: center;
-    padding-left: 40px;
+    margin: 10px 0;
 }
 
 div#chat {
     height: 200px;
+    padding: 5px;
+}
+
+canvas#map {
+    float: left;
+}
+
+div#right-of-map {
+    text-align: right;
+    margin-left: 350px;
 }
