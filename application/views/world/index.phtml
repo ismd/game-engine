@@ -1,26 +1,90 @@
-<div id="world">
-    <div id="cell-content"></div>
-
-    <div id="cell-picture">
-        Здесь будет картинка текущей клетки
+<div class="row">
+    <div class="span6">
+        <div class="row">
+            <div id="cell-content" class="span6">
+                <!--Здесь будет содержимое клетки-->
+                <img src="/img/world/hero.png">
+                <img src="/img/world/hero.png">
+                <img src="/img/world/hero.png">
+                <img src="/img/world/hero.png">
+                <img src="/img/world/hero.png">
+                <img src="/img/world/hero.png">
+            </div>
+        </div>
+        
+        <div class="row-fluid">
+            <div id="main-panel" class="span7">
+                Здесь будут кнопки
+            </div>
+            <div id="location-info" class="span5">
+                Зона: Древний лес<br>
+                Локация: Около старого дуба<br>
+            </div>
+        </div>
     </div>
-
-    <div id="map" idMap="<?php echo $this->cell->map->id ?>" x="<?php echo $this->cell->x ?>" y="<?php echo $this->cell->y ?>">
-        <img id="character" src="/img/world/hero.png">
+    
+    <div id="top-right" class="span4" idMap="<?php echo $this->cell->map->id ?>" x="<?php echo $this->cell->x ?>" y="<?php echo $this->cell->y ?>">
+        <div class="row">
+            <div id="map" class="span4">
+                <canvas id="map" width="350" height="250">
+                    Обновите браузер
+                </canvas>
+            </div>
+        </div>
+        
+        <script>
+            var canvas = $('canvas#map').get(0);
+            var ctx    = canvas.getContext('2d');
+            ctx.strokeRect(0, 0, 50, 50);
+            ctx.strokeRect(50, 0, 50, 50);
+            ctx.strokeRect(100, 0, 50, 50);
+            ctx.strokeRect(150, 0, 50, 50);
+            ctx.strokeRect(200, 0, 50, 50);
+            ctx.strokeRect(250, 0, 50, 50);
+            ctx.strokeRect(300, 0, 50, 50);
+            ctx.strokeRect(0, 50, 50, 50);
+            ctx.strokeRect(50, 50, 50, 50);
+            ctx.strokeRect(100, 50, 50, 50);
+            ctx.strokeRect(150, 50, 50, 50);
+            ctx.strokeRect(200, 50, 50, 50);
+            ctx.strokeRect(250, 50, 50, 50);
+            ctx.strokeRect(300, 50, 50, 50);
+            ctx.strokeRect(0, 100, 50, 50);
+            ctx.strokeRect(50, 100, 50, 50);
+            ctx.strokeRect(100, 100, 50, 50);
+            ctx.strokeRect(150, 100, 50, 50);
+            ctx.strokeRect(200, 100, 50, 50);
+            ctx.strokeRect(250, 100, 50, 50);
+            ctx.strokeRect(300, 100, 50, 50);
+            ctx.strokeRect(0, 150, 50, 50);
+            ctx.strokeRect(50, 150, 50, 50);
+            ctx.strokeRect(100, 150, 50, 50);
+            ctx.strokeRect(150, 150, 50, 50);
+            ctx.strokeRect(200, 150, 50, 50);
+            ctx.strokeRect(250, 150, 50, 50);
+            ctx.strokeRect(300, 150, 50, 50);
+            ctx.strokeRect(0, 200, 50, 50);
+            ctx.strokeRect(50, 200, 50, 50);
+            ctx.strokeRect(100, 200, 50, 50);
+            ctx.strokeRect(150, 200, 50, 50);
+            ctx.strokeRect(200, 200, 50, 50);
+            ctx.strokeRect(250, 200, 50, 50);
+            ctx.strokeRect(300, 200, 50, 50);
+        </script>
+        
+        <div class="row">
+            <div id="move-buttons" class="span4">
+                <button id="move-left">Налево</button>
+                <button id="move-top">Вверх</button>
+                <button id="move-bottom">Вниз</button>
+                <button id="move-right">Направо</button>
+            </div>
+        </div>
     </div>
+</div>
 
-    <div id="chat">
+<div class="row">
+    <div id="chat" class="span10">
         Здесь будет чат
-    </div>
-
-    <div id="main-panel">
-        Здесь будет главная панель управления
-    </div>
-
-    <div id="move-buttons">
-        <button id="move-top">Вверх</button>
-        <button id="move-bottom">Вниз</button>
-        <button id="move-left">Влево</button>
-        <button id="move-right">Вправо</button>
     </div>
 </div>
