@@ -22,8 +22,9 @@
     <body>
         <div class="container">
             <div class="row">
+                <!-- Sidebar -->
                 <div class="span2">
-                    <div class="sidebar-nav-fixed">
+                    <div class="sidebar-nav-fixed with-borders">
                         <?php if (null == $this->_registry->session->user): ?>
                         <div class="row">
                             <div class="span2">
@@ -48,10 +49,7 @@
                         <?php else: ?>
                         <div class="row">
                             <div class="span2">
-                                Добро пожаловать, <?php echo $this->_registry->session->user->login ?><br>
-                                <a href="/auth/logout" class="btn">
-                                    Выход
-                                </a>
+                                Добро пожаловать, <?php echo $this->_registry->session->user->login ?>
                             </div>
                         </div>
 
@@ -62,17 +60,67 @@
                                 </a>
                             </div>
                         </div>
+                        
+                        <hr>
 
                         <?php if (null != $this->_registry->session->character): ?>
                         <!-- Инфа о персонаже -->
                         <div class="row">
                             <div class="span2">
-                                Персонаж:<br>
-                                <?php echo $this->_registry->session->character->name ?> - <?php echo $this->_registry->session->character->level ?> уровень<br>
-                                hp: <span id="hp"><?php echo $this->_registry->session->character->hp ?></span>/<?php echo $this->_registry->session->character->maxHp ?><br>
-                                Сила: <?php echo $this->_registry->session->character->strength ?><br>
-                                Ловкость: <?php echo $this->_registry->session->character->dexterity ?><br>
-                                Выносливость: <?php echo $this->_registry->session->character->endurance ?><br>
+                                <h3 id="character-name">
+                                    <?php echo $this->_registry->session->character->name ?>
+                                </h3>
+                                
+                                <table>
+                                    <tr>
+                                        <td>
+                                            Уровень:
+                                        </td>
+                                        <td>
+                                            <?php echo $this->_registry->session->character->level ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Опыт:
+                                        </td>
+                                        <td>
+                                            <?php echo $this->_registry->session->character->experience ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Жизнь:
+                                        </td>
+                                        <td>
+                                            <span id="hp"><?php echo $this->_registry->session->character->hp ?></span>/<?php echo $this->_registry->session->character->maxHp ?><br>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Сила:
+                                        </td>
+                                        <td>
+                                            <?php echo $this->_registry->session->character->strength ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Ловкость:
+                                        </td>
+                                        <td>
+                                            <?php echo $this->_registry->session->character->dexterity ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Выносливость:
+                                        </td>
+                                        <td>
+                                            <?php echo $this->_registry->session->character->endurance ?>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                         <?php endif ?>
@@ -80,51 +128,62 @@
                     </div>
                 </div>
 
+                <!-- Header -->
                 <div class="span10">
-                    <div class="row">
-                        <div class="span10">
-                            <div class="navbar">
-                                <div class="navbar-inner">
-                                    <ul class="nav">
-                                        <?php if ('index' == $this->_registry->router->getController()): ?>
-                                        <li class="active">
-                                        <?php else: ?>
-                                        <li>
-                                        <?php endif ?>
-                                            <a href="/">Главная</a>
-                                        </li>
-                                        <?php if ('world' == $this->_registry->router->getController()): ?>
-                                        <li class="dropdown active">
-                                        <?php else: ?>
-                                        <li class="dropdown">
-                                        <?php endif ?>
-                                            <a href="/world" class="dropdown-toggle"
-                                               data-toggle="dropdown" data-target="#">
-                                                Игра
-                                                <b class="caret"></b>
-                                            </a>
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <ul class="nav">
+                                <?php if ('index' == $this->_registry->router->getController()): ?>
+                                <li class="active">
+                                <?php else: ?>
+                                <li>
+                                <?php endif ?>
+                                    <a href="/">Главная</a>
+                                </li>
+                                <?php if (null != $this->_registry->session->character): ?>
+                                <?php if ('world' == $this->_registry->router->getController()): ?>
+                                <li class="dropdown active">
+                                <?php else: ?>
+                                <li class="dropdown">
+                                <?php endif ?>
+                                    <a href="/world" class="dropdown-toggle"
+                                       data-toggle="dropdown" data-target="#">
+                                        Игра
+                                        <b class="caret"></b>
+                                    </a>
 
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <a href="/world">
-                                                        Мир
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="/world/inventory">
-                                                        Инвентарь
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="/world">
+                                                Мир
+                                            </a>
                                         </li>
                                         <li>
-                                            <a href="#">
-                                                Форум
+                                            <a href="/world/inventory">
+                                                Инвентарь
                                             </a>
                                         </li>
                                     </ul>
-                                </div>
-                            </div>
+                                </li>
+                                <?php endif ?>
+                                <li>
+                                    <a href="#">
+                                        База знаний
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        Форум
+                                    </a>
+                                </li>
+                                <?php if (null != $this->_registry->session->user): ?>
+                                <li>
+                                    <a href="/auth/logout">
+                                        Выход
+                                    </a>
+                                </li>
+                                <?php endif ?>
+                            </ul>
                         </div>
                     </div>
 

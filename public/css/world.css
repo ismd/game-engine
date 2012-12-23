@@ -1,12 +1,9 @@
 div#cell-content {
-    border: 1px solid silver;
     height: 115px;
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
+    background-color: #eeeeee;
 }
 
 div#cell-content img {
@@ -14,13 +11,8 @@ div#cell-content img {
     height: 100px;
 }
 
-div#main-panel {
-    border: 1px solid silver;
-    height: 131px;
-}
-
+div#main-panel,
 div#location-info {
-    border: 1px solid silver;
     height: 131px;
 }
 
@@ -29,15 +21,10 @@ div#map {
 }
 
 div#move-buttons {
-    height: 30px;
     text-align: center;
-    padding-left: 10px;
+    padding-left: 40px;
 }
 
 div#chat {
-    border: 1px solid silver;
     height: 200px;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
 }
