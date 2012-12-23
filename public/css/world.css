@@ -31,9 +31,13 @@ div#map {
 div#move-buttons {
     height: 30px;
     text-align: center;
+    padding-left: 10px;
 }
 
 div#chat {
     border: 1px solid silver;
     height: 200px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
