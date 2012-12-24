@@ -25,3 +25,9 @@ div#centered-content {
     width: 98%;
     margin-left: 1%;
 }
+
+a#auth-button,
+a#registration-button,
+a#forgot-password-button {
+    width: 85%;
+}

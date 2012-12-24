@@ -28,10 +28,17 @@
                         <?php if (null == $this->_registry->session->user): ?>
                         <div class="row">
                             <div class="span2">
-                                <a href="#" id="auth-button" class="btn">Войти в игру</a><br>
+                                <a id="auth-button" href="#" class="btn">
+                                    Войти в игру
+                                </a>
+                                <hr>
+                                <a id="registration-button" class="btn" href="/registration">
+                                    Регистрация
+                                </a>
                                 <br>
-                                <a href="/registration" class="btn">Регистрация</a><br>
-                                <a href="#" class="btn">Забыли пароль</a>
+                                <a id="forgot-password-button" class="btn" href="#">
+                                    Забыли пароль
+                                </a>
 
                                 <!-- Форма аутентификации -->
                                 <div id="auth-form" class="hide" title="Вход в игру">
