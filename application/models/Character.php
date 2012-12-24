@@ -176,7 +176,9 @@ class Character extends AbstractCharacter {
      * @return Character
      */
     public function setUser(User $value) {
-        $this->_user = $value;
+        $this->_user  = $value;
+        $this->idUser = $value->id;
+        
         return $this;
     }
 

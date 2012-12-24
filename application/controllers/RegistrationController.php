@@ -12,20 +12,19 @@ class RegistrationController extends AbstractController {
     }
 
     public function index() {
-        if (empty($_POST)) {
+        if (false == $this->request->isPost()) {
             return;
         }
 
-        $user = array(
-            'login'     => !empty($_POST['login']) ? $_POST['login'] : '',
-            'password'  => !empty($_POST['password']) ? $_POST['password'] : '',
-            'password1' => !empty($_POST['password1']) ? $_POST['password1'] : '',
-            'email'     => !empty($_POST['email']) ? $_POST['email'] : '',
-            'info'      => !empty($_POST['info']) ? $_POST['info'] : '',
-            'site'      => !empty($_POST['site']) ? $_POST['site'] : '',
-        );
-
-        $user   = new User($user);
+        $user = new User(array(
+            'login'     => $this->request->post->login,
+            'password'  => $this->request->post->password,
+            'password1' => $this->request->post->password1,
+            'email'     => $this->request->post->email,
+            'info'      => $this->request->post->info,
+            'site'      => $this->request->post->site,
+        ));
+        
         $mapper = new UserMapper;
 
         try {

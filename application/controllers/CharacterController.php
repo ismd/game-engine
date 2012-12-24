@@ -22,24 +22,31 @@ class CharacterController extends AbstractAuthController {
     public function create() {
         $this->view->setLayout('default');
 
-        if (empty($_POST)) {
+        if (false == $this->request->isPost()) {
             return;
         }
 
-        $character = array(
+        $character = new Character(array(
             'user' => $this->session->user,
-            'name' => $_POST['name'],
-        );
-
-        $character = new Character($character);
+            'name' => $this->request->post->name,
+        ));
+        
+        // Устанавливаем начальные значения
         $character->setDefaultValues();
 
         $mapper = new CharacterMapper;
 
         try {
             $mapper->save($character);
-        } catch (Exception $e) {
+            $this->view->created = true;
+        } catch (CharacterMapperLongName $e) {
             $this->view->error = $e->getMessage();
+        } catch (CharacterMapperShortName $e) {
+            $this->view->error = $e->getMessage();
+        } catch (CharacterMapperNameExists $e) {
+            $this->view->error = $e->getMessage();
+        } catch (Exception $e) {
+            $this->view->error = 'Ошибка';
         }
     }
 

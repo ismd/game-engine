@@ -1,32 +1,17 @@
-<?php
-if ( !empty($this->error) && $this->error !== true ) {
-    switch ($this->error) {
-        case Character::CREATE_ERR_NAME_EXISTS:
-            $message = 'Такое имя персонажа уже занято';
-            break;
-        case Character::CREATE_ERR_NAME_LENGTH_MAX:
-            $message = 'Имя не может быть длиннее 30 символов';
-            break;
-        case Character::CREATE_ERR_NAME_LENGTH_MIN:
-            $message = 'Имя не может быть короче 4 символов';
-            break;
-        default:
-            $message = 'При создании персонажа возникла ошибка. Проверьте введённые данные.';
-            break;
-    }
+<?php if (null != $this->error): ?>
+<p class="text-error">
+    <?php echo $this->error ?>
+</p>
+<?php endif ?>
 
-    echo '<font color="red">' . $message . '</font>';
-}
-?>
-
-<?php if ( !empty($this->error) && $this->error === true ): ?>
-Вы успешно создали персонажа, теперь можете выбрать его и начать играть им.
+<?php if (true == $this->created): ?>
+Вы успешно создали персонажа, теперь можете выбрать его и начать играть.
 <?php else: ?>
 <form action="/character/create" method="post">
     <fieldset>
         <legend>Создание персонажа</legend>
         <label for="name">Имя</label>
-        <input type="text" name="name" id="name" value="<?php echo ( !empty($_POST['name']) ) ? $_POST['name'] : '' ?>">
+        <input type="text" name="name" id="name">
         <input type="submit" value="Создать">
     </fieldset>
 </form>

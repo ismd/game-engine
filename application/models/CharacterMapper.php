@@ -68,7 +68,7 @@ class CharacterMapper extends AbstractDbMapper {
             throw new CharacterMapperNotFoundException;
         }
 
-        return new Character(mysql_fetch_assoc($query));
+        return new Character($query->fetch_assoc());
     }
 
     /**
@@ -148,8 +148,11 @@ class CharacterMapper extends AbstractDbMapper {
         }
 
         // Проверяем, не занят ли логин
-        if ($this->getByName($character->name) != null) {
+        try {
+            // Выбросит исключение, если персонаж с таким именем не найден
+            $this->getByName($character->name);
             throw new CharacterMapperNameExists;
+        } catch (CharacterMapperNotFoundException $e) {
         }
 
         if (null != $character->id) {
@@ -166,8 +169,7 @@ class CharacterMapper extends AbstractDbMapper {
             . "$character->y, $character->strength, $character->dexterity, "
             . "$character->endurance, $character->hp, $character->maxHp, "
             . "$character->minDamage, $character->maxDamage, '$character->image', "
-            . "$character->experience)"
-        );
+            . "$character->experience)");
 
         // TODO: сделать update, чтобы сохранялся персонаж. но надо ли?
     }

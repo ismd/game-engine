@@ -6,12 +6,18 @@
  */
 
 class User extends AbstractUser {
-
+    
     /**
      * Персонажи пользователя
      * @var Character[]
      */
     protected $_characters;
+    
+    /**
+     * Нужно для проверки совпадения паролей
+     * @var string
+     */
+    protected $_password1;
 
     public function setCharacters($value) {
         $this->_characters = (array)$value;
@@ -49,5 +55,14 @@ class User extends AbstractUser {
         }
 
         return false;
+    }
+    
+    public function setPassword1($value) {
+        $this->_password1 = (string)$value;
+        return $this;
+    }
+    
+    public function getPassword1() {
+        return $this->_password1;
     }
 }
