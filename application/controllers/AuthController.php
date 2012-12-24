@@ -22,13 +22,8 @@ class AuthController extends AbstractController {
      * @post password
      */
     public function login() {
-        if (empty($_POST['login']) || empty($_POST['password'])) {
-            $this->view->result = 'error';
-            return;
-        }
-
-        $login    = $_POST['login'];
-        $password = $_POST['password'];
+        $login    = $this->request->post->login;
+        $password = $this->request->post->password;
 
         $mapper = new UserMapper;
 

@@ -12,29 +12,48 @@
         <legend>Регистрация пользователя</legend>
         <p>
             <label for="login">Логин</label>
-            <input type="text" name="login" id="login" value="<?php echo ( !empty($_POST['login']) ) ? $_POST['login'] : '' ?>">
+            <input id="login"
+                   type="text"
+                   name="login"
+                   value="<?php echo $this->_registry->request->post->login ?>">
         </p>
         <p>
             <label for="password">Пароль</label>
-            <input type="password" name="password" id="password">
+            <input id="password"
+                   type="password"
+                   name="password">
         </p>
         <p>
             <label for="password1">Повтор пароля</label>
-            <input type="password" name="password1" id="password1">
+            <input id="password1"
+                   type="password"
+                   name="password1">
         </p>
         <p>
             <label for="email">e-mail</label>
-            <input type="text" name="email" id="email" value="<?php echo ( !empty($_POST['email']) ) ? $_POST['email'] : '' ?>">
+            <input id="email"
+                   type="text"
+                   name="email"
+                   value="<?php echo $this->_registry->request->post->email ?>">
         </p>
         <p>
-            <label>Инфо <textarea name="info"><?php echo ( !empty($_POST['info']) ) ? $_POST['info'] : '' ?></textarea></label>
+            <label for="info">
+                Инфо
+            </label>
+            <textarea id="info"
+                      name="info"><?php echo ( !empty($_POST['info']) ) ? $_POST['info'] : '' ?></textarea>
         </p>
         <p>
             <label for="site">Сайт</label>
-            <input type="text" name="site" id="site" value="<?php echo ( !empty($_POST['site']) ) ? $_POST['site'] : '' ?>">
+            <input id="site"
+                   type="text"
+                   name="site"
+                   value="<?php echo $this->_registry->request->post->site ?>">
         </p>
         <p>
-            <input type="submit" value="Зарегистрироваться">
+            <input type="submit"
+                   class="btn"
+                   value="Зарегистрироваться">
         </p>
     </fieldset>
 </form>

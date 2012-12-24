@@ -55,7 +55,7 @@ class CharacterController extends AbstractAuthController {
      * @post id
      */
     public function set() {
-        $idCharacter = (int)$_POST['id'];
+        $idCharacter = (int)$this->request->post->id;
 
         if (false == $this->session->user->hasCharacter($idCharacter)) {
             $this->view->result = 'error';
@@ -75,8 +75,8 @@ class CharacterController extends AbstractAuthController {
      * @post y
      */
     public function move() {
-        $x = (int)$_POST['x'];
-        $y = (int)$_POST['y'];
+        $x = (int)$this->request->post->x;
+        $y = (int)$this->request->post->y;
 
         $cell = new Cell($this->session->character->cell->map, $x, $y);
 
