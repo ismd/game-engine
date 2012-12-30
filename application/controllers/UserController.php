@@ -21,7 +21,14 @@ class UserController extends AbstractAuthController {
 
         // Преобразуем в массив каждого персонажа
         foreach ($characters as $i => $character) {
-            $characters[$i] = $character->toArray();
+            $characters[$i] = array(
+                'id'    => $character->id,
+                'name'  => $character->name,
+                'level' => $character->level,
+                'hp'    => $character->hp,
+                'maxHp' => $character->maxHp,
+                'image' => $character->image,
+            );
         }
 
         $this->view->characters = $characters;
