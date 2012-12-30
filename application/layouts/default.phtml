@@ -60,14 +60,6 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="span2">
-                                <a id="select-character" href="#" class="btn">
-                                    Выбрать персонажа
-                                </a>
-                            </div>
-                        </div>
-                        
                         <hr>
 
                         <?php if (null != $this->_registry->session->character): ?>
@@ -130,6 +122,14 @@
                                 </table>
                             </div>
                         </div>
+                        <?php else: ?>
+                        <div class="row">
+                            <div class="span2">
+                                <a id="select-character" href="#" class="btn">
+                                    Выбрать персонажа
+                                </a>
+                            </div>
+                        </div>
                         <?php endif ?>
                         <?php endif ?>
                     </div>
@@ -143,9 +143,9 @@
                                 <ul class="nav">
                                     <?php if ('index' == $this->_registry->router->getController()): ?>
                                     <li class="active">
-                                        <?php else: ?>
+                                    <?php else: ?>
                                     <li>
-                                        <?php endif ?>
+                                    <?php endif ?>
                                         <a href="/">
                                             <i class="icon-home"></i>
                                             Главная
@@ -154,10 +154,10 @@
                                     <?php if (null != $this->_registry->session->character): ?>
                                     <?php if ('world' == $this->_registry->router->getController()): ?>
                                     <li class="dropdown active">
-                                        <?php else: ?>
+                                    <?php else: ?>
                                     <li class="dropdown">
                                         <?php endif ?>
-                                        <a href="/world" class="dropdown-toggle"
+                                        <a href="#" class="dropdown-toggle"
                                            data-toggle="dropdown" data-target="#">
                                             Игра
                                             <b class="caret"></b>
@@ -190,10 +190,26 @@
                                 </ul>
                                 <?php if (null != $this->_registry->session->user): ?>
                                 <ul class="nav pull-right">
-                                    <li>
-                                        <a href="/auth/logout">
-                                            Выход
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle"
+                                           data-toggle="dropdown" data-target="#">
+                                            Настройки
+                                            <b class="caret"></b>
                                         </a>
+
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a id="select-character" href="#">
+                                                    Выбрать персонажа
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="/auth/logout">
+                                                    Выход
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </li>
                                 </ul>
                                 <?php endif ?>
