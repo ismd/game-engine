@@ -8,20 +8,55 @@ class MapController extends AbstractAuthController {
 
     /**
      * Выводит содержимое текущей клетки
-     * 
-     * @todo Переделать
      */
     public function cell() {
-        $content = $this->session->character->cell->getContent();
+        $this->view->setLayout('empty');
 
-        // Убираем текущего играющего персонажа из списка
-        foreach ($content['characters'] as $i => $character) {
-            if ($character['id'] == $this->session->character->id) {
-                unset($content['characters'][$i]);
-                break;
-            }
+        $content = array(
+            'npcs'       => array(),
+            'mobs'       => array(),
+            'characters' => array(),
+        );
+
+        $cell = $this->session->character->cell;
+
+        // Получаем NPC на клетке
+        $mapper = new NpcMapper;
+        $npcs   = $mapper->getByCell($cell);
+
+        // Получаем персонажей на клетке
+        $mapper     = new CharacterMapper;
+        $characters = $mapper->getByCell($cell);
+
+        // Получаем мобов на клетке
+        $mapper = new MobMapper;
+        $mobs   = $mapper->getByCell($cell);
+
+        // Преобразуем в массив
+        foreach ($npcs as $npc) {
+            //$content['npcs'][] = $npc->toArray();
         }
 
-        die(json_encode($content));
+        $id = $this->session->character->id;
+        foreach ($characters as $character) {
+            if ($character->id == $id) {
+                continue;
+            }
+
+            $content['characters'][] = array(
+                'id'    => $character->id,
+                'name'  => $character->name,
+                'level' => $character->level,
+                'hp'    => $character->hp,
+                'maxHp' => $character->maxHp,
+                'image' => $character->image,
+            );
+        }
+
+        foreach ($mobs as $mob) {
+            //$content['mobs'][] = $mob->toArray();
+        }
+
+        $this->view->content = $content;
     }
 }

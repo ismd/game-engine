@@ -16,19 +16,6 @@ abstract class AbstractNpc extends AbstractModel {
     protected $_x;
     protected $_y;
 
-    public function toArray() {
-        return array(
-            'id'          => $this->id,
-            'idNpc'       => $this->idNpc,
-            'name'        => $this->name,
-            'greeting'    => $this->greeting,
-            'image'       => $this->image,
-            'idMap'       => $this->idMap,
-            'x' => $this->x,
-            'y' => $this->y,
-        );
-    }
-
     public function setId($value) {
         $this->_id = (int)$value;
         return $this;

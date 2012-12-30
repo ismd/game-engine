@@ -34,28 +34,6 @@ class Character extends AbstractCharacter {
      */
     protected $_lastMove = 0;
 
-    public function toArray() {
-        return array(
-            'id'         => $this->id,
-            'idUser'     => $this->user->id,
-            'name'       => $this->name,
-            'level'      => $this->level,
-            'money'      => $this->money,
-            'hp'         => $this->hp,
-            'maxHp'      => $this->maxHp,
-            'minDamage'  => $this->minDamage,
-            'maxDamage'  => $this->maxDamage,
-            'experience' => $this->experience,
-            'image'      => $this->image,
-            'strength'   => $this->strength,
-            'dexterity'  => $this->dexterity,
-            'endurance'  => $this->endurance,
-            'idMap'      => $this->cell->map->id,
-            'x'          => $this->cell->x,
-            'y'          => $this->cell->y,
-        );
-    }
-
     /**
      * Установка начальных значений для персонажа
      */
