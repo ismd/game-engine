@@ -21,11 +21,6 @@ h3#character-name {
     margin-top: -10px;
 }
 
-div#centered-content {
-    width: 98%;
-    margin-left: 1%;
-}
-
 a#auth-button,
 a#registration-button,
 a#forgot-password-button {
