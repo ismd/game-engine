@@ -1,7 +1,7 @@
 require.config({
-    baseUrl: 'js/lib',
+    baseUrl: '/js/lib',
     paths: {
-        app: '../app'
+        app: '/js/app'
     },
     shim: {
         'bootstrap': {

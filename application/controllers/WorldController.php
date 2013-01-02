@@ -19,13 +19,7 @@ class WorldController extends AbstractAuthController {
      */
     public function index() {
         $this->view->setTitle('Мир');
-
         $this->view->appendCss('world');
-
-        $this->view->appendJs(array(
-            'world/world',
-            'world/actions',
-        ));
 
         $this->view->cell = $this->session->character->cell;
     }
