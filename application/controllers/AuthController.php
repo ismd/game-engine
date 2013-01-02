@@ -18,17 +18,17 @@ class AuthController extends AbstractController {
     /**
      * Залогиниваемся
      *
-     * @post login
+     * @post username
      * @post password
      */
     public function login() {
-        $login    = $this->request->post->login;
+        $username = $this->request->post->username;
         $password = $this->request->post->password;
 
         $mapper = new UserMapper;
 
         try {
-            $user = $mapper->getByLoginAndPassword($login, $password);
+            $user = $mapper->getByLoginAndPassword($username, $password);
             $this->session->user = $user;
 
             $this->view->result = 'ok';
