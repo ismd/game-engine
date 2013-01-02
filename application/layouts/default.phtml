@@ -8,16 +8,16 @@
         <link href="/css/bootstrap.css" rel="stylesheet" media="screen">
         <link href="/css/bootstrap-responsive.css" rel="stylesheet">
         <link href="/css/main.css" rel="stylesheet" media="screen">
-        <script src="/js/jquery.js"></script>
-        <script src="/js/jquery-ui.js"></script>
-        <script src="/js/bootstrap.js"></script>
-        <script src="/js/auth.js"></script>
         <?php foreach ($this->getCss() as $link): ?>
         <link href="/css/<?php echo $link ?>.css" rel="stylesheet" type="text/css">
         <?php endforeach ?>
-        <?php /*foreach ($this->getJs() as $link): ?>
-        <script src="/js/<?php echo $link ?>.js"></script>
-        <?php endforeach*/ ?>
+        <?php foreach ($this->getJs() as $js): ?>
+        <?php $attributes = array() ?>
+        <?php foreach ($js['attributes'] as $key => $value): ?>
+        <?php $attributes[] = $key . '="' . $value . '"' ?>
+        <?php endforeach ?>
+        <script<?php if (count($attributes) > 0) echo ' ' . implode(' ', $attributes) ?> src="/js/<?php echo $js['link'] ?>.js"></script>
+        <?php endforeach ?>
     </head>
     <body>
         <div class="container">
