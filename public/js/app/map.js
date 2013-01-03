@@ -15,7 +15,7 @@ define(['jquery'], function($) {
         var coordinates = $('input#coordinates');
 
         // Считываем координаты
-        id = parseInt(coordinates.attr('id'));
+        id = parseInt(coordinates.attr('id-map'));
         x  = parseInt(coordinates.attr('x'));
         y  = parseInt(coordinates.attr('y'));
     });
