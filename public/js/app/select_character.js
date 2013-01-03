@@ -1,4 +1,8 @@
 define(['jquery'], function($) {
+
+    /**
+     * Инициализируем модуль
+     */
     $('a#select-character').click(function(e) {
         e.preventDefault();
         showCharacters();
@@ -10,6 +14,7 @@ define(['jquery'], function($) {
 
     /**
      * Показывает окно для выбора персонажа
+     * Перенаправляет на страницу создания персонажа, если ни одного нет
      */
     function showCharacters() {
         var characters     = getUserCharacters();
@@ -26,11 +31,15 @@ define(['jquery'], function($) {
         
         // Наполняем список
         $.each(characters, function(i, character) {
+            // Создаём ссылку
             var link = $('<a/>', {
                 id: character.id,
                 href: '#',
                 text: character.name + ' (' + character.level + ' уровень)'
-            }).click(function() {
+            }).click(function(e) {
+                e.preventDefault();
+
+                // При клике выбираем персонажа
                 setCharacter(this.id);
             });
 
@@ -38,9 +47,11 @@ define(['jquery'], function($) {
                 id: character.id
             }).append(link);
 
+            // Добавляем персонажа в список
             charactersList.append(item);
         });
 
+        // Показываем окно выбора
         $('div#select-character').modal();
     }
 

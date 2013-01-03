@@ -1,27 +1,41 @@
 define(['jquery', 'app/select_character'], function($, select_character) {
-    var username = $('div#auth-form input#username'),
-        password = $('div#auth-form input#password');
-    
-    $('a#auth-button-login').click(function(e) {
-        e.preventDefault();
 
-        var authButton = $('a#auth-button-login');
+    /**
+     * Инициализируем модуль
+     */
+    $(document).ready(function() {
+        $('a#auth-button-login').click(function(e) {
+            e.preventDefault();
 
-        // Блокируем кнопку входа
-        authButton.addClass('disabled');
+            // Текущая кнопка
+            var currentButton = $(this);
 
-        // Пытаемся залогиниться
-        var logged = auth(username.val(), password.val());
+            // Блокируем кнопку входа
+            currentButton.addClass('disabled');
 
-        if (logged == true) {
-            $('div#auth-form').modal('hide');
-            select_character.showCharacters();
-        } else {
-            authButton.removeClass('disabled');
-            authFailed();
-        }
+            // Форма, скрываем её после удачного входа
+            var authForm = $('div#auth-form');
+
+            // Пытаемся залогиниться
+            var logged = auth(
+                authForm.find('input#username').val(),
+                authForm.find('input#password').val()
+            );
+
+            // Разблокируем кнопку входа
+            currentButton.removeClass('disabled');
+
+            if (logged == true) {
+                authForm.modal('hide');
+
+                // Передаём управление модулю select_character
+                select_character.showCharacters();
+            } else {
+                authFailed();
+            }
+        });
     });
-
+    
     /**
      * Пытается залогиниться путём отправки post-запроса
      * @return bool
