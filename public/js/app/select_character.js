@@ -27,7 +27,7 @@ define(['jquery'], function($) {
         }
 
         // Очищаем список
-        charactersList.text('');
+        charactersList.empty();
         
         // Наполняем список
         $.each(characters, function(i, character) {

@@ -20,6 +20,11 @@ define(['jquery'], function($) {
     $(document).ready(function() {
         var coordinates = $('input#coordinates');
 
+        // Если мы находимся на другой странице
+        if (coordinates.length == 0) {
+            return;
+        }
+
         // Считываем координаты
         id = parseInt(coordinates.attr('id-map'));
         x  = parseInt(coordinates.attr('x'));
