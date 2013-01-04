@@ -15,7 +15,7 @@
             <input id="login"
                    type="text"
                    name="login"
-                   value="<?php echo $this->_registry->request->post->login ?>">
+                   value="<?php echo $this->request->post->login ?>">
         </p>
         <p>
             <label for="password">Пароль</label>
@@ -34,21 +34,21 @@
             <input id="email"
                    type="text"
                    name="email"
-                   value="<?php echo $this->_registry->request->post->email ?>">
+                   value="<?php echo $this->request->post->email ?>">
         </p>
         <p>
             <label for="info">
                 Инфо
             </label>
             <textarea id="info"
-                      name="info"><?php echo ( !empty($_POST['info']) ) ? $_POST['info'] : '' ?></textarea>
+                      name="info"><?php echo $this->request->post->info ?></textarea>
         </p>
         <p>
             <label for="site">Сайт</label>
             <input id="site"
                    type="text"
                    name="site"
-                   value="<?php echo $this->_registry->request->post->site ?>">
+                   value="<?php echo $this->request->post->site ?>">
         </p>
         <p>
             <input type="submit"

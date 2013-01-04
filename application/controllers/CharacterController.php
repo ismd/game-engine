@@ -22,13 +22,15 @@ class CharacterController extends AbstractAuthController {
     public function create() {
         $this->view->setLayout('default');
 
-        if (false == $this->request->isPost()) {
+        $request = $this->getRequest();
+
+        if (false == $request->isPost()) {
             return;
         }
 
         $character = new Character(array(
             'user' => $this->session->user,
-            'name' => $this->request->post->name,
+            'name' => $request->post->name,
         ));
         
         // Устанавливаем начальные значения
@@ -55,7 +57,7 @@ class CharacterController extends AbstractAuthController {
      * @post id
      */
     public function set() {
-        $idCharacter = (int)$this->request->post->id;
+        $idCharacter = (int)$this->getRequest()->post->id;
 
         if (false == $this->session->user->hasCharacter($idCharacter)) {
             $this->view->result = 'error';
@@ -75,8 +77,10 @@ class CharacterController extends AbstractAuthController {
      * @post y
      */
     public function move() {
-        $x = (int)$this->request->post->x;
-        $y = (int)$this->request->post->y;
+        $request = $this->getRequest();
+
+        $x = (int)$request->post->x;
+        $y = (int)$request->post->y;
 
         $cell = new Cell($this->session->character->cell->map, $x, $y);
 
