@@ -2,6 +2,8 @@ define(['jquery'], function($) {
 
     /**
      * Инициализируем модуль
+     * При клике по кнопке смены персонажа загружаем их список
+     * Окно показывается автоматически с помощью bootstrap api (data-toggle, data-target)
      */
     $('a#select-character-open').click(function(e) {
         e.preventDefault();
