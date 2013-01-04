@@ -3,21 +3,41 @@ define(['jquery'], function($) {
     /**
      * Инициализируем модуль
      */
-    $('a#select-character').click(function(e) {
+    $('a#select-character-open').click(function(e) {
         e.preventDefault();
-        showCharacters();
+        fillUserCharacters();
     });
 
     return {
-        'showCharacters': showCharacters
+        'showUserCharacters': showUserCharacters
     };
 
     /**
-     * Показывает окно для выбора персонажа
+     * Показывает окно со списком персонажей
+     */
+    function showUserCharacters() {
+        fillUserCharacters();
+        $('div#select-character').modal();
+    }
+
+    /**
+     * Загружает список персонажей пользователя
+     */
+    function fillUserCharacters() {
+        $.ajax({
+            url: '/user/characters',
+            type: 'get',
+            success: function(data) {
+                updateUserCharactersList(eval(data));
+            }
+        });
+    }
+
+    /**
+     * Обновляет список персонажей пользователя
      * Перенаправляет на страницу создания персонажа, если ни одного нет
      */
-    function showCharacters() {
-        var characters     = getUserCharacters();
+    function updateUserCharactersList(characters) {
         var charactersList = $('div#select-character ul#characters-list');
 
         // Если у пользователя ещё нет персонажей, то перенаправляем на страницу создания персонажа
@@ -50,28 +70,6 @@ define(['jquery'], function($) {
             // Добавляем персонажа в список
             charactersList.append(item);
         });
-
-        // Показываем окно выбора
-        $('div#select-character').modal();
-    }
-
-    /**
-     * Получает список персонажей пользователя, показывает окно с выбором персонажа
-     * @return character[]
-     */
-    function getUserCharacters() {
-        var characters;
-
-        $.ajax({
-            url: '/user/characters',
-            type: 'get',
-            async: false,
-            success: function(data) {
-                characters = eval(data);
-            }
-        });
-
-        return characters;
     }
 
     /**

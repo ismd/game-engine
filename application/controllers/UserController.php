@@ -16,7 +16,7 @@ class UserController extends AbstractAuthController {
      */
     public function characters() {
         $this->view->setLayout('empty');
-
+        
         $characters = $this->session->user->characters;
 
         // Преобразуем в массив каждого персонажа

@@ -29,9 +29,11 @@
                         <?php if (null == $this->_registry->session->user): ?>
                         <div class="row">
                             <div class="span2">
-                                <a id="auth-button-open" href="#auth-form" role="button" class="btn" data-toggle="modal">
-                                    Войти в игру
-                                </a>
+                                <a id="auth-button-open"
+                                   href="#auth-form"
+                                   role="button"
+                                   data-toggle="modal"
+                                   class="btn">Войти в игру</a>
                                 <hr>
                                 <a id="registration-button" class="btn" href="/registration">
                                     Регистрация
@@ -114,7 +116,11 @@
                         <?php else: ?>
                         <div class="row">
                             <div class="span2">
-                                <a id="select-character" href="#" class="btn">
+                                <a id="select-character-open"
+                                   href="#select-character"
+                                   role="button"
+                                   data-toggle="modal"
+                                   class="btn">
                                     Выбрать персонажа
                                 </a>
                             </div>
@@ -188,9 +194,10 @@
 
                                         <ul class="dropdown-menu">
                                             <li>
-                                                <a id="select-character" href="#">
-                                                    Выбрать персонажа
-                                                </a>
+                                                <a id="select-character-open"
+                                                   href="#select-character"
+                                                   role="button"
+                                                   data-toggle="modal">Выбрать персонажа</a>
                                             </li>
 
                                             <li>
@@ -245,7 +252,9 @@
                 <h3>Выберите персонажа</h3>
             </div>
             <div class="modal-body">
-                <ul id="characters-list" />
+                <ul id="characters-list">
+                    <img src="/img/loadingAnimation.gif">
+                </ul>
             </div>
         </div>
     </body>

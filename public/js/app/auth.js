@@ -29,7 +29,7 @@ define(['jquery', 'app/select_character'], function($, select_character) {
                 authForm.modal('hide');
 
                 // Передаём управление модулю select_character
-                select_character.showCharacters();
+                select_character.showUserCharacters();
             } else {
                 authFailed();
             }
