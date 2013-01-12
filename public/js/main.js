@@ -10,7 +10,7 @@ require.config({
     }
 });
 
-require(['jquery', 'bootstrap', 'app/auth', 'app/select_character', 'app/map'],
-function($, bootstrap, auth, select_character, map) {
+require(['jquery', 'bootstrap', 'angular', 'app/auth', 'app/select_character', 'app/map'],
+function($, bootstrap, angular, auth, select_character, map) {
     
 });
