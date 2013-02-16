@@ -20,7 +20,7 @@ class PsRouter {
      * Запрошен только partial
      */
     protected $_isPartial = false;
-    
+
     /**
      * Запрошен доступ к действию
      */
@@ -49,7 +49,7 @@ class PsRouter {
         if (empty($route)) {
             $route = 'index';
         }
-        
+
         $this->_registry = $registry;
         $this->_route    = $route;
     }
@@ -83,7 +83,7 @@ class PsRouter {
         $controller = new $controllerName($this->_registry);
 
         $action = $this->_action;
-        
+
         if ($this->isPartial()) {
             $action .= 'Partial';
         } elseif ($this->isAction()) {
@@ -119,20 +119,16 @@ class PsRouter {
             case $prefixes->partial:
                 $this->_isPartial = true;
                 break;
-            
+
             // Обрабатываем как действие
             case $prefixes->action:
                 $this->_isAction = true;
                 break;
-            
-            case 'index':
+
+            default:
                 $this->_controller = 'index';
                 $this->_action     = 'index';
                 return;
-                break;
-            
-            default:
-                die;
                 break;
         }
 
@@ -141,7 +137,7 @@ class PsRouter {
         if ($countRoute == 1) {
             die;
         }
-        
+
         // Контроллер
         $this->_controller = strtolower($route[1]);
 
@@ -183,7 +179,7 @@ class PsRouter {
     public function isPartial() {
         return $this->_isPartial;
     }
-    
+
     public function isAction() {
         return $this->_isAction;
     }

@@ -12,7 +12,7 @@ require.config({
 
 require(['jquery', 'bootstrap', 'app/auth', 'app/select_character', 'app/map'],
 function($, bootstrap, auth, select_character, map) {
-    
+
 });
 
 define(['angular'], function(angulara) {

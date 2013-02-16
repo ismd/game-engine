@@ -11,7 +11,7 @@ class RegistrationController extends PsAbstractController {
         }
     }
 
-    public function index() {
+    public function indexPartial() {
         $request = $this->getRequest();
         
         if (false == $request->isPost()) {
