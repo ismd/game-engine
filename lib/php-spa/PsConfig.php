@@ -26,11 +26,10 @@ class PsConfig {
 
     /**
      * Читает конфигурационный файл
-     * @param string $sitepath Путь к директории с сайтом
      * @throws PsConfigCantReadException
      */
-    private function __construct($sitepath) {
-        $filename = $sitepath . $this->_filename;
+    private function __construct() {
+        $filename = SITEPATH . $this->_filename;
 
         if (false == is_readable($filename)) {
             throw new PsConfigCantReadException;
@@ -41,7 +40,7 @@ class PsConfig {
         if (false == $this->_config) {
             throw new PsConfigCantReadException;
         }
-        
+
         // Преобразуем все элементы к объектам
         array_walk($this->_config, create_function('&$val', '$val = (object)$val;'));
 
@@ -56,18 +55,17 @@ class PsConfig {
 
     /**
      * Возвращает инстанс
-     * @param string $sitepath Путь к директории с сайтом
      * @return PsConfig
      * @throws PsConfigCantReadException
      */
-    public static function getInstance($sitepath) {
+    public static function getInstance() {
         if (is_null(self::$_instance)) {
-            self::$_instance = new PsConfig($sitepath);
+            self::$_instance = new PsConfig();
         }
 
         return self::$_instance;
     }
-    
+
     /**
      * Возвращает объект конфига
      * @return object
