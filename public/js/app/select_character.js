@@ -50,7 +50,7 @@ define(['jquery'], function($) {
 
         // Очищаем список
         charactersList.empty();
-        
+
         // Наполняем список
         $.each(characters, function(i, character) {
             // Создаём ссылку

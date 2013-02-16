@@ -1,4 +1,4 @@
-define(['jquery', 'app/select_character'], function($, select_character) {
+define(['jquery', './select_character'], function($, select_character) {
 
     /**
      * Инициализируем модуль
@@ -35,7 +35,7 @@ define(['jquery', 'app/select_character'], function($, select_character) {
             }
         });
     });
-    
+
     /**
      * Пытается залогиниться путём отправки post-запроса
      * @return bool

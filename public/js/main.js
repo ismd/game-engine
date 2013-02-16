@@ -1,7 +1,8 @@
 require.config({
-    baseUrl: '/js/lib',
     paths: {
-        app: '/js/app'
+        jquery: 'lib/jquery',
+        bootstrap: 'lib/bootstrap',
+        angular: 'lib/angular'
     },
     shim: {
         'bootstrap': {
@@ -10,12 +11,12 @@ require.config({
     }
 });
 
-require(['jquery', 'bootstrap', 'app/auth', 'app/select_character', 'app/map'],
-function($, bootstrap, auth, select_character, map) {
+require(['bootstrap', 'app/auth'],
+function (bootstrap,   auth) {
 
 });
 
-define(['angular'], function(angulara) {
+define(['angular'], function(a) {
     function RegistrationController($scope) {};
     function WorldController($scope) {};
     function InventoryController($scope) {};

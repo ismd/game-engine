@@ -22,7 +22,8 @@
                                    href="#auth-form"
                                    role="button"
                                    data-toggle="modal"
-                                   class="btn">Войти в игру</a>
+                                   class="btn"
+                                   target="_self">Войти в игру</a>
                                 <hr>
                                 <a id="registration-button" class="btn" href="/registration">
                                     Регистрация
@@ -49,7 +50,7 @@
                                 <h3 id="character-name">
                                     <?php echo $this->_registry->session->character->name ?>
                                 </h3>
-                                
+
                                 <table>
                                     <tr>
                                         <td>
@@ -146,7 +147,7 @@
                                             Игра
                                             <b class="caret"></b>
                                         </a>
-                                        
+
                                         <ul class="dropdown-menu">
                                             <li>
                                                 <a href="/world">
@@ -210,10 +211,10 @@
                 </div>
             </div>
         </div>
-        
+
         <?php if (null == $this->_registry->session->user): ?>
         <!-- Форма аутентификации -->
-        <div id="auth-form" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div id="auth-form" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h3>Вход в игру</h3>
@@ -242,7 +243,7 @@
             </div>
             <div class="modal-body">
                 <ul id="characters-list">
-                    <img src="/img/loadingAnimation.gif">
+                    <img src="/img/loading.gif">
                 </ul>
             </div>
         </div>
