@@ -2,34 +2,8 @@
 /**
  * Класс для работы с шаблонами
  *
- * Установка заголовка страницы `test'
- * $view->setTitle('test')
- *
- * Будет подключен js-файл test.js
- * $view->appendJs('test')
- * Вторым параметром возможно передавать дополнительные атрибуты
- * $view->appendJs('test', array('data-main' => 'js/main'))
- *
- * Будут подключены css-файлы test.css и test1.css
- * $view->appendCss(array('test', 'test1'))
- *
  * Передача в шаблон переменной test со значением 'test'
  * $view->test = 'test'
- *
- * Возвращает подключаемый шаблон
- * $this->content()
- *
- * Возвращает заголовок страницы
- * $this->getTitle()
- *
- * Возвращает массив js-файлов, которые необходимо подключить
- * Вызов только из шаблонов
- * $this->getJs()
- *
- * Возвращает массив css-файлов, которые необходимо подключить
- * Вызов только из шаблонов
- * $this->getCss()
- *
  * Обращаться к переменным в шаблоне необходимо следующим образом
  * $this->test
  *
@@ -45,6 +19,15 @@ class PsView {
      * @var array
      */
     protected $_data = array();
+    
+    /**
+     * JSON-данные для вывода при запросе действия
+     * @var array
+     */
+    protected $_json = array(
+        'result' => 'error',
+        'data'   => array(),
+    );
 
     public function __construct($registry) {
         $this->_registry = $registry;
@@ -77,28 +60,33 @@ class PsView {
     public function render() {
         // Отправляем заголовок с указанием кодировки
         header('Content-Type: text/html; charset=utf-8');
+        
+        $router = $this->_registry->router;
 
         // Если отображаем только partial
-        if (true == $this->_registry->router->isPartial()) {
-            echo $this->content();
+        if ($router->isPartial()) {
+            $this->renderPartial();
+            return;
+        }
+        
+        // Если отображаем вывод обработки действия
+        if ($router->isAction()) {
+            $this->renderJson();
             return;
         }
 
-        // Подключаем layout
+        // Отображаем главную страницу
         $filename = SITEPATH . 'application/views/layout.phtml';
 
-        if (false == is_readable($filename)) {
-            throw new Exception('Cannot read layout file');
+        if (is_readable($filename)) {
+            require $filename;
         }
-
-        require $filename;
     }
 
     /**
-     * Возвращает содержимое запрошенной страницы
-     * @return string
+     * Выводит содержимое запрошенной страницы
      */
-    protected function content() {
+    protected function renderPartial() {
         $router = $this->_registry->router;
 
         // Путь к директории с шаблонами
@@ -112,65 +100,23 @@ class PsView {
             require $filename;
         }
     }
-
+    
+    protected function renderJson() {
+        echo json_encode($this->_json);
+    }
+    
     /**
-     * Переданная ссылка будет вставлена в качестве ссылки на javascript-файл
-     * @param string $link Ссылка на javascript-файл
-     * @param array $attributes Дополнительные атрибуты
-     * @return View
+     * Передача json-данных для вывода в шаблон
+     * Можно использовать только при запросе действия
+     * @param array $json
+     * @return PsView
      */
-    public function appendJs($link, $attributes = array()) {
-        $this->_js[] = array(
-            'link'       => $link,
-            'attributes' => $attributes,
+    public function json($value) {
+        $this->_json = array(
+            'result' => 'ok',
+            'data'   => (array)$value,
         );
-
+        
         return $this;
-    }
-
-    /**
-     * Возвращает массив js-файлов, которые будут подключены
-     * @return array
-     */
-    protected function getJs() {
-        return $this->_js;
-    }
-
-    /**
-     * Переданная ссылка будет вставлена в качестве ссылки на css-файл
-     * Может быть передан массив ссылок
-     * @param string|array $link Ссылка или массив ссылок на css-файлы
-     * @return View
-     */
-    public function appendCss($link) {
-        if (is_array($link)) {
-            $this->_css = array_merge($this->_css, $link);
-        } else {
-            $this->_css[] = $link;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Возвращает массив css-файлов, которые будут подключены
-     * @return array
-     */
-    protected function getCss() {
-        return $this->_css;
-    }
-
-    /**
-     * Устанавливает заголовок страницы
-     * @param string
-     * @return View
-     */
-    public function setTitle($value) {
-        $this->_title = '::' . (string)$value;
-        return $this;
-    }
-
-    public function getTitle() {
-        return $this->_title;
     }
 }

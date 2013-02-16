@@ -15,12 +15,7 @@ require SITEPATH . 'lib/php-spa/startup.php';
 $registry = new PsRegistry;
 
 // Читаем конфиг и сохраняем в $registry
-try {
-    $registry->config = PsConfig::getInstance(SITEPATH)->getConfig();
-} catch (PsConfigCantReadException $e) {
-    // Если не удалось прочитать конфиг
-    $_GET['route'] = 'index';
-}
+$registry->config = PsConfig::getInstance(SITEPATH)->getConfig();
 
 // Устанавливаем временную зону сервера
 date_default_timezone_set($registry->config->timezone->server);

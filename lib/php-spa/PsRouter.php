@@ -20,6 +20,11 @@ class PsRouter {
      * Запрошен только partial
      */
     protected $_isPartial = false;
+    
+    /**
+     * Запрошен доступ к действию
+     */
+    protected $_isAction = false;
 
     /**
      * Контроллер
@@ -40,7 +45,11 @@ class PsRouter {
      */
     protected $_args = array();
 
-    public function __construct($registry, $route = 'index') {
+    public function __construct($registry, $route) {
+        if (empty($route)) {
+            $route = 'index';
+        }
+        
         $this->_registry = $registry;
         $this->_route    = $route;
     }
@@ -62,7 +71,7 @@ class PsRouter {
         $controllerFile   = $controllersPath . $controllerName . '.php';
 
         // Если недоступен файл контроллера
-        if (false == is_readable($controllerFile)) {
+        if (!is_readable($controllerFile)) {
             $controllerFile = $controllersPath . 'IndexController.php';
             $controllerName = 'IndexController';
         }
@@ -74,10 +83,15 @@ class PsRouter {
         $controller = new $controllerName($this->_registry);
 
         $action = $this->_action;
+        
+        if ($this->isPartial()) {
+            $action .= 'Partial';
+        } elseif ($this->isAction()) {
+            $action .= 'Action';
+        }
 
         // Если действие недоступно
-        if (false == is_callable(array($controller, $action))) {
-            header('Location: /');
+        if (!is_callable(array($controller, $action))) {
             die;
         }
 
@@ -92,38 +106,54 @@ class PsRouter {
 
     /**
      * Определяет контроллер, действие и аргументы
+     * Устанавливает свойства _controller, _action и _args
      */
     protected function parseRoute() {
-        $route      = explode('/', $this->_route);
+        $route = explode('/', $this->_route);
 
-        // Обрабатываем как partial
-        if ($route[0] == 'p') {
-            $this->_isPartial = true;
-            $route = array_slice($route, 1);
-        } else {
-            $this->_controller = 'index';
-            $this->_action      = 'index';
-            return;
+        // Получаем префиксы
+        $prefixes = $this->_registry->config->url_prefix;
+
+        switch ($route[0]) {
+            // Обрабатываем как partial
+            case $prefixes->partial:
+                $this->_isPartial = true;
+                break;
+            
+            // Обрабатываем как действие
+            case $prefixes->action:
+                $this->_isAction = true;
+                break;
+            
+            case 'index':
+                $this->_controller = 'index';
+                $this->_action     = 'index';
+                return;
+                break;
+            
+            default:
+                die;
+                break;
         }
-        
+
         $countRoute = count($route);
 
-        // Контроллер
-        if ($countRoute > 0) {
-            $this->_controller = strtolower($route[0]);
-        } else {
-            $this->_controller = 'index';
+        if ($countRoute == 1) {
+            die;
         }
+        
+        // Контроллер
+        $this->_controller = strtolower($route[1]);
 
         // Действие
-        if ($countRoute > 1) {
-            $this->_action = strtolower($route[1]);
+        if ($countRoute > 2) {
+            $this->_action = strtolower($route[2]);
         } else {
             $this->_action = 'index';
         }
 
         // Аргументы
-        $this->_args = array_slice($route, 2);
+        $this->_args = array_slice($route, 3);
     }
 
     /**
@@ -152,5 +182,9 @@ class PsRouter {
 
     public function isPartial() {
         return $this->_isPartial;
+    }
+    
+    public function isAction() {
+        return $this->_isAction;
     }
 }

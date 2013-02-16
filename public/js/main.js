@@ -27,18 +27,18 @@ define(['angular'], function(angulara) {
 
             $routeProvider.
                 when('/', {
-                    templateUrl: '/p/news'
+                    templateUrl: '/partial/news'
                 }).
                 when('/registration', {
-                    templateUrl: '/p/registration',
+                    templateUrl: '/partial/registration',
                     controller: RegistrationController
                 }).
                 when('/world', {
-                    templateUrl: '/p/world',
+                    templateUrl: '/partial/world',
                     controller: WorldController
                 }).
                 when('/world/inventory', {
-                    templateUrl: '/p/world/inventory',
+                    templateUrl: '/partial/world/inventory',
                     controller: InventoryController
                 }).
                 otherwise({

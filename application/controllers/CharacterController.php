@@ -1,7 +1,6 @@
 <?php
 /**
  * Контроллер персонажа
- *
  * @author ismd
  */
 
@@ -18,7 +17,7 @@ class CharacterController extends PsAbstractAuthController {
     public function create() {
         $request = $this->getRequest();
 
-        if (false == $request->isPost()) {
+        if (!$request->isPost()) {
             return;
         }
 
@@ -66,7 +65,6 @@ class CharacterController extends PsAbstractAuthController {
 
     /**
      * Перемещение персонажа
-     *
      * @post x
      * @post y
      */
@@ -99,6 +97,6 @@ class CharacterController extends PsAbstractAuthController {
             $data[] = $item->toArray();
         }
 
-        $this->view->items = $data;
+        $this->view->json = $data;
     }
 }
