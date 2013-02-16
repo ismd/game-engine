@@ -19,7 +19,7 @@ class PsSession {
      * Очищает сессию
      * @return PsSession
      */
-    private function clear() {
+    public function clear() {
         $this->_data = array();
         return $this;
     }
