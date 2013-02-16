@@ -19,7 +19,7 @@ class PsView {
      * @var array
      */
     protected $_data = array();
-    
+
     /**
      * JSON-данные для вывода при запросе действия
      * @var array
@@ -60,26 +60,26 @@ class PsView {
     public function render() {
         // Отправляем заголовок с указанием кодировки
         header('Content-Type: text/html; charset=utf-8');
-        
+
         $router = $this->_registry->router;
 
-        // Если отображаем только partial
-        if ($router->isPartial()) {
-            $this->renderPartial();
-            return;
-        }
-        
-        // Если отображаем вывод обработки действия
-        if ($router->isAction()) {
-            $this->renderJson();
-            return;
-        }
+        switch ($router->getRequestType()) {
+            case PsRouter::PARTIAL_REQUEST:
+                $this->renderPartial();
+                break;
 
-        // Отображаем главную страницу
-        $filename = SITEPATH . 'application/views/layout.phtml';
+            case PsRouter::ACTION_REQUEST:
+                $this->renderJson();
+                break;
 
-        if (is_readable($filename)) {
-            require $filename;
+            default:
+                // Отображаем главную страницу
+                $filename = SITEPATH . 'application/views/layout.phtml';
+
+                if (is_readable($filename)) {
+                    require $filename;
+                }
+                break;
         }
     }
 
@@ -100,11 +100,14 @@ class PsView {
             require $filename;
         }
     }
-    
+
+    /**
+     * Отображает json-данные
+     */
     protected function renderJson() {
         echo json_encode($this->_json);
     }
-    
+
     /**
      * Передача json-данных для вывода в шаблон
      * Можно использовать только при запросе действия
@@ -116,7 +119,7 @@ class PsView {
             'result' => 'ok',
             'data'   => (array)$value,
         );
-        
+
         return $this;
     }
 }
