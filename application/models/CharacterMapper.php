@@ -21,7 +21,7 @@ class CharacterMapperNameExists extends Exception {
     protected $message = 'Персонаж с таким именем уже существует';
 };
 
-class CharacterMapper extends AbstractDbMapper {
+class CharacterMapper extends PsAbstractDbMapper {
 
     /**
      * Возвращает персонажа по id

@@ -5,9 +5,6 @@
  * Установка заголовка страницы `test'
  * $view->setTitle('test')
  *
- * Будет подключен layout empty.phtml
- * $view->setLayout('empty')
- *
  * Будет подключен js-файл test.js
  * $view->appendJs('test')
  * Вторым параметром возможно передавать дополнительные атрибуты
@@ -19,14 +16,11 @@
  * Передача в шаблон переменной test со значением 'test'
  * $view->test = 'test'
  *
- * Возвращает подключаемый шаблон. Необходимо использовать в layout'е
+ * Возвращает подключаемый шаблон
  * $this->content()
  *
  * Возвращает заголовок страницы
  * $this->getTitle()
- *
- * Возвращает имя layout'а
- * $this->getLayout()
  *
  * Возвращает массив js-файлов, которые необходимо подключить
  * Вызов только из шаблонов
@@ -42,7 +36,7 @@
  * @author ismd
  */
 
-class View {
+class PsView {
 
     protected $_registry;
 
@@ -51,30 +45,6 @@ class View {
      * @var array
      */
     protected $_data = array();
-
-    /**
-     * Массив подключаемых js-файлов
-     * @var array
-     */
-    protected $_js  = array();
-
-    /**
-     * Массив подключаемых css-файлов
-     * @var array
-     */
-    protected $_css = array();
-
-    /**
-     * Заголовок страницы
-     * @var string
-     */
-    protected $_title = '';
-
-    /**
-     * Layout для отображения
-     * @var string
-     */
-    protected $_layout = 'default';
 
     public function __construct($registry) {
         $this->_registry = $registry;
@@ -86,10 +56,6 @@ class View {
     }
 
     public function __get($name) {
-        if (false == isset($this->_data[$name])) {
-            return null;
-        }
-
         return $this->_data[$name];
     }
 
@@ -112,7 +78,14 @@ class View {
         // Отправляем заголовок с указанием кодировки
         header('Content-Type: text/html; charset=utf-8');
 
-        $filename = SITEPATH . 'application/layouts/' . $this->_layout . '.phtml';
+        // Если отображаем только partial
+        if (true == $this->_registry->router->isPartial()) {
+            echo $this->content();
+            return;
+        }
+
+        // Подключаем layout
+        $filename = SITEPATH . 'application/views/layout.phtml';
 
         if (false == is_readable($filename)) {
             throw new Exception('Cannot read layout file');
@@ -142,7 +115,6 @@ class View {
 
     /**
      * Переданная ссылка будет вставлена в качестве ссылки на javascript-файл
-     *
      * @param string $link Ссылка на javascript-файл
      * @param array $attributes Дополнительные атрибуты
      * @return View
@@ -167,7 +139,6 @@ class View {
     /**
      * Переданная ссылка будет вставлена в качестве ссылки на css-файл
      * Может быть передан массив ссылок
-     *
      * @param string|array $link Ссылка или массив ссылок на css-файлы
      * @return View
      */
@@ -191,7 +162,6 @@ class View {
 
     /**
      * Устанавливает заголовок страницы
-     *
      * @param string
      * @return View
      */
@@ -202,20 +172,5 @@ class View {
 
     public function getTitle() {
         return $this->_title;
-    }
-
-    /**
-     * Устаналивает Layout
-     *
-     * @param string
-     * @return View
-     */
-    public function setLayout($value) {
-        $this->_layout = (string)$value;
-        return $this;
-    }
-
-    public function getLayout() {
-        return $this->_layout;
     }
 }

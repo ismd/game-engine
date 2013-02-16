@@ -5,11 +5,7 @@
  * @author ismd
  */
 
-class CharacterController extends AbstractAuthController {
-
-    public function init() {
-        $this->view->setLayout('empty');
-    }
+class CharacterController extends PsAbstractAuthController {
 
     public function index() {
         $this->redirect('/');
@@ -20,8 +16,6 @@ class CharacterController extends AbstractAuthController {
      * @post name
      */
     public function create() {
-        $this->view->setLayout('default');
-
         $request = $this->getRequest();
 
         if (false == $request->isPost()) {

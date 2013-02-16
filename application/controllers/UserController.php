@@ -5,7 +5,7 @@
  * @author ismd
  */
 
-class UserController extends AbstractAuthController {
+class UserController extends PsAbstractAuthController {
 
     public function index() {
         $this->redirect('/');
@@ -15,8 +15,6 @@ class UserController extends AbstractAuthController {
      * Список персонажей игрока
      */
     public function characters() {
-        $this->view->setLayout('empty');
-        
         $characters = $this->session->user->characters;
 
         // Преобразуем в массив каждого персонажа

@@ -44,7 +44,7 @@ define(['jquery', 'app/select_character'], function($, select_character) {
         var logged = false;
 
         $.ajax({
-            url: '/auth/login',
+            url: '/p/auth/login',
             type: 'post',
             data: {
                 'username': username,

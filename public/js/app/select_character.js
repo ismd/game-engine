@@ -27,7 +27,7 @@ define(['jquery'], function($) {
      */
     function fillUserCharacters() {
         $.ajax({
-            url: '/user/characters',
+            url: '/p/user/characters',
             type: 'get',
             success: function(data) {
                 updateUserCharactersList(eval(data));
@@ -44,7 +44,7 @@ define(['jquery'], function($) {
 
         // Если у пользователя ещё нет персонажей, то перенаправляем на страницу создания персонажа
         if (characters.length == 0) {
-            window.location.replace('/character/create');
+            window.location.replace('/p/character/create');
             return;
         }
 
@@ -80,14 +80,14 @@ define(['jquery'], function($) {
      */
     function setCharacter(id) {
         $.ajax({
-            url: '/character/set',
+            url: '/p/character/set',
             type: 'post',
             data: {
                 'id': id
             },
             success: function(data) {
                 if (data == 'ok') {
-                    window.location.replace('/world');
+                    window.location.replace('/p/world');
                 } else {
                     alert('Не удалось выбрать персонажа');
                 }

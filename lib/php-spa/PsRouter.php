@@ -11,10 +11,15 @@
  * @author ismd
  */
 
-class Router extends AbstractModel {
+class PsRouter {
 
     protected $_registry;
     protected $_route;
+
+    /**
+     * Запрошен только partial
+     */
+    protected $_isPartial = false;
 
     /**
      * Контроллер
@@ -31,7 +36,6 @@ class Router extends AbstractModel {
     /**
      * Аргументы запроса
      * Пример: <контроллер>/<действие>/<арг.1>/<арг.2>/...
-     *
      * @var array
      */
     protected $_args = array();
@@ -59,8 +63,8 @@ class Router extends AbstractModel {
 
         // Если недоступен файл контроллера
         if (false == is_readable($controllerFile)) {
-            header('Location: /');
-            die;
+            $controllerFile = $controllersPath . 'IndexController.php';
+            $controllerName = 'IndexController';
         }
 
         // Подключаем контроллер
@@ -91,6 +95,17 @@ class Router extends AbstractModel {
      */
     protected function parseRoute() {
         $route      = explode('/', $this->_route);
+
+        // Обрабатываем как partial
+        if ($route[0] == 'p') {
+            $this->_isPartial = true;
+            $route = array_slice($route, 1);
+        } else {
+            $this->_controller = 'index';
+            $this->_action      = 'index';
+            return;
+        }
+        
         $countRoute = count($route);
 
         // Контроллер
@@ -133,5 +148,9 @@ class Router extends AbstractModel {
      */
     public function getArgs() {
         return $this->_args;
+    }
+
+    public function isPartial() {
+        return $this->_isPartial;
     }
 }

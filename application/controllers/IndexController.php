@@ -1,7 +1,12 @@
 <?php
-class IndexController extends AbstractController {
+/**
+ * Главная страница
+ * @author ismd
+ */
+
+class IndexController extends PsAbstractController {
 
     public function index() {
-        
+
     }
 }

@@ -29,7 +29,7 @@ class WorldController extends AbstractAuthController {
      */
     public function inventory() {
         $this->view->setTitle('Инвентарь');
-
+        
         $this->view->items = $this->session->character->items;
     }
 }

@@ -5,7 +5,7 @@
  * @author ismd
  */
 
-abstract class AbstractUser extends AbstractModel {
+abstract class AbstractUser extends PsAbstractModel {
 
     protected $_id;
     protected $_login;

@@ -1,15 +1,10 @@
 <?php
 /**
  * Класс авторизации
- *
  * @author ismd
  */
 
-class AuthController extends AbstractController {
-
-    public function init() {
-        $this->view->setLayout('empty');
-    }
+class AuthController extends PsAbstractController {
 
     public function index() {
         $this->redirect('/');
@@ -22,10 +17,10 @@ class AuthController extends AbstractController {
      * @post password
      */
     public function login() {
-        $request = $this->getRequest();
+        $post = $this->getRequest()->getPost();
 
-        $username = $request->post->username;
-        $password = $request->post->password;
+        $username = $post->username;
+        $password = $post->password;
 
         $mapper = new UserMapper;
 

@@ -3,7 +3,7 @@
  * Контроллер регистрации
  */
 
-class RegistrationController extends AbstractController {
+class RegistrationController extends PsAbstractController {
 
     public function init() {
         if (null != $this->session->user) {
@@ -47,7 +47,7 @@ class RegistrationController extends AbstractController {
         } catch (UserMapperShortPassword $e) {
             $this->view->error = $e->getMessage();
         } catch (Exception $e) {
-            $this->view_error = 'Ошибка';
+            $this->view->error = 'Ошибка';
         }
     }
 }

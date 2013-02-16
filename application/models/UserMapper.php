@@ -33,7 +33,7 @@ class UserMapperPasswordsDontMatch extends Exception {
     protected $message = 'Пароли не совпадают';
 };
 
-class UserMapper extends AbstractDbMapper {
+class UserMapper extends PsAbstractDbMapper {
 
     /**
      * Возвращает пользователя по id
