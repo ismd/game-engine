@@ -14,7 +14,7 @@ class UserController extends PsAbstractAuthController {
     /**
      * Список персонажей игрока
      */
-    public function characters() {
+    public function charactersAction() {
         $characters = $this->session->user->characters;
 
         // Преобразуем в массив каждого персонажа
@@ -29,6 +29,6 @@ class UserController extends PsAbstractAuthController {
             );
         }
 
-        $this->view->characters = $characters;
+        $this->view->json($characters);
     }
 }

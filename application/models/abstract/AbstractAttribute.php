@@ -1,11 +1,10 @@
 <?php
 /**
  * Абстрактный класс аттрибута
- *
  * @author ismd
  */
 
-abstract class AbstractAttribute extends AbstractModel {
+abstract class AbstractAttribute extends PsAbstractModel {
 
     protected $_id;
     protected $_title;

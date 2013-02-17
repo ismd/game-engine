@@ -1,11 +1,10 @@
 <?php
 /**
  * Абстрактный класс карты
- *
  * @author ismd
  */
 
-abstract class AbstractMap extends AbstractModel {
+abstract class AbstractMap extends PsAbstractModel {
 
     protected $_id;
     protected $_title;

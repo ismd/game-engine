@@ -44,15 +44,16 @@ define(['jquery', './select_character'], function($, select_character) {
         var logged = false;
 
         $.ajax({
-            url: '/p/auth/login',
+            url: '/api/auth/login',
             type: 'post',
             data: {
                 'username': username,
                 'password': password
             },
             async: false,
+            dataType: 'json',
             success: function(data) {
-                if (data == 'ok') {
+                if (data.status == 'ok') {
                     logged = true;
                 }
             }

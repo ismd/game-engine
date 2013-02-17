@@ -1,17 +1,15 @@
 <?php
 /**
- * Модель вещи
- *
+ * Модель инвентаря
  * @author ismd
  */
 
 class ItemMapperNotFoundException extends Exception {};
 
-class ItemMapper extends AbstractDbMapper {
+class ItemMapper extends PsAbstractDbMapper {
 
     /**
      * Возвращает вещь по id
-     *
      * @param int $id
      * @return Item
      * @throws ItemMapperNotFoundException
@@ -35,7 +33,6 @@ class ItemMapper extends AbstractDbMapper {
 
     /**
      * Возвращает массив вещей персонажа
-     *
      * @param Character $character
      * @return Item[]
      */

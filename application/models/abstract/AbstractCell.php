@@ -1,11 +1,10 @@
 <?php
 /**
  * Абстрактный класс клетки карты
- *
  * @author ismd
  */
 
-abstract class AbstractCell extends AbstractModel {
+abstract class AbstractCell extends PsAbstractModel {
 
     protected $_map;
     protected $_x;
@@ -14,7 +13,6 @@ abstract class AbstractCell extends AbstractModel {
     /**
      * Создал неунаследованный конструктор,
      *   потому что координаты необходимо указывать в обязательном порядке
-     *
      * @param Map $map
      * @param int $x
      * @param int $y

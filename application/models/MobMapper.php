@@ -7,7 +7,7 @@
 
 class MobMapperNotFoundException extends Exception {};
 
-class MobMapper extends AbstractDbMapper {
+class MobMapper extends PsAbstractDbMapper {
 
     /**
      * Возвращает моба по id из таблицы MobMap

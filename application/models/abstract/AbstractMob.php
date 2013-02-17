@@ -1,11 +1,10 @@
 <?php
 /**
  * Абстрактный класс моба
- *
  * @author ismd
  */
 
-abstract class AbstractMob extends AbstractModel {
+abstract class AbstractMob extends PsAbstractModel {
 
     protected $_id;    // id в таблице MobMap (конкретный моб на карте)
     protected $_idMob; // id в таблице Mob (класс моба)

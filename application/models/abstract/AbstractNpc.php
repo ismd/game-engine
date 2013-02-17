@@ -1,11 +1,10 @@
 <?php
 /**
  * Абстрактный класс NPC
- *
  * @author ismd
  */
 
-abstract class AbstractNpc extends AbstractModel {
+abstract class AbstractNpc extends PsAbstractModel {
 
     protected $_id;    // id в таблице NpcMap (конкретный NPC на карте)
     protected $_idNpc; // id в таблице Npc (класс NPC)

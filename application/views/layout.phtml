@@ -8,6 +8,7 @@
         <link href="/css/bootstrap.css" rel="stylesheet" media="screen">
         <link href="/css/bootstrap-responsive.css" rel="stylesheet">
         <link href="/css/main.css" rel="stylesheet" media="screen">
+        <link href="/css/world.css" rel="stylesheet" media="screen">
     </head>
     <body>
         <div class="container">
@@ -15,7 +16,7 @@
                 <!-- Sidebar -->
                 <div class="span2">
                     <div class="sidebar-nav-fixed with-borders">
-                        <?php if (null == $this->_registry->session->user): ?>
+                        <?php if (null == $this->user): ?>
                         <div class="row">
                             <div class="span2">
                                 <a id="auth-button-open"
@@ -37,18 +38,18 @@
                         <?php else: ?>
                         <div class="row">
                             <div class="span2">
-                                Добро пожаловать, <?php echo $this->_registry->session->user->login ?>
+                                Добро пожаловать, <?php echo $this->user->login ?>
                             </div>
                         </div>
 
                         <hr>
 
-                        <?php if (null != $this->_registry->session->character): ?>
+                        <?php if (null != $this->character): ?>
                         <!-- Инфа о персонаже -->
                         <div class="row">
                             <div class="span2">
                                 <h3 id="character-name">
-                                    <?php echo $this->_registry->session->character->name ?>
+                                    <?php echo $this->character->name ?>
                                 </h3>
 
                                 <table>
@@ -57,7 +58,7 @@
                                             Уровень:
                                         </td>
                                         <td>
-                                            <?php echo $this->_registry->session->character->level ?>
+                                            <?php echo $this->character->level ?>
                                         </td>
                                     </tr>
                                     <tr>
@@ -65,7 +66,7 @@
                                             Опыт:
                                         </td>
                                         <td>
-                                            <?php echo $this->_registry->session->character->experience ?>
+                                            <?php echo $this->character->experience ?>
                                         </td>
                                     </tr>
                                     <tr>
@@ -73,7 +74,7 @@
                                             Жизнь:
                                         </td>
                                         <td>
-                                            <span id="hp"><?php echo $this->_registry->session->character->hp ?></span>/<?php echo $this->_registry->session->character->maxHp ?><br>
+                                            <span id="hp"><?php echo $this->character->hp ?></span>/<?php echo $this->character->maxHp ?><br>
                                         </td>
                                     </tr>
                                     <tr>
@@ -81,7 +82,7 @@
                                             Сила:
                                         </td>
                                         <td>
-                                            <?php echo $this->_registry->session->character->strength ?>
+                                            <?php echo $this->character->strength ?>
                                         </td>
                                     </tr>
                                     <tr>
@@ -89,7 +90,7 @@
                                             Ловкость:
                                         </td>
                                         <td>
-                                            <?php echo $this->_registry->session->character->dexterity ?>
+                                            <?php echo $this->character->dexterity ?>
                                         </td>
                                     </tr>
                                     <tr>
@@ -97,7 +98,7 @@
                                             Выносливость:
                                         </td>
                                         <td>
-                                            <?php echo $this->_registry->session->character->endurance ?>
+                                            <?php echo $this->character->endurance ?>
                                         </td>
                                     </tr>
                                 </table>
@@ -110,9 +111,8 @@
                                    href="#select-character"
                                    role="button"
                                    data-toggle="modal"
-                                   class="btn">
-                                    Выбрать персонажа
-                                </a>
+                                   class="btn"
+                                   target="_self">Выбрать персонажа</a>
                             </div>
                         </div>
                         <?php endif ?>
@@ -126,7 +126,7 @@
                         <div class="navbar-inner">
                             <div class="container">
                                 <ul class="nav">
-                                    <?php if ('index' == $this->_registry->router->getController()): ?>
+                                    <?php if ('index' == $this->controller): ?>
                                     <li class="active">
                                     <?php else: ?>
                                     <li>
@@ -136,8 +136,8 @@
                                             Главная
                                         </a>
                                     </li>
-                                    <?php if (null != $this->_registry->session->character): ?>
-                                    <?php if ('world' == $this->_registry->router->getController()): ?>
+                                    <?php if (null != $this->character): ?>
+                                    <?php if ('world' == $this->controller): ?>
                                     <li class="dropdown active">
                                     <?php else: ?>
                                     <li class="dropdown">
@@ -173,7 +173,7 @@
                                         </a>
                                     </li>
                                 </ul>
-                                <?php if (null != $this->_registry->session->user): ?>
+                                <?php if (null != $this->user): ?>
                                 <ul class="nav pull-right">
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle"
@@ -187,7 +187,8 @@
                                                 <a id="select-character-open"
                                                    href="#select-character"
                                                    role="button"
-                                                   data-toggle="modal">Выбрать персонажа</a>
+                                                   data-toggle="modal"
+                                                   target="_self">Выбрать персонажа</a>
                                             </li>
 
                                             <li>
@@ -212,7 +213,7 @@
             </div>
         </div>
 
-        <?php if (null == $this->_registry->session->user): ?>
+        <?php if (null == $this->user): ?>
         <!-- Форма аутентификации -->
         <div id="auth-form" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-header">
@@ -238,7 +239,11 @@
         <!-- Форма выбора персонажа -->
         <div id="select-character" class="modal hide fade" role="dialog">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-hidden="true">&times;</button>
+
                 <h3>Выберите персонажа</h3>
             </div>
             <div class="modal-body">

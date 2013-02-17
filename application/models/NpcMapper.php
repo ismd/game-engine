@@ -7,7 +7,7 @@
 
 class NpcMapperNotFoundException extends Exception {};
 
-class NpcMapper extends AbstractDbMapper {
+class NpcMapper extends PsAbstractDbMapper {
 
     /**
      * Возвращает NPC по id из таблицы NpcMap

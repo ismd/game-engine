@@ -5,11 +5,11 @@
  * @author ismd
  */
 
-class AttributeMapper extends AbstractDbMapper {
+class AttributeMapper extends PsAbstractDbMapper {
 
     /**
      * Возвращает аттрибуты вещи
-     * 
+     *
      * @param Item $item
      * @return Attribute[]
      */

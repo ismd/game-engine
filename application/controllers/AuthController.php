@@ -6,18 +6,13 @@
 
 class AuthController extends PsAbstractController {
 
-    public function index() {
-        $this->redirect('/');
-    }
-
     /**
      * Залогиниваемся
-     *
      * @post username
      * @post password
      */
-    public function login() {
-        $post = $this->getRequest()->getPost();
+    public function loginAction() {
+        $post = $this->request->getPost();
 
         $username = $post->username;
         $password = $post->password;
@@ -28,22 +23,29 @@ class AuthController extends PsAbstractController {
             $user = $mapper->getByLoginAndPassword($username, $password);
             $this->session->user = $user;
 
-            $this->view->result = 'ok';
+            $this->view->json(array(
+                'status' => 'ok',
+            ));
         } catch (UserMapperNotFoundException $e) {
-            $this->view->result = 'error';
+            $this->view->json(array(
+                'status' => 'error',
+            ));
         }
     }
 
     /**
      * Разлогиниваемся
      */
-    public function logout() {
+    public function logoutAction() {
         // Проверяем, не в бою ли персонаж
         // FIXME: сделать проверку
         //if () {
         //}
 
         $this->session->clear();
-        $this->redirect('/');
+
+        $this->view->json(array(
+            'status' => 'ok',
+        ));
     }
 }

@@ -17,14 +17,22 @@ define(['jquery'], function($) {
     /**
      * Инициализируем модуль
      */
-    $(document).ready(function() {
+    /*$(document).ready(function() {
         var coordinates = $('input#coordinates');
 
-        // Если мы находимся на другой странице
-        if (coordinates.length == 0) {
-            return;
+        // Если мы находимся на нужной странице
+        if (coordinates.length > 0) {
+            init();
         }
+    });*/
 
+    return {
+        'init': init
+    };
+
+    function init() {
+        var coordinates = $('input#coordinates');
+console.log(coordinates);
         // Считываем координаты
         id = parseInt(coordinates.attr('id-map'));
         x  = parseInt(coordinates.attr('x'));
@@ -70,5 +78,5 @@ define(['jquery'], function($) {
         ctx.strokeRect(200, 200, 50, 50);
         ctx.strokeRect(250, 200, 50, 50);
         ctx.strokeRect(300, 200, 50, 50);
-    });
+    }
 });

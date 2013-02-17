@@ -1,17 +1,15 @@
 <?php
 /**
  * Модель карты
- *
  * @author ismd
  */
 
 class MapMapperNotFoundException extends Exception {};
 
-class MapMapper extends AbstractDbMapper {
+class MapMapper extends PsAbstractDbMapper {
 
     /**
      * Возвращает карту по id
-     *
      * @param int $id
      * @return Map
      * @throws MapMapperNotFoundException

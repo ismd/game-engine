@@ -6,15 +6,11 @@
 
 class CharacterController extends PsAbstractAuthController {
 
-    public function index() {
-        $this->redirect('/');
-    }
-
     /**
      * Создание персонажа
      * @post name
      */
-    public function create() {
+    public function createAction() {
         $request = $this->getRequest();
 
         if (!$request->isPost()) {
@@ -25,7 +21,7 @@ class CharacterController extends PsAbstractAuthController {
             'user' => $this->session->user,
             'name' => $request->post->name,
         ));
-        
+
         // Устанавливаем начальные значения
         $character->setDefaultValues();
 
@@ -33,15 +29,30 @@ class CharacterController extends PsAbstractAuthController {
 
         try {
             $mapper->save($character);
-            $this->view->created = true;
+
+            $this->view->json(array(
+                'status' => 'ok',
+            ));
         } catch (CharacterMapperLongName $e) {
-            $this->view->error = $e->getMessage();
+            $this->view->json(array(
+                'status'  => 'error',
+                'message' => $e->getMessage(),
+            ));
         } catch (CharacterMapperShortName $e) {
-            $this->view->error = $e->getMessage();
+            $this->view->json(array(
+                'status'  => 'error',
+                'message' => $e->getMessage(),
+            ));
         } catch (CharacterMapperNameExists $e) {
-            $this->view->error = $e->getMessage();
+            $this->view->json(array(
+                'status'  => 'error',
+                'message' => $e->getMessage(),
+            ));
         } catch (Exception $e) {
-            $this->view->error = 'Ошибка';
+            $this->view->json(array(
+                'status'  => 'error',
+                'message' => 'Ошибка',
+            ));
         }
     }
 
@@ -49,18 +60,24 @@ class CharacterController extends PsAbstractAuthController {
      * Устанавливает текущего персонажа для сессии
      * @post id
      */
-    public function set() {
-        $idCharacter = (int)$this->getRequest()->post->id;
+    public function setAction() {
+        $idCharacter = (int)$this->request->getPost()->id;
 
-        if (false == $this->session->user->hasCharacter($idCharacter)) {
-            $this->view->result = 'error';
+        if (!$this->session->user->hasCharacter($idCharacter)) {
+            $this->view->json(array(
+                'status' => 'error',
+            ));
+
             return;
         }
 
-        $mapper                   = new CharacterMapper;
+        $mapper = new CharacterMapper;
+
         $this->session->character = $mapper->getById($idCharacter);
 
-        $this->view->result = 'ok';
+        $this->view->json(array(
+            'status' => 'ok',
+        ));
     }
 
     /**
@@ -68,7 +85,7 @@ class CharacterController extends PsAbstractAuthController {
      * @post x
      * @post y
      */
-    public function move() {
+    public function moveAction() {
         $request = $this->getRequest();
 
         $x = (int)$request->post->x;
@@ -78,18 +95,27 @@ class CharacterController extends PsAbstractAuthController {
 
         try {
             $this->session->character->move($cell);
-            $this->view->result = 'ok';
+
+            $this->view->json(array(
+                'status' => 'ok',
+            ));
         } catch (CharacterFastMove $e) {
-            $this->view->result = 'error: fast moving';
+            $this->view->json(array(
+                'status'  => 'error',
+                'message' => 'fast moving',
+            ));
         } catch (CharacterCantMoveHere $e) {
-            $this->view->result = 'error: cannot move here';
+            $this->view->json(array(
+                'status'  => 'error',
+                'message' => 'cannot move here',
+            ));
         }
     }
 
     /**
      * Список вещей персонажа
      */
-    public function items() {
+    public function itemsAction() {
         $items = $this->session->character->getItems();
 
         $data = array();
@@ -97,6 +123,6 @@ class CharacterController extends PsAbstractAuthController {
             $data[] = $item->toArray();
         }
 
-        $this->view->json = $data;
+        $this->view->json($data);
     }
 }

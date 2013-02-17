@@ -5,31 +5,26 @@
  * @author ismd
  */
 
-class WorldController extends AbstractAuthController {
+class WorldController extends PsAbstractAuthController {
 
     public function init() {
         // У пользователя должен быть выбран персонаж
         if (null == $this->session->character) {
-            $this->redirect('/');
+            die;
         }
     }
 
     /**
      * Главная страница мира
      */
-    public function index() {
-        $this->view->setTitle('Мир');
-        $this->view->appendCss('world');
-
+    public function indexPartial() {
         $this->view->cell = $this->session->character->cell;
     }
 
     /**
      * Страница инвентаря
      */
-    public function inventory() {
-        $this->view->setTitle('Инвентарь');
-        
+    public function inventoryPartial() {
         $this->view->items = $this->session->character->items;
     }
 }

@@ -24,10 +24,7 @@ class PsView {
      * JSON-данные для вывода при запросе действия
      * @var array
      */
-    protected $_json = array(
-        'result' => 'error',
-        'data'   => array(),
-    );
+    protected $_json = array();
 
     public function __construct($registry) {
         $this->_registry = $registry;
@@ -115,11 +112,7 @@ class PsView {
      * @return PsView
      */
     public function json($value) {
-        $this->_json = array(
-            'result' => 'ok',
-            'data'   => (array)$value,
-        );
-
+        $this->_json = (array)$value;
         return $this;
     }
 }
