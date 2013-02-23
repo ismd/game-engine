@@ -4,7 +4,12 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>ismd-game</title>
-        <script data-main="/js/main" src="/js/require.js"></script>
+
+        <script src="/js/lib/jquery.js"></script>
+        <script src="/js/lib/bootstrap.js"></script>
+        <script src="/js/lib/angular.js"></script>
+        <script src="/js/app/main.js"></script>
+        
         <link href="/css/bootstrap.css" rel="stylesheet" media="screen">
         <link href="/css/bootstrap-responsive.css" rel="stylesheet">
         <link href="/css/main.css" rel="stylesheet" media="screen">
@@ -19,18 +24,17 @@
                         <?php if (null == $this->user): ?>
                         <div class="row">
                             <div class="span2">
-                                <a id="auth-button-open"
+                                <button class="left-pannel-button btn btn-primary"
                                    href="#auth-form"
                                    role="button"
                                    data-toggle="modal"
-                                   class="btn"
-                                   target="_self">Войти в игру</a>
+                                   target="_self">Войти в игру</button>
                                 <hr>
-                                <a id="registration-button" class="btn" href="/registration">
+                                <a class="left-panel-button btn" href="/registration">
                                     Регистрация
                                 </a>
                                 <br>
-                                <a id="forgot-password-button" class="btn" href="#">
+                                <a class="left-panel-button btn" href="#">
                                     Забыли пароль
                                 </a>
                             </div>

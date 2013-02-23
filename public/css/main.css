@@ -21,8 +21,10 @@ h3#character-name {
     margin-top: -10px;
 }
 
-a#auth-button-open,
-a#registration-button,
-a#forgot-password-button {
+button.left-pannel-button {
+    width: 100%;
+}
+
+a.left-panel-button {
     width: 85%;
 }

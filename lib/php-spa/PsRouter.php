@@ -61,7 +61,7 @@ class PsRouter {
         $this->_registry = $registry;
         $this->_route    = $route;
 
-        $this->_prefixes = $this->_registry->config->url_prefix;
+        $this->_prefixes = $this->_registry->config->url_prefixes;
     }
 
     /**
@@ -82,6 +82,8 @@ class PsRouter {
 
         // Если недоступен файл контроллера
         if (!is_readable($controllerFile)) {
+            $logger = PsLogger::getInstance($this->_registry);
+            $logger->log('ERROR: Bad controller ' . $this->_route);
             die;
         }
 
@@ -108,6 +110,8 @@ class PsRouter {
 
         // Если действие недоступно
         if (!is_callable(array($controller, $action))) {
+            $logger = PsLogger::getInstance($this->_registry);
+            $logger->log('ERROR: Bad action ' . $this->_route);
             die;
         }
 
@@ -127,22 +131,20 @@ class PsRouter {
     protected function parseRoute() {
         $route = explode('/', $this->_route);
 
-        $countRoute = count($route);
+        // Префикс
+        $this->_prefix = $route[0];
 
-        if (1 == $countRoute) {
+        if (!in_array($this->_prefix, (array)$this->_prefixes)) {
             $this->_controller = 'index';
             $this->_action     = 'index';
             return;
         }
 
-        // Префикс
-        $this->_prefix = $route[0];
-
         // Контроллер
         $this->_controller = strtolower($route[1]);
 
         // Действие
-        if ($countRoute > 2) {
+        if (count($route) > 2) {
             $this->_action = strtolower($route[2]);
         } else {
             $this->_action = 'index';
