@@ -82,8 +82,6 @@ class PsRouter {
 
         // Если недоступен файл контроллера
         if (!is_readable($controllerFile)) {
-            $logger = PsLogger::getInstance($this->_registry);
-            $logger->log('ERROR: Bad controller ' . $this->_route);
             die;
         }
 
@@ -110,8 +108,6 @@ class PsRouter {
 
         // Если действие недоступно
         if (!is_callable(array($controller, $action))) {
-            $logger = PsLogger::getInstance($this->_registry);
-            $logger->log('ERROR: Bad action ' . $this->_route);
             die;
         }
 
