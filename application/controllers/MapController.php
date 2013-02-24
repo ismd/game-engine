@@ -3,7 +3,7 @@
 class MapController extends AbstractAuthController {
 
     public function index() {
-        $this->redirect('/');
+        die;
     }
 
     /**

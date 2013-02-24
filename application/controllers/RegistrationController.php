@@ -7,13 +7,13 @@ class RegistrationController extends PsAbstractController {
 
     public function init() {
         if (null != $this->session->user) {
-            $this->redirect('/');
+            die;
         }
     }
 
     public function indexPartial() {
         $request = $this->getRequest();
-        
+
         if (false == $request->isPost()) {
             return;
         }
@@ -28,7 +28,7 @@ class RegistrationController extends PsAbstractController {
             'info'      => $request->post->info,
             'site'      => $request->post->site,
         ));
-        
+
         $mapper = new UserMapper;
 
         try {

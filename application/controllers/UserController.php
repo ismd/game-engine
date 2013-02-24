@@ -8,7 +8,7 @@
 class UserController extends PsAbstractAuthController {
 
     public function index() {
-        $this->redirect('/');
+        die;
     }
 
     /**

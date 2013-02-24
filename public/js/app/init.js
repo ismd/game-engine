@@ -1,3 +1,5 @@
+'use strict';
+
 function RegistrationController($scope) {};
 function WorldController($scope) {};
 function InventoryController($scope) {};
