@@ -89,7 +89,7 @@ define(['jquery'], function($) {
             success: function(data) {
                 if (data.status == 'ok') {
                     // FIXME: $location
-                    window.location.replace('/world');
+                    window.location = '/world';
 
                     require(['./map']).init();
                 } else {

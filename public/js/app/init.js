@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('main', []).
-    config(function($routeProvider, $locationProvider) {
+    config(function($routeProvider, $locationProvider, $httpProvider) {
         $locationProvider.html5Mode(true);
 
         $routeProvider.
@@ -20,4 +20,13 @@ angular.module('main', []).
             otherwise({
                 redirectTo: '/'
             });
-    });
+
+        $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+        $httpProvider.defaults.transformRequest = function(data){
+            if (data === undefined) {
+                return data;
+            }
+
+            return $.param(data);
+        }
+});
