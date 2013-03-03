@@ -1,9 +1,5 @@
 'use strict';
 
-function RegistrationController($scope) {};
-function WorldController($scope) {};
-function InventoryController($scope) {};
-
 angular.module('main', []).
     config(function($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true);
@@ -13,16 +9,13 @@ angular.module('main', []).
                 templateUrl: '/partial/news'
             }).
             when('/registration', {
-                templateUrl: '/partial/registration',
-                controller: RegistrationController
+                templateUrl: '/partial/registration'
             }).
             when('/world', {
-                templateUrl: '/partial/world',
-                controller: WorldController
+                templateUrl: '/partial/world'
             }).
             when('/world/inventory', {
-                templateUrl: '/partial/world/inventory',
-                controller: InventoryController
+                templateUrl: '/partial/world/inventory'
             }).
             otherwise({
                 redirectTo: '/'
