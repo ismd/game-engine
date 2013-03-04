@@ -1,4 +1,4 @@
-function AuthCtrl($scope, $http) {
+function AuthCtrl($scope, $http, Auth) {
     var authForm            = $('div#auth-form');
     var selectCharacterForm = $('div#select-character');
     var loginButton         = $('button#login-button');
@@ -11,6 +11,8 @@ function AuthCtrl($scope, $http) {
             password: password
         }).success(function(data) {
             if ('ok' === data.status) {
+                Auth.setLogged(true);
+
                 authForm.modal('hide');
                 selectCharacterForm.modal();
             } else {
@@ -22,3 +24,24 @@ function AuthCtrl($scope, $http) {
         });
     };
 }
+
+AuthCtrl.$inject = ['$scope', '$http', 'Auth'];
+
+function CharactersCtrl($scope, $http) {
+    var loading = $('div#select-character img.loading');
+
+    $scope.$on('logged', function() {
+        $scope.loadCharacters();
+    });
+
+    $scope.loadCharacters = function() {
+        $http.get('/api/user/characters').success(function(data) {
+            loading.hide();
+            $scope.characters = data;
+        }).error(function() {
+            alert('Не удалось обратиться к серверу');
+        });
+    }
+}
+
+CharactersCtrl.$inject = ['$scope', '$http'];

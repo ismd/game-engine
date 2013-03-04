@@ -16,6 +16,7 @@
         <script src="/js/lib/angular-resource.js"></script>
         <script src="/js/app/init.js"></script>
         <script src="/js/app/controllers.js"></script>
+        <script src="/js/app/services.js"></script>
     </head>
     <body>
         <div class="container">
@@ -241,7 +242,7 @@
         <?php endif ?>
 
         <!-- Форма выбора персонажа -->
-        <div id="select-character" class="modal hide fade" role="dialog">
+        <div ng-controller="CharactersCtrl" id="select-character" class="modal hide fade" role="dialog">
             <div class="modal-header">
                 <button type="button"
                         class="close"
@@ -251,9 +252,25 @@
                 <h3>Выберите персонажа</h3>
             </div>
             <div class="modal-body">
-                <ul id="characters-list">
-                    <img src="/img/loading.gif">
-                </ul>
+                <img class="loading" src="/img/loading.gif">
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Имя</th>
+                            <th>Уровень</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="character in characters">
+                            <td>
+                                <img ng-src="/img/world/characters/{{character.image}}">
+                                {{character.name}}
+                            </td>
+                            <td>{{character.level}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </body>
