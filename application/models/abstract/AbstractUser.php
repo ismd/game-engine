@@ -15,6 +15,17 @@ abstract class AbstractUser extends PsAbstractModel {
     protected $_site;
     protected $_registered;
 
+    public function toArray() {
+        return array(
+            'id'         => $this->id,
+            'login'      => $this->login,
+            'email'      => $this->email,
+            'info'       => $this->info,
+            'site'       => $this->site,
+            'registered' => $this->registered,
+        );
+    }
+
     public function setId($value) {
         $this->_id = (int)$value;
         return $this;

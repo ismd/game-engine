@@ -6,7 +6,7 @@ var windowServices = angular.module('windowServices', []);
 /**
  * Список персонажей пользователя
  */
-windowServices.factory('CharacterList', function($rootScope) {
+windowServices.factory('CharactersList', function($rootScope) {
     return {
         'showCharactersList': function() {
             $rootScope.$broadcast('showCharactersList');
