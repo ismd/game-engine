@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('main', ['authServices']).
+angular.module('main', ['windowServices']).
     config(function($routeProvider, $locationProvider, $httpProvider) {
         $locationProvider.html5Mode(true);
 
