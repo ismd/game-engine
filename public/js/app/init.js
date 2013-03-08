@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('main', ['userServices']).
+angular.module('main', ['userServices', 'characterServices']).
     config(function($routeProvider, $locationProvider, $httpProvider) {
         $locationProvider.html5Mode(true);
 

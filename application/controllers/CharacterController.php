@@ -77,6 +77,7 @@ class CharacterController extends PsAbstractAuthController {
 
         $this->view->json(array(
             'status' => 'ok',
+            'character' => $this->session->character->toArray(),
         ));
     }
 

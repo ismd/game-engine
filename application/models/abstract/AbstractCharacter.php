@@ -24,6 +24,28 @@ abstract class AbstractCharacter extends PsAbstractModel {
     protected $_x;
     protected $_y;
 
+    public function toArray() {
+        return array(
+            'id'         => $this->id,
+            'idUser'     => $this->idUser,
+            'name'       => $this->name,
+            'level'      => $this->level,
+            'money'      => $this->money,
+            'hp'         => $this->hp,
+            'maxHp'      => $this->maxHp,
+            'minDamage'  => $this->minDamage,
+            'maxDamage'  => $this->maxDamage,
+            'experience' => $this->experience,
+            'image'      => $this->image,
+            'strength'   => $this->strength,
+            'dexterity'  => $this->dexterity,
+            'endurance'  => $this->endurance,
+            'idMap'      => $this->idMap,
+            'x'          => $this->x,
+            'y'          => $this->y,
+        );
+    }
+
     public function setId($value) {
         $this->_id = (int)$value;
         return $this;

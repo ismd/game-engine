@@ -1,4 +1,4 @@
-function UserCtrl($scope, User) {
+function UserCtrl($scope, User, Character) {
     $scope.login = function(username, password) {
         User.login(username, password);
     };
@@ -11,6 +11,10 @@ function UserCtrl($scope, User) {
     $scope.$on('characters-list-update', function(e, characters) {
         $scope.characters = characters;
     });
+
+    $scope.setCharacter = function(character) {
+        Character.setCharacter(character.id);
+    }
 }
 
-UserCtrl.$inject = ['$scope', 'User'];
+UserCtrl.$inject = ['$scope', 'User', 'Character'];

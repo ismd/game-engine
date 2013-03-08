@@ -20,6 +20,7 @@
         <script src="/js/app/controllers/CharacterCtrl.js"></script>
 
         <script src="/js/app/services/UserServices.js"></script>
+        <script src="/js/app/services/CharacterServices.js"></script>
     </head>
     <body>
         <div ng-controller="CharacterCtrl" class="container">
@@ -50,7 +51,7 @@
                                 <hr>
 
                                 <!-- Инфа о персонаже -->
-                                <div ng-switch on="character" class="row">
+                                <div ng-controller="CharacterCtrl" ng-switch on="character" class="row">
                                     <div ng-switch-when="undefined" class="span2">
                                         <a id="select-character-open"
                                            href="#select-character"
@@ -62,7 +63,7 @@
 
                                     <div ng-switch-default class="span2">
                                         <h3 id="character-name">
-                                            <?php echo $this->character->name ?>
+                                            {{character.name}}
                                         </h3>
 
                                         <table>
@@ -71,7 +72,7 @@
                                                     Уровень:
                                                 </td>
                                                 <td>
-                                                    <?php echo $this->character->level ?>
+                                                    {{character.level}}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -79,7 +80,7 @@
                                                     Опыт:
                                                 </td>
                                                 <td>
-                                                    <?php echo $this->character->experience ?>
+                                                    {{character.experience}}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -87,7 +88,7 @@
                                                     Жизнь:
                                                 </td>
                                                 <td>
-                                                    <span id="hp"><?php echo $this->character->hp ?></span>/<?php echo $this->character->maxHp ?><br>
+                                                    <span id="hp">{{character.hp}}</span>/{{character.maxHp}}<br>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -95,7 +96,7 @@
                                                     Сила:
                                                 </td>
                                                 <td>
-                                                    <?php echo $this->character->strength ?>
+                                                    {{character.strength}}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -103,7 +104,7 @@
                                                     Ловкость:
                                                 </td>
                                                 <td>
-                                                    <?php echo $this->character->dexterity ?>
+                                                    {{character.dexterity}}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -111,7 +112,7 @@
                                                     Выносливость:
                                                 </td>
                                                 <td>
-                                                    <?php echo $this->character->endurance ?>
+                                                    {{character.endurance}}
                                                 </td>
                                             </tr>
                                         </table>
@@ -162,7 +163,7 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="character in characters">
-                                        <td>
+                                        <td ng-click="setCharacter(character)">
                                             <img ng-src="/img/world/characters/{{character.image}}">
                                             {{character.name}}
                                         </td>
@@ -220,8 +221,8 @@
                                     </li>
                                 </ul>
 
-                                <ul ng-controller="UserCtrl" ng-class="{hide: user == undefined}" class="nav pull-right">
-                                    <li class="dropdown">
+                                <ul class="nav pull-right">
+                                    <li ng-controller="UserCtrl" ng-class="{hide: user == undefined}" class="dropdown">
                                         <a href="#" class="dropdown-toggle"
                                            data-toggle="dropdown" data-target="#">
                                             Настройки

@@ -28,3 +28,7 @@ button.left-pannel-button {
 a.left-panel-button {
     width: 85%;
 }
+
+div#select-character table tbody tr {
+    cursor: pointer;
+}
