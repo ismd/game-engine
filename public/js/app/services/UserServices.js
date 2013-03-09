@@ -34,9 +34,6 @@ userServices.factory('User', function($rootScope, $http) {
             selectCharacterForm.modal();
 
             $http.get('/api/user/characters').success(function(data) {
-                var loading = selectCharacterForm.find('img.loading');
-
-                loading.hide();
                 $rootScope.$broadcast('characters-list-update', data);
             }).error(function() {
                 alert('Не удалось обратиться к серверу');

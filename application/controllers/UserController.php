@@ -28,7 +28,7 @@ class UserController extends PsAbstractAuthController {
                 'image' => $character->image,
             );
         }
-
+sleep(5);
         $this->view->json($characters);
     }
 }
