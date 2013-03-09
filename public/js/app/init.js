@@ -13,7 +13,8 @@ main.config(function($routeProvider, $locationProvider, $httpProvider) {
             templateUrl: '/partial/registration'
         }).
         when('/world', {
-            templateUrl: '/partial/world'
+            templateUrl: '/partial/world',
+            controller: WorldCtrl
         }).
         when('/world/inventory', {
             templateUrl: '/partial/world/inventory'
