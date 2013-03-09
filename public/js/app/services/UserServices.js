@@ -16,8 +16,7 @@ userServices.factory('User', function($rootScope, $http) {
                 password: password
             }).success(function(data) {
                 if ('ok' === data.status) {
-                    delete data.status;
-                    $rootScope.$broadcast('logged', data);
+                    $rootScope.$broadcast('logged', data.user);
 
                     authForm.modal('hide');
                 } else {

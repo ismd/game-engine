@@ -23,9 +23,10 @@ class AuthController extends PsAbstractController {
             $user = $mapper->getByLoginAndPassword($username, $password);
             $this->session->user = $user;
 
-            $this->view->json(array_merge(array(
+            $this->view->json(array(
                 'status' => 'ok',
-            ), $this->session->user->toArray()));
+                'user'   => $this->session->user->toArray(),
+            ));
         } catch (UserMapperNotFoundException $e) {
             $this->view->json(array(
                 'status' => 'error',
