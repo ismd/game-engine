@@ -11,6 +11,15 @@ class IndexController extends PsAbstractController {
 
         if (null != $this->session->user) {
             $this->view->user = $this->session->user;
+
+            $userCharacters = $this->session->user->characters;
+
+            $characters = array();
+            foreach ($userCharacters as $character) {
+                $characters[] = $character->toArray();
+            }
+
+            $this->view->userCharacters = $characters;
         }
 
         if (null != $this->session->character) {

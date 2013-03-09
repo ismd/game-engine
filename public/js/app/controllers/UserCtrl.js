@@ -16,11 +16,11 @@ function UserCtrl($scope, $window, User, Character) {
     });
 
     $scope.$on('characters-list-update', function(e, characters) {
-        $scope.characters = characters;
+        $scope.user.characters = characters;
     });
 
-    $scope.setCharacter = function(character) {
-        Character.setCharacter(character.id);
+    $scope.setCharacter = function(id) {
+        Character.setCharacter(id);
     };
 }
 
