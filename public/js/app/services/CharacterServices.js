@@ -1,8 +1,5 @@
 var characterServices = angular.module('characterServices', []);
 
-/**
- * Список персонажей пользователя
- */
 characterServices.factory('Character', function($rootScope, $http, $location) {
     return {
         'setCharacter': function(id) {

@@ -18,10 +18,11 @@
 
         <script src="/js/app/controllers/UserCtrl.js"></script>
         <script src="/js/app/controllers/CharacterCtrl.js"></script>
-        <script src="/js/app/controllers/WorldCtrl.js"></script>
+        <script src="/js/app/controllers/MapCtrl.js"></script>
 
         <script src="/js/app/services/UserServices.js"></script>
         <script src="/js/app/services/CharacterServices.js"></script>
+        <script src="/js/app/services/MapServices.js"></script>
 
         <?php if (null != $this->user): ?>
         <script>
@@ -33,6 +34,9 @@
         <?php if (null != $this->character): ?>
         <script>
         window.character = <?php echo json_encode($this->character->toArray()) ?>;
+
+        window.x = <?php echo $this->character->x ?>;
+        window.y = <?php echo $this->character->y ?>;
         </script>
         <?php endif ?>
     </head>

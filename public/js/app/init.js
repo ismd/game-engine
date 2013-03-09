@@ -1,6 +1,6 @@
 'use strict';
 
-var main = angular.module('main', ['userServices', 'characterServices']);
+var main = angular.module('main', ['userServices', 'characterServices', 'mapServices']);
 
 main.config(function($routeProvider, $locationProvider, $httpProvider) {
     $locationProvider.html5Mode(true);
@@ -13,8 +13,7 @@ main.config(function($routeProvider, $locationProvider, $httpProvider) {
             templateUrl: '/partial/registration'
         }).
         when('/world', {
-            templateUrl: '/partial/world',
-            controller: WorldCtrl
+            templateUrl: '/partial/world'
         }).
         when('/world/inventory', {
             templateUrl: '/partial/world/inventory'
