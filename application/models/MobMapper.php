@@ -1,7 +1,6 @@
 <?php
 /**
  * Модель моба
- *
  * @author ismd
  */
 
@@ -11,7 +10,6 @@ class MobMapper extends PsAbstractDbMapper {
 
     /**
      * Возвращает моба по id из таблицы MobMap
-     *
      * @param int $id
      * @return Mob
      * @throws MobMapperNotFoundException
@@ -37,7 +35,6 @@ class MobMapper extends PsAbstractDbMapper {
 
     /**
      * Возвращает мобов на клетке
-     *
      * @param Cell $cell
      * @return Mob[]
      */

@@ -1,7 +1,6 @@
 <?php
 /**
  * Модель пользователя
- *
  * @author ismd
  */
 
@@ -37,7 +36,6 @@ class UserMapper extends PsAbstractDbMapper {
 
     /**
      * Возвращает пользователя по id
-     *
      * @param int $id
      * @return User
      * @throws UserMapperNotFoundException
@@ -60,10 +58,8 @@ class UserMapper extends PsAbstractDbMapper {
 
     /**
      * Возвращает пользователя по логину
-     *
      * Не рекомендуется использовать данный метод
      * Необходимо использовать только в случае проверки на занятость логина
-     *
      * @param string $login
      * @return User
      * @throws UserMapperNotFoundException
@@ -86,7 +82,6 @@ class UserMapper extends PsAbstractDbMapper {
 
     /**
      * Создаёт либо изменяет пользователя
-     *
      * @param User $user
      * @throws UserMapperLongName
      * @throws UserMapperShortName
@@ -146,9 +141,7 @@ class UserMapper extends PsAbstractDbMapper {
 
     /**
      * Возвращает пользователя по логину и паролю
-     * 
      * Необходимо использовать только при аутентификации
-     *
      * @param string $login
      * @param string $password
      * @return User

@@ -1,7 +1,6 @@
 <?php
 /**
  * Модель NPC
- *
  * @author ismd
  */
 
@@ -11,7 +10,6 @@ class NpcMapper extends PsAbstractDbMapper {
 
     /**
      * Возвращает NPC по id из таблицы NpcMap
-     *
      * @param int $id
      * @return Npc
      * @throws NpcMapperNotFoundException
@@ -35,7 +33,6 @@ class NpcMapper extends PsAbstractDbMapper {
 
     /**
      * Возвращает NPC на клетке
-     *
      * @param Cell $cell
      * @return Npc[]
      */

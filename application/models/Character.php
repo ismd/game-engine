@@ -1,7 +1,6 @@
 <?php
 /**
  * Класс персонажей
- *
  * @author ismd
  */
 
@@ -58,7 +57,6 @@ class Character extends AbstractCharacter {
 
     /**
      * Перемещение персонажа по карте
-     *
      * @param Cell $cell
      * @throws CharacterFastMove
      * @throws CharacterCantMoveHere
@@ -116,7 +114,7 @@ class Character extends AbstractCharacter {
         if (null == $this->_cell) {
             $mapper = new MapMapper;
             $map    = $mapper->getById($this->idMap);
-            
+
             $this->cell = new Cell($map, $this->_x, $this->_y);
         }
 
@@ -148,15 +146,14 @@ class Character extends AbstractCharacter {
     }
 
     /**
-     * Устанавливает пользователя первонажа
-     *
+     * Устанавливает пользователя персонажа
      * @param User $value
      * @return Character
      */
     public function setUser(User $value) {
         $this->_user  = $value;
         $this->idUser = $value->id;
-        
+
         return $this;
     }
 

@@ -1,18 +1,17 @@
 <?php
 /**
  * Класс пользователя
- *
  * @author ismd
  */
 
 class User extends AbstractUser {
-    
+
     /**
      * Персонажи пользователя
      * @var Character[]
      */
     protected $_characters;
-    
+
     /**
      * Нужно для проверки совпадения паролей
      * @var string
@@ -39,7 +38,6 @@ class User extends AbstractUser {
 
     /**
      * Проверяет, есть ли у пользователя персонаж
-     *
      * @todo Подумать, может переделать или убрать этот метод
      * @param int $idCharacter
      * @return bool
@@ -56,12 +54,12 @@ class User extends AbstractUser {
 
         return false;
     }
-    
+
     public function setPassword1($value) {
         $this->_password1 = (string)$value;
         return $this;
     }
-    
+
     public function getPassword1() {
         return $this->_password1;
     }

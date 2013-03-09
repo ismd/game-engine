@@ -1,7 +1,6 @@
 <?php
 /**
  * Модель аттрибута
- *
  * @author ismd
  */
 
@@ -9,7 +8,6 @@ class AttributeMapper extends PsAbstractDbMapper {
 
     /**
      * Возвращает аттрибуты вещи
-     *
      * @param Item $item
      * @return Attribute[]
      */

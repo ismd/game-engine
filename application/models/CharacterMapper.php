@@ -1,7 +1,6 @@
 <?php
 /**
  * Модель персонажа
- *
  * @author ismd
  */
 
@@ -25,7 +24,6 @@ class CharacterMapper extends PsAbstractDbMapper {
 
     /**
      * Возвращает персонажа по id
-     *
      * @param int $id
      * @return Character
      * @throws CharacterMapperNotFoundException
@@ -50,7 +48,6 @@ class CharacterMapper extends PsAbstractDbMapper {
      * Возвращает персонажа по имени
      * Не рекомендуется использовать данный метод
      * Необходимо использовать только в случае проверки на занятость имени
-     *
      * @param string $name
      * @return Character
      * @throws CharacterMapperNotFoundException
@@ -73,7 +70,6 @@ class CharacterMapper extends PsAbstractDbMapper {
 
     /**
      * Возвращает массив персонажей пользователя
-     *
      * @param User $user
      * @return Character[]
      */
@@ -94,7 +90,6 @@ class CharacterMapper extends PsAbstractDbMapper {
 
     /**
      * Возвращает персонажей на клетке
-     *
      * @param Cell $cell
      * @return Character[]
      */
@@ -116,7 +111,6 @@ class CharacterMapper extends PsAbstractDbMapper {
 
     /**
      * Перемещает персонажа на клетку в базе
-     *
      * @param Character $character
      * @param Cell $cell
      */
@@ -130,7 +124,6 @@ class CharacterMapper extends PsAbstractDbMapper {
 
     /**
      * Создаёт персонажа в базе
-     *
      * @param Character $character
      * @throws CharacterMapperLongName
      * @throws CharacterMapperShortName
