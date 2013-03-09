@@ -8,6 +8,18 @@ function MapCtrl($scope, $window, Map) {
         Map.move('top');
     };
 
+    $scope.moveRight = function() {
+        Map.move('right');
+    };
+
+    $scope.moveBottom = function() {
+        Map.move('bottom');
+    };
+
+    $scope.moveLeft = function() {
+        Map.move('left');
+    };
+
     $scope.$on('move', function(e, x, y) {
         $scope.x = x;
         $scope.y = y;
