@@ -34,9 +34,6 @@
         <?php if (null != $this->character): ?>
         <script>
         window.character = <?php echo json_encode($this->character->toArray()) ?>;
-
-        window.x = <?php echo $this->character->x ?>;
-        window.y = <?php echo $this->character->y ?>;
         </script>
         <?php endif ?>
     </head>

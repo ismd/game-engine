@@ -1,8 +1,9 @@
 var mapServices = angular.module('mapServices', []);
 
 mapServices.factory('Map', function($http, $rootScope) {
-    var x;
-    var y;
+    var idMap,
+        x,
+        y;
 
     var canvas = $('canvas#map');
     var ctx    = canvas.get(0).getContext('2d');
@@ -45,9 +46,10 @@ mapServices.factory('Map', function($http, $rootScope) {
     ctx.strokeRect(300, 200, 50, 50);
 
     return {
-        'init': function(init_x, init_y) {
-            x = init_x;
-            y = init_y;
+        'init': function(init_idMap, init_x, init_y) {
+            idMap = init_idMap;
+            x     = init_x;
+            y     = init_y;
         },
         'move': function(direction) {
             var newX = x;

@@ -1,8 +1,11 @@
-function MapCtrl($scope, $window, Map) {
-    $scope.x = $window.x;
-    $scope.y = $window.y;
+function MapCtrl($scope, Map, Character) {
+    var character = Character.getCharacter();
 
-    Map.init($scope.x, $scope.y);
+    $scope.idMap = character.idMap;
+    $scope.x     = character.x;
+    $scope.y     = character.y;
+
+    Map.init($scope.idMap, $scope.x, $scope.y);
 
     $scope.moveTop = function() {
         Map.move('top');
@@ -26,4 +29,4 @@ function MapCtrl($scope, $window, Map) {
     });
 }
 
-MapCtrl.$inject = ['$scope', '$window', 'Map'];
+MapCtrl.$inject = ['$scope', 'Map', 'Character'];

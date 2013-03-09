@@ -1,14 +1,18 @@
 var characterServices = angular.module('characterServices', []);
 
-characterServices.factory('Character', function($rootScope, $http, $location) {
+characterServices.factory('Character', function($rootScope, $http, $location, $window) {
+    var character = $window.character;
+
     return {
         'setCharacter': function(id) {
             $http.post('/api/character/set', {
                 id: id
             }).success(function(data) {
                 if ('ok' === data.status) {
+                    character = data.character;
+
                     $('div#select-character').modal('hide');
-                    $rootScope.$broadcast('characterChosen', data.character);
+                    $rootScope.$broadcast('characterChosen', character);
                     $location.path('/world');
                 } else {
                     alert('Ошибка');
@@ -16,6 +20,9 @@ characterServices.factory('Character', function($rootScope, $http, $location) {
             }).error(function() {
                 alert('Не удалось обратиться к серверу');
             });
+        },
+        'getCharacter': function() {
+            return character;
         }
     };
 });
