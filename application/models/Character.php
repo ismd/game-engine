@@ -103,6 +103,8 @@ class Character extends AbstractCharacter {
 
     public function setCell(Cell $value) {
         $this->_cell = $value;
+        $this->idMap = $value->map->id;
+
         return $this;
     }
 
