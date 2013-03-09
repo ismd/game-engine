@@ -1,7 +1,9 @@
-function CharacterCtrl($scope) {
+function CharacterCtrl($scope, $window) {
+    $scope.character = $window.character;
+
     $scope.$on('characterChosen', function(e, character) {
         $scope.character = character;
     });
 }
 
-CharacterCtrl.$inject = ['$scope'];
+CharacterCtrl.$inject = ['$scope', '$window'];

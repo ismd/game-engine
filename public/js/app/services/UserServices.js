@@ -1,8 +1,5 @@
 var userServices = angular.module('userServices', []);
 
-/**
- * Список персонажей пользователя
- */
 userServices.factory('User', function($rootScope, $http) {
     return {
         'login': function(username, password) {
@@ -16,7 +13,8 @@ userServices.factory('User', function($rootScope, $http) {
                 password: password
             }).success(function(data) {
                 if ('ok' === data.status) {
-                    $rootScope.$broadcast('logged', data.user);
+                    $rootScope.$broadcast('logged', true);
+                    $rootScope.$broadcast('setUser', data.user);
 
                     authForm.modal('hide');
                 } else {

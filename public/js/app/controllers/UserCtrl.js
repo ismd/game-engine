@@ -1,11 +1,18 @@
-function UserCtrl($scope, User, Character) {
+function UserCtrl($scope, $window, User, Character) {
+    $scope.user = $window.user;
+
     $scope.login = function(username, password) {
         User.login(username, password);
     };
 
-    $scope.$on('logged', function(e, user) {
+    $scope.$on('logged', function(e, logged) {
+        if (true === logged) {
+            User.showCharactersList();
+        }
+    });
+
+    $scope.$on('setUser', function(e, user) {
         $scope.user = user;
-        User.showCharactersList();
     });
 
     $scope.$on('characters-list-update', function(e, characters) {
@@ -14,7 +21,7 @@ function UserCtrl($scope, User, Character) {
 
     $scope.setCharacter = function(character) {
         Character.setCharacter(character.id);
-    }
+    };
 }
 
-UserCtrl.$inject = ['$scope', 'User', 'Character'];
+UserCtrl.$inject = ['$scope', '$window', 'User', 'Character'];

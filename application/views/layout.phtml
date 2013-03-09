@@ -21,6 +21,18 @@
 
         <script src="/js/app/services/UserServices.js"></script>
         <script src="/js/app/services/CharacterServices.js"></script>
+
+        <?php if (null != $this->user): ?>
+        <script>
+        window.user = <?php echo json_encode($this->user->toArray()) ?>;
+        </script>
+        <?php endif ?>
+
+        <?php if (null != $this->character): ?>
+        <script>
+        window.character = <?php echo json_encode($this->character->toArray()) ?>;
+        </script>
+        <?php endif ?>
     </head>
     <body>
         <div ng-controller="CharacterCtrl" class="container">
