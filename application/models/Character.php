@@ -70,10 +70,19 @@ class Character extends AbstractCharacter {
         $this->_lastMove = microtime(true);
 
         // Проверяем, может ли персонаж переместиться на заданную клетку
-        if (($cell->x == $this->cell->x && abs($cell->y - $this->cell->y) != 1)
-                || ($cell->y == $this->cell->y && abs($cell->x - $this->cell->x) != 1)
-                || ($cell->x == $this->cell->x && $cell->y == $this->cell->y)
-                || $cell->x < 0 || $cell->y < 0) {
+        if ($cell->x < 0 || $cell->y < 0) {
+            throw new CharacterCantMoveHere;
+        }
+
+        if ($cell->x == $this->cell->x) {
+            if (abs($cell->y - $this->cell->y) != 1) {
+                throw new CharacterCantMoveHere;
+            }
+        } elseif ($cell->y == $this->cell->y) {
+            if (abs($cell->x - $this->cell->x) != 1) {
+                throw new CharacterCantMoveHere;
+            }
+        } else {
             throw new CharacterCantMoveHere;
         }
 

@@ -87,10 +87,10 @@ class CharacterController extends PsAbstractAuthController {
      * @post y
      */
     public function moveAction() {
-        $request = $this->getRequest();
+        $post = $this->request->getPost();
 
-        $x = (int)$request->post->x;
-        $y = (int)$request->post->y;
+        $x = (int)$post->x;
+        $y = (int)$post->y;
 
         $cell = new Cell($this->session->character->cell->map, $x, $y);
 
@@ -99,6 +99,8 @@ class CharacterController extends PsAbstractAuthController {
 
             $this->view->json(array(
                 'status' => 'ok',
+                'x'      => $cell->x,
+                'y'      => $cell->y,
             ));
         } catch (CharacterFastMove $e) {
             $this->view->json(array(

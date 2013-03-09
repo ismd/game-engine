@@ -76,8 +76,8 @@ mapServices.factory('Map', function($http, $rootScope) {
                 y: newY
             }).success(function(data) {
                 if ('ok' === data.status) {
-                    x = newX;
-                    y = newY;
+                    x = data.x;
+                    y = data.y;
 
                     $rootScope.$broadcast('move', x, y);
                 } else {
