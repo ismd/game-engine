@@ -3,18 +3,17 @@
 angular.module('userService', []).factory('User', function($rootScope, $http, $location) {
     return {
         'login': function(username, password) {
-            var authForm = $('div#auth-form');
-
             $http.post('/api/auth/login', {
                 username: username,
                 password: password
             }).success(function(data) {
+                // Скрываем форму авторизации
+                if ('ok' === data.status) {
+                    $('div#auth-form').modal('hide');
+                }
+                
                 $rootScope.$broadcast('login-result', 'ok' === data.status, data.message);
                 $rootScope.$broadcast('set-user', data.user);
-
-                if ('ok' === data.status) {
-                    authForm.modal('hide');
-                }
             }).error(function() {
                 alert('Не удалось обратиться к серверу');
             });
@@ -31,9 +30,7 @@ angular.module('userService', []).factory('User', function($rootScope, $http, $l
             });
         },
         'showCharactersList': function() {
-            var selectCharacterForm = $('div#select-character');
-
-            selectCharacterForm.modal();
+            $('div#select-character').modal();
 
             $http.get('/api/user/characters').success(function(data) {
                 $rootScope.$broadcast('characters-list-update', data);

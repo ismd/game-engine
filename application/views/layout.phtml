@@ -171,6 +171,8 @@
                             <div ng-show="0 == user.characters.length">
                                 У вас пока нет созданных персонажей
                             </div>
+
+                            <p class="text-error">{{setCharacterMessage}}</p>
                         </div>
                         <div class="modal-footer">
                             <a href="/character/create" class="btn" data-dismiss="modal">Создать персонажа</a>

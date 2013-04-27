@@ -70,7 +70,8 @@ class CharacterController extends PsAbstractAuthController {
 
         if (!$this->session->user->hasCharacter($idCharacter)) {
             $this->view->json(array(
-                'status' => 'error',
+                'status'  => 'error',
+                'message' => 'Ошибка',
             ));
             return;
         }
@@ -80,7 +81,8 @@ class CharacterController extends PsAbstractAuthController {
         $this->session->character = $mapper->getById($idCharacter);
 
         $this->view->json(array(
-            'status' => 'ok',
+            'status'    => 'ok',
+            'message'   => '',
             'character' => $this->session->character->toArray(),
         ));
     }

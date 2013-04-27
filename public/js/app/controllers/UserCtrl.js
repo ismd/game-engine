@@ -1,6 +1,6 @@
 'use strict';
 
-function UserCtrl($scope, $window, User, Character) {
+function UserCtrl($scope, $window, User) {
     $scope.user = $window.user;
 
     // true, когда происходит процесс авторизации
@@ -41,10 +41,6 @@ function UserCtrl($scope, $window, User, Character) {
     $scope.$on('characters-list-update', function(e, characters) {
         $scope.user.characters = characters;
     });
-
-    $scope.setCharacter = function(id) {
-        Character.setCharacter(id);
-    };
 }
 
-UserCtrl.$inject = ['$scope', '$window', 'User', 'Character'];
+UserCtrl.$inject = ['$scope', '$window', 'User'];
