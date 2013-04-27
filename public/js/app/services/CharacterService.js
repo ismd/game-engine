@@ -16,7 +16,7 @@ angular.module('characterService', []).factory('Character', function($rootScope,
                 character = data.character;
 
                 $('div#select-character').modal('hide');
-                $rootScope.$broadcast('characterChosen', character);
+                $rootScope.$broadcast('character-chosen', character);
                 $location.path('/world');
             }).error(function() {
                 alert('Не удалось обратиться к серверу');
