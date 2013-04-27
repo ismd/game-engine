@@ -1,14 +1,14 @@
 <!doctype html>
 <html lang="ru" ng-app="main">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>ismd-game</title>
 
-        <link href="/css/bootstrap.css" rel="stylesheet" media="screen">
-        <link href="/css/bootstrap-responsive.css" rel="stylesheet">
-        <link href="/css/main.css" rel="stylesheet" media="screen">
-        <link href="/css/world.css" rel="stylesheet" media="screen">
+        <link href="/css/bootstrap.css" rel="stylesheet" media="screen" />
+        <link href="/css/bootstrap-responsive.css" rel="stylesheet" />
+        <link href="/css/main.css" rel="stylesheet" media="screen" />
+        <link href="/css/world.css" rel="stylesheet" media="screen" />
 
         <script src="/js/lib/jquery.js"></script>
         <script src="/js/lib/bootstrap.js"></script>
@@ -16,13 +16,17 @@
         <script src="/js/lib/angular-resource.js"></script>
         <script src="/js/app/init.js"></script>
 
+        <script src="/js/app/controllers/RegistrationCtrl.js"></script>
+        <script src="/js/app/controllers/CharacterCreateCtrl.js"></script>
         <script src="/js/app/controllers/UserCtrl.js"></script>
         <script src="/js/app/controllers/CharacterCtrl.js"></script>
         <script src="/js/app/controllers/MapCtrl.js"></script>
 
-        <script src="/js/app/services/UserServices.js"></script>
-        <script src="/js/app/services/CharacterServices.js"></script>
-        <script src="/js/app/services/MapServices.js"></script>
+        <script src="/js/app/services/RegistrationService.js"></script>
+        <script src="/js/app/services/CharacterCreateService.js"></script>
+        <script src="/js/app/services/UserService.js"></script>
+        <script src="/js/app/services/CharacterService.js"></script>
+        <script src="/js/app/services/MapService.js"></script>
 
         <?php if (null != $this->user): ?>
         <script>
@@ -37,36 +41,33 @@
         </script>
         <?php endif ?>
     </head>
-    <body>
+    <body ng-controller="UserCtrl">
         <div ng-controller="CharacterCtrl" class="container">
             <div class="row">
                 <!-- Sidebar -->
                 <div class="span2">
                     <div class="sidebar-nav-fixed with-borders">
-                        <div ng-controller="UserCtrl" ng-switch on="user" class="row">
+                        <div ng-switch on="user" class="row">
+                            <!-- Пользователь не выбран -->
                             <div ng-switch-when="undefined" class="span2">
                                 <button class="left-pannel-button btn btn-primary"
-                                   href="#auth-form"
-                                   role="button"
-                                   data-toggle="modal"
-                                   target="_self">Войти в игру</button>
-                                <hr>
-                                <a class="left-panel-button btn" href="/registration">
-                                    Регистрация
-                                </a>
-                                <br>
-                                <a class="left-panel-button btn" href="#">
-                                    Забыли пароль
-                                </a>
+                                        href="#auth-form"
+                                        role="button"
+                                        data-toggle="modal"
+                                        target="_self">Войти в игру</button>
+                                <hr />
+                                <a class="left-panel-button btn" href="/registration">Регистрация</a>
+                                <br />
+                                <a class="left-panel-button btn" href="#">Забыли пароль</a>
                             </div>
 
+                            <!-- Персонаж выбран -->
                             <div ng-switch-default class="span2">
                                 Добро пожаловать, {{user.login}}
-
-                                <hr>
-
+                                <hr />
                                 <!-- Инфа о персонаже -->
-                                <div ng-controller="CharacterCtrl" ng-switch on="character" class="row">
+                                <div ng-switch on="character" class="row">
+                                    <!-- Персонаж не выбран -->
                                     <div ng-switch-when="undefined" class="span2">
                                         <a id="select-character-open"
                                            href="#select-character"
@@ -76,59 +77,34 @@
                                            target="_self">Выбрать персонажа</a>
                                     </div>
 
+                                    <!-- Персонаж выбран -->
                                     <div ng-switch-default class="span2">
-                                        <h3 id="character-name">
-                                            {{character.name}}
-                                        </h3>
+                                        <h4 id="character-name">{{character.name}}</h4>
 
                                         <table>
                                             <tr>
-                                                <td>
-                                                    Уровень:
-                                                </td>
-                                                <td>
-                                                    {{character.level}}
-                                                </td>
+                                                <td>Уровень:</td>
+                                                <td>{{character.level}}</td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    Опыт:
-                                                </td>
-                                                <td>
-                                                    {{character.experience}}
-                                                </td>
+                                                <td>Опыт:</td>
+                                                <td>{{character.experience}}</td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    Жизнь:
-                                                </td>
-                                                <td>
-                                                    <span id="hp">{{character.hp}}</span>/{{character.maxHp}}<br>
-                                                </td>
+                                                <td>Жизнь:</td>
+                                                <td>{{character.hp}}/{{character.maxHp}}</td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    Сила:
-                                                </td>
-                                                <td>
-                                                    {{character.strength}}
-                                                </td>
+                                                <td>Сила:</td>
+                                                <td>{{character.strength}}</td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    Ловкость:
-                                                </td>
-                                                <td>
-                                                    {{character.dexterity}}
-                                                </td>
+                                                <td>Ловкость:</td>
+                                                <td>{{character.dexterity}}</td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    Выносливость:
-                                                </td>
-                                                <td>
-                                                    {{character.endurance}}
-                                                </td>
+                                                <td>Выносливость:</td>
+                                                <td>{{character.endurance}}</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -138,7 +114,7 @@
                     </div>
 
                     <!-- Форма аутентификации -->
-                    <div ng-controller="UserCtrl" id="auth-form" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div id="auth-form" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h3>Вход в игру</h3>
@@ -146,9 +122,9 @@
                         <div class="modal-body">
                             <form>
                                 <label for="username">Логин</label>
-                                <input ng-model="username" type="text" placeholder="Введите логин">
+                                <input ng-model="username" type="text" placeholder="Введите логин" />
                                 <label for="password">Пароль</label>
-                                <input ng-model="password" type="password" placeholder="Введите пароль">
+                                <input ng-model="password" type="password" placeholder="Введите пароль" />
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -157,7 +133,7 @@
                     </div>
 
                     <!-- Форма выбора персонажа -->
-                    <div ng-controller="UserCtrl" id="select-character" class="modal hide fade" role="dialog">
+                    <div id="select-character" class="modal hide fade" role="dialog">
                         <div class="modal-header">
                             <button type="button"
                                     class="close"
@@ -167,9 +143,9 @@
                             <h3>Выберите персонажа</h3>
                         </div>
                         <div class="modal-body">
-                            <img ng-class="{hide: user.characters != undefined}" class="loading" src="/img/loading.gif">
+                            <img ng-show="!user.characters" class="loading" src="/img/loading.gif" />
 
-                            <table ng-class="{hide: user.characters == undefined}" class="table table-hover">
+                            <table ng-show="user.characters" class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th>Имя</th>
@@ -179,13 +155,20 @@
                                 <tbody>
                                     <tr ng-repeat="character in user.characters">
                                         <td ng-click="setCharacter(character.id)">
-                                            <img ng-src="/img/world/characters/{{character.image}}">
+                                            <img ng-src="/img/world/characters/{{character.image}}" />
                                             {{character.name}}
                                         </td>
                                         <td>{{character.level}}</td>
                                     </tr>
                                 </tbody>
                             </table>
+
+                            <div ng-show="0 == user.characters.length">
+                                У вас пока нет созданных персонажей
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="/character/create" class="btn" data-dismiss="modal">Создать персонажа</a>
                         </div>
                     </div>
                 </div>
@@ -202,44 +185,32 @@
                                             Главная
                                         </a>
                                     </li>
-
-                                    <li ng-controller="CharacterCtrl" ng-class="{hide: character == undefined}" class="dropdown">
-                                        <a href="#" class="dropdown-toggle"
-                                           data-toggle="dropdown" data-target="#">
+                                    <li ng-show="character" class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-target="#">
                                             Игра
                                             <b class="caret"></b>
                                         </a>
 
                                         <ul class="dropdown-menu">
                                             <li>
-                                                <a href="/world">
-                                                    Мир
-                                                </a>
+                                                <a href="/world">Мир</a>
                                             </li>
                                             <li>
-                                                <a href="/world/inventory">
-                                                    Инвентарь
-                                                </a>
+                                                <a href="/world/inventory">Инвентарь</a>
                                             </li>
                                         </ul>
                                     </li>
-
                                     <li>
-                                        <a href="database">
-                                            База знаний
-                                        </a>
+                                        <a href="/database">База знаний</a>
                                     </li>
                                     <li>
-                                        <a href="#">
-                                            Форум
-                                        </a>
+                                        <a href="#">Форум</a>
                                     </li>
                                 </ul>
 
                                 <ul class="nav pull-right">
-                                    <li ng-controller="UserCtrl" ng-class="{hide: user == undefined}" class="dropdown">
-                                        <a href="#" class="dropdown-toggle"
-                                           data-toggle="dropdown" data-target="#">
+                                    <li ng-show="character" class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-target="#">
                                             Настройки
                                             <b class="caret"></b>
                                         </a>
@@ -252,11 +223,8 @@
                                                    data-toggle="modal"
                                                    target="_self">Выбрать персонажа</a>
                                             </li>
-
                                             <li>
-                                                <a href="/auth/logout">
-                                                    Выход
-                                                </a>
+                                                <a ng-click="logout()" href="#">Выход</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -265,6 +233,7 @@
                         </div>
                     </div>
 
+                    <!-- Основной контент страницы -->
                     <div class="row-fluid">
                         <div class="span12">
                             <div ng-view></div>

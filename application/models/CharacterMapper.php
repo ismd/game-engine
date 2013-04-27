@@ -9,15 +9,15 @@ class CharacterMapperNotFoundException extends Exception {
 };
 
 class CharacterMapperLongName extends Exception {
-    protected $message = 'Имя слишком длинное';
+    protected $message = 'Имя не может быть длиннее 30 символов';
 };
 
 class CharacterMapperShortName extends Exception {
-    protected $message = 'Имя слишком короткое';
+    protected $message = 'Имя не может быть короче 4 символов';
 };
 
 class CharacterMapperNameExists extends Exception {
-    protected $message = 'Персонаж с таким именем уже существует';
+    protected $message = 'Введённое имя уже занято';
 };
 
 class CharacterMapper extends PsAbstractDbMapper {
@@ -125,6 +125,7 @@ class CharacterMapper extends PsAbstractDbMapper {
     /**
      * Создаёт персонажа в базе
      * @param Character $character
+     * @return int id персонажа
      * @throws CharacterMapperLongName
      * @throws CharacterMapperShortName
      * @throws CharacterMapperNameExists
@@ -165,5 +166,7 @@ class CharacterMapper extends PsAbstractDbMapper {
             . "$character->experience)");
 
         // TODO: сделать update, чтобы сохранялся персонаж. но надо ли?
+
+        return $this->db->insert_id;
     }
 }

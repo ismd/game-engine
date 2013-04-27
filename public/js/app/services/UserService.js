@@ -1,6 +1,6 @@
-var userServices = angular.module('userServices', []);
+'use strict';
 
-userServices.factory('User', function($rootScope, $http) {
+angular.module('userService', []).factory('User', function($rootScope, $http, $location) {
     return {
         'login': function(username, password) {
             var authForm    = $('div#auth-form');
@@ -12,18 +12,32 @@ userServices.factory('User', function($rootScope, $http) {
                 username: username,
                 password: password
             }).success(function(data) {
-                if ('ok' === data.status) {
-                    $rootScope.$broadcast('logged', true);
-                    $rootScope.$broadcast('setUser', data.user);
-
-                    authForm.modal('hide');
-                } else {
+                if ('ok' !== data.status) {
                     alert('Не удалось войти');
                     loginButton.removeClass('disabled');
+                    return;
                 }
+
+                $rootScope.$broadcast('logged', true);
+                $rootScope.$broadcast('setUser', data.user);
+
+                authForm.modal('hide');
             }).error(function() {
                 alert('Не удалось обратиться к серверу');
             });
+        },
+        'logout': function() {
+            $http.post('/api/auth/logout').success(function(data) {
+                if ('ok' !== data.status) {
+                    alert('Не удалось выйти');
+                    return;
+                }
+
+                $rootScope.$broadcast('logged', false);
+                $location.path('/');
+            }).error(function() {
+                alert('Не удалось обратиться к серверу');
+            });;
         },
         'showCharactersList': function() {
             var selectCharacterForm = $('div#select-character');

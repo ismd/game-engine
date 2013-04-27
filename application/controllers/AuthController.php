@@ -12,7 +12,14 @@ class AuthController extends PsAbstractController {
      * @post password
      */
     public function loginAction() {
-        $post = $this->request->getPost();
+        if (!$this->request->isPost()) {
+            $this->view->json(array(
+                'status' => 'error',
+            ));
+            return;
+        }
+
+        $post = $this->request->post;
 
         $username = $post->username;
         $password = $post->password;

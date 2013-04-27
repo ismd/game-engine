@@ -1,3 +1,5 @@
+'use strict';
+
 function MapCtrl($scope, Map, Character) {
     var character = Character.getCharacter();
 

@@ -1,3 +1,5 @@
+'use strict';
+
 function UserCtrl($scope, $window, User, Character) {
     $scope.user = $window.user;
 
@@ -5,10 +7,17 @@ function UserCtrl($scope, $window, User, Character) {
         User.login(username, password);
     };
 
+    $scope.logout = function() {
+        User.logout();
+    };
+
     $scope.$on('logged', function(e, logged) {
-        if (true === logged) {
-            User.showCharactersList();
+        if (!logged) {
+            delete($scope.user);
+            return;
         }
+
+        User.showCharactersList();
     });
 
     $scope.$on('setUser', function(e, user) {

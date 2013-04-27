@@ -1,6 +1,6 @@
-var mapServices = angular.module('mapServices', []);
+'use strict';
 
-mapServices.factory('Map', function($http, $rootScope) {
+angular.module('mapService', []).factory('Map', function($http, $rootScope) {
     var idMap,
         x,
         y;

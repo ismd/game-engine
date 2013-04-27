@@ -1,18 +1,13 @@
-<?php if (null != $this->error): ?>
-<p class="text-error">
-    <?php echo $this->error ?>
-</p>
-<?php endif ?>
-
-<?php if (true == $this->created): ?>
-Вы успешно создали персонажа, теперь можете выбрать его и начать играть.
-<?php else: ?>
-<form action="/character/create" method="post">
-    <fieldset>
-        <legend>Создание персонажа</legend>
+<fieldset>
+    <legend>Создание персонажа</legend>
+    <p>
         <label for="name">Имя</label>
-        <input type="text" name="name" id="name">
-        <input type="submit" value="Создать">
-    </fieldset>
-</form>
-<?php endif ?>
+        <input ng-model="newCharacter.name" id="name" type="text" />
+    </p>
+    <p class="text-error">
+        {{message}}
+    </p>
+    <p>
+        <button ng-click="create()" class="btn">Создать</button>
+    </p>
+</fieldset>

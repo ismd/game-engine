@@ -12,42 +12,61 @@ class RegistrationController extends PsAbstractController {
     }
 
     public function indexPartial() {
-        $request = $this->getRequest();
+    }
 
-        if (false == $request->isPost()) {
-            return;
-        }
-
-        $this->view->request = $request;
+    /**
+     * Регистрация пользователя
+     */
+    public function registerAction() {
+        $post = $this->request->post;
 
         $user = new User(array(
-            'login'     => $request->post->login,
-            'password'  => $request->post->password,
-            'password1' => $request->post->password1,
-            'email'     => $request->post->email,
-            'info'      => $request->post->info,
-            'site'      => $request->post->site,
+            'login'     => $post->login,
+            'password'  => $post->password,
+            'password1' => $post->password1,
+            'email'     => $post->email,
+            'info'      => $post->info,
+            'site'      => $post->site,
         ));
 
         $mapper = new UserMapper;
 
         try {
             $mapper->save($user);
-            $this->view->registered = true;
-        } catch (UserMapperLongName $e) {
-            $this->view->error = $e->getMessage();
-        } catch (UserMapperLongPassword $e) {
-            $this->view->error = $e->getMessage();
-        } catch (UserMapperNameExists $e) {
-            $this->view->error = $e->getMessage();
+            $this->view->json(array(
+                'status'  => 'ok',
+                'message' => '',
+            ));
+        } catch (UserMapperLongLogin $e) {
+            $this->view->json(array(
+                'status'  => 'error',
+                'message' => $e->getMessage(),
+            ));
+        } catch (UserMapperLoginExists $e) {
+            $this->view->json(array(
+                'status'  => 'error',
+                'message' => $e->getMessage(),
+            ));
         } catch (UserMapperPasswordsDontMatch $e) {
-            $this->view->error = $e->getMessage();
-        } catch (UserMapperShortName $e) {
-            $this->view->error = $e->getMessage();
+            $this->view->json(array(
+                'status'  => 'error',
+                'message' => $e->getMessage(),
+            ));
+        } catch (UserMapperShortLogin $e) {
+            $this->view->json(array(
+                'status'  => 'error',
+                'message' => $e->getMessage(),
+            ));
         } catch (UserMapperShortPassword $e) {
-            $this->view->error = $e->getMessage();
+            $this->view->json(array(
+                'status'  => 'error',
+                'message' => $e->getMessage(),
+            ));
         } catch (Exception $e) {
-            $this->view->error = 'Ошибка';
+            $this->view->json(array(
+                'status'  => 'error',
+                'message' => 'Ошибка',
+            ));
         }
     }
 }

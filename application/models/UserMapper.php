@@ -8,28 +8,24 @@ class UserMapperNotFoundException extends Exception {
     protected $message = 'Персонаж не найден';
 };
 
-class UserMapperLongName extends Exception {
-    protected $message = 'Имя слишком длинное';
+class UserMapperLongLogin extends Exception {
+    protected $message = 'Логин не может быть длиннее 30 символов';
 };
 
-class UserMapperShortName extends Exception {
-    protected $message = 'Имя слишком короткое';
+class UserMapperShortLogin extends Exception {
+    protected $message = 'Логин не может быть короче 4 символов';
 };
 
-class UserMapperNameExists extends Exception {
-    protected $message = 'Персонаж с таким именем уже существует';
-};
-
-class UserMapperLongPassword extends Exception {
-    protected $message = 'Пароль слишком длинный';
+class UserMapperLoginExists extends Exception {
+    protected $message = 'Введённый логин уже занят';
 };
 
 class UserMapperShortPassword extends Exception {
-    protected $message = 'Пароль слишком короткий';
+    protected $message = 'Пароль не может быть короче 6 символов';
 };
 
 class UserMapperPasswordsDontMatch extends Exception {
-    protected $message = 'Пароли не совпадают';
+    protected $message = 'Введённые пароли не совпадают';
 };
 
 class UserMapper extends PsAbstractDbMapper {
@@ -83,36 +79,31 @@ class UserMapper extends PsAbstractDbMapper {
     /**
      * Создаёт либо изменяет пользователя
      * @param User $user
-     * @throws UserMapperLongName
-     * @throws UserMapperShortName
-     * @throws UserMapperNameExists
+     * @throws UserMapperLongLogin
+     * @throws UserMapperShortLogin
+     * @throws UserMapperLoginExists
      * @throws UserMapperLongPassword
      * @throws UserMapperShortPassword
      * @throws UserMapperPasswordsDontMatch
      */
     public function save(User $user) {
         // FIXME: валидация
-
         if (mb_strlen($user->login) > 30) {
-            throw new UserMapperLongName;
+            throw new UserMapperLongLogin;
         }
 
         if (mb_strlen($user->login) < 4) {
-            throw new UserMapperShortName;
+            throw new UserMapperShortLogin;
         }
 
         // Проверяем, не занят ли логин
         try {
             $this->getByLogin($user->login);
-            throw new UserMapperNameExists;
+            throw new UserMapperLoginExists;
         } catch (UserMapperNotFoundException $e) {
         }
 
-        if (mb_strlen($user->password) > 30) {
-            throw new UserMapperLongPassword;
-        }
-
-        if (mb_strlen($user->password) < 8) {
+        if (mb_strlen($user->password) < 6) {
             throw new UserMapperShortPassword;
         }
 

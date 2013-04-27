@@ -1,60 +1,33 @@
-<?php if (null != $this->error): ?>
-<p class="text-error">
-    <?php echo $this->error ?>
-</p>
-<?php endif ?>
-
-<?php if (true == $this->registered): ?>
-Вы успешно зарегистрированы, теперь можете зайти на сайт и создать персонажа.
-<?php else: ?>
-<form action="/registration" method="post">
-    <fieldset>
-        <legend>Регистрация пользователя</legend>
-        <p>
-            <label for="login">Логин</label>
-            <input id="login"
-                   type="text"
-                   name="login"
-                   value="<?php echo $this->request->post->login ?>">
-        </p>
-        <p>
-            <label for="password">Пароль</label>
-            <input id="password"
-                   type="password"
-                   name="password">
-        </p>
-        <p>
-            <label for="password1">Повтор пароля</label>
-            <input id="password1"
-                   type="password"
-                   name="password1">
-        </p>
-        <p>
-            <label for="email">e-mail</label>
-            <input id="email"
-                   type="text"
-                   name="email"
-                   value="<?php echo $this->request->post->email ?>">
-        </p>
-        <p>
-            <label for="info">
-                Инфо
-            </label>
-            <textarea id="info"
-                      name="info"><?php echo $this->request->post->info ?></textarea>
-        </p>
-        <p>
-            <label for="site">Сайт</label>
-            <input id="site"
-                   type="text"
-                   name="site"
-                   value="<?php echo $this->request->post->site ?>">
-        </p>
-        <p>
-            <input type="submit"
-                   class="btn"
-                   value="Зарегистрироваться">
-        </p>
-    </fieldset>
-</form>
-<?php endif ?>
+<fieldset>
+    <legend>Регистрация пользователя</legend>
+    <p>
+        <label for="login">Логин</label>
+        <input ng-model="user.login" id="login" type="text" />
+    </p>
+    <p>
+        <label for="password">Пароль</label>
+        <input ng-model="user.password" id="password" type="password" />
+    </p>
+    <p>
+        <label for="password1">Повтор пароля</label>
+        <input ng-model="user.password1" id="password1" type="password" />
+    </p>
+    <p>
+        <label for="email">e-mail</label>
+        <input ng-model="user.email" id="email" type="text" />
+    </p>
+    <p>
+        <label for="info">Инфо</label>
+        <textarea ng-model="user.info" id="info"></textarea>
+    </p>
+    <p>
+        <label for="site">Сайт</label>
+        <input ng-model="user.site" id="site" type="text" />
+    </p>
+    <p class="text-error">
+        {{message}}
+    </p>
+    <p>
+        <button ng-click="register()" class="btn">Зарегистрироваться</button>
+    </p>
+</fieldset>

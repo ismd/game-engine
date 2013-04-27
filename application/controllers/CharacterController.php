@@ -6,20 +6,18 @@
 
 class CharacterController extends PsAbstractAuthController {
 
+    public function createPartial() {
+    }
+
     /**
      * Создание персонажа
-     * @post name
      */
     public function createAction() {
-        $request = $this->getRequest();
-
-        if (!$request->isPost()) {
-            return;
-        }
+        $post = $this->request->post;
 
         $character = new Character(array(
             'user' => $this->session->user,
-            'name' => $request->post->name,
+            'name' => $post->name,
         ));
 
         // Устанавливаем начальные значения
@@ -28,10 +26,17 @@ class CharacterController extends PsAbstractAuthController {
         $mapper = new CharacterMapper;
 
         try {
-            $mapper->save($character);
+            $id = $mapper->save($character);
+
+            // Добавляем созданного персонажа в список персонажей пользователя
+            $this->session->user->characters = array_merge($this->session->user->characters, array(
+                $mapper->getById($id),
+            ));
 
             $this->view->json(array(
-                'status' => 'ok',
+                'status'  => 'ok',
+                'message' => '',
+                'id'      => $id,
             ));
         } catch (CharacterMapperLongName $e) {
             $this->view->json(array(
@@ -61,13 +66,12 @@ class CharacterController extends PsAbstractAuthController {
      * @post id
      */
     public function setAction() {
-        $idCharacter = (int)$this->request->getPost()->id;
+        $idCharacter = (int)$this->request->post->id;
 
         if (!$this->session->user->hasCharacter($idCharacter)) {
             $this->view->json(array(
                 'status' => 'error',
             ));
-
             return;
         }
 
@@ -87,7 +91,7 @@ class CharacterController extends PsAbstractAuthController {
      * @post y
      */
     public function moveAction() {
-        $post = $this->request->getPost();
+        $post = $this->request->post;
 
         $x = (int)$post->x;
         $y = (int)$post->y;
