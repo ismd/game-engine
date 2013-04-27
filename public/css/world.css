@@ -6,6 +6,20 @@ div#cell-content {
     background-color: #eeeeee;
 }
 
+div#cell-content div {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+}
+
+div#cell-content div.selected {
+    background-color: #dddddd;
+}
+
+div#cell-content div:hover {
+    background-color: #cccccc;
+}
+
 div#cell-content img {
     width: 100px;
     height: 100px;

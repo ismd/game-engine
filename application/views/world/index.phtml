@@ -2,13 +2,16 @@
     <!-- Левый верхний угол -->
     <div class="span7">
         <!-- Содержимое клетки -->
-        <div id="cell-content" class="span12">
-            <img src="/img/world/hero.png" />
-            <img src="/img/world/hero.png" />
-            <img src="/img/world/hero.png" />
-            <img src="/img/world/hero.png" />
-            <img src="/img/world/hero.png" />
-            <img src="/img/world/hero.png" />
+        <div ng-controller="CellContentCtrl" id="cell-content" class="span12">
+            <div ng-repeat="item in content">
+                <div ng-click="selectItem(item.type, item.id)"
+                     ng-class="{selected: item.id == selectedItem.id && item.type == selectedItem.type}"
+                     class="{{item.type}}"
+                     data-id="{{item.id}}"
+                     title="{{item.name}}">
+                    <img ng-src="{{item.image}}" />
+                </div>
+            </div>
         </div>
 
         <div class="row-fluid">
