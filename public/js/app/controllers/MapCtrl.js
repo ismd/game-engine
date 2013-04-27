@@ -3,31 +3,33 @@
 function MapCtrl($scope, Map, Character) {
     var character = Character.getCharacter();
 
-    $scope.idMap = character.idMap;
-    $scope.x     = character.x;
-    $scope.y     = character.y;
+    $scope.map = {
+        idMap: character.idMap,
+        x: character.x,
+        y: character.y
+    };
 
-    Map.init($scope.idMap, $scope.x, $scope.y);
+    Map.init($scope.map.idMap, $scope.map.x, $scope.map.y);
 
-    $scope.moveTop = function() {
+    $scope.map.moveTop = function() {
         Map.move('top');
     };
 
-    $scope.moveRight = function() {
+    $scope.map.moveRight = function() {
         Map.move('right');
     };
 
-    $scope.moveBottom = function() {
+    $scope.map.moveBottom = function() {
         Map.move('bottom');
     };
 
-    $scope.moveLeft = function() {
+    $scope.map.moveLeft = function() {
         Map.move('left');
     };
 
     $scope.$on('move', function(e, x, y) {
-        $scope.x = x;
-        $scope.y = y;
+        $scope.map.x = x;
+        $scope.map.y = y;
     });
 }
 

@@ -84,15 +84,16 @@ angular.module('mapService', []).factory('Map', function($http, $rootScope) {
                 x: newX,
                 y: newY
             }).success(function(data) {
-                if ('ok' === data.status) {
-                    x = data.x;
-                    y = data.y;
-
-                    updateImage();
-                    $rootScope.$broadcast('move', x, y);
-                } else {
-                    alert('Ошибка при перемещении');
+                if ('ok' !== data.status) {
+                    alert(data.message);
+                    return;
                 }
+
+                x = data.x;
+                y = data.y;
+
+                updateImage();
+                $rootScope.$broadcast('move', x, y);
             }).error(function() {
                 alert('Не удалось обратиться к серверу');
             });

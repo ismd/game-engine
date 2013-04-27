@@ -4,8 +4,13 @@
  * @author ismd
  */
 
-class CharacterFastMove extends Exception {};
-class CharacterCantMoveHere extends Exception {};
+class CharacterFastMove extends Exception {
+    protected $message = 'Слишком быстрое передвижение';
+};
+
+class CharacterCantMoveHere extends Exception {
+    protected $message = 'Невозможно переместиться на заданную клетку';
+};
 
 class Character extends AbstractCharacter {
 

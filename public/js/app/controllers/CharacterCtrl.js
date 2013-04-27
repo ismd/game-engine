@@ -21,6 +21,11 @@ function CharacterCtrl($scope, $window, Character, $location) {
             delete($scope.character);
         }
     });
+
+    $scope.$on('move', function(e, x, y) {
+        $scope.character.x = x;
+        $scope.character.y = y;
+    });
 }
 
 CharacterCtrl.$inject = ['$scope', '$window', 'Character', '$location'];

@@ -104,19 +104,20 @@ class CharacterController extends PsAbstractAuthController {
             $this->session->character->move($cell);
 
             $this->view->json(array(
-                'status' => 'ok',
-                'x'      => $cell->x,
-                'y'      => $cell->y,
+                'status'  => 'ok',
+                'message' => '',
+                'x'       => $cell->x,
+                'y'       => $cell->y,
             ));
         } catch (CharacterFastMove $e) {
             $this->view->json(array(
                 'status'  => 'error',
-                'message' => 'fast moving',
+                'message' => $e->getMessage(),
             ));
         } catch (CharacterCantMoveHere $e) {
             $this->view->json(array(
                 'status'  => 'error',
-                'message' => 'cannot move here',
+                'message' => $e->getMessage(),
             ));
         }
     }
