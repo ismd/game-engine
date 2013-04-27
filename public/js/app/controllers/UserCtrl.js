@@ -41,6 +41,24 @@ function UserCtrl($scope, $window, User) {
     $scope.$on('characters-list-update', function(e, characters) {
         $scope.user.characters = characters;
     });
+
+    $scope.$on('set-character-result', function(e, result, message, character) {
+        if (!result) {
+            return;
+        }
+
+        var found = false;
+
+        angular.forEach($scope.user.characters, function(value, key) {
+            if (value.id === character.id) {
+                found = true;
+            }
+        });
+
+        if (!found) {
+            $scope.user.characters.push(character);
+        }
+    });
 }
 
 UserCtrl.$inject = ['$scope', '$window', 'User'];
