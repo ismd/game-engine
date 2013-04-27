@@ -14,17 +14,40 @@
         <div class="row-fluid">
             <!-- Действия -->
             <div id="main-panel" class="span6 with-borders">
-                <button id="kill" class="btn">Убить</button>
-                <button id="talk" class="btn">Общаться</button>
-                <button id="pick-up" class="btn">Подобрать</button>
-                <button id="look" class="btn">Осмотреть</button>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><button id="kill" class="btn btn-small btn-danger disabled">Убить</button></td>
+                            <td><button id="talk" class="btn btn-small btn-success disabled">Общаться</button></td>
+                            <td><button id="pick-up" class="btn btn-small btn-warning disabled">Подобрать</button></td>
+                        </tr>
+                        <tr>
+                            <td><button id="look" class="btn btn-small btn-info disabled">Осмотреть</button></td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <!-- Информация о локации -->
             <div id="location-info" class="span6 with-borders">
-                Зона: Древний лес<br />
-                Локация: Около старого дуба<br />
-                Координаты: {{character.x}}x{{character.y}}
+                <table class="table table-condensed">
+                    <tbody>
+                        <tr>
+                            <td>Зона</td>
+                            <td>Древний лес</td>
+                        </tr>
+                        <tr>
+                            <td>Локация</td>
+                            <td>Около старого дуба</td>
+                        </tr>
+                        <tr>
+                            <td>Координаты</td>
+                            <td>{{character.x}}x{{character.y}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

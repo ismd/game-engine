@@ -39,3 +39,15 @@ div#right-of-map {
     text-align: right;
     margin-right: 10px;
 }
+
+div#location-info table tbody tr:first-child td {
+    border-top: 0;
+}
+
+div#main-panel table {
+    margin-left: 6px;
+}
+
+div#main-panel button {
+    width: 80px;
+}
