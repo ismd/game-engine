@@ -1,8 +1,8 @@
 <div class="row-fluid">
     <!-- Левый верхний угол -->
-    <div class="span7">
+    <div ng-controller="CellContentCtrl" class="span7">
         <!-- Содержимое клетки -->
-        <div ng-controller="CellContentCtrl" id="cell-content" class="span12">
+        <div id="cell-content" class="span12">
             <!-- NPC -->
             <div class="npcs">
                 <div ng-repeat="item in content.npcs"
@@ -43,9 +43,20 @@
                 <table>
                     <tbody>
                         <tr>
-                            <td><button id="kill" class="btn btn-small btn-danger disabled">Убить</button></td>
-                            <td><button id="talk" class="btn btn-small btn-success disabled">Общаться</button></td>
-                            <td><button id="pick-up" class="btn btn-small btn-warning disabled">Подобрать</button></td>
+                            <td>
+                                <button id="kill"
+                                        ng-class="{disabled: 'mob' != selectedItem.type}"
+                                        class="btn btn-small btn-danger">Убить</button>
+                            </td>
+                            <td>
+                                <button id="talk"
+                                        ng-class="{disabled: 'npc' != selectedItem.type}"
+                                        class="btn btn-small btn-success">Общаться</button>
+                            </td>
+                            <td>
+                                <button id="pick-up"
+                                        class="btn btn-small btn-warning disabled">Подобрать</button>
+                            </td>
                         </tr>
                         <tr>
                             <td><button id="look" class="btn btn-small btn-info disabled">Осмотреть</button></td>

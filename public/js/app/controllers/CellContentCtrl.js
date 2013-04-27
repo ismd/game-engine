@@ -19,100 +19,43 @@ function CellContentCtrl($scope) {
     $scope.$on('cell-content', function(e, content) {
         $scope.content = content;
 
-        // foreach'и оказались очень тяжёлыми
+        if (!$scope.selectedItem) {
+            return;
+        }
 
-        // Удаление старых NPC
-        /*angular.forEach($scope.content.npcs, function(item, i) {
-            var found = false;
+        // Если на клетке уже нет выбранного item'а, то очищаем selectedItem
+        var found = false;
+        var id    = $scope.selectedItem.id;
 
-            angular.forEach(content.npcs, function(value) {
-                if (value.id === item.id) {
-                    found = true;
-                }
-            });
+        switch ($scope.selectedItem.type) {
+            case 'npc':
+                angular.forEach(content.npcs, function(item) {
+                    if (id === item.id) {
+                        found = true;
+                    }
+                });
+                break;
 
-            if (!found) {
-                $scope.content.npcs.splice(i, 1);
-            }
-        });
+            case 'character':
+                angular.forEach(content.characters, function(item) {
+                    if (id === item.id) {
+                        found = true;
+                    }
+                });
+                break;
 
-        // Удаление старых персонажей
-        angular.forEach($scope.content.characters, function(item, i) {
-            var found = false;
+            case 'mob':
+                angular.forEach(content.mobs, function(item) {
+                    if (id === item.id) {
+                        found = true;
+                    }
+                });
+                break;
+        }
 
-            angular.forEach(content.characters, function(value) {
-                if (value.id === item.id) {
-                    found = true;
-                }
-            });
-
-            if (!found) {
-                $scope.content.characters.splice(i, 1);
-            }
-        });
-
-        // Удаление старых мобов
-        angular.forEach($scope.content.mobs, function(item, i) {
-            var found = false;
-
-            angular.forEach(content.mobs, function(value) {
-                if (value.id === item.id) {
-                    found = true;
-                }
-            });
-
-            if (!found) {
-                $scope.content.mobs.splice(i, 1);
-            }
-        });
-
-        // Добавление новых NPC
-        angular.forEach(content.npcs, function(item) {
-            var found = false;
-
-            angular.forEach($scope.content.npcs, function(value) {
-                if (value.id === item.id) {
-                    found = true;
-                }
-            });
-
-            if (!found) {
-                item.type  = 'npc';
-                $scope.content.npcs.push(item);
-            }
-        });
-
-        // Добавление новых персонажей
-        angular.forEach(content.characters, function(item) {
-            var found = false;
-
-            angular.forEach($scope.content.characters, function(value) {
-                if (value.id === item.id) {
-                    found = true;
-                }
-            });
-
-            if (!found) {
-                item.type  = 'character';
-                $scope.content.characters.push(item);
-            }
-        });
-
-        // Добавление новых мобов
-        angular.forEach(content.mobs, function(item) {
-            var found = false;
-
-            angular.forEach($scope.content.mobs, function(value) {
-                if (value.id === item.id) {
-                    found = true;
-                }
-            });
-
-            if (!found) {
-                item.type  = 'mob';
-                $scope.content.mobs.push(item);
-            }
-        });*/
+        if (!found) {
+            $scope.selectedItem = undefined;
+        }
     });
 }
 
