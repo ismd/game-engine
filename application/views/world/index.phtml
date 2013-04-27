@@ -1,17 +1,18 @@
 <div class="row-fluid">
     <!-- Левый верхний угол -->
     <div class="span7">
+        <!-- Содержимое клетки -->
         <div id="cell-content" class="span12">
-            <!--Здесь будет содержимое клетки-->
-            <img src="/img/world/hero.png">
-            <img src="/img/world/hero.png">
-            <img src="/img/world/hero.png">
-            <img src="/img/world/hero.png">
-            <img src="/img/world/hero.png">
-            <img src="/img/world/hero.png">
+            <img src="/img/world/hero.png" />
+            <img src="/img/world/hero.png" />
+            <img src="/img/world/hero.png" />
+            <img src="/img/world/hero.png" />
+            <img src="/img/world/hero.png" />
+            <img src="/img/world/hero.png" />
         </div>
 
         <div class="row-fluid">
+            <!-- Действия -->
             <div id="main-panel" class="span6 with-borders">
                 <button id="kill" class="btn">Убить</button>
                 <button id="talk" class="btn">Общаться</button>
@@ -19,62 +20,43 @@
                 <button id="look" class="btn">Осмотреть</button>
             </div>
 
+            <!-- Информация о локации -->
             <div id="location-info" class="span6 with-borders">
-                Зона: Древний лес<br>
-                Локация: Около старого дуба<br>
-                Координаты: 10x20<br>
+                Зона: Древний лес<br />
+                Локация: Около старого дуба<br />
+                Координаты: {{character.x}}x{{character.y}}
             </div>
         </div>
     </div>
 
-    <!-- Правый верхний угол -->
     <div ng-controller="MapCtrl" id="top-right" class="span5">
+        <!-- Карта -->
         <div class="span12">
-            <input id="coordinates" type="hidden"
-                   id-map="<?php echo $this->cell->map->id ?>"
-                   x="<?php echo $this->cell->x ?>"
-                   y="<?php echo $this->cell->y ?>">
-
-            <canvas id="map" width="350" height="250">
-                Обновите браузер
-            </canvas>
+            <canvas id="map" width="350" height="250">Обновите браузер</canvas>
 
             <div id="right-of-map">
-                <i class="icon-star"></i><br>
-                <i class="icon-tag"></i><br>
-                <i class="icon-pencil"></i><br>
-                <i class="icon-eye-open"></i><br>
-                <i class="icon-wrench"></i><br>
-                <i class="icon-fullscreen"></i><br>
+                <i class="icon-star"></i><br />
+                <i class="icon-tag"></i><br />
+                <i class="icon-pencil"></i><br />
+                <i class="icon-eye-open"></i><br />
+                <i class="icon-wrench"></i><br />
+                <i class="icon-fullscreen"></i>
             </div>
         </div>
 
+        <!-- Кнопки перемещения -->
         <div class="row-fluid">
-            <!--<div id="move-buttons" class="span5">
-                <button id="move-top">Вверх</button><br>
-                <button id="move-left">Налево</button>
-                <button id="move-right">Направо</button><br>
-                <button id="move-bottom">Вниз</button>
-            </div>-->
-            {{x}}:{{y}}
             <div id="move-buttons" class="span12">
-                <button ng-click="moveTop()" id="move-top">
-                    <i class="icon-arrow-up"></i>
-                </button><br>
-                <button ng-click="moveLeft()" id="move-left">
-                    <i class="icon-arrow-left"></i>
-                </button>
-                <button ng-click="moveRight()" id="move-right">
-                    <i class="icon-arrow-right"></i>
-                </button><br>
-                <button ng-click="moveBottom()" id="move-bottom">
-                    <i class="icon-arrow-down"></i>
-                </button>
+                <button ng-click="moveTop()" id="move-top"><i class="icon-arrow-up"></i></button><br />
+                <button ng-click="moveLeft()" id="move-left"><i class="icon-arrow-left"></i></button>
+                <button ng-click="moveRight()" id="move-right"><i class="icon-arrow-right"></i></button><br />
+                <button ng-click="moveBottom()" id="move-bottom"><i class="icon-arrow-down"></i></button>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Чат -->
 <div class="row-fluid">
     <div id="chat" class="span12 with-borders">
         Здесь будет чат

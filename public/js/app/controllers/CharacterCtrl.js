@@ -1,17 +1,26 @@
 'use strict';
 
-function CharacterCtrl($scope, $window) {
+function CharacterCtrl($scope, $window, Character, $location) {
     $scope.character = $window.character;
 
-    $scope.$on('characterChosen', function(e, character) {
-        $scope.character = character;
+    $scope.setCharacter = function(id) {
+        Character.setCharacter(id);
+    };
+
+    $scope.$on('set-character-result', function(e, result, message, character) {
+        $scope.setCharacterMessage = message;
+
+        if (result) {
+            $scope.character = character;
+            $location.path('/world');
+        }
     });
 
-    $scope.$on('logged', function(e, logged) {
-        if (!logged) {
+    $scope.$on('logout-result', function(e, result) {
+        if (result) {
             delete($scope.character);
         }
     });
 }
 
-CharacterCtrl.$inject = ['$scope', '$window'];
+CharacterCtrl.$inject = ['$scope', '$window', 'Character', '$location'];

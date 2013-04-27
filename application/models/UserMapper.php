@@ -8,6 +8,10 @@ class UserMapperNotFoundException extends Exception {
     protected $message = 'Персонаж не найден';
 };
 
+class UserMapperBadLoginOrPasswordException extends Exception {
+    protected $message = 'Неверный логин или пароль';
+}
+
 class UserMapperLongLogin extends Exception {
     protected $message = 'Логин не может быть длиннее 30 символов';
 };
@@ -136,7 +140,7 @@ class UserMapper extends PsAbstractDbMapper {
      * @param string $login
      * @param string $password
      * @return User
-     * @throws UserMapperNotFoundException
+     * @throws UserMapperBadLoginOrPasswordException
      */
     public function getByLoginAndPassword($login, $password) {
         $login    = $this->db->real_escape_string($login);
@@ -149,7 +153,7 @@ class UserMapper extends PsAbstractDbMapper {
             . "LIMIT 1");
 
         if ($query->num_rows == 0) {
-            throw new UserMapperNotFoundException;
+            throw new UserMapperBadLoginOrPasswordException;
         }
 
         return new User($query->fetch_assoc());

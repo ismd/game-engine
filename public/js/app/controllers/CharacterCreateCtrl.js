@@ -6,7 +6,7 @@ function CharacterCreateCtrl($scope, CharacterCreate, Character) {
         CharacterCreate.create($scope.newCharacter);
     };
 
-    $scope.$on('characterCreated', function(e, created, message, id) {
+    $scope.$on('character-created', function(e, created, message, id) {
         $scope.message = message;
 
         if (created) {

@@ -12,13 +12,6 @@ class AuthController extends PsAbstractController {
      * @post password
      */
     public function loginAction() {
-        if (!$this->request->isPost()) {
-            $this->view->json(array(
-                'status' => 'error',
-            ));
-            return;
-        }
-
         $post = $this->request->post;
 
         $username = $post->username;
@@ -31,12 +24,19 @@ class AuthController extends PsAbstractController {
             $this->session->user = $user;
 
             $this->view->json(array(
-                'status' => 'ok',
-                'user'   => $this->session->user->toArray(),
+                'status'  => 'ok',
+                'message' => '',
+                'user'    => $this->session->user->toArray(),
             ));
-        } catch (UserMapperNotFoundException $e) {
+        } catch (UserMapperBadLoginOrPasswordException $e) {
             $this->view->json(array(
-                'status' => 'error',
+                'status'  => 'error',
+                'message' => $e->getMessage(),
+            ));
+        } catch (Exception $e) {
+            $this->view->json(array(
+                'status'  => 'error',
+                'message' => 'Ошибка',
             ));
         }
     }
