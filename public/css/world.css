@@ -8,6 +8,11 @@ div#cell-content {
 
 div#cell-content div {
     display: inline-block;
+}
+
+div#cell-content div.npcs div,
+div#cell-content div.characters div,
+div#cell-content div.mobs div {
     width: 100px;
     height: 100px;
 }
@@ -16,13 +21,20 @@ div#cell-content div.selected {
     background-color: #dddddd;
 }
 
-div#cell-content div:hover {
+div#cell-content div.npcs div:hover,
+div#cell-content div.characters div:hover,
+div#cell-content div.mobs div:hover {
     background-color: #cccccc;
 }
 
 div#cell-content img {
     width: 100px;
     height: 100px;
+}
+
+div#cell-content div.characters div:first-child,
+div#cell-content div.mobs div:first-child {
+    margin-left: -4px;
 }
 
 div#main-panel,

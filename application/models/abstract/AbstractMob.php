@@ -23,6 +23,27 @@ abstract class AbstractMob extends PsAbstractModel {
     protected $_x;
     protected $_y;
 
+    public function toArray() {
+        return array(
+            'id'         => $this->id,
+            'idMob'      => $this->idMob,
+            'name'       => $this->name,
+            'level'      => $this->level,
+            'hp'         => $this->hp,
+            'maxHp'      => $this->maxHp,
+            'minDamage'  => $this->minDamage,
+            'maxDamage'  => $this->maxDamage,
+            'experience' => $this->experience,
+            'image'      => $this->image,
+            'strength'   => $this->strength,
+            'dexterity'  => $this->dexterity,
+            'endurance'  => $this->endurance,
+            'idMap'      => $this->idMap,
+            'x'          => $this->x,
+            'y'          => $this->y,
+        );
+    }
+
     public function setId($value) {
         $this->_id = (int)$value;
         return $this;
@@ -149,21 +170,21 @@ abstract class AbstractMob extends PsAbstractModel {
         return $this->_idMap;
     }
 
-    public function setCoordinateX($value) {
+    public function setX($value) {
         $this->_x = (int)$value;
         return $this;
     }
 
-    public function getCoordinateX() {
+    public function getX() {
         return $this->_x;
     }
 
-    public function setCoordinateY($value) {
+    public function setY($value) {
         $this->_y = (int)$value;
         return $this;
     }
 
-    public function getCoordinateY() {
+    public function getY() {
         return $this->_y;
     }
 }

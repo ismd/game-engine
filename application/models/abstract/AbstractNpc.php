@@ -15,6 +15,19 @@ abstract class AbstractNpc extends PsAbstractModel {
     protected $_x;
     protected $_y;
 
+    public function toArray() {
+        return array(
+            'id'       => $this->id,
+            'idNpc'    => $this->idNpc,
+            'name'     => $this->name,
+            'greeting' => $this->greeting,
+            'image'    => $this->image,
+            'idMap'    => $this->idMap,
+            'x'        => $this->x,
+            'y'        => $this->y,
+        );
+    }
+
     public function setId($value) {
         $this->_id = (int)$value;
         return $this;
@@ -69,21 +82,21 @@ abstract class AbstractNpc extends PsAbstractModel {
         return $this->_idMap;
     }
 
-    public function setCoordinateX($value) {
+    public function setX($value) {
         $this->_x = (int)$value;
         return $this;
     }
 
-    public function getCoordinateX() {
+    public function getX() {
         return $this->_x;
     }
 
-    public function setCoordinateY($value) {
+    public function setY($value) {
         $this->_y = (int)$value;
         return $this;
     }
 
-    public function getCoordinateY() {
+    public function getY() {
         return $this->_y;
     }
 }

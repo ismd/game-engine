@@ -49,8 +49,8 @@ function UserCtrl($scope, $window, User) {
 
         var found = false;
 
-        angular.forEach($scope.user.characters, function(value, key) {
-            if (value.id === character.id) {
+        angular.forEach($scope.user.characters, function(item) {
+            if (item.id === character.id) {
                 found = true;
             }
         });

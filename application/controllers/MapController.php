@@ -1,49 +1,37 @@
 <?php
 
-class MapController extends AbstractAuthController {
-
-    public function index() {
-        die;
-    }
+class MapController extends PsAbstractAuthController {
 
     /**
      * Выводит содержимое текущей клетки
      */
-    public function cell() {
-        $this->view->setLayout('empty');
-
-        $content = array(
-            'npcs'       => array(),
-            'mobs'       => array(),
-            'characters' => array(),
-        );
+    public function cellAction() {
+        $npcMapper       = new NpcMapper;
+        $characterMapper = new CharacterMapper;
+        $mobMapper       = new MobMapper;
 
         $cell = $this->session->character->cell;
 
-        // Получаем NPC на клетке
-        $mapper = new NpcMapper;
-        $npcs   = $mapper->getByCell($cell);
+        $content = array(
+            'npcs'       => $npcMapper->getByCell($cell),
+            'characters' => $characterMapper->getByCell($cell),
+            'mobs'       => $mobMapper->getByCell($cell),
+        );
 
-        // Получаем персонажей на клетке
-        $mapper     = new CharacterMapper;
-        $characters = $mapper->getByCell($cell);
-
-        // Получаем мобов на клетке
-        $mapper = new MobMapper;
-        $mobs   = $mapper->getByCell($cell);
-
-        // Преобразуем в массив
-        foreach ($npcs as $npc) {
-            //$content['npcs'][] = $npc->toArray();
+        // Преобразуем в массив NPC
+        foreach ($content['npcs'] as $i => $npc) {
+            $content['npcs'][$i] = $npc->toArray();
         }
 
+        // Преобразуем в массив персонажей
         $id = $this->session->character->id;
-        foreach ($characters as $character) {
+        foreach ($content['characters'] as $i => $character) {
             if ($character->id == $id) {
+                unset($content['characters'][$i]);
                 continue;
             }
 
-            $content['characters'][] = array(
+            $content['characters'][$i] = array(
                 'id'    => $character->id,
                 'name'  => $character->name,
                 'level' => $character->level,
@@ -53,10 +41,11 @@ class MapController extends AbstractAuthController {
             );
         }
 
-        foreach ($mobs as $mob) {
-            //$content['mobs'][] = $mob->toArray();
+        // Преобразуем в массив мобов
+        foreach ($content['mobs'] as $i => $mob) {
+            $content['mobs'][$i] = $mob->toArray();
         }
 
-        $this->view->content = $content;
+        $this->view->json($content);
     }
 }

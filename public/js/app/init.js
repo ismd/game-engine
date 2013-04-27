@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('main', ['userService', 'characterService', 'mapService', 'registrationService', 'characterCreateService'])
+angular.module('main', ['userService', 'characterService', 'mapService', 'registrationService', 'characterCreateService', 'worldService'])
     .config(function($routeProvider, $locationProvider, $httpProvider) {
         $locationProvider.html5Mode(true);
 
@@ -17,7 +17,8 @@ angular.module('main', ['userService', 'characterService', 'mapService', 'regist
                 controller: CharacterCreateCtrl
             }).
             when('/world', {
-                templateUrl: '/partial/world'
+                templateUrl: '/partial/world',
+                controller: WorldCtrl
             }).
             when('/world/inventory', {
                 templateUrl: '/partial/world/inventory'
@@ -35,3 +36,10 @@ angular.module('main', ['userService', 'characterService', 'mapService', 'regist
             return $.param(data);
         };
     });
+
+// Array Remove - By John Resig (MIT Licensed)
+Array.prototype.remove = function(from, to) {
+    var rest = this.slice((to || from) + 1 || this.length);
+    this.length = from < 0 ? this.length + from : from;
+    return this.push.apply(this, rest);
+};
