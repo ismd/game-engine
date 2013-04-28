@@ -1,6 +1,10 @@
 'use strict';
 
-function CellContentCtrl($scope) {
+function CellContentCtrl($scope, CellContent) {
+    setInterval(function() {
+        CellContent.updateCellContent($scope.content);
+    }, 1000);
+
     $scope.selectedItem = undefined;
 
     $scope.content = {
@@ -16,47 +20,9 @@ function CellContentCtrl($scope) {
         };
     };
 
-    $scope.$on('cell-content', function(e, content) {
-        $scope.content = content;
-
-        if (!$scope.selectedItem) {
-            return;
-        }
-
-        // Если на клетке уже нет выбранного item'а, то очищаем selectedItem
-        var found = false;
-        var id    = $scope.selectedItem.id;
-
-        switch ($scope.selectedItem.type) {
-            case 'npc':
-                angular.forEach(content.npcs, function(item) {
-                    if (id === item.id) {
-                        found = true;
-                    }
-                });
-                break;
-
-            case 'character':
-                angular.forEach(content.characters, function(item) {
-                    if (id === item.id) {
-                        found = true;
-                    }
-                });
-                break;
-
-            case 'mob':
-                angular.forEach(content.mobs, function(item) {
-                    if (id === item.id) {
-                        found = true;
-                    }
-                });
-                break;
-        }
-
-        if (!found) {
-            $scope.selectedItem = undefined;
-        }
+    $scope.$on('cell-content-update', function(e, data) {
+        $scope.content = data;
     });
 }
 
-CellContentCtrl.$inject = ['$scope'];
+CellContentCtrl.$inject = ['$scope', 'CellContent'];
