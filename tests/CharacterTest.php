@@ -4,36 +4,7 @@
  * @author ismd
  */
 
-require_once '../lib/php-spa/PsObject.php';
-require_once '../lib/php-spa/PsAbstractModel.php';
-require_once '../lib/php-spa/PsAbstractDbMapper.php';
-
-require_once '../application/models/abstract/AbstractCharacter.php';
-require_once '../application/models/abstract/AbstractCell.php';
-require_once '../application/models/abstract/AbstractMap.php';
-require_once '../application/models/Character.php';
-require_once '../application/models/MapMapper.php';
-require_once '../application/models/Cell.php';
-require_once '../application/models/Map.php';
-
 class CharacterTest extends PHPUnit_Framework_TestCase {
-
-    /**
-     * @dataProvider provider
-     */
-    public function testCharacter($options) {
-        $character = new Character($options);
-
-        $character->cell = new Cell(new Map(array(
-            'id'    => $options['idMap'],
-            'title' => 'test map',
-        )), 334, 335);
-
-        $this->assertEquals(array_merge($options, array(
-            'x' => 334,
-            'y' => 335,
-        )), $character->toArray());
-    }
 
     public function provider() {
         return array(
@@ -75,5 +46,22 @@ class CharacterTest extends PHPUnit_Framework_TestCase {
                 ),
             ),
         );
+    }
+
+    /**
+     * @dataProvider provider
+     */
+    public function testCharacter($options) {
+        $character = new Character($options);
+
+        $character->cell = new Cell(new Map(array(
+            'id'    => $options['idMap'],
+            'title' => 'test map',
+        )), 334, 335);
+
+        $this->assertEquals(array_merge($options, array(
+            'x' => 334,
+            'y' => 335,
+        )), $character->toArray());
     }
 }
