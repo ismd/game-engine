@@ -9,9 +9,8 @@
                      ng-click="selectItem('npc', item.id)"
                      ng-class="{selected: item.id == selectedItem.id && 'npc' == selectedItem.type}"
                      data-id="{{item.id}}"
-                     title="{{item.name}}">
-                    <img ng-src="/img/world/npcs/{{item.image}}" />
-                </div>
+                     title="{{item.name}}"
+                     background-image="/img/world/npcs/{{item.image}}" />
             </div>
 
             <!-- Персонажи -->
@@ -20,9 +19,8 @@
                      ng-click="selectItem('character', item.id)"
                      ng-class="{selected: item.id == selectedItem.id && 'character' == selectedItem.type}"
                      data-id="{{item.id}}"
-                     title="{{item.name}}">
-                    <img ng-src="/img/world/characters/{{item.image}}" />
-                </div>
+                     title="{{item.name}}"
+                     background-image="/img/world/characters/{{item.image}}" />
             </div>
 
             <!-- Мобы -->
@@ -31,9 +29,8 @@
                      ng-click="selectItem('mob', item.id)"
                      ng-class="{selected: item.id == selectedItem.id && 'mob' == selectedItem.type}"
                      data-id="{{item.id}}"
-                     title="{{item.name}}">
-                    <img ng-src="/img/world/mobs/{{item.image}}" />
-                </div>
+                     title="{{item.name}}"
+                     background-image="/img/world/mobs/{{item.image}}" />
             </div>
         </div>
 

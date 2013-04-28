@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('main', ['userService', 'characterService', 'mapService', 'registrationService', 'characterCreateService', 'worldService'])
+angular.module('main', ['userService', 'characterService', 'mapService',
+    'registrationService', 'characterCreateService', 'worldService', 'backgroundImageDirective'])
     .config(function($routeProvider, $locationProvider, $httpProvider) {
         $locationProvider.html5Mode(true);
 

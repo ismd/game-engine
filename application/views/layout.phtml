@@ -31,6 +31,8 @@
         <script src="/js/app/services/MapService.js"></script>
         <script src="/js/app/services/WorldService.js"></script>
 
+        <script src="/js/app/directives/BackgroundImageDirective.js"></script>
+
         <?php if (null != $this->user): ?>
         <script>
         window.user            = <?php echo json_encode($this->user->toArray()) ?>;

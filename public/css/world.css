@@ -15,6 +15,7 @@ div#cell-content div.characters div,
 div#cell-content div.mobs div {
     width: 100px;
     height: 100px;
+    background-size: cover;
 }
 
 div#cell-content div.selected {
@@ -25,11 +26,6 @@ div#cell-content div.npcs div:hover,
 div#cell-content div.characters div:hover,
 div#cell-content div.mobs div:hover {
     background-color: #cccccc;
-}
-
-div#cell-content img {
-    width: 100px;
-    height: 100px;
 }
 
 div#cell-content div.characters div:first-child,
