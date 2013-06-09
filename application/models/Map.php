@@ -18,4 +18,12 @@ class Map extends AbstractMap {
     public function getMap() {
         return $this->_map;
     }
+
+    public function getWidth() {
+        return count($this->map);
+    }
+
+    public function getHeight() {
+        return count($this->map[0]);
+    }
 }

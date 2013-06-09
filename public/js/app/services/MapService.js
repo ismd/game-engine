@@ -79,15 +79,17 @@ angular.module('mapService', []).factory('Map', function($http, $rootScope) {
     function drawMap(map) {
         angular.forEach(map, function(column, x) {
             angular.forEach(column, function(cell, y) {
-                ctx.drawImage(sprites,
-                              cell[0] * cell_width,
-                              cell[1] * cell_height,
-                              cell_width,
-                              cell_height,
-                              x * cell_width,
-                              y * cell_height,
-                              cell_width,
-                              cell_height);
+                if (cell) {
+                    ctx.drawImage(sprites,
+                                  cell[0] * cell_width,
+                                  cell[1] * cell_height,
+                                  cell_width,
+                                  cell_height,
+                                  x * cell_width,
+                                  y * cell_height,
+                                  cell_width,
+                                  cell_height);
+                }
             });
         });
 
