@@ -5,58 +5,28 @@ angular.module('mapService', []).factory('Map', function($http, $rootScope) {
         x,
         y;
 
+    var cell_width = 50,
+        cell_height = 50;
+
+    var map = [];
+
     var canvas = $('canvas#map');
     var ctx    = canvas.get(0).getContext('2d');
 
-    var image = new Image();
+    var sprites = new Image();
+    sprites.src = '/img/world/maps/sprites.png';
 
     var player = new Image();
-    player.src = '/img/world/hero.png';
 
-    // Test data
-    /*ctx.strokeRect(0, 0, 50, 50);
-    ctx.strokeRect(50, 0, 50, 50);
-    ctx.strokeRect(100, 0, 50, 50);
-    ctx.strokeRect(150, 0, 50, 50);
-    ctx.strokeRect(200, 0, 50, 50);
-    ctx.strokeRect(250, 0, 50, 50);
-    ctx.strokeRect(300, 0, 50, 50);
-    ctx.strokeRect(0, 50, 50, 50);
-    ctx.strokeRect(50, 50, 50, 50);
-    ctx.strokeRect(100, 50, 50, 50);
-    ctx.strokeRect(150, 50, 50, 50);
-    ctx.strokeRect(200, 50, 50, 50);
-    ctx.strokeRect(250, 50, 50, 50);
-    ctx.strokeRect(300, 50, 50, 50);
-    ctx.strokeRect(0, 100, 50, 50);
-    ctx.strokeRect(50, 100, 50, 50);
-    ctx.strokeRect(100, 100, 50, 50);
-    ctx.strokeRect(150, 100, 50, 50);
-    ctx.strokeRect(200, 100, 50, 50);
-    ctx.strokeRect(250, 100, 50, 50);
-    ctx.strokeRect(300, 100, 50, 50);
-    ctx.strokeRect(0, 150, 50, 50);
-    ctx.strokeRect(50, 150, 50, 50);
-    ctx.strokeRect(100, 150, 50, 50);
-    ctx.strokeRect(150, 150, 50, 50);
-    ctx.strokeRect(200, 150, 50, 50);
-    ctx.strokeRect(250, 150, 50, 50);
-    ctx.strokeRect(300, 150, 50, 50);
-    ctx.strokeRect(0, 200, 50, 50);
-    ctx.strokeRect(50, 200, 50, 50);
-    ctx.strokeRect(100, 200, 50, 50);
-    ctx.strokeRect(150, 200, 50, 50);
-    ctx.strokeRect(200, 200, 50, 50);
-    ctx.strokeRect(250, 200, 50, 50);
-    ctx.strokeRect(300, 200, 50, 50);*/
+    sprites.onload = function() {
+        initMap();
+    };
 
     return {
         'init': function(init_idMap, init_x, init_y) {
             idMap = init_idMap;
             x     = init_x;
             y     = init_y;
-
-            updateImage();
         },
         'move': function(direction) {
             var newX = x;
@@ -89,23 +59,55 @@ angular.module('mapService', []).factory('Map', function($http, $rootScope) {
                     return;
                 }
 
-                x = data.x;
-                y = data.y;
-
-                updateImage();
-                $rootScope.$broadcast('move', x, y);
+                move(data.x, data.y, angular.fromJson(data.map));
             }).error(function() {
                 alert('Не удалось обратиться к серверу');
             });
         }
     };
 
-    function updateImage() {
-        image.src = '/img/world/maps/' + idMap + '/' + x + 'x' + y + '.png';
+    function move(data_x, data_y, data_map) {
+        x = data_x;
+        y = data_y;
+        map = data_map;
 
-        image.onload = function() {
-            ctx.drawImage(image, 0, 0);
-            ctx.drawImage(player, 150, 100);
-        };
+        drawMap(map);
+
+        $rootScope.$broadcast('move', x, y);
+    }
+
+    function drawMap(map) {
+        angular.forEach(map, function(column, x) {
+            angular.forEach(column, function(cell, y) {
+                ctx.drawImage(sprites,
+                              cell[0] * cell_width,
+                              cell[1] * cell_height,
+                              cell_width,
+                              cell_height,
+                              x * cell_width,
+                              y * cell_height,
+                              cell_width,
+                              cell_height);
+            });
+        });
+
+        ctx.drawImage(player, 150, 100, 50, 50);
+    }
+
+    function initMap() {
+        $http.get('/api/map/vicinity').success(function(data) {
+            if ('ok' !== data.status) {
+                alert(data.message);
+                return;
+            }
+
+            player.src = '/img/world/hero.png';
+
+            player.onload = function() {
+                drawMap(angular.fromJson(data.map));
+            };
+        }).error(function() {
+            alert('Не удалось обратиться к серверу');
+        });
     }
 });

@@ -108,6 +108,7 @@ class CharacterController extends PsAbstractAuthController {
                 'message' => '',
                 'x'       => $cell->x,
                 'y'       => $cell->y,
+                'map'     => json_encode($this->session->character->cell->getVicinity()),
             ));
         } catch (CharacterFastMove $e) {
             $this->view->json(array(

@@ -75,7 +75,7 @@ class Character extends AbstractCharacter {
         $this->_lastMove = microtime(true);
 
         // Проверяем, может ли персонаж переместиться на заданную клетку
-        if ($cell->x < 0 || $cell->y < 0) {
+        if ($cell->x < 3 || $cell->y < 2) {
             throw new CharacterCantMoveHere;
         }
 

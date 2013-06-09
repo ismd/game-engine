@@ -48,4 +48,14 @@ class MapController extends PsAbstractAuthController {
 
         $this->view->json($content);
     }
+
+    /**
+     * Возвращает окрестности клетки
+     */
+    public function vicinityAction() {
+        $this->view->json(array(
+            'status' => 'ok',
+            'map'    => json_encode($this->session->character->cell->getVicinity()),
+        ));
+    }
 }

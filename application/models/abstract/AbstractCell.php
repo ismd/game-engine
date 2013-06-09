@@ -6,6 +6,9 @@
 
 abstract class AbstractCell extends PsAbstractModel {
 
+    /**
+     * @var Map
+     */
     protected $_map;
     protected $_x;
     protected $_y;
@@ -35,6 +38,9 @@ abstract class AbstractCell extends PsAbstractModel {
         return $this;
     }
 
+    /**
+     * @return Map
+     */
     public function getMap() {
         return $this->_map;
     }
