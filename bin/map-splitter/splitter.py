@@ -8,7 +8,7 @@ def crop_image(img, region_size, region_step):
     for y in range(img.size[1] // region_step - 1):
         for x in range(img.size[0] // region_step - 1):
             box = (x * region_step, y * region_step, (x * region_step) + region_size[0], (y * region_step) + region_size[1])
-            yield image.crop(box)
+            yield (x, y, image.crop(box))
 
 if __name__ == '__main__':
     if len(argv) != 5:
@@ -19,8 +19,8 @@ if __name__ == '__main__':
     region_size = (int(argv[2]), int(argv[3]))
     region_step = int(argv[4])
 
-    for i, region in enumerate(crop_image(image, region_size, region_step)):
+    for x, y, region in crop_image(image, region_size, region_step):
         new_image = Image.new('RGB', region_size, 255)
         new_image.paste(region)
-        path = 'IMG-%d.png' % i
+        path = '%dx%d.png' % (x, y)
         new_image.save(path)
