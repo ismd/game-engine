@@ -1,25 +1,37 @@
 package server;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
+import org.java_websocket.WebSocket;
+import org.java_websocket.handshake.ClientHandshake;
+import org.java_websocket.server.WebSocketServer;
 
 /**
  * @author ismd
  */
-public class Server {
+public class Server extends WebSocketServer {
 
-    public static void main(String[] args) throws UnknownHostException, IOException {
-        ServerImpl server = new ServerImpl(8887);
-        server.start();
+    public Server(int port) throws UnknownHostException {
+        super(new InetSocketAddress(port));
+    }
 
-        System.out.println("Server started on port: " + server.getPort());
+    @Override
+    public void onOpen(WebSocket ws, ClientHandshake ch) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
-        BufferedReader reader = new  BufferedReader(new InputStreamReader(System.in));
-        while (true) {
-            String in = reader.readLine();
-            System.out.println(in);
-        }
+    @Override
+    public void onClose(WebSocket ws, int i, String string, boolean bln) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void onMessage(WebSocket ws, String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void onError(WebSocket ws, Exception excptn) {
+        System.out.println(excptn.getMessage());
     }
 }
