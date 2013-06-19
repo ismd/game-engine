@@ -1,9 +1,9 @@
 'use strict';
 
 function CellContentCtrl($scope, CellContent) {
-    setInterval(function() {
+    /*setInterval(function() {
         CellContent.updateCellContent($scope.content);
-    }, 1000);
+    }, 1000);*/
 
     $scope.selectedItem = undefined;
 

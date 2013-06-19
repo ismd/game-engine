@@ -10,16 +10,20 @@ import java.net.UnknownHostException;
  */
 public class Main {
 
-    public static void main(String[] args) throws UnknownHostException, IOException {
-        Server server = new Server(8081);
-        server.start();
+    public static void main(String[] args) throws IOException {
+        try {
+            Server server = new Server(8081);
+            server.start();
+            System.out.println("Server started on port: " + server.getPort());
+        } catch (UnknownHostException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        System.out.println("Server started on port: " + server.getPort());
-
-        BufferedReader reader = new  BufferedReader(new InputStreamReader(System.in));
-        while (true) {
-            String in = reader.readLine();
-            System.out.println(in);
+            while (true) {
+                String in = reader.readLine();
+                System.out.println(in);
+            }
         }
     }
 }

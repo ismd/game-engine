@@ -1,6 +1,8 @@
 'use strict';
 
-angular.module('mapService', []).factory('Map', function($http, $rootScope) {
+angular.module('mapService', []).factory('Map', function(Ws, $http, $rootScope) {
+    var service = {};
+
     var idMap,
         x,
         y;
@@ -22,48 +24,57 @@ angular.module('mapService', []).factory('Map', function($http, $rootScope) {
         initMap();
     };
 
-    return {
-        'init': function(init_idMap, init_x, init_y) {
-            idMap = init_idMap;
-            x     = init_x;
-            y     = init_y;
-        },
-        'move': function(direction) {
-            var newX = x;
-            var newY = y;
+    service.init = function(init_idMap, init_x, init_y) {
+        idMap = init_idMap;
+        x     = init_x;
+        y     = init_y;
+    };
 
-            switch (direction) {
-                case 'top':
-                    newY--;
-                    break;
+    service.move = function(direction) {
+        var newX = x;
+        var newY = y;
 
-                case 'right':
-                    newX++;
-                    break;
+        switch (direction) {
+            case 'top':
+                newY--;
+                break;
 
-                case 'bottom':
-                    newY++;
-                    break;
+            case 'right':
+                newX++;
+                break;
 
-                case 'left':
-                    newX--;
-                    break;
-            }
+            case 'bottom':
+                newY++;
+                break;
 
-            $http.post('/api/character/move', {
+            case 'left':
+                newX--;
+                break;
+        }
+
+        Ws.sendRequest({
+            command: 'move',
+            args: {
                 x: newX,
                 y: newY
-            }).success(function(data) {
-                if ('ok' !== data.status) {
-                    alert(data.message);
-                    return;
-                }
+            }
+        }).then(function(data) {
+            console.log(data);
+        });
+        
+        /*$http.post('/api/character/move', {
+            x: newX,
+            y: newY
+        }).success(function(data) {
+            if ('ok' !== data.status) {
+                alert(data.message);
+                return;
+            }
 
-                move(data.x, data.y, angular.fromJson(data.map));
-            }).error(function() {
-                alert('Не удалось обратиться к серверу');
-            });
-        }
+            move(data.x, data.y, angular.fromJson(data.map));
+        }).error(function() {
+            alert('Не удалось обратиться к серверу');
+        });*/
     };
 
     function move(data_x, data_y, data_map) {
@@ -112,4 +123,6 @@ angular.module('mapService', []).factory('Map', function($http, $rootScope) {
             alert('Не удалось обратиться к серверу');
         });
     }
+
+    return service;
 });

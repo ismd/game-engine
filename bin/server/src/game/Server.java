@@ -2,6 +2,8 @@ package game;
 
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -10,6 +12,8 @@ import org.java_websocket.server.WebSocketServer;
  * @author ismd
  */
 class Server extends WebSocketServer {
+
+    final ExecutorService executor = Executors.newCachedThreadPool();
 
     Server(int port) throws UnknownHostException {
         super(new InetSocketAddress(port));
@@ -28,9 +32,9 @@ class Server extends WebSocketServer {
     }
 
     @Override
-    public void onMessage(WebSocket ws, String string) {
-        System.out.println("Message: " + string);
-        ws.send(string);
+    public void onMessage(WebSocket ws, String message) {
+        System.out.println("Message: " + message);
+        executor.execute(new RequestHandler(ws, message));
     }
 
     @Override
