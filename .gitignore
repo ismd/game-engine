@@ -3,3 +3,5 @@
 .directory
 nbproject
 .ropeproject
+build.xml
+manifest.mf
