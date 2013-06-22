@@ -8,6 +8,10 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope) {
 
     var ws = new WebSocket('ws://localhost:8081');
 
+    ws.onopen = function(){
+        console.log('Socket has been opened!');
+    };
+
     ws.onmessage = function(message) {
         listener(angular.fromJson(message.data));
     };
@@ -26,12 +30,15 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope) {
         };
 
         request.idCallback = idCallback;
+        console.log('Sending request', request);
         ws.send(JSON.stringify(request));
 
         return defer.promise;
     };
 
     function listener(data) {
+        console.log('Received data from websocket: ', messageObj);
+
         if (callbacks.hasOwnProperty(data.idCallback)) {
             var idCallback = data.idCallback;
 

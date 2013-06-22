@@ -1,12 +1,15 @@
 package game;
 
 import com.google.gson.Gson;
+import controllers.*;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.java_websocket.WebSocket;
+import org.reflections.Reflections;
 
 /**
  * @author ismd
@@ -16,34 +19,45 @@ public class RequestHandler implements Runnable {
     private WebSocket ws;
     private String message;
     private Request request;
-    Map<String, AbstractDispatcher> dispatchers = new HashMap<>();
+
+    private static Map<String, Class<? extends AbstractController>> controllers = new HashMap<>();
+    private static Map<String, AbstractController> controllersObjects = new HashMap<>();
 
     RequestHandler(WebSocket ws, String message) {
         this.ws = ws;
         this.message = message;
-        dispatchers.put("move", new MoveDispatcher());
+    }
+
+    static void init() {
+        Reflections reflections = new Reflections("controllers");
+
+        Set<Class<? extends AbstractController>> allControllers
+            = reflections.getSubTypesOf(AbstractController.class);
+
+        for (Class<? extends AbstractController> controller : allControllers) {
+            String controllerName = controller.getName().substring("controllers.".length());
+
+            try {
+                controllersObjects.put(controllerName,
+                    (AbstractController)Class.forName(controller.getName()).newInstance());
+
+                controllers.put(controllerName, controller);
+            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
+                Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @Override
     public void run() {
         request = new Gson().fromJson(message, Request.class);
-        dispatchers.get(request.getCommand()).handle();
-    }
 
-    public void move() {
-        System.out.println("Moved");
-    }
-}
-
-
-abstract class AbstractDispatcher {
-    abstract void handle();
-}
-
-class MoveDispatcher extends AbstractDispatcher {
-
-    @Override
-    void handle() {
-        System.out.println("Moved");
+        try {
+            controllers.get(request.getController())
+                .getDeclaredMethod(request.getAction())
+                .invoke(controllersObjects.get(request.getController()));
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException ex) {
+            Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

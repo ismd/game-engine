@@ -17,6 +17,7 @@ class Server extends WebSocketServer {
 
     Server(int port) throws UnknownHostException {
         super(new InetSocketAddress(port));
+        RequestHandler.init();
     }
 
     @Override

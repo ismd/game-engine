@@ -53,7 +53,8 @@ angular.module('mapService', []).factory('Map', function(Ws, $http, $rootScope) 
         }
 
         Ws.sendRequest({
-            command: 'move',
+            controller: 'Character',
+            action: 'move',
             args: {
                 x: newX,
                 y: newY
@@ -61,7 +62,7 @@ angular.module('mapService', []).factory('Map', function(Ws, $http, $rootScope) 
         }).then(function(data) {
             console.log(data);
         });
-        
+
         /*$http.post('/api/character/move', {
             x: newX,
             y: newY

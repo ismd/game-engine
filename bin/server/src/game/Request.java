@@ -7,19 +7,25 @@ import java.util.Map;
  */
 public class Request {
 
-    private String command;
-    private Map<String, String> args;
+    private String controller;
+    private String action;
+    private Map<String, Object> args;
 
-    public Request(String command, Map<String, String> args) {
-        this.command = command;
+    public Request(String controller, String action, Map<String, Object> args) {
+        this.controller = controller;
+        this.action = action;
         this.args = args;
     }
 
-    public String getCommand() {
-        return command;
+    public String getController() {
+        return controller;
     }
 
-    public Map<String, String> getArgs() {
+    public String getAction() {
+        return action;
+    }
+
+    public Map<String, Object> getArgs() {
         return args;
     }
 }
