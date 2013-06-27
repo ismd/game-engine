@@ -1,59 +1,62 @@
 <?php
 /**
- * Модель пользователя
  * @author ismd
  */
 
-class UserMapperNotFoundException extends Exception {
-    protected $message = 'Персонаж не найден';
+class UserNotFoundException extends Exception {
+    protected $message = 'Пользователь не найден';
 };
 
-class UserMapperBadLoginOrPasswordException extends Exception {
+class UserBadLoginOrPasswordException extends Exception {
     protected $message = 'Неверный логин или пароль';
 }
 
-class UserMapperLongLogin extends Exception {
+class UserLongLoginException extends Exception {
     protected $message = 'Логин не может быть длиннее 30 символов';
 };
 
-class UserMapperShortLogin extends Exception {
+class UserShortLoginException extends Exception {
     protected $message = 'Логин не может быть короче 4 символов';
 };
 
-class UserMapperLoginExists extends Exception {
+class UserLoginExistsException extends Exception {
     protected $message = 'Введённый логин уже занят';
 };
 
-class UserMapperShortPassword extends Exception {
+class UserShortPasswordException extends Exception {
     protected $message = 'Пароль не может быть короче 6 символов';
 };
 
-class UserMapperPasswordsDontMatch extends Exception {
+class UserPasswordsDontMatchException extends Exception {
     protected $message = 'Введённые пароли не совпадают';
 };
 
-class UserMapper extends PsAbstractDbMapper {
+class UserMapper extends PsDbMapper {
 
     /**
      * Возвращает пользователя по id
      * @param int $id
      * @return User
-     * @throws UserMapperNotFoundException
+     * @throws UserNotFoundException
      */
     public function getById($id) {
         $id = (int)$id;
 
-        $query = $this->db->query("SELECT id, login, email, info, site, "
+        $stmt = $this->db->prepare("SELECT id, login, email, info, site, "
             . "registered "
             . "FROM User "
-            . "WHERE id = $id "
+            . "WHERE id = ? "
             . "LIMIT 1");
 
-        if ($query->num_rows == 0) {
-            throw new UserMapperNotFoundException;
+        $stmt->bind_param('d', $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if (0 == $result->num_rows) {
+            throw new UserNotFoundException;
         }
 
-        return new User($query->fetch_assoc());
+        return new User($result->fetch_assoc());
     }
 
     /**
@@ -62,76 +65,90 @@ class UserMapper extends PsAbstractDbMapper {
      * Необходимо использовать только в случае проверки на занятость логина
      * @param string $login
      * @return User
-     * @throws UserMapperNotFoundException
+     * @throws UserNotFoundException
      */
     public function getByLogin($login) {
-        $login = $this->db->real_escape_string($login);
-
-        $query = $this->db->query("SELECT id, login, email, info, site, "
+        $stmt = $this->db->prepare("SELECT id, login, email, info, site, "
             . "registered "
             . "FROM `User` "
-            . "WHERE login = '$login' "
+            . "WHERE login = ? "
             . "LIMIT 1");
 
-        if ($query->num_rows == 0) {
-            throw new UserMapperNotFoundException;
+        $stmt->bind_param('s', $login);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if (0 == $result->num_rows) {
+            throw new UserNotFoundException;
         }
 
-        return new User($query->fetch_assoc());
+        return new User($result->fetch_assoc());
     }
 
     /**
      * Создаёт либо изменяет пользователя
      * @param User $user
-     * @throws UserMapperLongLogin
-     * @throws UserMapperShortLogin
-     * @throws UserMapperLoginExists
+     * @throws UserLongLoginException
+     * @throws UserShortLoginException
+     * @throws UserLoginExistsException
      * @throws UserMapperLongPassword
-     * @throws UserMapperShortPassword
-     * @throws UserMapperPasswordsDontMatch
+     * @throws UserShortPasswordException
+     * @throws UserPasswordsDontMatchException
      */
     public function save(User $user) {
+        $login = $user->getLogin();
+
         // FIXME: валидация
-        if (mb_strlen($user->login) > 30) {
-            throw new UserMapperLongLogin;
+        if (mb_strlen($login) > 30) {
+            throw new UserLongLoginException;
         }
 
-        if (mb_strlen($user->login) < 4) {
-            throw new UserMapperShortLogin;
+        if (mb_strlen($login) < 4) {
+            throw new UserShortLoginException;
         }
 
         // Проверяем, не занят ли логин
         try {
-            $this->getByLogin($user->login);
-            throw new UserMapperLoginExists;
-        } catch (UserMapperNotFoundException $e) {
+            $this->getByLogin($login);
+            throw new UserLoginExistsException;
+        } catch (UserNotFoundException $e) {
         }
 
-        if (mb_strlen($user->password) < 6) {
-            throw new UserMapperShortPassword;
+        if (mb_strlen($user->getPassword()) < 6) {
+            throw new UserShortPasswordException;
         }
 
-        if ($user->password != $user->password1) {
-            throw new UserMapperPasswordsDontMatch;
+        if ($user->getPassword() != $user->getPassword1()) {
+            throw new UserPasswordsDontMatchException;
         }
 
-        $user->login    = htmlspecialchars($this->db->real_escape_string($user->login));
-        $user->password = md5($user->password);
-        $user->email    = htmlspecialchars($this->db->real_escape_string($user->email));
-        $user->info     = htmlspecialchars($this->db->real_escape_string($user->info));
-        $user->site     = htmlspecialchars($this->db->real_escape_string($user->site));
+        $user->setPassword(md5($user->getPassword()));
 
-        if (null == $user->id) {
-            $this->db->query("INSERT INTO User "
+        if (null == $user->getId()) {
+            $stmt = $this->db->prepare("INSERT INTO User "
                 . "(login, password, email, info, site, registered) "
-                . "VALUES "
-                . "('$user->login', '$user->password', '$user->email', "
-                . "'$user->info', '$user->site', NOW())");
+                . "(?, ?, ?, ?, ?, NOW())");
+
+            $stmt->bind_param('sssss',
+                $user->getLogin(),
+                $user->getPassword(),
+                $user->getEmail(),
+                $user->getInfo(),
+                $user->getSite());
         } else {
-            $this->db->query("UPDATE User "
-                . "SET password = '$user->password', email = '$user->email', "
-                . "info = '$user->info', site = '$user->site'");
+            $stmt = $this->db->prepare("UPDATE User "
+                . "SET password = ?, email = ?, info = ?, site = ? "
+                . "WHERE id = ?");
+
+            $stmt->bind_param('ssssd',
+                $user->getPassword(),
+                $user->getEmail(),
+                $user->getInfo(),
+                $user->getSite(),
+                $user->getId());
         }
+
+        $stmt->execute();
     }
 
     /**
@@ -140,22 +157,25 @@ class UserMapper extends PsAbstractDbMapper {
      * @param string $login
      * @param string $password
      * @return User
-     * @throws UserMapperBadLoginOrPasswordException
+     * @throws UserBadLoginOrPasswordException
      */
     public function getByLoginAndPassword($login, $password) {
-        $login    = $this->db->real_escape_string($login);
         $password = md5($password);
 
-        $query = $this->db->query("SELECT id, login, email, info, site, "
+        $stmt = $this->db->prepare("SELECT id, login, email, info, site, "
             . "registered "
             . "FROM `User` "
-            . "WHERE login = '$login' AND password = '$password' "
+            . "WHERE login = ? AND password = ? "
             . "LIMIT 1");
 
-        if ($query->num_rows == 0) {
-            throw new UserMapperBadLoginOrPasswordException;
+        $stmt->bind_param('ss', $login, $password);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if (0 == $result->num_rows) {
+            throw new UserBadLoginOrPasswordException;
         }
 
-        return new User($query->fetch_assoc());
+        return new User($result->fetch_assoc());
     }
 }

@@ -4,6 +4,5 @@
  * @author ismd
  */
 
-class Attribute extends AbstractAttribute {
-
+class Attribute extends Abstract_Attribute {
 }

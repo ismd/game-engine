@@ -4,7 +4,7 @@
  * @author ismd
  */
 
-abstract class AbstractAttribute extends PsAbstractModel {
+abstract class Abstract_Attribute extends PsModel {
 
     protected $_id;
     protected $_title;
@@ -12,9 +12,9 @@ abstract class AbstractAttribute extends PsAbstractModel {
 
     public function toArray() {
         return array(
-            'id'    => $this->id,
-            'title' => $this->title,
-            'value' => $this->value,
+            'id'    => $this->getId(),
+            'title' => $this->getTitle(),
+            'value' => $this->getValue(),
         );
     }
 

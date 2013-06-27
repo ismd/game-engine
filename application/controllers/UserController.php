@@ -5,7 +5,7 @@
  * @author ismd
  */
 
-class UserController extends PsAbstractAuthController {
+class UserController extends PsAuthController {
 
     public function index() {
         die;
@@ -15,17 +15,18 @@ class UserController extends PsAbstractAuthController {
      * Список персонажей игрока
      */
     public function charactersAction() {
-        $characters = $this->session->user->characters;
+        $characters = array();
 
         // Преобразуем в массив каждого персонажа
-        foreach ($characters as $i => $character) {
-            $characters[$i] = array(
-                'id'    => $character->id,
-                'name'  => $character->name,
-                'level' => $character->level,
-                'hp'    => $character->hp,
-                'maxHp' => $character->maxHp,
-                'image' => $character->image,
+        foreach ($this->getSession()->user->getCharacters() as $character) {
+            /* @var $character Character */
+            $characters[] = array(
+                'id'    => $character->getId(),
+                'name'  => $character->getName(),
+                'level' => $character->getLevel(),
+                'hp'    => $character->getHp(),
+                'maxHp' => $character->getMaxHp(),
+                'image' => $character->getImage(),
             );
         }
 

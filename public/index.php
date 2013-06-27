@@ -1,20 +1,22 @@
 <?php
-error_reporting(E_ALL ^ E_NOTICE);
+error_reporting(E_ALL ^ E_NOTICE ^ E_STRICT);
 
-// Определяем директорию с сайтом
-define('SITEPATH', realpath(dirname(__FILE__)) . '/../');
+// Определяем директорию с исходниками
+define('APPLICATION_PATH', realpath(dirname(__FILE__)) . '/../application');
+
+set_include_path(implode('/', array(
+    realpath(APPLICATION_PATH . '../lib'),
+    get_include_path(),
+)));
 
 // Инициализируем систему
-require SITEPATH . 'lib/php-spa/startup.php';
+require 'php-spa/startup.php';
 
 // PsRegistry, в котором будем хранить глобальные значения
 $registry = new PsRegistry;
 
-// Читаем конфиг и сохраняем в $registry
-$registry->config = PsConfig::getInstance(SITEPATH)->getConfig();
-
 // Устанавливаем временную зону сервера
-date_default_timezone_set($registry->config->timezone->server);
+date_default_timezone_set(PsConfig::getInstance()->config->timezone->server);
 
 // Загружаем router
 $registry->router = new PsRouter($registry, $_GET['route']);

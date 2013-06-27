@@ -4,45 +4,45 @@
  * @author ismd
  */
 
-abstract class AbstractCharacter extends PsAbstractModel {
+abstract class Abstract_Character extends PsModel {
 
-    protected $_id;     // id в таблице Character (сам персонаж)
-    protected $_idUser; // id в таблице User (пользователь)
-    protected $_name;
-    protected $_level;
-    protected $_money;
-    protected $_hp;
-    protected $_maxHp;
-    protected $_minDamage;
-    protected $_maxDamage;
-    protected $_experience;
-    protected $_image;
-    protected $_strength;
-    protected $_dexterity;
-    protected $_endurance;
-    protected $_idMap;
-    protected $_x;
-    protected $_y;
+    private $_id;     // id в таблице Character (сам персонаж)
+    private $_idUser; // id в таблице User (пользователь)
+    private $_name;
+    private $_level;
+    private $_money;
+    private $_hp;
+    private $_maxHp;
+    private $_minDamage;
+    private $_maxDamage;
+    private $_experience;
+    private $_image;
+    private $_strength;
+    private $_dexterity;
+    private $_endurance;
+    private $_idMap;
+    private $_x;
+    private $_y;
 
     public function toArray() {
         return array(
-            'id'         => $this->id,
-            'idUser'     => $this->idUser,
-            'name'       => $this->name,
-            'level'      => $this->level,
-            'money'      => $this->money,
-            'hp'         => $this->hp,
-            'maxHp'      => $this->maxHp,
-            'minDamage'  => $this->minDamage,
-            'maxDamage'  => $this->maxDamage,
-            'experience' => $this->experience,
-            'image'      => $this->image,
-            'strength'   => $this->strength,
-            'dexterity'  => $this->dexterity,
-            'endurance'  => $this->endurance,
-            'idMap'      => $this->idMap,
-            'x'          => $this->x,
-            'y'          => $this->y,
+            'id'         => $this->getId(),
+            'idUser'     => $this->getIdUser(),
+            'name'       => $this->getName(),
+            'level'      => $this->getLevel(),
+            'money'      => $this->getMoney(),
+            'hp'         => $this->getHp(),
+            'maxHp'      => $this->getMaxHp(),
+            'minDamage'  => $this->getMinDamage(),
+            'maxDamage'  => $this->getMaxDamage(),
+            'experience' => $this->getExperience(),
+            'image'      => $this->getImage(),
+            'strength'   => $this->getStrength(),
+            'dexterity'  => $this->getDexterity(),
+            'endurance'  => $this->getEndurance(),
+            'idMap'      => $this->getIdMap(),
+            'x'          => $this->getX(),
+            'y'          => $this->getY(),
         );
     }
 

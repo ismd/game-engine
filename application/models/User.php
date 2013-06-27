@@ -4,7 +4,7 @@
  * @author ismd
  */
 
-class User extends AbstractUser {
+class User extends Abstract_User {
 
     /**
      * Персонажи пользователя
@@ -29,8 +29,7 @@ class User extends AbstractUser {
      */
     public function getCharacters() {
         if (null == $this->_characters) {
-            $mapper           = new CharacterMapper;
-            $this->characters = $mapper->getByUser($this);
+            $this->setCharacters(CharacterMapper::getInstance()->getByUser($this));
         }
 
         return $this->_characters;
@@ -44,10 +43,9 @@ class User extends AbstractUser {
      */
     public function hasCharacter($idCharacter) {
         $idCharacter = (int)$idCharacter;
-        $characters  = $this->characters;
 
-        foreach ($characters as $character) {
-            if ($character->id == $idCharacter) {
+        foreach ($this->getCharacters() as $character) {
+            if ($character->getId() == $idCharacter) {
                 return true;
             }
         }

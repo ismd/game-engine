@@ -4,7 +4,7 @@
  * @author ismd
  */
 
-abstract class AbstractNpc extends PsAbstractModel {
+abstract class Abstract_Npc extends PsModel {
 
     protected $_id;    // id в таблице NpcMap (конкретный NPC на карте)
     protected $_idNpc; // id в таблице Npc (класс NPC)
@@ -17,14 +17,14 @@ abstract class AbstractNpc extends PsAbstractModel {
 
     public function toArray() {
         return array(
-            'id'       => $this->id,
-            'idNpc'    => $this->idNpc,
-            'name'     => $this->name,
-            'greeting' => $this->greeting,
-            'image'    => $this->image,
-            'idMap'    => $this->idMap,
-            'x'        => $this->x,
-            'y'        => $this->y,
+            'id'       => $this->getId(),
+            'idNpc'    => $this->getIdNpc(),
+            'name'     => $this->getName(),
+            'greeting' => $this->getGreeting(),
+            'image'    => $this->getImage(),
+            'idMap'    => $this->getIdMap(),
+            'x'        => $this->getX(),
+            'y'        => $this->getY(),
         );
     }
 

@@ -4,7 +4,7 @@
  * @author ismd
  */
 
-abstract class AbstractUser extends PsAbstractModel {
+abstract class Abstract_User extends PsModel {
 
     protected $_id;
     protected $_login;
@@ -17,12 +17,12 @@ abstract class AbstractUser extends PsAbstractModel {
 
     public function toArray() {
         return array(
-            'id'         => $this->id,
-            'login'      => $this->login,
-            'email'      => $this->email,
-            'info'       => $this->info,
-            'site'       => $this->site,
-            'registered' => $this->registered,
+            'id'         => $this->getId(),
+            'login'      => $this->getLogin(),
+            'email'      => $this->getEmail(),
+            'info'       => $this->getInfo(),
+            'site'       => $this->getSite(),
+            'registered' => $this->getRegistered(),
         );
     }
 

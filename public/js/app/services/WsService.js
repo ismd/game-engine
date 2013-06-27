@@ -8,7 +8,7 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope) {
 
     var ws = new WebSocket('ws://localhost:8081');
 
-    ws.onopen = function(){
+    ws.onopen = function() {
         console.log('Socket has been opened!');
     };
 

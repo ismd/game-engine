@@ -3,9 +3,9 @@ package controllers;
 /**
  * @author ismd
  */
-public class Map extends AbstractController {
+public class MapController extends AbstractController {
 
     public void get() {
-        
+
     }
 }

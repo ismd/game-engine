@@ -4,9 +4,8 @@
  * @author ismd
  */
 
-class NewsController extends PsAbstractController {
+class NewsController extends PsController {
 
     public function indexPartial() {
-        
     }
 }

@@ -4,15 +4,17 @@
  * @author ismd
  */
 
-class NpcMapperNotFoundException extends Exception {};
+class NpcNotFoundException extends Exception {
+    protected $message = 'NPC не найден';
+};
 
-class NpcMapper extends PsAbstractDbMapper {
+class NpcMapper extends PsDbMapper {
 
     /**
      * Возвращает NPC по id из таблицы NpcMap
      * @param int $id
      * @return Npc
-     * @throws NpcMapperNotFoundException
+     * @throws NpcNotFoundException
      */
     public function getById($id) {
         $id = (int)$id;
@@ -25,7 +27,7 @@ class NpcMapper extends PsAbstractDbMapper {
             . "LIMIT 1");
 
         if ($query->num_rows == 0) {
-            throw new NpcMapperNotFoundException;
+            throw new NpcNotFoundException;
         }
 
         return new Npc($query->fetch_assoc());

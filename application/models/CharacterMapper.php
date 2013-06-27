@@ -4,44 +4,50 @@
  * @author ismd
  */
 
-class CharacterMapperNotFoundException extends Exception {
+class CharacterNotFoundException extends Exception {
     protected $message = 'Персонаж не найден';
 };
 
-class CharacterMapperLongName extends Exception {
+class CharacterLongNameException extends Exception {
     protected $message = 'Имя не может быть длиннее 30 символов';
 };
 
-class CharacterMapperShortName extends Exception {
+class CharacterShortNameException extends Exception {
     protected $message = 'Имя не может быть короче 4 символов';
 };
 
-class CharacterMapperNameExists extends Exception {
+class CharacterNameExistsException extends Exception {
     protected $message = 'Введённое имя уже занято';
 };
 
-class CharacterMapper extends PsAbstractDbMapper {
+class CharacterMapper extends PsDbMapper {
 
     /**
      * Возвращает персонажа по id
      * @param int $id
      * @return Character
-     * @throws CharacterMapperNotFoundException
+     * @throws CharacterNotFoundException
      */
     public function getById($id) {
         $id = (int)$id;
 
-        $query = $this->db->query("SELECT id, idUser, name, level, money, "
+        $stmt = $this->db->prepare("SELECT id, idUser, name, level, money, "
             . "idMap, x, y, "
             . "strength, dexterity, endurance, hp, maxHp, minDamage, "
             . "maxDamage, image, experience "
-            . "FROM `Character` WHERE id = $id LIMIT 1");
+            . "FROM `Character` "
+            . "WHERE id = ? "
+            . "LIMIT 1");
 
-        if ($query->num_rows == 0) {
-            throw new CharacterMapperNotFoundException;
+        $stmt->bind_param('d', $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if (0 == $result->num_rows) {
+            throw new CharacterNotFoundException;
         }
 
-        return new Character($query->fetch_assoc());
+        return new Character($result->fetch_assoc());
     }
 
     /**
@@ -50,22 +56,25 @@ class CharacterMapper extends PsAbstractDbMapper {
      * Необходимо использовать только в случае проверки на занятость имени
      * @param string $name
      * @return Character
-     * @throws CharacterMapperNotFoundException
+     * @throws CharacterNotFoundException
      */
     public function getByName($name) {
-        $name = $this->db->real_escape_string($name);
+        $stmt = $this->db->prepare("SELECT id, idUser, name, level, money, "
+            . "idMap, x, y, strength, dexterity, endurance, hp, maxHp, "
+            . "minDamage, maxDamage, image, experience "
+            . "FROM `Character` "
+            . "WHERE name = ? "
+            . "LIMIT 1");
 
-        $query = $this->db->query("SELECT id, idUser, name, level, money, "
-            . "idMap, x, y, "
-            . "strength, dexterity, endurance, hp, maxHp, minDamage, "
-            . "maxDamage, image, experience "
-            . "FROM `Character` WHERE name = '$name' LIMIT 1");
+        $stmt->bind_param('s', $name);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        if ($query->num_rows == 0) {
-            throw new CharacterMapperNotFoundException;
+        if (0 == $result->num_rows) {
+            throw new CharacterNotFoundException;
         }
 
-        return new Character($query->fetch_assoc());
+        return new Character($result->fetch_assoc());
     }
 
     /**
@@ -74,14 +83,18 @@ class CharacterMapper extends PsAbstractDbMapper {
      * @return Character[]
      */
     public function getByUser(User $user) {
-        $query = $this->db->query("SELECT id, idUser, name, level, money, "
+        $stmt = $this->db->prepare("SELECT id, idUser, name, level, money, "
             . "idMap, x, y, strength, dexterity, "
             . "endurance, hp, maxHp, minDamage, maxDamage, image, experience "
             . "FROM `Character` "
-            . "WHERE idUser = $user->id");
+            . "WHERE idUser = ?");
+
+        $stmt->bind_param('d', $user->getId());
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         $characters = array();
-        while ($character = $query->fetch_assoc()) {
+        while ($character = $result->fetch_assoc()) {
             $characters[] = new Character($character);
         }
 
@@ -94,15 +107,21 @@ class CharacterMapper extends PsAbstractDbMapper {
      * @return Character[]
      */
     public function getByCell(Cell $cell) {
-        $query = $this->db->query("SELECT id, idUser, name, level, money, idMap, "
+        $stmt = $this->db->prepare("SELECT id, idUser, name, level, money, idMap, "
             . "x, y, strength, dexterity, endurance, "
             . "hp, maxHp, minDamage, maxDamage, image, experience "
             . "FROM `Character` "
-            . "WHERE idMap = " . $cell->map->id . " "
-            . "AND x = $cell->x AND y = $cell->y");
+            . "WHERE idMap = ? AND x = ? AND y = ?");
+
+        $stmt->bind_param('ddd',
+            $cell->getMap()->getId(),
+            $cell->getX(),
+            $cell->getY());
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         $characters = array();
-        while ($character = $query->fetch_assoc()) {
+        while ($character = $result->fetch_assoc()) {
             $characters[] = new Character($character);
         }
 
@@ -115,58 +134,78 @@ class CharacterMapper extends PsAbstractDbMapper {
      * @param Cell $cell
      */
     public function move(Character $character, Cell $cell) {
-        $this->db->query("UPDATE `Character` "
-            . "SET idMap = " . $cell->map->id . ", x = $cell->x, "
-            . "y = $cell->y "
-            . "WHERE id = $character->id "
+        $stmt = $this->db->prepare("UPDATE `Character` "
+            . "SET idMap = ?, x = ?, y = ? "
+            . "WHERE id = ? "
             . "LIMIT 1");
+
+        $stmt->bind_param('dddd',
+            $cell->getMap()->getId(),
+            $cell->getX(),
+            $cell->getY(),
+            $character->getId());
+
+        $stmt->execute();
     }
 
     /**
      * Создаёт персонажа в базе
      * @param Character $character
      * @return int id персонажа
-     * @throws CharacterMapperLongName
-     * @throws CharacterMapperShortName
-     * @throws CharacterMapperNameExists
+     * @throws CharacterLongNameException
+     * @throws CharacterShortNameException
+     * @throws CharacterNameExistsException
      */
     public function save(Character $character) {
         // TODO: валидация
 
-        if (mb_strlen($character->name) > 30) {
-            throw new CharacterMapperLongName;
+        $name = $character->getName();
+
+        if (mb_strlen($name) > 30) {
+            throw new CharacterLongNameException;
         }
 
-        if (mb_strlen($character->name) < 4) {
-            throw new CharacterMapperShortName;
+        if (mb_strlen($name) < 4) {
+            throw new CharacterShortNameException;
         }
 
         // Проверяем, не занят ли логин
         try {
             // Выбросит исключение, если персонаж с таким именем не найден
-            $this->getByName($character->name);
-            throw new CharacterMapperNameExists;
-        } catch (CharacterMapperNotFoundException $e) {
+            $this->getByName($name);
+            throw new CharacterNameExistsException;
+        } catch (CharacterNotFoundException $e) {
         }
 
-        if (null != $character->id) {
+        // TODO: сделать update, чтобы сохранялся персонаж. но надо ли?
+        if (null != $character->getId()) {
             throw new Exception("CharacterMapper currently can't update rows");
         }
 
-        $name = $this->db->real_escape_string($character->name);
+        $stmt = $this->db->prepare("INSERT INTO `Character` "
+            . "(idUser, name, level, money, idMap, x, y, strength, dexterity, "
+            . "endurance, hp, maxHp, minDamage, maxDamage, image, experience) "
+            . "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-        $this->db->query("INSERT INTO `Character` (idUser, name, level, money, idMap, "
-            . "x, y, strength, dexterity, endurance, "
-            . "hp, maxHp, minDamage, maxDamage, image, experience) "
-            . "VALUES ($character->idUser, '$name', $character->level, "
-            . "$character->money, $character->idMap, $character->x, "
-            . "$character->y, $character->strength, $character->dexterity, "
-            . "$character->endurance, $character->hp, $character->maxHp, "
-            . "$character->minDamage, $character->maxDamage, '$character->image', "
-            . "$character->experience)");
+        $stmt->bind_param('dsddddddddddddsd',
+            $character->getIdUser(),
+            $name,
+            $character->getLevel(),
+            $character->getMoney(),
+            $character->getIdMap(),
+            $character->getX(),
+            $character->getY(),
+            $character->getStrength(),
+            $character->getDexterity(),
+            $character->getEndurance(),
+            $character->getHp(),
+            $character->getMaxHp(),
+            $character->getMinDamage(),
+            $character->getMaxDamage(),
+            $character->getImage(),
+            $character->getExperience());
 
-        // TODO: сделать update, чтобы сохранялся персонаж. но надо ли?
-
-        return $this->db->insert_id;
+        $stmt->execute();
+        return $stmt->insert_id;
     }
 }

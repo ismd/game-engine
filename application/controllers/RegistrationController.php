@@ -3,7 +3,7 @@
  * Контроллер регистрации
  */
 
-class RegistrationController extends PsAbstractController {
+class RegistrationController extends PsController {
 
     public function init() {
         if (null != $this->session->user) {
@@ -37,27 +37,27 @@ class RegistrationController extends PsAbstractController {
                 'status'  => 'ok',
                 'message' => '',
             ));
-        } catch (UserMapperLongLogin $e) {
+        } catch (UserLongLoginException $e) {
             $this->view->json(array(
                 'status'  => 'error',
                 'message' => $e->getMessage(),
             ));
-        } catch (UserMapperLoginExists $e) {
+        } catch (UserLoginExistsException $e) {
             $this->view->json(array(
                 'status'  => 'error',
                 'message' => $e->getMessage(),
             ));
-        } catch (UserMapperPasswordsDontMatch $e) {
+        } catch (UserPasswordsDontMatchException $e) {
             $this->view->json(array(
                 'status'  => 'error',
                 'message' => $e->getMessage(),
             ));
-        } catch (UserMapperShortLogin $e) {
+        } catch (UserShortLoginException $e) {
             $this->view->json(array(
                 'status'  => 'error',
                 'message' => $e->getMessage(),
             ));
-        } catch (UserMapperShortPassword $e) {
+        } catch (UserShortPasswordException $e) {
             $this->view->json(array(
                 'status'  => 'error',
                 'message' => $e->getMessage(),

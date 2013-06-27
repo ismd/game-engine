@@ -4,7 +4,7 @@
  * @author ismd
  */
 
-class Cell extends AbstractCell {
+class Cell extends Abstract_Cell {
 
     const VICINITY_WIDTH  = 7;
     const VICINITY_HEIGHT = 5;
@@ -14,10 +14,10 @@ class Cell extends AbstractCell {
      * @return array Двумерный массив [x][y]
      */
     public function getVicinity() {
-        $map = $this->map->map;
+        $map = $this->getMap()->getMap();
 
-        $startX = $this->x - floor(self::VICINITY_WIDTH / 2);
-        $startY = $this->y - floor(self::VICINITY_HEIGHT / 2);
+        $startX = $this->getX() - floor(self::VICINITY_WIDTH / 2);
+        $startY = $this->getY() - floor(self::VICINITY_HEIGHT / 2);
 
         if ($startX < 0) {
             $startX = 0;

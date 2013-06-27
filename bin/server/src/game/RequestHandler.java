@@ -35,7 +35,8 @@ public class RequestHandler implements Runnable {
             = reflections.getSubTypesOf(AbstractController.class);
 
         for (Class<? extends AbstractController> controller : allControllers) {
-            String controllerName = controller.getName().substring("controllers.".length());
+            String controllerName = controller.getName().substring("controllers.".length(),
+                controller.getName().lastIndexOf("Controller"));
 
             try {
                 controllersObjects.put(controllerName,
@@ -54,8 +55,8 @@ public class RequestHandler implements Runnable {
 
         try {
             controllers.get(request.getController())
-                .getDeclaredMethod(request.getAction())
-                .invoke(controllersObjects.get(request.getController()));
+                .getDeclaredMethod(request.getAction(), Map.class)
+                .invoke(controllersObjects.get(request.getController()), request.getArgs());
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException ex) {
             Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, ex);
         }

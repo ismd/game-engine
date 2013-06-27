@@ -4,7 +4,7 @@
  * @author ismd
  */
 
-abstract class AbstractMap extends PsAbstractModel {
+abstract class Abstract_Map extends PsModel {
 
     protected $_id;
     protected $_title;

@@ -4,6 +4,5 @@
  * @author ismd
  */
 
-class Npc extends AbstractNpc {
-
+class Npc extends Abstract_Npc {
 }

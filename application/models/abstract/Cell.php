@@ -4,7 +4,7 @@
  * @author ismd
  */
 
-abstract class AbstractCell extends PsAbstractModel {
+abstract class Abstract_Cell extends PsModel {
 
     /**
      * @var Map

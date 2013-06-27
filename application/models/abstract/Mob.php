@@ -4,7 +4,7 @@
  * @author ismd
  */
 
-abstract class AbstractMob extends PsAbstractModel {
+abstract class Abstract_Mob extends PsModel {
 
     protected $_id;    // id в таблице MobMap (конкретный моб на карте)
     protected $_idMob; // id в таблице Mob (класс моба)
@@ -25,22 +25,22 @@ abstract class AbstractMob extends PsAbstractModel {
 
     public function toArray() {
         return array(
-            'id'         => $this->id,
-            'idMob'      => $this->idMob,
-            'name'       => $this->name,
-            'level'      => $this->level,
-            'hp'         => $this->hp,
-            'maxHp'      => $this->maxHp,
-            'minDamage'  => $this->minDamage,
-            'maxDamage'  => $this->maxDamage,
-            'experience' => $this->experience,
-            'image'      => $this->image,
-            'strength'   => $this->strength,
-            'dexterity'  => $this->dexterity,
-            'endurance'  => $this->endurance,
-            'idMap'      => $this->idMap,
-            'x'          => $this->x,
-            'y'          => $this->y,
+            'id'         => $this->getId(),
+            'idMob'      => $this->getIdMob(),
+            'name'       => $this->getName(),
+            'level'      => $this->getLevel(),
+            'hp'         => $this->getHp(),
+            'maxHp'      => $this->getMaxHp(),
+            'minDamage'  => $this->getMinDamage(),
+            'maxDamage'  => $this->getMaxDamage(),
+            'experience' => $this->getExperience(),
+            'image'      => $this->getImage(),
+            'strength'   => $this->getStrength(),
+            'dexterity'  => $this->getDexterity(),
+            'endurance'  => $this->getEndurance(),
+            'idMap'      => $this->getIdMap(),
+            'x'          => $this->getX(),
+            'y'          => $this->getY(),
         );
     }
 

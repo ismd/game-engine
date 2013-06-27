@@ -4,6 +4,5 @@
  * @author ismd
  */
 
-class Mob extends AbstractMob {
-
+class Mob extends Abstract_Mob {
 }

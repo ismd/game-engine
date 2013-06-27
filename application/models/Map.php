@@ -4,14 +4,14 @@
  * @author ismd
  */
 
-class Map extends AbstractMap {
+class Map extends Abstract_Map {
 
     private $_map = array();
 
     public function __construct($options = null) {
         parent::__construct($options);
 
-        $file = file_get_contents('img/world/maps/' . $this->id . '.txt');
+        $file = file_get_contents('img/world/maps/' . $this->getId() . '.txt');
         $this->_map = json_decode($file);
     }
 
@@ -20,10 +20,10 @@ class Map extends AbstractMap {
     }
 
     public function getWidth() {
-        return count($this->map);
+        return count($this->getMap());
     }
 
     public function getHeight() {
-        return count($this->map[0]);
+        return count($this->getMap()[0]);
     }
 }

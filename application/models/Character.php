@@ -4,58 +4,58 @@
  * @author ismd
  */
 
-class CharacterFastMove extends Exception {
+class FastMoveException extends Exception {
     protected $message = 'Слишком быстрое передвижение';
 };
 
-class CharacterCantMoveHere extends Exception {
+class CantMoveHereException extends Exception {
     protected $message = 'Невозможно переместиться на заданную клетку';
 };
 
-class Character extends AbstractCharacter {
+class Character extends Abstract_Character {
 
     /**
      * Пользователь, владеющий персонажем
      * @var User
      */
-    protected $_user;
+    private $_user;
 
     /**
      * Клетка, на которой находится персонаж
      * @var Cell
      */
-    protected $_cell;
+    private $_cell;
 
     /**
      * Вещи персонажа
      * @var Item[]
      */
-    protected $_items;
+    private $_items;
 
     /**
      * Используется для проверки задержки между перещениями персонажа
      * @var int
      */
-    protected $_lastMove = 0;
+    private $_lastMove = 0;
 
     /**
      * Установка начальных значений для персонажа
      */
     public function setDefaultValues() {
-        $this->level      = 1;
-        $this->money      = 0;
-        $this->idMap      = 1;
-        $this->x          = 2;
-        $this->y          = 2;
-        $this->strength   = 5;
-        $this->dexterity  = 5;
-        $this->endurance  = 5;
-        $this->hp         = 25;
-        $this->maxHp      = 25;
-        $this->minDamage  = 5;
-        $this->maxDamage  = 10;
-        $this->image      = 'player.png';
-        $this->experience = 0;
+        $this->setLevel(1);
+        $this->setMoney(0);
+        $this->setIdMap(1);
+        $this->setX(2);
+        $this->setY(2);
+        $this->setStrength(5);
+        $this->setDexterity(5);
+        $this->setEndurance(5);
+        $this->setHp(25);
+        $this->setMaxHp(25);
+        $this->setMinDamage(5);
+        $this->setMaxDamage(10);
+        $this->setImage('player.png');
+        $this->setExperience(0);
 
         return $this;
     }
@@ -63,39 +63,38 @@ class Character extends AbstractCharacter {
     /**
      * Перемещение персонажа по карте
      * @param Cell $cell
-     * @throws CharacterFastMove
-     * @throws CharacterCantMoveHere
+     * @throws FastMoveException
+     * @throws CantMoveHereException
      */
     public function move(Cell $cell) {
         // Лимит - секунда
         if (microtime(true) - $this->_lastMove < 1) {
-            throw new CharacterFastMove;
+            throw new FastMoveException;
         }
 
         $this->_lastMove = microtime(true);
 
         // Проверяем, может ли персонаж переместиться на заданную клетку
-        if ($cell->x < 3 || $cell->y < 2
-            || $cell->x > $cell->map->width - 3 || $cell->y > $cell->map->height - 2) {
-            throw new CharacterCantMoveHere;
+        if ($cell->getX() < 3 || $cell->getY() < 2
+            || $cell->getX() > $cell->getMap()->getWidth() - 3
+            || $cell->getY() > $cell->getMap()->getHeight() - 2) {
+            throw new CantMoveHereException;
         }
 
-        if ($cell->x == $this->cell->x) {
-            if (abs($cell->y - $this->cell->y) != 1) {
-                throw new CharacterCantMoveHere;
+        if ($cell->getX() == $this->getCell()->getX()) {
+            if (abs($cell->getY() - $this->getCell()->getY()) != 1) {
+                throw new CantMoveHereException;
             }
-        } elseif ($cell->y == $this->cell->y) {
-            if (abs($cell->x - $this->cell->x) != 1) {
-                throw new CharacterCantMoveHere;
+        } elseif ($cell->getY() == $this->getCell()->getY()) {
+            if (abs($cell->getX() - $this->getCell()->getX()) != 1) {
+                throw new CantMoveHereException;
             }
         } else {
-            throw new CharacterCantMoveHere;
+            throw new CantMoveHereException;
         }
 
-        $mapper = new CharacterMapper;
-        $mapper->move($this, $cell);
-
-        $this->cell = $cell;
+        CharacterMapper::getInstance()->move($this, $cell);
+        $this->setCell($cell);
     }
 
     public function setItems($value) {
@@ -109,8 +108,7 @@ class Character extends AbstractCharacter {
      */
     public function getItems() {
         if (null == $this->_items) {
-            $mapper      = new ItemMapper;
-            $this->items = $mapper->getByCharacter($this);
+            $this->setItems(ItemMapper::getInstance()->getByCharacter($this));
         }
 
         return $this->_items;
@@ -118,7 +116,7 @@ class Character extends AbstractCharacter {
 
     public function setCell(Cell $value) {
         $this->_cell = $value;
-        $this->idMap = $value->map->id;
+        $this->setIdMap($value->getMap()->getId());
 
         return $this;
     }
@@ -129,37 +127,37 @@ class Character extends AbstractCharacter {
      */
     public function getCell() {
         if (null == $this->_cell) {
-            $mapper = new MapMapper;
-            $map    = $mapper->getById($this->idMap);
-
-            $this->cell = new Cell($map, $this->_x, $this->_y);
+            $this->setCell(new Cell(
+                MapMapper::getInstance()->getById($this->getIdMap()),
+                $this->_x,
+                $this->_y));
         }
 
         return $this->_cell;
     }
 
     public function setX($value) {
-        if (null != $this->cell) {
-            $this->cell->x = $value;
+        if (null != $this->getCell()) {
+            $this->getCell()->setX($value);
         }
 
         parent::setX($value);
     }
 
     public function getX() {
-        return $this->cell->x;
+        return $this->getCell()->getX();
     }
 
     public function setY($value) {
-        if (null != $this->cell) {
-            $this->cell->y = $value;
+        if (null != $this->getCell()) {
+            $this->getCell()->setY($value);
         }
 
         parent::setY($value);
     }
 
     public function getY() {
-        return $this->cell->y;
+        return $this->getCell()->getY();
     }
 
     /**
@@ -168,16 +166,15 @@ class Character extends AbstractCharacter {
      * @return Character
      */
     public function setUser(User $value) {
-        $this->_user  = $value;
-        $this->idUser = $value->id;
+        $this->_user = $value;
+        $this->setIdUser($value->getId());
 
         return $this;
     }
 
     public function getUser() {
         if (null == $this->_user) {
-            $mapper     = new UserMapper;
-            $this->user = $mapper->getById($this->idUser);
+            $this->setUser(UserMapper::getInstance()->getById($this->getIdUser()));
         }
 
         return $this->_user;

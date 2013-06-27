@@ -4,7 +4,7 @@
  * @author ismd
  */
 
-class AuthController extends PsAbstractController {
+class AuthController extends PsController {
 
     /**
      * Залогиниваемся
@@ -12,23 +12,21 @@ class AuthController extends PsAbstractController {
      * @post password
      */
     public function loginAction() {
-        $post = $this->request->post;
+        $post = $this->getRequest()->getPost();
 
         $username = $post->username;
         $password = $post->password;
 
-        $mapper = new UserMapper;
-
         try {
-            $user = $mapper->getByLoginAndPassword($username, $password);
-            $this->session->user = $user;
+            $user = UserMapper::getInstance()->getByLoginAndPassword($username, $password);
+            $this->getSession()->user = $user;
 
             $this->view->json(array(
                 'status'  => 'ok',
                 'message' => '',
-                'user'    => $this->session->user->toArray(),
+                'user'    => $user->toArray(),
             ));
-        } catch (UserMapperBadLoginOrPasswordException $e) {
+        } catch (UserBadLoginOrPasswordException $e) {
             $this->view->json(array(
                 'status'  => 'error',
                 'message' => $e->getMessage(),
@@ -50,7 +48,7 @@ class AuthController extends PsAbstractController {
         //if () {
         //}
 
-        $this->session->clear();
+        $this->getSession()->clear();
 
         $this->view->json(array(
             'status' => 'ok',

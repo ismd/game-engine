@@ -4,15 +4,17 @@
  * @author ismd
  */
 
-class MobMapperNotFoundException extends Exception {};
+class MobNotFoundException extends Exception {
+    protected $message = 'Моб не найден';
+};
 
-class MobMapper extends PsAbstractDbMapper {
+class MobMapper extends PsDbMapper {
 
     /**
      * Возвращает моба по id из таблицы MobMap
      * @param int $id
      * @return Mob
-     * @throws MobMapperNotFoundException
+     * @throws MobNotFoundException
      */
     public function getById($id) {
         $id = (int)$id;
@@ -27,7 +29,7 @@ class MobMapper extends PsAbstractDbMapper {
             . "LIMIT 1");
 
         if ($query->num_rows == 0) {
-            throw new MobMapperNotFoundException;
+            throw new MobNotFoundException;
         }
 
         return new Mob($query->fetch_assoc());

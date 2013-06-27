@@ -1,24 +1,28 @@
 <?php
 /**
- * Модель аттрибута
+ * Mapper атрибута
  * @author ismd
  */
 
-class AttributeMapper extends PsAbstractDbMapper {
+class AttributeMapper extends PsDbMapper {
 
     /**
-     * Возвращает аттрибуты вещи
+     * Возвращает атрибуты вещи
      * @param Item $item
      * @return Attribute[]
      */
     public function getByItem(Item $item) {
-        $query = $this->db->query("SELECT ia.value, a.id, a.title "
+        $stmt = $this->db->prepare("SELECT ia.value, a.id, a.title "
             . "FROM ItemAttribute ia "
             . "INNER JOIN Attribute a ON ia.idAttribute = a.id "
-            . "WHERE ia.idItem = $item->id");
+            . "WHERE ia.idItem = ?");
+
+        $stmt->bind_param('d', $item->id);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         $attributes = array();
-        while ($attribute = $query->fetch_assoc()) {
+        while ($attribute = $result->fetch_assoc()) {
             $attributes[] = new Attribute($attribute);
         }
 

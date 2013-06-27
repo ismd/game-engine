@@ -4,7 +4,7 @@
  * @author ismd
  */
 
-class CharacterController extends PsAbstractAuthController {
+class CharacterController extends PsAuthController {
 
     public function createPartial() {
     }
@@ -13,42 +13,42 @@ class CharacterController extends PsAbstractAuthController {
      * Создание персонажа
      */
     public function createAction() {
-        $post = $this->request->post;
+        $post = $this->getRequest()->post;
 
         $character = new Character(array(
-            'user' => $this->session->user,
+            'user' => $this->getSession()->user,
             'name' => $post->name,
         ));
 
         // Устанавливаем начальные значения
         $character->setDefaultValues();
 
-        $mapper = new CharacterMapper;
-
         try {
+            $mapper = CharacterMapper::getInstance();
             $id = $mapper->save($character);
 
             // Добавляем созданного персонажа в список персонажей пользователя
-            $this->session->user->characters = array_merge($this->session->user->characters, array(
-                $mapper->getById($id),
-            ));
+            $this->getSession()->user->characters = array_merge(
+                $this->getSession()->user->characters,
+                array($mapper->getById($id))
+            );
 
             $this->view->json(array(
                 'status'  => 'ok',
                 'message' => '',
                 'id'      => $id,
             ));
-        } catch (CharacterMapperLongName $e) {
+        } catch (CharacterLongNameException $e) {
             $this->view->json(array(
                 'status'  => 'error',
                 'message' => $e->getMessage(),
             ));
-        } catch (CharacterMapperShortName $e) {
+        } catch (CharacterShortNameException $e) {
             $this->view->json(array(
                 'status'  => 'error',
                 'message' => $e->getMessage(),
             ));
-        } catch (CharacterMapperNameExists $e) {
+        } catch (CharacterNameExistsException $e) {
             $this->view->json(array(
                 'status'  => 'error',
                 'message' => $e->getMessage(),
@@ -66,9 +66,9 @@ class CharacterController extends PsAbstractAuthController {
      * @post id
      */
     public function setAction() {
-        $idCharacter = (int)$this->request->post->id;
+        $idCharacter = (int)$this->getRequest()->getPost()->id;
 
-        if (!$this->session->user->hasCharacter($idCharacter)) {
+        if (!$this->getSession()->user->hasCharacter($idCharacter)) {
             $this->view->json(array(
                 'status'  => 'error',
                 'message' => 'Ошибка',
@@ -76,14 +76,12 @@ class CharacterController extends PsAbstractAuthController {
             return;
         }
 
-        $mapper = new CharacterMapper;
-
-        $this->session->character = $mapper->getById($idCharacter);
+        $this->getSession()->character = CharacterMapper::getInstance()->getById($idCharacter);
 
         $this->view->json(array(
             'status'    => 'ok',
             'message'   => '',
-            'character' => $this->session->character->toArray(),
+            'character' => $this->getSession()->character->toArray(),
         ));
     }
 
@@ -93,29 +91,29 @@ class CharacterController extends PsAbstractAuthController {
      * @post y
      */
     public function moveAction() {
-        $post = $this->request->post;
+        $post = $this->getRequest()->post;
 
         $x = (int)$post->x;
         $y = (int)$post->y;
 
-        $cell = new Cell($this->session->character->cell->map, $x, $y);
+        $cell = new Cell($this->getSession()->character->getCell()->getMap(), $x, $y);
 
         try {
-            $this->session->character->move($cell);
+            $this->getSession()->character->move($cell);
 
             $this->view->json(array(
                 'status'  => 'ok',
                 'message' => '',
                 'x'       => $cell->x,
                 'y'       => $cell->y,
-                'map'     => json_encode($this->session->character->cell->getVicinity()),
+                'map'     => json_encode($this->getSession()->character->getCell()->getVicinity()),
             ));
-        } catch (CharacterFastMove $e) {
+        } catch (FastMoveException $e) {
             $this->view->json(array(
                 'status'  => 'error',
                 'message' => $e->getMessage(),
             ));
-        } catch (CharacterCantMoveHere $e) {
+        } catch (CantMoveHereException $e) {
             $this->view->json(array(
                 'status'  => 'error',
                 'message' => $e->getMessage(),
@@ -127,13 +125,11 @@ class CharacterController extends PsAbstractAuthController {
      * Список вещей персонажа
      */
     public function itemsAction() {
-        $items = $this->session->character->getItems();
-
-        $data = array();
-        foreach ($items as $item) {
-            $data[] = $item->toArray();
+        $items = array();
+        foreach ($this->getSession()->character->getItems() as $item) {
+            $items[] = $item->toArray();
         }
 
-        $this->view->json($data);
+        $this->view->json($items);
     }
 }

@@ -1,7 +1,6 @@
 package game.models;
 
 import game.models.common.AbstractCharacter;
-import game.models.User;
 
 /**
  * Класс персонажа
@@ -9,5 +8,5 @@ import game.models.User;
  */
 public class Character extends AbstractCharacter {
 
-    private User _user;
+    
 }

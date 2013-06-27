@@ -4,15 +4,16 @@
  * @author ismd
  */
 
-class IndexController extends PsAbstractController {
+class IndexController extends PsController {
 
     public function index() {
         $this->view->controller = $this->registry->router->getController();
 
-        if (null != $this->session->user) {
-            $this->view->user = $this->session->user;
+        $session = $this->getSession();
+        if (null != $session->user) {
+            $this->view->user = $session->user;
 
-            $userCharacters = $this->session->user->characters;
+            $userCharacters = $session->user->getCharacters();
 
             $characters = array();
             foreach ($userCharacters as $character) {
@@ -22,8 +23,8 @@ class IndexController extends PsAbstractController {
             $this->view->userCharacters = $characters;
         }
 
-        if (null != $this->session->character) {
-            $this->view->character = $this->session->character;
+        if (null != $session->character) {
+            $this->view->character = $session->character;
         }
     }
 }

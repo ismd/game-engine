@@ -4,28 +4,34 @@
  * @author ismd
  */
 
-class MapMapperNotFoundException extends Exception {};
+class MapNotFoundException extends Exception {
+    protected $message = 'Карта не найдена';
+};
 
-class MapMapper extends PsAbstractDbMapper {
+class MapMapper extends PsDbMapper {
 
     /**
      * Возвращает карту по id
      * @param int $id
      * @return Map
-     * @throws MapMapperNotFoundException
+     * @throws MapNotFoundException
      */
     public function getById($id) {
         $id = (int)$id;
 
-        $query = $this->db->query("SELECT id, title "
+        $stmt = $this->db->prepare("SELECT id, title "
             . "FROM `Map` "
-            . "WHERE id = $id "
+            . "WHERE id = ? "
             . "LIMIT 1");
 
-        if ($query->num_rows == 0) {
-            throw new MapMapperNotFoundException;
+        $stmt->bind_param('d', $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if (0 == $result->num_rows) {
+            throw new MapNotFoundException;
         }
 
-        return new Map($query->fetch_assoc());
+        return new Map($result->fetch_assoc());
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-class MapController extends PsAbstractAuthController {
+class MapController extends PsAuthController {
 
     /**
      * Выводит содержимое текущей клетки
@@ -55,7 +55,7 @@ class MapController extends PsAbstractAuthController {
     public function vicinityAction() {
         $this->view->json(array(
             'status' => 'ok',
-            'map'    => json_encode($this->session->character->cell->getVicinity()),
+            'map'    => json_encode($this->getSession()->character->getCell()->getVicinity()),
         ));
     }
 }

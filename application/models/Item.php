@@ -4,7 +4,7 @@
  * @author ismd
  */
 
-class Item extends AbstractItem {
+class Item extends Abstract_Item {
 
     /**
      * Тип вещи из таблицы ItemType
@@ -17,6 +17,21 @@ class Item extends AbstractItem {
      * @var Attribute[]
      */
     protected $_attributes;
+
+    public function toArray() {
+        $attributes = array();
+        foreach ($this->getAttributes() as $attribute) {
+            $attributes[] = $attribute->toArray();
+        }
+
+        return array_merge(
+            parent::toArray(),
+            array(
+                'type'       => $this->getType(),
+                'attributes' => $attributes,
+            )
+        );
+    }
 
     public function setType($value) {
         $this->_type = (string)$value;

@@ -4,7 +4,7 @@
  * @author ismd
  */
 
-abstract class AbstractItem extends PsAbstractModel {
+abstract class Abstract_Item extends PsModel {
 
     protected $_id;
     protected $_title;
@@ -13,19 +13,12 @@ abstract class AbstractItem extends PsAbstractModel {
     protected $_description;
 
     public function toArray() {
-        $attributes = array();
-        foreach ($this->attributes as $attribute) {
-            $attributes[] = $attribute->toArray();
-        }
-
         return array(
-            'id'          => $this->id,
-            'title'       => $this->title,
-            'idType'      => $this->idType,
-            'price'       => $this->price,
-            'description' => $this->description,
-            'type'        => $this->type,
-            'attributes'  => $attributes,
+            'id'          => $this->getId(),
+            'title'       => $this->getTitle(),
+            'idType'      => $this->getIdType(),
+            'price'       => $this->getPrice(),
+            'description' => $this->getDescription(),
         );
     }
 
