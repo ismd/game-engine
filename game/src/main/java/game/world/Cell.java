@@ -10,6 +10,9 @@ public class Cell {
 
     Cell(CellType type) {
         this.type = type;
-        System.out.println("CREATED NEW CELL OF TYPE " + type);
+    }
+
+    public CellType getType() {
+        return type;
     }
 }

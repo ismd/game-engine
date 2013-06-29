@@ -6,11 +6,11 @@ import java.util.Map;
 /**
  * @author ismd
  */
-enum CellType {
+public enum CellType {
 
-    GRASS(0),
-    EARTH(1),
-    WATER(2);
+    WATER(0),
+    ROCK(1),
+    GRASS(2);
 
     private final int id;
 
