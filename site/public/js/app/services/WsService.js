@@ -1,12 +1,13 @@
 'use strict';
 
-angular.module('wsService', []).factory('Ws', function($q, $rootScope) {
+angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) {
     var service = {};
 
     var callbacks = {};
     var idCurrentCallback = 0;
 
-    var ws = new WebSocket('ws://localhost:8081');
+    var config = $window.ws;
+    var ws = new WebSocket('ws://' + config.host + ':' + config.port);
 
     ws.onopen = function() {
         console.log('Socket has been opened!');
