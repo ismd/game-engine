@@ -29,13 +29,13 @@ public class RequestHandler implements Runnable {
     }
 
     static void init() {
-        Reflections reflections = new Reflections("controllers");
+        Reflections reflections = new Reflections("game.server.controllers");
 
         Set<Class<? extends AbstractController>> allControllers
             = reflections.getSubTypesOf(AbstractController.class);
 
         for (Class<? extends AbstractController> controller : allControllers) {
-            String controllerName = controller.getName().substring("controllers.".length(),
+            String controllerName = controller.getName().substring("game.server.controllers.".length(),
                 controller.getName().lastIndexOf("Controller"));
 
             try {
