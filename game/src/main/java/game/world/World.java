@@ -15,11 +15,11 @@ public class World {
     private Logger log = LoggerFactory.getLogger(World.class);
     private Layout[] maps;
 
-    World() {
+    World(String dirPath) {
         log.info("Initializing world");
 
         Gson gson = new Gson();
-        File[] dir = new File("/home/ismd/coding/game/maps").listFiles();
+        File[] dir = new File(dirPath).listFiles();
 
         maps = new Layout[dir.length];
 
@@ -35,6 +35,6 @@ public class World {
     }
 
     public static void main(String[] args) {
-        World world = new World();
+        World world = new World("/home/ismd/coding/game/maps");
     }
 }
