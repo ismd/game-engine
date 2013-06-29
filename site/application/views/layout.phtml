@@ -33,18 +33,21 @@
 
         <script src="/js/app/directives/BackgroundImageDirective.js"></script>
 
-        <?php if (null != $this->user): ?>
         <script>
+        window.ws = {
+            host: '<?php echo $this->ws['host'] ?>',
+            port: <?php echo $this->ws['port'] ?>
+        };
+
+        <?php if (null != $this->user): ?>
         window.user            = <?php echo json_encode($this->user->toArray()) ?>;
         window.user.characters = <?php echo json_encode($this->userCharacters) ?>;
-        </script>
         <?php endif ?>
 
         <?php if (null != $this->character): ?>
-        <script>
         window.character = <?php echo json_encode($this->character->toArray()) ?>;
-        </script>
         <?php endif ?>
+        </script>
     </head>
     <body ng-controller="UserCtrl">
         <div ng-controller="CharacterCtrl" class="container">
