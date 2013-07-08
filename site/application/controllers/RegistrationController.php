@@ -18,7 +18,7 @@ class RegistrationController extends PsController {
      * Регистрация пользователя
      */
     public function registerAction() {
-        $post = $this->request->post;
+        $post = $this->getRequest()->getPost();
 
         $user = new User(array(
             'login'     => $post->login,

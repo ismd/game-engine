@@ -13,8 +13,8 @@ class CharacterController extends PsAuthController {
      * Создание персонажа
      */
     public function createAction() {
-        $post = $this->getRequest()->post;
-
+        $post = $this->getRequest()->getPost();
+        PsLogger::getInstance()->log($post);
         $character = new Character(array(
             'user' => $this->getSession()->user,
             'name' => $post->name,
@@ -28,10 +28,10 @@ class CharacterController extends PsAuthController {
             $id = $mapper->save($character);
 
             // Добавляем созданного персонажа в список персонажей пользователя
-            $this->getSession()->user->characters = array_merge(
-                $this->getSession()->user->characters,
+            $this->getSession()->user->setCharacters(array_merge(
+                $this->getSession()->user->getCharacters(),
                 array($mapper->getById($id))
-            );
+            ));
 
             $this->view->json(array(
                 'status'  => 'ok',
@@ -91,7 +91,7 @@ class CharacterController extends PsAuthController {
      * @post y
      */
     public function moveAction() {
-        $post = $this->getRequest()->post;
+        $post = $this->getRequest()->getPost();
 
         $x = (int)$post->x;
         $y = (int)$post->y;
