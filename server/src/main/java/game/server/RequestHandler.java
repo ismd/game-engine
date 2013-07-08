@@ -70,9 +70,10 @@ public class RequestHandler implements Runnable {
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();
 
-            System.out.println("Sending: " + response.setIdCallback(request.getIdCallback()).toString());
-            System.out.println(gson.toJson(response));
-            ws.send(gson.toJson(response));
+            String json = gson.toJson(response.setIdCallback(request.getIdCallback()));
+
+            System.out.println("Sending: " + json);
+            ws.send(json);
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException ex) {
             Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, ex);
         }

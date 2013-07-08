@@ -51,7 +51,7 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
     };
 
     function wsSend(request) {
-        console.log('Sending request', request);
+        console.log('Sending request: ', request);
         ws.send(JSON.stringify(request));
     }
 
