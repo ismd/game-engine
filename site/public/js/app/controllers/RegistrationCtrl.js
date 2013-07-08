@@ -3,17 +3,14 @@
 function RegistrationCtrl($scope, Registration, User, $location) {
 
     $scope.register = function() {
-        Registration.register($scope.user);
+        Registration.register($scope.user)
+            .then(function() {
+                $location.path('/');
+                User.login($scope.user.login, $scope.user.password);
+            }, function(message) {
+                $scope.message = message;
+            });
     };
-
-    $scope.$on('registered', function(e, registered, message) {
-        $scope.message = message;
-
-        if (registered) {
-            $location.path('/');
-            User.login($scope.user.login, $scope.user.password);
-        }
-    });
 }
 
 RegistrationCtrl.$inject = ['$scope', 'Registration', 'User', '$location'];

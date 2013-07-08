@@ -12,41 +12,29 @@ function UserCtrl($scope, $window, User) {
         }
 
         $scope.loginInProcess = true;
-        User.login(username, password);
+        User.login(username, password)
+            .then(function(user) {
+                $scope.loginInProcess = false;
+                $scope.user = user;
+                User.showCharactersList()
+                    .then(function(characters) {
+                        $scope.user.characters = characters;
+                    }, function(message) {
+                        alert(message);
+                    });
+            }, function(message) {
+                $scope.loginInProcess = false;
+                $scope.loginMessage   = message;
+            });
     };
 
     $scope.logout = function() {
-        User.logout();
+        User.logout().then(function() {
+            delete($scope.user);
+        });
     };
 
-    $scope.$on('login-result', function(e, result, message) {
-        $scope.loginInProcess = false;
-        $scope.loginMessage   = message;
-
-        if (result) {
-            User.showCharactersList();
-        }
-    });
-
-    $scope.$on('logout-result', function(e, result) {
-        if (result) {
-            delete($scope.user);
-        }
-    });
-
-    $scope.$on('set-user', function(e, user) {
-        $scope.user = user;
-    });
-
-    $scope.$on('characters-list-update', function(e, characters) {
-        $scope.user.characters = characters;
-    });
-
-    $scope.$on('set-character-result', function(e, result, message, character) {
-        if (!result) {
-            return;
-        }
-
+    $scope.$on('set-character-success', function(e, character) {
         var found = false;
 
         angular.forEach($scope.user.characters, function(item) {

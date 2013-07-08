@@ -1,23 +1,31 @@
 'use strict';
 
-angular.module('characterService', []).factory('Character', function($rootScope, $http, $window) {
+angular.module('characterService', []).factory('Character', function($q, $rootScope, $http, $window) {
     var service = {};
 
     var character = $window.character;
 
     service.setCharacter = function(id) {
+        var defer = $q.defer();
+
         $http.post('/api/character/set', {
             id: id
         }).success(function(data) {
-            if ('ok' === data.status) {
-                character = data.character;
-                $('div#select-character').modal('hide');
+            if ('ok' !== data.status) {
+                defer.reject(data.message);
+                return;
             }
 
-            $rootScope.$broadcast('set-character-result', 'ok' === data.status, data.message, data.character);
+            character = data.character;
+            $('div#select-character').modal('hide');
+
+            $rootScope.$broadcast('set-character-success', data.character);
+            defer.resolve(data.character);
         }).error(function() {
-            alert('Не удалось обратиться к серверу');
+            defer.reject('Не удалось обратиться к серверу');
         });
+
+        return defer.promise;
     };
 
     service.getCharacter = function() {

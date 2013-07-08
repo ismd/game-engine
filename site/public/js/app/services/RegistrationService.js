@@ -1,14 +1,18 @@
 'use strict';
 
-angular.module('registrationService', []).factory('Registration', function($rootScope, $http) {
+angular.module('registrationService', []).factory('Registration', function($q, $http) {
     var service = {};
 
     service.register = function(data) {
+        var defer = $q.defer();
+
         $http.post('/api/registration/register', data).success(function(data) {
-            $rootScope.$broadcast('registered', 'ok' === data.status, data.message);
+            'ok' === data.status ? defer.resolve() : defer.reject(data.message);
         }).error(function() {
-            alert('Не удалось обратиться к серверу');
+            defer.reject('Не удалось обратиться к серверу');
         });
+
+        return defer.promise;
     };
 
     return service;

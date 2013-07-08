@@ -3,16 +3,13 @@
 function CharacterCreateCtrl($scope, CharacterCreate, Character) {
 
     $scope.create = function() {
-        CharacterCreate.create($scope.newCharacter);
+        CharacterCreate.create($scope.newCharacter)
+            .then(function(id) {
+                Character.setCharacter(id);
+            }, function(message) {
+                $scope.message = message;
+            });
     };
-
-    $scope.$on('character-created', function(e, created, message, id) {
-        $scope.message = message;
-
-        if (created) {
-            Character.setCharacter(id);
-        }
-    });
 }
 
 CharacterCreateCtrl.$inject = ['$scope', 'CharacterCreate', 'Character'];
