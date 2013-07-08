@@ -6,11 +6,11 @@
 
 abstract class Abstract_Item extends PsModel {
 
-    protected $_id;
-    protected $_title;
-    protected $_idType;
-    protected $_price;
-    protected $_description;
+    private $_id;
+    private $_title;
+    private $_idType;
+    private $_price;
+    private $_description;
 
     public function toArray() {
         return array(

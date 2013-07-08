@@ -6,9 +6,9 @@
 
 abstract class Abstract_Attribute extends PsModel {
 
-    protected $_id;
-    protected $_title;
-    protected $_value;
+    private $_id;
+    private $_title;
+    private $_value;
 
     public function toArray() {
         return array(

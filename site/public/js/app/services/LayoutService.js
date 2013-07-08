@@ -1,33 +1,33 @@
 'use strict';
 
-angular.module('mapService', []).factory('Map', function(Ws, $http, $rootScope) {
+angular.module('layoutService', []).factory('Layout', function(Ws, $http, $rootScope) {
     var service = {};
 
-    var idMap,
+    var idLayout,
         x,
         y;
 
     var cell_width = 50,
         cell_height = 50;
 
-    var map = [];
+    var layout = [];
 
-    var canvas = $('canvas#map');
+    var canvas = $('canvas#layout');
     var ctx    = canvas.get(0).getContext('2d');
 
     var sprites = new Image();
-    sprites.src = '/img/world/maps/sprites.png';
+    sprites.src = '/img/world/layouts/sprites.png';
 
     var player = new Image();
 
     sprites.onload = function() {
-        initMap();
+        initLayout();
     };
 
-    service.init = function(init_idMap, init_x, init_y) {
-        idMap = init_idMap;
-        x     = init_x;
-        y     = init_y;
+    service.init = function(init_idLayout, init_x, init_y) {
+        idLayout = init_idLayout;
+        x        = init_x;
+        y        = init_y;
     };
 
     service.move = function(direction) {
@@ -72,24 +72,24 @@ angular.module('mapService', []).factory('Map', function(Ws, $http, $rootScope) 
                 return;
             }
 
-            move(data.x, data.y, angular.fromJson(data.map));
+            move(data.x, data.y, angular.fromJson(data.layout));
         }).error(function() {
             alert('Не удалось обратиться к серверу');
         });*/
     };
 
-    function move(data_x, data_y, data_map) {
+    function move(data_x, data_y, data_layout) {
         x = data_x;
         y = data_y;
-        map = data_map;
+        layout = data_layout;
 
-        drawMap(map);
+        drawLayout(layout);
 
         $rootScope.$broadcast('move', x, y);
     }
 
-    function drawMap(map) {
-        angular.forEach(map, function(column, x) {
+    function drawLayout(layout) {
+        angular.forEach(layout, function(column, x) {
             angular.forEach(column, function(cell, y) {
                 if (cell) {
                     ctx.drawImage(sprites,
@@ -108,8 +108,8 @@ angular.module('mapService', []).factory('Map', function(Ws, $http, $rootScope) 
         ctx.drawImage(player, 150, 100, 50, 50);
     }
 
-    function initMap() {
-        $http.get('/api/map/vicinity').success(function(data) {
+    function initLayout() {
+        $http.get('/api/layout/vicinity').success(function(data) {
             if ('ok' !== data.status) {
                 alert(data.message);
                 return;
@@ -118,7 +118,7 @@ angular.module('mapService', []).factory('Map', function(Ws, $http, $rootScope) 
             player.src = '/img/world/hero.png';
 
             player.onload = function() {
-                drawMap(angular.fromJson(data.map));
+                drawLayout(angular.fromJson(data.layout));
             };
         }).error(function() {
             alert('Не удалось обратиться к серверу');

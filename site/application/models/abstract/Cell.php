@@ -7,42 +7,42 @@
 abstract class Abstract_Cell extends PsModel {
 
     /**
-     * @var Map
+     * @var Layout
      */
-    protected $_map;
-    protected $_x;
-    protected $_y;
+    private $_layout;
+    private $_x;
+    private $_y;
 
     /**
      * Создал неунаследованный конструктор,
      * потому что координаты необходимо указывать в обязательном порядке
-     * @param Map $map
+     * @param Layout $layout
      * @param int $x
      * @param int $y
      */
-    public function __construct(Map $map, $x, $y) {
+    public function __construct(Layout $layout, $x, $y) {
         $x = (int)$x;
         $y = (int)$y;
 
         $options = array(
-            'map' => $map,
-            'x'   => $x,
-            'y'   => $y,
+            'layout' => $layout,
+            'x'      => $x,
+            'y'      => $y,
         );
 
         parent::__construct($options);
     }
 
-    public function setMap(Map $value) {
-        $this->_map = $value;
+    public function setLayout(Layout $value) {
+        $this->_layout = $value;
         return $this;
     }
 
     /**
-     * @return Map
+     * @return Layout
      */
-    public function getMap() {
-        return $this->_map;
+    public function getLayout() {
+        return $this->_layout;
     }
 
     public function setX($value) {

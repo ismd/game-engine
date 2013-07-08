@@ -4,7 +4,7 @@ angular.module('cellContentService', []).factory('CellContent', function($rootSc
     var service = {};
 
     service.updateCellContent = function(content) {
-        $http.post('/api/map/cell').success(function(data) {
+        $http.post('/api/layout/cell').success(function(data) {
             var contentChanged = false;
 
             angular.forEach(content.npcs, function(item, i) {

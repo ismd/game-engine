@@ -4,23 +4,23 @@
  * @author ismd
  */
 
-class MapNotFoundException extends Exception {
+class LayoutNotFoundException extends Exception {
     protected $message = 'Карта не найдена';
 };
 
-class MapMapper extends PsDbMapper {
+class LayoutMapper extends PsDbMapper {
 
     /**
      * Возвращает карту по id
      * @param int $id
-     * @return Map
-     * @throws MapNotFoundException
+     * @return Layout
+     * @throws LayoutNotFoundException
      */
     public function getById($id) {
         $id = (int)$id;
 
         $stmt = $this->db->prepare("SELECT id, title "
-            . "FROM `Map` "
+            . "FROM `Layout` "
             . "WHERE id = ? "
             . "LIMIT 1");
 
@@ -29,9 +29,9 @@ class MapMapper extends PsDbMapper {
         $result = $stmt->get_result();
 
         if (0 == $result->num_rows) {
-            throw new MapNotFoundException;
+            throw new LayoutNotFoundException;
         }
 
-        return new Map($result->fetch_assoc());
+        return new Layout($result->fetch_assoc());
     }
 }

@@ -11,7 +11,7 @@ class MobNotFoundException extends Exception {
 class MobMapper extends PsDbMapper {
 
     /**
-     * Возвращает моба по id из таблицы MobMap
+     * Возвращает моба по id из таблицы MobLayout
      * @param int $id
      * @return Mob
      * @throws MobNotFoundException
@@ -19,12 +19,12 @@ class MobMapper extends PsDbMapper {
     public function getById($id) {
         $id = (int)$id;
 
-        $query = $this->db->query("SELECT mm.id, mm.idMap, "
+        $query = $this->db->query("SELECT mm.id, mm.idLayout, "
             . "mm.x, mm.y, mm.hp, "
-            . "m.id as idMob, m.name, m.level, m.maxHp, m.minDamage, "
+            . "m.id as idMob, m.name, m.lvl, m.maxHp, m.minDamage, "
             . "m.maxDamage, m.experience, m.image, m.strength, "
             . "m.dexterity, m.endurance "
-            . "FROM MobMap mm "
+            . "FROM MobLayout mm "
             . "INNER JOIN Mob m ON mm.idMob = m.id "
             . "LIMIT 1");
 
@@ -41,15 +41,15 @@ class MobMapper extends PsDbMapper {
      * @return Mob[]
      */
     public function getByCell(Cell $cell) {
-        $query = $this->db->query("SELECT mm.id, mm.idMap, mm.x, "
+        $query = $this->db->query("SELECT mm.id, mm.idLayout, mm.x, "
             . "mm.y, mm.hp, m.id as idMob, "
-            . "m.name, m.level, m.maxHp, m.minDamage, m.maxDamage, "
+            . "m.name, m.lvl, m.maxHp, m.minDamage, m.maxDamage, "
             . "m.experience, m.image, m.strength, "
             . "m.dexterity, m.endurance "
-            . "FROM MobMap mm "
+            . "FROM MobLayout mm "
             . "INNER JOIN Mob m ON mm.idMob = m.id "
-            . "WHERE mm.idMap = " . $cell->map->id . " AND mm.x = $cell->x "
-            . "AND mm.y = $cell->y");
+            . "WHERE mm.idLayout = " . $cell->getLayout()->getId() . " AND mm.x = " . $cell->getX()
+            . "AND mm.y = " . $cell->getY());
 
         $mobs = array();
         while ($mob = $query->fetch_assoc()) {

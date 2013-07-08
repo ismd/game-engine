@@ -4,10 +4,10 @@
  * @author ismd
  */
 
-abstract class Abstract_Map extends PsModel {
+abstract class Abstract_Layout extends PsModel {
 
-    protected $_id;
-    protected $_title;
+    private $_id;
+    private $_title;
 
     public function setId($value) {
         $this->_id = (int)$value;

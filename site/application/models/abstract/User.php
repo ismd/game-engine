@@ -6,14 +6,14 @@
 
 abstract class Abstract_User extends PsModel {
 
-    protected $_id;
-    protected $_login;
-    protected $_password;
-    protected $_password1;
-    protected $_email;
-    protected $_info;
-    protected $_site;
-    protected $_registered;
+    private $_id;
+    private $_login;
+    private $_password;
+    private $_password1;
+    private $_email;
+    private $_info;
+    private $_site;
+    private $_registered;
 
     public function toArray() {
         return array(

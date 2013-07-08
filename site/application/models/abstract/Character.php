@@ -20,7 +20,7 @@ abstract class Abstract_Character extends PsModel {
     private $_strength;
     private $_dexterity;
     private $_endurance;
-    private $_idMap;
+    private $_idLayout;
     private $_x;
     private $_y;
 
@@ -40,7 +40,7 @@ abstract class Abstract_Character extends PsModel {
             'strength'   => $this->getStrength(),
             'dexterity'  => $this->getDexterity(),
             'endurance'  => $this->getEndurance(),
-            'idMap'      => $this->getIdMap(),
+            'idLayout'   => $this->getIdLayout(),
             'x'          => $this->getX(),
             'y'          => $this->getY(),
         );
@@ -80,6 +80,14 @@ abstract class Abstract_Character extends PsModel {
 
     public function getLevel() {
         return $this->_level;
+    }
+
+    public function setLvl($value) {
+        return $this->setLevel($value);
+    }
+
+    public function getLvl() {
+        return $this->getLevel();
     }
 
     public function setMoney($value) {
@@ -172,13 +180,13 @@ abstract class Abstract_Character extends PsModel {
         return $this->_endurance;
     }
 
-    public function setIdMap($value) {
-        $this->_idMap = (int)$value;
+    public function setIdLayout($value) {
+        $this->_idLayout = (int)$value;
         return $this;
     }
 
-    public function getIdMap() {
-        return $this->_idMap;
+    public function getIdLayout() {
+        return $this->_idLayout;
     }
 
     public function setX($value) {

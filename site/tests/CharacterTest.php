@@ -24,7 +24,7 @@ class CharacterTest extends PHPUnit_Framework_TestCase {
                     'strength'   => 11,
                     'dexterity'  => 12,
                     'endurance'  => 13,
-                    'idMap'      => 333,
+                    'idLayout'   => 333,
                 ),
             ), array(
                 array(
@@ -42,7 +42,7 @@ class CharacterTest extends PHPUnit_Framework_TestCase {
                     'strength'   => 10,
                     'dexterity'  => 7,
                     'endurance'  => 8,
-                    'idMap'      => 1,
+                    'idLayout'   => 1,
                 ),
             ),
         );
@@ -54,9 +54,9 @@ class CharacterTest extends PHPUnit_Framework_TestCase {
     public function testCharacter($options) {
         $character = new Character($options);
 
-        $character->cell = new Cell(new Map(array(
-            'id'    => $options['idMap'],
-            'title' => 'test map',
+        $character->cell = new Cell(new Layout(array(
+            'id'    => $options['idLayout'],
+            'title' => 'test layout',
         )), 334, 335);
 
         $this->assertEquals(array_merge($options, array(

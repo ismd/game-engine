@@ -14,7 +14,7 @@ class Cell extends Abstract_Cell {
      * @return array Двумерный массив [x][y]
      */
     public function getVicinity() {
-        $map = $this->getMap()->getMap();
+        $layout = $this->getLayout()->getLayout();
 
         $startX = $this->getX() - floor(self::VICINITY_WIDTH / 2);
         $startY = $this->getY() - floor(self::VICINITY_HEIGHT / 2);
@@ -31,7 +31,7 @@ class Cell extends Abstract_Cell {
 
         for ($y = $startY, $j = 0; $y < $startY + self::VICINITY_HEIGHT; $y++, $j++) {
             for ($x = $startX, $i = 0; $x < $startX + self::VICINITY_WIDTH; $x++, $i++) {
-                $result[$i][$j] = $map[$y][$x];
+                $result[$i][$j] = $layout[$y][$x];
             }
         }
 

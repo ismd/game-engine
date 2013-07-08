@@ -44,7 +44,7 @@ class Character extends Abstract_Character {
     public function setDefaultValues() {
         $this->setLevel(1);
         $this->setMoney(0);
-        $this->setIdMap(1);
+        $this->setIdLayout(1);
         $this->setX(2);
         $this->setY(2);
         $this->setStrength(5);
@@ -76,8 +76,8 @@ class Character extends Abstract_Character {
 
         // Проверяем, может ли персонаж переместиться на заданную клетку
         if ($cell->getX() < 3 || $cell->getY() < 2
-            || $cell->getX() > $cell->getMap()->getWidth() - 3
-            || $cell->getY() > $cell->getMap()->getHeight() - 2) {
+            || $cell->getX() > $cell->getLayout()->getWidth() - 3
+            || $cell->getY() > $cell->getLayout()->getHeight() - 2) {
             throw new CantMoveHereException;
         }
 
@@ -116,7 +116,7 @@ class Character extends Abstract_Character {
 
     public function setCell(Cell $value) {
         $this->_cell = $value;
-        $this->setIdMap($value->getMap()->getId());
+        $this->setIdLayout($value->getLayout()->getId());
 
         return $this;
     }
@@ -128,7 +128,7 @@ class Character extends Abstract_Character {
     public function getCell() {
         if (null == $this->_cell) {
             $this->setCell(new Cell(
-                MapMapper::getInstance()->getById($this->getIdMap()),
+                LayoutMapper::getInstance()->getById($this->getIdLayout()),
                 $this->_x,
                 $this->_y));
         }

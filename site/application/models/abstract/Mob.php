@@ -6,22 +6,22 @@
 
 abstract class Abstract_Mob extends PsModel {
 
-    protected $_id;    // id в таблице MobMap (конкретный моб на карте)
-    protected $_idMob; // id в таблице Mob (класс моба)
-    protected $_name;
-    protected $_level;
-    protected $_hp;
-    protected $_maxHp;
-    protected $_minDamage;
-    protected $_maxDamage;
-    protected $_experience;
-    protected $_image;
-    protected $_strength;
-    protected $_dexterity;
-    protected $_endurance;
-    protected $_idMap;
-    protected $_x;
-    protected $_y;
+    private $_id;    // id в таблице MobLayout (конкретный моб на карте)
+    private $_idMob; // id в таблице Mob (класс моба)
+    private $_name;
+    private $_level;
+    private $_hp;
+    private $_maxHp;
+    private $_minDamage;
+    private $_maxDamage;
+    private $_experience;
+    private $_image;
+    private $_strength;
+    private $_dexterity;
+    private $_endurance;
+    private $_idLayout;
+    private $_x;
+    private $_y;
 
     public function toArray() {
         return array(
@@ -38,7 +38,7 @@ abstract class Abstract_Mob extends PsModel {
             'strength'   => $this->getStrength(),
             'dexterity'  => $this->getDexterity(),
             'endurance'  => $this->getEndurance(),
-            'idMap'      => $this->getIdMap(),
+            'idLayout'   => $this->getIdLayout(),
             'x'          => $this->getX(),
             'y'          => $this->getY(),
         );
@@ -78,6 +78,14 @@ abstract class Abstract_Mob extends PsModel {
 
     public function getLevel() {
         return $this->_level;
+    }
+
+    public function setLvl($value) {
+        return $this->setLevel($value);
+    }
+
+    public function getLvl() {
+        return $this->getLevel();
     }
 
     public function setHp($value) {
@@ -161,13 +169,13 @@ abstract class Abstract_Mob extends PsModel {
         return $this->_endurance;
     }
 
-    public function setIdMap($value) {
-        $this->_idMap = (int)$value;
+    public function setIdLayout($value) {
+        $this->_idLayout = (int)$value;
         return $this;
     }
 
-    public function getIdMap() {
-        return $this->_idMap;
+    public function getIdLayout() {
+        return $this->_idLayout;
     }
 
     public function setX($value) {

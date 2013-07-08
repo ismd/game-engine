@@ -96,7 +96,7 @@ class CharacterController extends PsAuthController {
         $x = (int)$post->x;
         $y = (int)$post->y;
 
-        $cell = new Cell($this->getSession()->character->getCell()->getMap(), $x, $y);
+        $cell = new Cell($this->getSession()->character->getCell()->getLayout(), $x, $y);
 
         try {
             $this->getSession()->character->move($cell);
@@ -104,9 +104,9 @@ class CharacterController extends PsAuthController {
             $this->view->json(array(
                 'status'  => 'ok',
                 'message' => '',
+                'layout'  => json_encode($this->getSession()->character->getCell()->getVicinity()),
                 'x'       => $cell->x,
                 'y'       => $cell->y,
-                'map'     => json_encode($this->getSession()->character->getCell()->getVicinity()),
             ));
         } catch (FastMoveException $e) {
             $this->view->json(array(

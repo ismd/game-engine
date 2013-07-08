@@ -31,11 +31,11 @@ class CharacterMapper extends PsDbMapper {
     public function getById($id) {
         $id = (int)$id;
 
-        $stmt = $this->db->prepare("SELECT id, idUser, name, level, money, "
-            . "idMap, x, y, "
+        $stmt = $this->db->prepare("SELECT id, idUser, name, lvl, money, "
+            . "idLayout, x, y, "
             . "strength, dexterity, endurance, hp, maxHp, minDamage, "
             . "maxDamage, image, experience "
-            . "FROM `Character` "
+            . "FROM UserCharacter "
             . "WHERE id = ? "
             . "LIMIT 1");
 
@@ -59,10 +59,10 @@ class CharacterMapper extends PsDbMapper {
      * @throws CharacterNotFoundException
      */
     public function getByName($name) {
-        $stmt = $this->db->prepare("SELECT id, idUser, name, level, money, "
-            . "idMap, x, y, strength, dexterity, endurance, hp, maxHp, "
+        $stmt = $this->db->prepare("SELECT id, idUser, name, lvl, money, "
+            . "idLayout, x, y, strength, dexterity, endurance, hp, maxHp, "
             . "minDamage, maxDamage, image, experience "
-            . "FROM `Character` "
+            . "FROM UserCharacter "
             . "WHERE name = ? "
             . "LIMIT 1");
 
@@ -83,10 +83,10 @@ class CharacterMapper extends PsDbMapper {
      * @return Character[]
      */
     public function getByUser(User $user) {
-        $stmt = $this->db->prepare("SELECT id, idUser, name, level, money, "
-            . "idMap, x, y, strength, dexterity, "
+        $stmt = $this->db->prepare("SELECT id, idUser, name, lvl, money, "
+            . "idLayout, x, y, strength, dexterity, "
             . "endurance, hp, maxHp, minDamage, maxDamage, image, experience "
-            . "FROM `Character` "
+            . "FROM UserCharacter "
             . "WHERE idUser = ?");
 
         $stmt->bind_param('d', $user->getId());
@@ -107,14 +107,14 @@ class CharacterMapper extends PsDbMapper {
      * @return Character[]
      */
     public function getByCell(Cell $cell) {
-        $stmt = $this->db->prepare("SELECT id, idUser, name, level, money, idMap, "
+        $stmt = $this->db->prepare("SELECT id, idUser, name, lvl, money, idLayout, "
             . "x, y, strength, dexterity, endurance, "
             . "hp, maxHp, minDamage, maxDamage, image, experience "
-            . "FROM `Character` "
-            . "WHERE idMap = ? AND x = ? AND y = ?");
+            . "FROM UserCharacter "
+            . "WHERE idLayout = ? AND x = ? AND y = ?");
 
         $stmt->bind_param('ddd',
-            $cell->getMap()->getId(),
+            $cell->getLayout()->getId(),
             $cell->getX(),
             $cell->getY());
         $stmt->execute();
@@ -134,13 +134,13 @@ class CharacterMapper extends PsDbMapper {
      * @param Cell $cell
      */
     public function move(Character $character, Cell $cell) {
-        $stmt = $this->db->prepare("UPDATE `Character` "
-            . "SET idMap = ?, x = ?, y = ? "
+        $stmt = $this->db->prepare("UPDATE Character "
+            . "SET idLayout = ?, x = ?, y = ? "
             . "WHERE id = ? "
             . "LIMIT 1");
 
         $stmt->bind_param('dddd',
-            $cell->getMap()->getId(),
+            $cell->getLayout()->getId(),
             $cell->getX(),
             $cell->getY(),
             $character->getId());
@@ -182,8 +182,8 @@ class CharacterMapper extends PsDbMapper {
             throw new Exception("CharacterMapper currently can't update rows");
         }
 
-        $stmt = $this->db->prepare("INSERT INTO `Character` "
-            . "(idUser, name, level, money, idMap, x, y, strength, dexterity, "
+        $stmt = $this->db->prepare("INSERT INTO UserCharacter "
+            . "(idUser, name, lvl, money, idLayout, x, y, strength, dexterity, "
             . "endurance, hp, maxHp, minDamage, maxDamage, image, experience) "
             . "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
@@ -192,7 +192,7 @@ class CharacterMapper extends PsDbMapper {
             $name,
             $character->getLevel(),
             $character->getMoney(),
-            $character->getIdMap(),
+            $character->getIdLayout(),
             $character->getX(),
             $character->getY(),
             $character->getStrength(),

@@ -11,7 +11,7 @@ class NpcNotFoundException extends Exception {
 class NpcMapper extends PsDbMapper {
 
     /**
-     * Возвращает NPC по id из таблицы NpcMap
+     * Возвращает NPC по id
      * @param int $id
      * @return Npc
      * @throws NpcNotFoundException
@@ -19,11 +19,9 @@ class NpcMapper extends PsDbMapper {
     public function getById($id) {
         $id = (int)$id;
 
-        $query = $this->db->query("SELECT nm.id, nm.idMap, nm.x, "
-            . "nm.y, n.id as idNpc, "
-            . "n.name, n.greeting, n.image "
-            . "FROM NpcMap nm "
-            . "INNER JOIN Npc n ON nm.idNpc = n.id "
+        $query = $this->db->query("SELECT id, idLayout, x, "
+            . "y, name, greeting, image "
+            . "FROM Npc "
             . "LIMIT 1");
 
         if ($query->num_rows == 0) {
@@ -39,13 +37,11 @@ class NpcMapper extends PsDbMapper {
      * @return Npc[]
      */
     public function getByCell(Cell $cell) {
-        $query = $this->db->query("SELECT nm.id, nm.idMap, nm.x, "
-            . "nm.y, n.id as idNpc, "
-            . "n.name, n.greeting, n.image "
-            . "FROM NpcMap nm "
-            . "INNER JOIN Npc n ON nm.idNpc = n.id "
-            . "WHERE nm.idMap = " . $cell->map->id . " AND nm.x = $cell->x "
-            . "AND nm.y = $cell->y");
+        $query = $this->db->query("SELECT id, idMap, x, "
+            . "y, name, greeting, image "
+            . "FROM Npc "
+            . "WHERE idMap = " . $cell->getLayout()->getId() . " AND x = " . $cell->getX()
+            . "AND y = " . $cell->getY());
 
         $npcs = array();
         while ($npc = $query->fetch_assoc()) {

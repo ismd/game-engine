@@ -6,14 +6,14 @@
 
 abstract class Abstract_Npc extends PsModel {
 
-    protected $_id;    // id в таблице NpcMap (конкретный NPC на карте)
-    protected $_idNpc; // id в таблице Npc (класс NPC)
-    protected $_name;
-    protected $_greeting;
-    protected $_image;
-    protected $_idMap;
-    protected $_x;
-    protected $_y;
+    private $_id;    // id в таблице NpcLayout (конкретный NPC на карте)
+    private $_idNpc; // id в таблице Npc (класс NPC)
+    private $_name;
+    private $_greeting;
+    private $_image;
+    private $_idLayout;
+    private $_x;
+    private $_y;
 
     public function toArray() {
         return array(
@@ -22,7 +22,7 @@ abstract class Abstract_Npc extends PsModel {
             'name'     => $this->getName(),
             'greeting' => $this->getGreeting(),
             'image'    => $this->getImage(),
-            'idMap'    => $this->getIdMap(),
+            'idLayout' => $this->getIdLayout(),
             'x'        => $this->getX(),
             'y'        => $this->getY(),
         );
@@ -73,13 +73,13 @@ abstract class Abstract_Npc extends PsModel {
         return $this->_image;
     }
 
-    public function setIdMap($value) {
-        $this->_idMap = (int)$value;
+    public function setIdLayout($value) {
+        $this->_idLayout = (int)$value;
         return $this;
     }
 
-    public function getIdMap() {
-        return $this->_idMap;
+    public function getIdLayout() {
+        return $this->_idLayout;
     }
 
     public function setX($value) {

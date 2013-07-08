@@ -53,11 +53,11 @@ div#chat {
     margin-top: 5px;
 }
 
-canvas#map {
+canvas#layout {
     float: left;
 }
 
-div#right-of-map {
+div#right-of-layout {
     text-align: right;
     margin-right: 10px;
 }
