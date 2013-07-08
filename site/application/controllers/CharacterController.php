@@ -65,7 +65,7 @@ class CharacterController extends PsAuthController {
      * Устанавливает текущего персонажа для сессии
      * @post id
      */
-    public function setAction() {
+    /*public function setAction() {
         $idCharacter = (int)$this->getRequest()->getPost()->id;
 
         if (!$this->getSession()->user->hasCharacter($idCharacter)) {
@@ -83,7 +83,7 @@ class CharacterController extends PsAuthController {
             'message'   => '',
             'character' => $this->getSession()->character->toArray(),
         ));
-    }
+    }*/
 
     /**
      * Перемещение персонажа

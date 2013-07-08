@@ -1,6 +1,7 @@
 package game.server;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import game.server.controllers.*;
 import game.world.World;
 import java.io.FileNotFoundException;
@@ -25,7 +26,7 @@ public class RequestHandler implements Runnable {
     private static Map<String, Class<? extends AbstractController>> controllers = new HashMap<>();
     private static Map<String, AbstractController> controllersObjects = new HashMap<>();
 
-    private static World world;
+    public static World world;
 
     RequestHandler(WebSocket ws, String message) {
         this.ws = ws;
@@ -57,12 +58,21 @@ public class RequestHandler implements Runnable {
 
     @Override
     public void run() {
-        request = new Gson().fromJson(message, Request.class);
+        Gson gson = new Gson();
+        request = gson.fromJson(message, Request.class);
 
         try {
-            controllers.get(request.getController())
+            Response response = (Response)controllers.get(request.getController())
                 .getDeclaredMethod(request.getAction(), Map.class)
                 .invoke(controllersObjects.get(request.getController()), request.getArgs());
+
+            gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .create();
+
+            System.out.println("Sending: " + response.setIdCallback(request.getIdCallback()).toString());
+            System.out.println(gson.toJson(response));
+            ws.send(gson.toJson(response));
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException ex) {
             Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, ex);
         }

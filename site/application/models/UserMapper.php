@@ -43,7 +43,7 @@ class UserMapper extends PsDbMapper {
         $id = (int)$id;
 
         $stmt = $this->db->prepare("SELECT id, login, email, info, site, "
-            . "registered "
+            . "registered, authKey "
             . "FROM User "
             . "WHERE id = ? "
             . "LIMIT 1");
@@ -69,7 +69,7 @@ class UserMapper extends PsDbMapper {
      */
     public function getByLogin($login) {
         $stmt = $this->db->prepare("SELECT id, login, email, info, site, "
-            . "registered "
+            . "registered, authKey "
             . "FROM `User` "
             . "WHERE login = ? "
             . "LIMIT 1");
@@ -126,8 +126,8 @@ class UserMapper extends PsDbMapper {
 
         if (null == $user->getId()) {
             $stmt = $this->db->prepare("INSERT INTO User "
-                . "(login, password, email, info, site, registered) "
-                . "(?, ?, ?, ?, ?, NOW())");
+                . "(login, password, email, info, site, registered, authKey) "
+                . "(?, ?, ?, ?, ?, NOW(), NULL)");
 
             $stmt->bind_param('sssss',
                 $user->getLogin(),
@@ -163,7 +163,7 @@ class UserMapper extends PsDbMapper {
         $password = md5($password);
 
         $stmt = $this->db->prepare("SELECT id, login, email, info, site, "
-            . "registered "
+            . "registered, authKey "
             . "FROM `User` "
             . "WHERE login = ? AND password = ? "
             . "LIMIT 1");
@@ -177,5 +177,25 @@ class UserMapper extends PsDbMapper {
         }
 
         return new User($result->fetch_assoc());
+    }
+
+    /**
+     * Генерирует и сохраняет ключ для дальнейшей аутентификации через ws-сервер
+     * @param User $user
+     * @return string $key
+     */
+    public function generateAuthKey(User $user) {
+        $key = md5(microtime());
+
+        $stmt = $this->db->prepare("UPDATE `User` "
+            . "SET authKey = ? "
+            . "WHERE id = ? "
+            . "LIMIT 1");
+
+        $stmt->bind_param('sd', $key, $user->getId());
+        $stmt->execute();
+
+        $user->setAuthKey($key);
+        return $key;
     }
 }

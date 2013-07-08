@@ -21,7 +21,7 @@ angular.module('layoutService', []).factory('Layout', function(Ws, $http, $rootS
     var player = new Image();
 
     sprites.onload = function() {
-        initLayout();
+        //initLayout();
     };
 
     service.init = function(init_idLayout, init_x, init_y) {
@@ -52,7 +52,7 @@ angular.module('layoutService', []).factory('Layout', function(Ws, $http, $rootS
                 break;
         }
 
-        Ws.sendRequest({
+        Ws.send({
             controller: 'Character',
             action: 'move',
             args: {

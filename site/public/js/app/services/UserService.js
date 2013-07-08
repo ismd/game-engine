@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('userService', []).factory('User', function($q, $rootScope, $http, $location) {
+angular.module('userService', []).factory('User', function($q, $rootScope, $http, $location, $window) {
     var service = {};
+    var authKey = $window.authKey;
 
     service.login = function(username, password) {
         var defer = $q.defer();
@@ -10,11 +11,12 @@ angular.module('userService', []).factory('User', function($q, $rootScope, $http
             username: username,
             password: password
         }).success(function(data) {
-            // Скрываем форму авторизации
             if ('ok' !== data.status) {
                 defer.reject(data.message);
                 return;
             }
+
+            authKey = data.key;
 
             $('div#auth-form').modal('hide');
             defer.resolve(data.user);
@@ -56,6 +58,10 @@ angular.module('userService', []).factory('User', function($q, $rootScope, $http
         });
 
         return defer.promise;
+    };
+
+    service.getAuthKey = function() {
+        return authKey;
     };
 
     return service;

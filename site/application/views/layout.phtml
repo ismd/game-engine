@@ -42,10 +42,7 @@
         <?php if (null != $this->user): ?>
         window.user            = <?php echo json_encode($this->user->toArray()) ?>;
         window.user.characters = <?php echo json_encode($this->userCharacters) ?>;
-        <?php endif ?>
-
-        <?php if (null != $this->character): ?>
-        window.character = <?php echo json_encode($this->character->toArray()) ?>;
+        window.authKey         = '<?php echo $this->authKey ?>';
         <?php endif ?>
         </script>
     </head>

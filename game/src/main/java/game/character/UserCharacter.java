@@ -1,5 +1,6 @@
 package game.character;
 
+import com.google.gson.annotations.Expose;
 import game.layout.CellContent;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,22 +15,39 @@ public class UserCharacter extends CellContent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Expose
     private int id;
+    @Expose
     private long idUser;
+    @Expose
     private String name;
+    @Expose
     private int lvl;
+    @Expose
     private long money;
+    @Expose
     private int idLayout;
+    @Expose
     private int x;
+    @Expose
     private int y;
+    @Expose
     private int strength;
+    @Expose
     private int dexterity;
+    @Expose
     private int endurance;
+    @Expose
     private int hp;
+    @Expose
     private int maxHp;
+    @Expose
     private int minDamage;
+    @Expose
     private int maxDamage;
+    @Expose
     private String image;
+    @Expose
     private long experience;
 
     public UserCharacter() {

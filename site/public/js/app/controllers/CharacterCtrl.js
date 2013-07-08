@@ -1,7 +1,9 @@
 'use strict';
 
-function CharacterCtrl($scope, $window, Character, $location) {
-    $scope.character = $window.character;
+function CharacterCtrl($scope, Character, $location) {
+    Character.getCharacter().then(function(character) {
+        $scope.character = character;
+    });
 
     $scope.setCharacter = function(id) {
         Character.setCharacter(id)
@@ -23,4 +25,4 @@ function CharacterCtrl($scope, $window, Character, $location) {
     });
 }
 
-CharacterCtrl.$inject = ['$scope', '$window', 'Character', '$location'];
+CharacterCtrl.$inject = ['$scope', 'Character', '$location'];

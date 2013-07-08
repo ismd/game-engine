@@ -9,8 +9,16 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
     var config = $window.ws;
     var ws = new WebSocket('ws://' + config.host + ':' + config.port);
 
+    var opened = false;
+    var queue = [];
+
     ws.onopen = function() {
+        opened = true;
         console.log('Socket has been opened!');
+
+        for (var i = 0; i < queue.length; i++) {
+            wsSend(queue[i]);
+        }
     };
 
     ws.onmessage = function(message) {
@@ -18,10 +26,11 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
     };
 
     ws.onerror = function() {
+        opened = false;
         alert('Не удалось подключиться к серверу');
     };
 
-    service.sendRequest = function(request) {
+    service.send = function(request) {
         var defer = $q.defer();
         var idCallback = getIdCallback();
 
@@ -31,21 +40,30 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
         };
 
         request.idCallback = idCallback;
-        console.log('Sending request', request);
-        ws.send(JSON.stringify(request));
+
+        if (opened) {
+            wsSend(request);
+        } else {
+            queue.push(request);
+        }
 
         return defer.promise;
     };
 
+    function wsSend(request) {
+        console.log('Sending request', request);
+        ws.send(JSON.stringify(request));
+    }
+
     function listener(data) {
-        console.log('Received data from websocket: ', messageObj);
+        console.log('Received response: ', data.data);
 
         if (callbacks.hasOwnProperty(data.idCallback)) {
             var idCallback = data.idCallback;
 
             delete data.idCallback;
 
-            $rootScope.$apply(callbacks[idCallback].cb.resolve(data));
+            $rootScope.$apply(callbacks[idCallback].cb.resolve(data.data));
             delete callbacks[idCallback];
         }
     }

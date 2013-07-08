@@ -17,14 +17,17 @@ class AuthController extends PsController {
         $username = $post->username;
         $password = $post->password;
 
+        $mapper = UserMapper::getInstance();
+
         try {
-            $user = UserMapper::getInstance()->getByLoginAndPassword($username, $password);
+            $user = $mapper->getByLoginAndPassword($username, $password);
             $this->getSession()->user = $user;
 
             $this->view->json(array(
                 'status'  => 'ok',
                 'message' => '',
                 'user'    => $user->toArray(),
+                'key'     => $mapper->generateAuthKey($user),
             ));
         } catch (UserBadLoginOrPasswordException $e) {
             $this->view->json(array(

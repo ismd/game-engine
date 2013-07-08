@@ -27,10 +27,7 @@ class IndexController extends PsController {
             }
 
             $this->view->userCharacters = $characters;
-        }
-
-        if (null != $session->character) {
-            $this->view->character = $session->character;
+            $this->view->authKey        = $session->user->getAuthKey();
         }
     }
 }

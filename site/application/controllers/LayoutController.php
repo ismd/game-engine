@@ -52,10 +52,10 @@ class LayoutController extends PsAuthController {
     /**
      * Возвращает окрестности клетки
      */
-    public function vicinityAction() {
+    /*public function vicinityAction() {
         $this->view->json(array(
             'status' => 'ok',
             'layout' => json_encode($this->getSession()->character->getCell()->getVicinity()),
         ));
-    }
+    }*/
 }

@@ -1,6 +1,7 @@
 'use strict';
 
 function LayoutCtrl($scope, Layout, Character) {
+    return;
     var character = Character.getCharacter();
 
     $scope.layout = {
@@ -9,7 +10,7 @@ function LayoutCtrl($scope, Layout, Character) {
         y: character.y
     };
 
-    Layout.init($scope.layout.idLayout, $scope.layout.x, $scope.layout.y);
+    //Layout.init($scope.layout.idLayout, $scope.layout.x, $scope.layout.y);
 
     $scope.layout.moveTop = function() {
         Layout.move('top');

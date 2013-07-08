@@ -9,11 +9,11 @@ abstract class Abstract_User extends PsModel {
     private $_id;
     private $_login;
     private $_password;
-    private $_password1;
     private $_email;
     private $_info;
     private $_site;
     private $_registered;
+    private $_authKey;
 
     public function toArray() {
         return array(
@@ -87,5 +87,14 @@ abstract class Abstract_User extends PsModel {
 
     public function getRegistered() {
         return $this->_registered;
+    }
+
+    public function setAuthKey($value) {
+        $this->_authKey = (string)$value;
+        return $this;
+    }
+
+    public function getAuthKey() {
+        return $this->_authKey;
     }
 }
