@@ -1,4 +1,4 @@
-package game.world;
+package game.layout;
 
 import java.util.HashMap;
 import java.util.Map;
