@@ -17,7 +17,6 @@ import java.io.FileReader;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -137,9 +136,5 @@ public class World {
 
     public Layout getLayout(int id) {
         return layouts.get(id);
-    }
-
-    public static void main(String[] args) throws FileNotFoundException {
-        World world = new World("/home/ismd/coding/game/layouts");
     }
 }

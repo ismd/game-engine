@@ -12,7 +12,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         try {
-            Server server = new Server(8081);
+            Server server = new Server(8081, "/home/ismd/coding/game/layouts");
             server.start();
             System.out.println("Server started on port: " + server.getPort());
         } catch (UnknownHostException e) {

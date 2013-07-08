@@ -3,7 +3,7 @@ package game.server.controllers;
 /**
  * @author ismd
  */
-public class MapController extends AbstractController {
+public class LayoutController extends AbstractController {
 
     public void get() {
 

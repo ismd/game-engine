@@ -2,6 +2,8 @@ package game.server;
 
 import com.google.gson.Gson;
 import game.server.controllers.*;
+import game.world.World;
+import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,12 +25,14 @@ public class RequestHandler implements Runnable {
     private static Map<String, Class<? extends AbstractController>> controllers = new HashMap<>();
     private static Map<String, AbstractController> controllersObjects = new HashMap<>();
 
+    private static World world;
+
     RequestHandler(WebSocket ws, String message) {
         this.ws = ws;
         this.message = message;
     }
 
-    static void init() {
+    static void init(String layoutsPath) throws FileNotFoundException {
         Reflections reflections = new Reflections("game.server.controllers");
 
         Set<Class<? extends AbstractController>> allControllers
@@ -47,6 +51,8 @@ public class RequestHandler implements Runnable {
                 Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+
+        world = new World(layoutsPath);
     }
 
     @Override

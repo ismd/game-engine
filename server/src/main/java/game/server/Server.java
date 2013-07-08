@@ -1,5 +1,6 @@
 package game.server;
 
+import java.io.FileNotFoundException;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.Executors;
@@ -15,9 +16,9 @@ class Server extends WebSocketServer {
 
     final ExecutorService executor = Executors.newCachedThreadPool();
 
-    Server(int port) throws UnknownHostException {
+    Server(int port, String layoutsPath) throws UnknownHostException, FileNotFoundException {
         super(new InetSocketAddress(port));
-        RequestHandler.init();
+        RequestHandler.init(layoutsPath);
     }
 
     @Override
