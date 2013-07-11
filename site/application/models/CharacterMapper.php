@@ -35,7 +35,7 @@ class CharacterMapper extends PsDbMapper {
             . "idLayout, x, y, "
             . "strength, dexterity, endurance, hp, maxHp, minDamage, "
             . "maxDamage, image, experience "
-            . "FROM UserCharacter "
+            . "FROM `Character` "
             . "WHERE id = ? "
             . "LIMIT 1");
 
@@ -62,7 +62,7 @@ class CharacterMapper extends PsDbMapper {
         $stmt = $this->db->prepare("SELECT id, idUser, name, lvl, money, "
             . "idLayout, x, y, strength, dexterity, endurance, hp, maxHp, "
             . "minDamage, maxDamage, image, experience "
-            . "FROM UserCharacter "
+            . "FROM `Character` "
             . "WHERE name = ? "
             . "LIMIT 1");
 
@@ -86,7 +86,7 @@ class CharacterMapper extends PsDbMapper {
         $stmt = $this->db->prepare("SELECT id, idUser, name, lvl, money, "
             . "idLayout, x, y, strength, dexterity, "
             . "endurance, hp, maxHp, minDamage, maxDamage, image, experience "
-            . "FROM UserCharacter "
+            . "FROM `Character` "
             . "WHERE idUser = ?");
 
         $stmt->bind_param('d', $user->getId());
@@ -110,7 +110,7 @@ class CharacterMapper extends PsDbMapper {
         $stmt = $this->db->prepare("SELECT id, idUser, name, lvl, money, idLayout, "
             . "x, y, strength, dexterity, endurance, "
             . "hp, maxHp, minDamage, maxDamage, image, experience "
-            . "FROM UserCharacter "
+            . "FROM `Character` "
             . "WHERE idLayout = ? AND x = ? AND y = ?");
 
         $stmt->bind_param('ddd',
@@ -182,7 +182,7 @@ class CharacterMapper extends PsDbMapper {
             throw new Exception("CharacterMapper currently can't update rows");
         }
 
-        $stmt = $this->db->prepare("INSERT INTO UserCharacter "
+        $stmt = $this->db->prepare("INSERT INTO `Character` "
             . "(idUser, name, lvl, money, idLayout, x, y, strength, dexterity, "
             . "endurance, hp, maxHp, minDamage, maxDamage, image, experience) "
             . "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");

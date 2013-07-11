@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('characterService', []).factory('Character', function($q, $rootScope, $http, $window, Ws, User) {
+angular.module('characterService', []).factory('Character', function($q, $rootScope, $http, Ws, User, $window) {
     var service = {};
 
     var character;
@@ -26,6 +26,10 @@ angular.module('characterService', []).factory('Character', function($q, $rootSc
 
             $rootScope.$broadcast('set-character-success', data.character);
             defer.resolve(data.character);
+
+            $http.post('/api/character/setId', {
+                id: id
+            });
         });
 
         return defer.promise;
@@ -34,16 +38,12 @@ angular.module('characterService', []).factory('Character', function($q, $rootSc
     service.getCharacter = function() {
         var defer = $q.defer();
 
-        if (!character) {
-            Ws.send({
-                controller: 'Character',
-                action: 'getCurrent'
-            }).then(function(data) {
-                character = data.character;
+        if (character) {
+            defer.resolve(character);
+        } else {
+            service.setCharacter($window.idCharacter).then(function(character) {
                 defer.resolve(character);
             });
-        } else {
-            defer.resolve(character);
         }
 
         return defer.promise;
