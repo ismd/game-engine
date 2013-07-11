@@ -2,17 +2,13 @@ package game.server;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import game.server.controllers.*;
-import game.world.World;
-import java.io.FileNotFoundException;
+import game.character.Character;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.java_websocket.WebSocket;
-import org.reflections.Reflections;
 
 /**
  * @author ismd
@@ -20,40 +16,16 @@ import org.reflections.Reflections;
 public class RequestHandler implements Runnable {
 
     private WebSocket ws;
+    private RequestRouter requestRouter;
     private String message;
     private Request request;
+    
+    public static Map<WebSocket, Character> characters = new HashMap<>();
 
-    private static Map<String, Class<? extends AbstractController>> controllers = new HashMap<>();
-    private static Map<String, AbstractController> controllersObjects = new HashMap<>();
-
-    public static World world;
-
-    RequestHandler(WebSocket ws, String message) {
+    RequestHandler(WebSocket ws, RequestRouter requestRouter, String message) {
         this.ws = ws;
+        this.requestRouter = requestRouter;
         this.message = message;
-    }
-
-    static void init(String layoutsPath) throws FileNotFoundException {
-        Reflections reflections = new Reflections("game.server.controllers");
-
-        Set<Class<? extends AbstractController>> allControllers
-            = reflections.getSubTypesOf(AbstractController.class);
-
-        for (Class<? extends AbstractController> controller : allControllers) {
-            String controllerName = controller.getName().substring("game.server.controllers.".length(),
-                controller.getName().lastIndexOf("Controller"));
-
-            try {
-                controllersObjects.put(controllerName,
-                    (AbstractController)Class.forName(controller.getName()).newInstance());
-
-                controllers.put(controllerName, controller);
-            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
-                Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        world = new World(layoutsPath);
     }
 
     @Override
@@ -62,9 +34,7 @@ public class RequestHandler implements Runnable {
         request = gson.fromJson(message, Request.class);
 
         try {
-            Response response = (Response)controllers.get(request.getController())
-                .getDeclaredMethod(request.getAction(), Map.class)
-                .invoke(controllersObjects.get(request.getController()), request.getArgs());
+            Response response = requestRouter.executeRequest(request.setWs(ws));
 
             gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
@@ -74,8 +44,8 @@ public class RequestHandler implements Runnable {
 
             System.out.println("Sending: " + json);
             ws.send(json);
-        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException ex) {
-            Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 }

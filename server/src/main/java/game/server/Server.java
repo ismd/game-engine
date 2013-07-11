@@ -14,11 +14,12 @@ import org.java_websocket.server.WebSocketServer;
  */
 class Server extends WebSocketServer {
 
-    final ExecutorService executor = Executors.newCachedThreadPool();
+    private final ExecutorService executor = Executors.newCachedThreadPool();
+    private final RequestRouter requestRouter;
 
     Server(int port, String layoutsPath) throws UnknownHostException, FileNotFoundException {
         super(new InetSocketAddress(port));
-        RequestHandler.init(layoutsPath);
+        requestRouter = new RequestRouter(layoutsPath);
     }
 
     @Override
@@ -36,7 +37,7 @@ class Server extends WebSocketServer {
     @Override
     public void onMessage(WebSocket ws, String message) {
         System.out.println("Message: " + message);
-        executor.execute(new RequestHandler(ws, message));
+        executor.execute(new RequestHandler(ws, requestRouter, message));
     }
 
     @Override

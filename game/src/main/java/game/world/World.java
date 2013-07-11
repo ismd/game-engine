@@ -2,7 +2,7 @@ package game.world;
 
 import game.layout.Layout;
 import com.google.gson.Gson;
-import game.character.UserCharacter;
+import game.character.Character;
 import game.mappers.CharacterMapper;
 import game.mappers.LayoutMapper;
 import game.mappers.MobMapper;
@@ -50,7 +50,7 @@ public class World {
     private void initializeCharacters() {
         log.info("Initializing characters");
 
-        for (UserCharacter character : new CharacterMapper().getAll()) {
+        for (Character character : new CharacterMapper().getAll()) {
             log.info("Placing character `{}' ({}) on layout {} (x: {}, y: {})",
                 character.getName(),
                 character.getId(),

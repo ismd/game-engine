@@ -1,6 +1,6 @@
 package game.server.controllers;
 
-import game.server.RequestHandler;
+import game.server.RequestRouter;
 import game.world.World;
 
 /**
@@ -8,5 +8,5 @@ import game.world.World;
  */
 abstract public class AbstractController {
 
-    protected final World world = RequestHandler.world;
+    protected final World world = RequestRouter.world;
 }

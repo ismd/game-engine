@@ -11,7 +11,7 @@ import javax.persistence.Id;
  * @author ismd
  */
 @Entity
-public class UserCharacter extends CellContent {
+public class Character extends CellContent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,7 +50,7 @@ public class UserCharacter extends CellContent {
     @Expose
     private long experience;
 
-    public UserCharacter() {
+    public Character() {
     }
 
     public long getId() {
@@ -61,7 +61,7 @@ public class UserCharacter extends CellContent {
         return name;
     }
 
-    public UserCharacter setName(String name) {
+    public Character setName(String name) {
         this.name = name;
         return this;
     }
@@ -70,7 +70,7 @@ public class UserCharacter extends CellContent {
         return idUser;
     }
 
-    public UserCharacter setIdUser(long idUser) {
+    public Character setIdUser(long idUser) {
         this.idUser = idUser;
         return this;
     }
@@ -79,7 +79,7 @@ public class UserCharacter extends CellContent {
         return lvl;
     }
 
-    public UserCharacter setLevel(int level) {
+    public Character setLevel(int level) {
         this.lvl = level;
         return this;
     }
@@ -88,7 +88,7 @@ public class UserCharacter extends CellContent {
         return money;
     }
 
-    public UserCharacter setMoney(long money) {
+    public Character setMoney(long money) {
         this.money = money;
         return this;
     }
@@ -97,7 +97,7 @@ public class UserCharacter extends CellContent {
         return idLayout;
     }
 
-    public UserCharacter setIdLayout(int idLayout) {
+    public Character setIdLayout(int idLayout) {
         this.idLayout = idLayout;
         return this;
     }
@@ -106,7 +106,7 @@ public class UserCharacter extends CellContent {
         return x;
     }
 
-    public UserCharacter setX(int x) {
+    public Character setX(int x) {
         this.x = x;
         return this;
     }
@@ -115,7 +115,7 @@ public class UserCharacter extends CellContent {
         return y;
     }
 
-    public UserCharacter setY(int y) {
+    public Character setY(int y) {
         this.y = y;
         return this;
     }
@@ -124,7 +124,7 @@ public class UserCharacter extends CellContent {
         return strength;
     }
 
-    public UserCharacter setStrength(int strength) {
+    public Character setStrength(int strength) {
         this.strength = strength;
         return this;
     }
@@ -133,7 +133,7 @@ public class UserCharacter extends CellContent {
         return dexterity;
     }
 
-    public UserCharacter setDexterity(int dexterity) {
+    public Character setDexterity(int dexterity) {
         this.dexterity = dexterity;
         return this;
     }
@@ -142,7 +142,7 @@ public class UserCharacter extends CellContent {
         return endurance;
     }
 
-    public UserCharacter setEndurance(int endurance) {
+    public Character setEndurance(int endurance) {
         this.endurance = endurance;
         return this;
     }
@@ -151,7 +151,7 @@ public class UserCharacter extends CellContent {
         return hp;
     }
 
-    public UserCharacter setHp(int hp) {
+    public Character setHp(int hp) {
         this.hp = hp;
         return this;
     }
@@ -160,7 +160,7 @@ public class UserCharacter extends CellContent {
         return maxHp;
     }
 
-    public UserCharacter setMaxHp(int maxHp) {
+    public Character setMaxHp(int maxHp) {
         this.maxHp = maxHp;
         return this;
     }
@@ -169,7 +169,7 @@ public class UserCharacter extends CellContent {
         return minDamage;
     }
 
-    public UserCharacter setMinDamage(int minDamage) {
+    public Character setMinDamage(int minDamage) {
         this.minDamage = minDamage;
         return this;
     }
@@ -178,7 +178,7 @@ public class UserCharacter extends CellContent {
         return maxDamage;
     }
 
-    public UserCharacter setMaxDamage(int maxDamage) {
+    public Character setMaxDamage(int maxDamage) {
         this.maxDamage = maxDamage;
         return this;
     }
@@ -187,7 +187,7 @@ public class UserCharacter extends CellContent {
         return image;
     }
 
-    public UserCharacter setImage(String image) {
+    public Character setImage(String image) {
         this.image = image;
         return this;
     }
@@ -196,7 +196,7 @@ public class UserCharacter extends CellContent {
         return experience;
     }
 
-    public UserCharacter setExperience(long experience) {
+    public Character setExperience(long experience) {
         this.experience = experience;
         return this;
     }
