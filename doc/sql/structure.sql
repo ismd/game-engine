@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4
+-- version 4.0.4.1
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Июл 08 2013 г., 14:10
+-- Время создания: Июл 11 2013 г., 08:55
 -- Версия сервера: 5.5.31-MariaDB-log
--- Версия PHP: 5.4.16
+-- Версия PHP: 5.4.17
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -177,6 +177,7 @@ CREATE TABLE IF NOT EXISTS `User` (
   `info` text,
   `site` varchar(40) DEFAULT NULL,
   `registered` datetime NOT NULL,
+  `authKey` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
 
