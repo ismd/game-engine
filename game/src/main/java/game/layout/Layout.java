@@ -26,10 +26,6 @@ public class Layout implements Serializable {
     public Layout() {
     }
 
-    public Layout(int[][] layout) {
-        setCells(layout);
-    }
-
     public Cell getCell(int x, int y) throws BadCoordinatesException {
         try {
             return cells[y][x];
@@ -38,14 +34,20 @@ public class Layout implements Serializable {
         }
     }
 
-    public final Layout setCells(int[][] layout) {
+    public final Layout setCells(int[][][] layout) {
         cells = new Cell[layout.length][];
 
         for (int i = 0; i < layout.length; i++) {
             cells[i] = new Cell[layout[i].length];
 
             for (int j = 0; j < layout[i].length; j++) {
-                cells[i][j] = new Cell(this, CellType.getById(layout[i][j]), j, i);
+                cells[i][j] = new Cell(this, j, i, new SpriteCoordinate(layout[i][j][0], layout[i][j][1]));
+            }
+        }
+
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[i].length; j++) {
+                cells[i][j].setVicinity(getVicinity(cells[i][j]));
             }
         }
 
@@ -65,7 +67,22 @@ public class Layout implements Serializable {
         return this;
     }
 
-    /*public Map<int, Map<int, int>> getVicinity(Cell cell) {
-        
-    }*/
+    public SpriteCoordinate[][] getVicinity(Cell cell) {
+        SpriteCoordinate[][] vicinity = new SpriteCoordinate[7][5];
+
+        int x = cell.getX();
+        int y = cell.getY();
+
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 5; j++) {
+                try {
+                    vicinity[i][j] = getCell(x + i - 3, y + j - 2).getSpriteCoordinate();
+                } catch (BadCoordinatesException ex) {
+                    vicinity[i][j] = null;
+                }
+            }
+        }
+
+        return vicinity;
+    }
 }

@@ -9,6 +9,6 @@ import java.util.Map;
 public class LayoutController extends AbstractController {
 
     public Response getCurrentCell(game.character.Character character, Map<String, Object> args) {
-        return new Response(true).appendData("cell", character.getCell());
+        return new Response(true, true, "cell-update").appendData("cell", character.getCell());
     }
 }

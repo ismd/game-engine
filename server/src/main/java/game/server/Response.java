@@ -17,14 +17,28 @@ public class Response {
     private boolean status;
     @Expose
     private String message;
+    @Expose
+    private boolean broadcast = false;
+    @Expose
+    private String broadcastName;
 
-    public Response(boolean status, String message) {
+    public Response(boolean status, String message, boolean broadcast, String broadcastName) {
         this.status = status;
         this.message = message;
+        this.broadcast = broadcast;
+        this.broadcastName = broadcastName;
     }
 
     public Response(boolean status) {
-        this(status, "");
+        this(status, null, false, null);
+    }
+
+    public Response(boolean status, boolean broadcast, String broadcastName) {
+        this(status, null, broadcast, broadcastName);
+    }
+
+    public Response(boolean status, String message) {
+        this(status, message, false, null);
     }
 
     public int getIdCallback() {
@@ -47,6 +61,11 @@ public class Response {
 
     public Response appendData(String key, Object value) {
         data.put(key, value);
+        return this;
+    }
+
+    public Response setBroadcast(boolean broadcast) {
+        this.broadcast = broadcast;
         return this;
     }
 }

@@ -13,8 +13,6 @@ public class Cell {
 
     private Layout layout;
     @Expose
-    private CellType type;
-    @Expose
     private final Map<ContentType, List<CellContent>> content = new HashMap<>();
     @Expose
     private int idLayout;
@@ -22,13 +20,17 @@ public class Cell {
     private int x;
     @Expose
     private int y;
+    @Expose
+    private SpriteCoordinate spriteCoordinate;
+    @Expose
+    private SpriteCoordinate[][] vicinity = new SpriteCoordinate[7][5];
 
-    Cell(Layout layout, CellType type, int x, int y) {
+    Cell(Layout layout, int x, int y, SpriteCoordinate spriteCoordinate) {
         this.layout = layout;
-        this.type = type;
         this.idLayout = layout.getId();
         this.x = x;
         this.y = y;
+        this.spriteCoordinate = spriteCoordinate;
 
         content.put(ContentType.CHARACTER, new LinkedList<CellContent>());
         content.put(ContentType.MOB, new LinkedList<CellContent>());
@@ -45,10 +47,6 @@ public class Cell {
         return layout;
     }
 
-    public CellType getType() {
-        return type;
-    }
-
     public int getIdLayout() {
         return idLayout;
     }
@@ -59,5 +57,18 @@ public class Cell {
 
     public int getY() {
         return y;
+    }
+
+    public SpriteCoordinate getSpriteCoordinate() {
+        return spriteCoordinate;
+    }
+
+    public Cell setVicinity(SpriteCoordinate[][] vicinity) {
+        this.vicinity = vicinity;
+        return this;
+    }
+
+    public SpriteCoordinate[][] getVicinity() {
+        return vicinity;
     }
 }

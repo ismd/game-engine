@@ -30,6 +30,14 @@ public class World {
 
     public World(String dir) throws FileNotFoundException {
         log.info("Initializing world");
+        initializeLayouts(dir);
+        initializeCharacters();
+        initializeMobs();
+        initializeNpcs();
+    }
+
+    private void initializeLayouts(String dir) throws FileNotFoundException {
+        log.info("Initializing layouts");
 
         Gson gson = new Gson();
         FileReader reader;
@@ -39,12 +47,8 @@ public class World {
             log.info("Parsing layout ({}) {}", layout.getValue().getId(), layout.getValue().getTitle());
 
             reader = new FileReader(dir + "/" + layout.getValue().getId() + ".txt");
-            layout.getValue().setCells(gson.fromJson(reader, int[][].class));
+            layout.getValue().setCells(gson.fromJson(reader, int[][][].class));
         }
-
-        initializeCharacters();
-        initializeMobs();
-        initializeNpcs();
     }
 
     private void initializeCharacters() {
