@@ -144,4 +144,19 @@ public class MobLayout extends CellContent {
     public int getEndurance() {
         return endurance;
     }
+
+    public MobLayout setIdLayout(int idLayout) {
+        this.idLayout = idLayout;
+        return this;
+    }
+
+    public MobLayout setX(int x) {
+        this.x = x;
+        return this;
+    }
+
+    public MobLayout setY(int y) {
+        this.y = y;
+        return this;
+    }
 }

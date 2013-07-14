@@ -46,6 +46,11 @@ public class Npc extends CellContent {
         return image;
     }
 
+    public Npc setIdLayout(int idLayout) {
+        this.idLayout = idLayout;
+        return this;
+    }
+
     public int getIdLayout() {
         return idLayout;
     }
@@ -54,7 +59,17 @@ public class Npc extends CellContent {
         return x;
     }
 
+    public Npc setX(int x) {
+        this.x = x;
+        return this;
+    }
+
     public int getY() {
         return y;
+    }
+
+    public Npc setY(int y) {
+        this.y = y;
+        return this;
     }
 }

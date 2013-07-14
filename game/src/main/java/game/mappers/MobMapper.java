@@ -3,6 +3,7 @@ package game.mappers;
 import static game.mappers.Mapper.em;
 import game.mob.Mob;
 import game.mob.MobCell;
+import game.mob.MobLayout;
 import java.util.List;
 import org.hibernate.Session;
 
@@ -15,9 +16,9 @@ public class MobMapper extends Mapper {
         return em.find(Mob.class, id);
     }
 
-    public void save(Mob mob) {
+    public void save(MobLayout mob) {
         em.getTransaction().begin();
-        em.persist(mob);
+        em.merge(mob);
         em.getTransaction().commit();
     }
 
