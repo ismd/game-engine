@@ -1,16 +1,9 @@
 'use strict';
 
-angular.module('worldService', []).factory('World', function(Ws, $rootScope) {
+angular.module('worldService', []).factory('World', function(Ws, $rootScope, $q) {
     var service = {};
 
-    var idLayout,
-        x,
-        y;
-
-    var cell_width = 50,
-        cell_height = 50;
-
-    var layout = [];
+    //var layout = [];
 
     var canvas = $('canvas#layout');
     var ctx    = canvas.get(0).getContext('2d');
@@ -19,19 +12,16 @@ angular.module('worldService', []).factory('World', function(Ws, $rootScope) {
     sprites.src = '/img/world/layouts/sprites.png';
 
     var player = new Image();
+    player.src = '/img/world/hero.png';
 
     sprites.onload = function() {
-        //initLayout();
-    };
-
-    service.init = function() {
-        return Ws.send({
+        Ws.send({
             controller: 'Layout',
             action: 'getCurrentCell'
         });
     };
 
-    service.move = function(direction) {
+    /*service.move = function(direction) {
         var newX = x;
         var newY = y;
 
@@ -71,7 +61,7 @@ return;
 
         });
 
-        /*$http.post('/api/character/move', {
+        $http.post('/api/character/move', {
             x: newX,
             y: newY
         }).success(function(data) {
@@ -83,10 +73,10 @@ return;
             move(data.x, data.y, angular.fromJson(data.layout));
         }).error(function() {
             alert('Не удалось обратиться к серверу');
-        });*/
-    };
+        });
+    };*/
 
-    function move(data_x, data_y, data_layout) {
+    /*function move(data_x, data_y, data_layout) {
         x = data_x;
         y = data_y;
         layout = data_layout;
@@ -94,24 +84,25 @@ return;
         drawLayout(layout);
 
         $rootScope.$broadcast('move', x, y);
-    }
+    }*/
 
-    function drawLayout(layout) {
-        angular.forEach(layout, function(column, x) {
-            angular.forEach(column, function(cell, y) {
-                if (cell) {
-                    ctx.drawImage(sprites,
-                                  cell[0] * cell_width,
-                                  cell[1] * cell_height,
-                                  cell_width,
-                                  cell_height,
-                                  x * cell_width,
-                                  y * cell_height,
-                                  cell_width,
-                                  cell_height);
-                }
-            });
-        });
+    var CELL_WIDTH = 50,
+        CELL_HEIGHT = 50;
+
+    service.drawVicinity = function(vicinity) {
+        for (var x = 0; x < 7; x++) {
+            for (var y = 0; y < 5; y++) {
+                ctx.drawImage(sprites,
+                              vicinity[x][y]['x'] * CELL_WIDTH,
+                              vicinity[x][y]['y'] * CELL_HEIGHT,
+                              CELL_WIDTH,
+                              CELL_HEIGHT,
+                              x * CELL_WIDTH,
+                              y * CELL_HEIGHT,
+                              CELL_WIDTH,
+                              CELL_HEIGHT);
+            }
+        }
 
         ctx.drawImage(player, 150, 100, 50, 50);
     }

@@ -61,6 +61,10 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
     function listener(data) {
         console.log('Received response: ', data);
 
+        if (data.broadcast) {
+            $rootScope.$broadcast(data.broadcastName, data.data);
+        }
+
         if (callbacks.hasOwnProperty(data.idCallback)) {
             var idCallback = data.idCallback;
 
