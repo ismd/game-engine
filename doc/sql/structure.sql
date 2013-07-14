@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Июл 14 2013 г., 07:46
+-- Время создания: Июл 14 2013 г., 07:52
 -- Версия сервера: 5.5.31-MariaDB-log
 -- Версия PHP: 5.4.17
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `Character` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idUser` int(11) NOT NULL,
   `name` varchar(30) NOT NULL,
-  `lvl` tinyint(4) NOT NULL,
+  `level` tinyint(4) NOT NULL,
   `money` int(11) NOT NULL,
   `idLayout` tinyint(4) NOT NULL,
   `x` tinyint(4) NOT NULL,
@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `Layout` (
 CREATE TABLE IF NOT EXISTS `Mob` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(40) NOT NULL,
-  `lvl` tinyint(4) NOT NULL,
+  `level` tinyint(4) NOT NULL,
   `maxHp` int(11) NOT NULL,
   `minDamage` int(11) NOT NULL,
   `maxDamage` int(11) NOT NULL,
