@@ -80,14 +80,6 @@ abstract class Abstract_Mob extends PsModel {
         return $this->_level;
     }
 
-    public function setLvl($value) {
-        return $this->setLevel($value);
-    }
-
-    public function getLvl() {
-        return $this->getLevel();
-    }
-
     public function setHp($value) {
         $this->_hp = (int)$value;
         return $this;

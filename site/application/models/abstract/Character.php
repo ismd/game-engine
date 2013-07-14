@@ -82,14 +82,6 @@ abstract class Abstract_Character extends PsModel {
         return $this->_level;
     }
 
-    public function setLvl($value) {
-        return $this->setLevel($value);
-    }
-
-    public function getLvl() {
-        return $this->getLevel();
-    }
-
     public function setMoney($value) {
         $this->_money = (int)$value;
         return $this;

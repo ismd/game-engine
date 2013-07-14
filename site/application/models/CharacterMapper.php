@@ -31,7 +31,7 @@ class CharacterMapper extends PsDbMapper {
     public function getById($id) {
         $id = (int)$id;
 
-        $stmt = $this->db->prepare("SELECT id, idUser, name, lvl, money, "
+        $stmt = $this->db->prepare("SELECT id, idUser, name, level, money, "
             . "idLayout, x, y, "
             . "strength, dexterity, endurance, hp, maxHp, minDamage, "
             . "maxDamage, image, experience "
@@ -59,7 +59,7 @@ class CharacterMapper extends PsDbMapper {
      * @throws CharacterNotFoundException
      */
     public function getByName($name) {
-        $stmt = $this->db->prepare("SELECT id, idUser, name, lvl, money, "
+        $stmt = $this->db->prepare("SELECT id, idUser, name, level, money, "
             . "idLayout, x, y, strength, dexterity, endurance, hp, maxHp, "
             . "minDamage, maxDamage, image, experience "
             . "FROM `Character` "
@@ -83,7 +83,7 @@ class CharacterMapper extends PsDbMapper {
      * @return Character[]
      */
     public function getByUser(User $user) {
-        $stmt = $this->db->prepare("SELECT id, idUser, name, lvl, money, "
+        $stmt = $this->db->prepare("SELECT id, idUser, name, level, money, "
             . "idLayout, x, y, strength, dexterity, "
             . "endurance, hp, maxHp, minDamage, maxDamage, image, experience "
             . "FROM `Character` "
@@ -107,7 +107,7 @@ class CharacterMapper extends PsDbMapper {
      * @return Character[]
      */
     public function getByCell(Cell $cell) {
-        $stmt = $this->db->prepare("SELECT id, idUser, name, lvl, money, idLayout, "
+        $stmt = $this->db->prepare("SELECT id, idUser, name, level, money, idLayout, "
             . "x, y, strength, dexterity, endurance, "
             . "hp, maxHp, minDamage, maxDamage, image, experience "
             . "FROM `Character` "
@@ -183,7 +183,7 @@ class CharacterMapper extends PsDbMapper {
         }
 
         $stmt = $this->db->prepare("INSERT INTO `Character` "
-            . "(idUser, name, lvl, money, idLayout, x, y, strength, dexterity, "
+            . "(idUser, name, level, money, idLayout, x, y, strength, dexterity, "
             . "endurance, hp, maxHp, minDamage, maxDamage, image, experience) "
             . "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 

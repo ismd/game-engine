@@ -21,7 +21,7 @@ class MobMapper extends PsDbMapper {
 
         $query = $this->db->query("SELECT mm.id, mm.idLayout, "
             . "mm.x, mm.y, mm.hp, "
-            . "m.id as idMob, m.name, m.lvl, m.maxHp, m.minDamage, "
+            . "m.id as idMob, m.name, m.level, m.maxHp, m.minDamage, "
             . "m.maxDamage, m.experience, m.image, m.strength, "
             . "m.dexterity, m.endurance "
             . "FROM MobLayout mm "
@@ -43,7 +43,7 @@ class MobMapper extends PsDbMapper {
     public function getByCell(Cell $cell) {
         $query = $this->db->query("SELECT mm.id, mm.idLayout, mm.x, "
             . "mm.y, mm.hp, m.id as idMob, "
-            . "m.name, m.lvl, m.maxHp, m.minDamage, m.maxDamage, "
+            . "m.name, m.level, m.maxHp, m.minDamage, m.maxDamage, "
             . "m.experience, m.image, m.strength, "
             . "m.dexterity, m.endurance "
             . "FROM MobLayout mm "

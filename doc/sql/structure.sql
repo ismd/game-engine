@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Июл 11 2013 г., 08:55
+-- Время создания: Июл 14 2013 г., 07:46
 -- Версия сервера: 5.5.31-MariaDB-log
 -- Версия PHP: 5.4.17
 
@@ -21,6 +21,35 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `game` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `game`;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `Character`
+--
+
+CREATE TABLE IF NOT EXISTS `Character` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idUser` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `lvl` tinyint(4) NOT NULL,
+  `money` int(11) NOT NULL,
+  `idLayout` tinyint(4) NOT NULL,
+  `x` tinyint(4) NOT NULL,
+  `y` tinyint(4) NOT NULL,
+  `strength` tinyint(4) NOT NULL,
+  `dexterity` tinyint(4) NOT NULL,
+  `endurance` tinyint(4) NOT NULL,
+  `hp` int(11) NOT NULL,
+  `maxHp` int(11) NOT NULL,
+  `minDamage` int(11) NOT NULL,
+  `maxDamage` int(11) NOT NULL,
+  `image` varchar(40) NOT NULL,
+  `experience` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `idUser` (`idUser`),
+  KEY `coordinates` (`idLayout`,`x`,`y`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
 
 -- --------------------------------------------------------
 
@@ -180,35 +209,6 @@ CREATE TABLE IF NOT EXISTS `User` (
   `authKey` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `UserCharacter`
---
-
-CREATE TABLE IF NOT EXISTS `UserCharacter` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `idUser` int(11) NOT NULL,
-  `name` varchar(30) NOT NULL,
-  `lvl` tinyint(4) NOT NULL,
-  `money` int(11) NOT NULL,
-  `idLayout` tinyint(4) NOT NULL,
-  `x` tinyint(4) NOT NULL,
-  `y` tinyint(4) NOT NULL,
-  `strength` tinyint(4) NOT NULL,
-  `dexterity` tinyint(4) NOT NULL,
-  `endurance` tinyint(4) NOT NULL,
-  `hp` int(11) NOT NULL,
-  `maxHp` int(11) NOT NULL,
-  `minDamage` int(11) NOT NULL,
-  `maxDamage` int(11) NOT NULL,
-  `image` varchar(40) NOT NULL,
-  `experience` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `idUser` (`idUser`),
-  KEY `coordinates` (`idLayout`,`x`,`y`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
