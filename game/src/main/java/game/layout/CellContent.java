@@ -4,7 +4,7 @@ import game.character.Character;
 import game.mappers.CharacterMapper;
 import game.mappers.MobMapper;
 import game.mappers.NpcMapper;
-import game.mob.MobLayout;
+import game.mob.Mob;
 import game.npc.Npc;
 import java.io.Serializable;
 
@@ -26,8 +26,8 @@ abstract public class CellContent implements Serializable {
             character.setX(cell.getX());
             character.setY(cell.getY());
             new CharacterMapper().save(character);
-        } else if (this instanceof MobLayout) {
-            MobLayout mob = (MobLayout)this;
+        } else if (this instanceof Mob) {
+            Mob mob = (Mob)this;
             mob.setIdLayout(cell.getLayout().getId());
             mob.setX(cell.getX());
             mob.setY(cell.getY());
@@ -47,7 +47,7 @@ abstract public class CellContent implements Serializable {
     public ContentType getType() {
         if (this instanceof Character) {
             return ContentType.CHARACTER;
-        } else if (this instanceof MobLayout) {
+        } else if (this instanceof Mob) {
             return ContentType.MOB;
         } else if (this instanceof Npc) {
             return ContentType.NPC;

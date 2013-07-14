@@ -1,39 +1,106 @@
 package game.mob;
 
-import java.io.Serializable;
+import com.google.gson.annotations.Expose;
+import game.layout.Cell;
+import game.layout.CellContent;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 /**
- * Общий класс мобов, не конкретные мобы
+ * Конкретный моб на карте
  * @author ismd
  */
 @Entity
-public class Mob implements Serializable {
+public class Mob extends CellContent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Expose
     private int id;
+    private int idMob;
+    private int idLayout;
+    private int x;
+    private int y;
+    @Expose
+    private int hp;
+
+    @Transient
+    @Expose
     private String name;
+    @Transient
+    @Expose
     private int level;
+    @Transient
+    @Expose
     private int maxHp;
+    @Transient
+    @Expose
     private int minDamage;
+    @Transient
+    @Expose
     private int maxDamage;
-    private int maxInWorld;
+    @Transient
+    @Expose
     private int experience;
+    @Transient
+    @Expose
     private String image;
+    @Transient
+    @Expose
     private int strength;
+    @Transient
+    @Expose
     private int dexterity;
+    @Transient
+    @Expose
     private int endurance;
+
+    public Mob() {
+    }
+
+    public Mob(MobInfo mob) {
+        idMob = mob.getId();
+
+        setHp(mob.getMaxHp());
+        name = mob.getName();
+        level = mob.getLevel();
+        maxHp = mob.getMaxHp();
+        minDamage = mob.getMinDamage();
+        maxDamage = mob.getMaxDamage();
+        experience = mob.getExperience();
+        image = mob.getImage();
+        strength = mob.getStrength();
+        dexterity = mob.getDexterity();
+        endurance = mob.getEndurance();
+    }
+
+    public Mob(MobInfo mob, Cell cell) {
+        this(mob);
+
+        idLayout = cell.getLayout().getId();
+        x = cell.getX();
+        y = cell.getY();
+
+        setCell(cell);
+    }
 
     public int getId() {
         return id;
     }
 
-    public Mob setId(int id) {
-        this.id = id;
+    public int getIdMob() {
+        return idMob;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public final Mob setHp(int hp) {
+        this.hp = hp;
         return this;
     }
 
@@ -41,98 +108,54 @@ public class Mob implements Serializable {
         return name;
     }
 
-    public Mob setName(String name) {
-        this.name = name;
-        return this;
-    }
-
     public int getLevel() {
         return level;
-    }
-
-    public Mob setLevel(int level) {
-        this.level = level;
-        return this;
     }
 
     public int getMaxHp() {
         return maxHp;
     }
 
-    public Mob setMaxHp(int maxHp) {
-        this.maxHp = maxHp;
-        return this;
-    }
-
     public int getMinDamage() {
         return minDamage;
-    }
-
-    public Mob setMinDamage(int minDamage) {
-        this.minDamage = minDamage;
-        return this;
     }
 
     public int getMaxDamage() {
         return maxDamage;
     }
 
-    public Mob setMaxDamage(int maxDamage) {
-        this.maxDamage = maxDamage;
-        return this;
-    }
-
-    public int getMaxInWorld() {
-        return maxInWorld;
-    }
-
-    public Mob setMaxInWorld(int maxInWorld) {
-        this.maxInWorld = maxInWorld;
-        return this;
-    }
-
     public int getExperience() {
         return experience;
-    }
-
-    public Mob setExperience(int experience) {
-        this.experience = experience;
-        return this;
     }
 
     public String getImage() {
         return image;
     }
 
-    public Mob setImage(String image) {
-        this.image = image;
-        return this;
-    }
-
     public int getStrength() {
         return strength;
-    }
-
-    public Mob setStrength(int strength) {
-        this.strength = strength;
-        return this;
     }
 
     public int getDexterity() {
         return dexterity;
     }
 
-    public Mob setDexterity(int dexterity) {
-        this.dexterity = dexterity;
-        return this;
-    }
-
     public int getEndurance() {
         return endurance;
     }
 
-    public Mob setEndurance(int endurance) {
-        this.endurance = endurance;
+    public Mob setIdLayout(int idLayout) {
+        this.idLayout = idLayout;
+        return this;
+    }
+
+    public Mob setX(int x) {
+        this.x = x;
+        return this;
+    }
+
+    public Mob setY(int y) {
+        this.y = y;
         return this;
     }
 }

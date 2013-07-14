@@ -7,9 +7,9 @@ import game.mappers.CharacterMapper;
 import game.mappers.LayoutMapper;
 import game.mappers.MobMapper;
 import game.mappers.NpcMapper;
+import game.mob.MobInfo;
+import game.mob.MobAvailableCell;
 import game.mob.Mob;
-import game.mob.MobCell;
-import game.mob.MobLayout;
 import game.npc.Npc;
 import game.world.exceptions.BadCoordinatesException;
 import java.io.FileNotFoundException;
@@ -54,13 +54,13 @@ public class World {
         log.info("Initializing mobs");
 
         MobMapper mobMapper = new MobMapper();
-        mobMapper.removeAllFromMap();
+        mobMapper.removeAllFromWorld();
 
         Random random = new Random(System.currentTimeMillis());
 
-        for (Mob mob : mobMapper.getAllAvailable()) {
+        for (MobInfo mob : mobMapper.getAllAvailable()) {
             int maxInWorld = mob.getMaxInWorld();
-            List<MobCell> availableCells = mobMapper.getAvailableCells(mob);
+            List<MobAvailableCell> availableCells = mobMapper.getAvailableCells(mob);
 
             if (0 == availableCells.size()) {
                 log.warn("No available cells for mob `{}' ({})", mob.getName(), mob.getId());
@@ -68,7 +68,7 @@ public class World {
             }
 
             for (int i = 0; i < maxInWorld; i++) {
-                MobCell mobCell;
+                MobAvailableCell mobCell;
 
                 if (1 == availableCells.size()) {
                     mobCell = availableCells.get(0);
@@ -88,9 +88,10 @@ public class World {
                     y);
 
                 try {
-                    MobLayout mobLayout = new MobLayout(mob);
-                    layouts.get(idLayout).getCell(x, y).addContent(mobLayout);
-                } catch (BadCoordinatesException ex) {
+                    Mob m = new Mob(mob);
+                    layouts.get(idLayout).getCell(x, y).addContent(m);
+                    mobMapper.save(m);
+                } catch (BadCoordinatesException e) {
                     log.error("Can't place mob");
                 }
             }
@@ -110,7 +111,7 @@ public class World {
 
             try {
                 layouts.get(npc.getIdLayout()).getCell(npc.getX(), npc.getY()).addContent(npc);
-            } catch (BadCoordinatesException ex) {
+            } catch (BadCoordinatesException e) {
                 log.error("Can't place mob");
             }
         }

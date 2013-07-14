@@ -30,6 +30,7 @@ class Server extends WebSocketServer {
 
     @Override
     public void onClose(WebSocket ws, int i, String string, boolean bln) {
+        requestRouter.removeCharacter(ws);
         System.out.println("Disconnected from "
             + ws.getRemoteSocketAddress().getAddress().getHostAddress());
     }

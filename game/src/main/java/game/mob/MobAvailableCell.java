@@ -11,7 +11,7 @@ import javax.persistence.Id;
  * @author ismd
  */
 @Entity
-public class MobCell implements Serializable {
+public class MobAvailableCell implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,7 +25,7 @@ public class MobCell implements Serializable {
         return id;
     }
 
-    public MobCell setId(int id) {
+    public MobAvailableCell setId(int id) {
         this.id = id;
         return this;
     }
@@ -34,7 +34,7 @@ public class MobCell implements Serializable {
         return idMob;
     }
 
-    public MobCell setIdMob(int idMob) {
+    public MobAvailableCell setIdMob(int idMob) {
         this.idMob = idMob;
         return this;
     }
@@ -43,7 +43,7 @@ public class MobCell implements Serializable {
         return idLayout;
     }
 
-    public MobCell setIdLayout(int idLayout) {
+    public MobAvailableCell setIdLayout(int idLayout) {
         this.idLayout = idLayout;
         return this;
     }
@@ -52,7 +52,7 @@ public class MobCell implements Serializable {
         return x;
     }
 
-    public MobCell setX(int x) {
+    public MobAvailableCell setX(int x) {
         this.x = x;
         return this;
     }
@@ -61,7 +61,7 @@ public class MobCell implements Serializable {
         return y;
     }
 
-    public MobCell setY(int y) {
+    public MobAvailableCell setY(int y) {
         this.y = y;
         return this;
     }

@@ -89,6 +89,13 @@ public class RequestRouter {
 
         return (Character)character.setCell(world.getLayout(character.getIdLayout()).getCell(character.getX(), character.getY()));
     }
+
+    void removeCharacter(WebSocket ws) {
+        Character character = characters.get(ws);
+        character.getCell().removeContent(character);
+
+        characters.remove(ws);
+    }
 }
 
 class BadAuthKeyException extends Exception {

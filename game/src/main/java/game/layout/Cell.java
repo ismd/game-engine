@@ -2,7 +2,7 @@ package game.layout;
 
 import com.google.gson.annotations.Expose;
 import game.character.Character;
-import game.mob.MobLayout;
+import game.mob.Mob;
 import game.npc.Npc;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -51,7 +51,7 @@ public class Cell {
 
         if (item instanceof Character) {
             list = content.get(ContentType.CHARACTER);
-        } else if (item instanceof MobLayout) {
+        } else if (item instanceof Mob) {
             list = content.get(ContentType.MOB);
         } else if (item instanceof Npc) {
             list = content.get(ContentType.NPC);

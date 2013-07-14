@@ -1,9 +1,9 @@
 package game.mappers;
 
 import static game.mappers.Mapper.em;
+import game.mob.MobInfo;
+import game.mob.MobAvailableCell;
 import game.mob.Mob;
-import game.mob.MobCell;
-import game.mob.MobLayout;
 import java.util.List;
 import org.hibernate.Session;
 
@@ -12,28 +12,28 @@ import org.hibernate.Session;
  */
 public class MobMapper extends Mapper {
 
-    public Mob getById(int id) {
-        return em.find(Mob.class, id);
+    public MobInfo getById(int id) {
+        return em.find(MobInfo.class, id);
     }
 
-    public void save(MobLayout mob) {
+    public void save(Mob mob) {
         em.getTransaction().begin();
-        em.merge(mob);
+        em.persist(mob);
         em.getTransaction().commit();
     }
 
-    public List<Mob> getAllAvailable() {
-        return em.createQuery("from Mob", Mob.class).getResultList();
+    public List<MobInfo> getAllAvailable() {
+        return em.createQuery("from MobInfo", MobInfo.class).getResultList();
     }
 
-    public List<MobCell> getAvailableCells(Mob mob) {
-        return em.createQuery("from MobCell where idMob = :idMob", MobCell.class)
+    public List<MobAvailableCell> getAvailableCells(MobInfo mob) {
+        return em.createQuery("from MobAvailableCell where idMob = :idMob", MobAvailableCell.class)
             .setParameter("idMob", mob.getId())
             .getResultList();
     }
 
-    public void removeAllFromMap() {
+    public void removeAllFromWorld() {
         Session session = (Session)em.getDelegate();
-        session.createSQLQuery("truncate table `MobLayout`").executeUpdate();
+        session.createSQLQuery("truncate table Mob").executeUpdate();
     }
 }
