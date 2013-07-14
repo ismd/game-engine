@@ -13,8 +13,18 @@ public class Response {
     private int idCallback;
     @Expose
     private Map<String, Object> data = new HashMap<>();
+    @Expose
+    private boolean status;
+    @Expose
+    private String message;
 
-    public Response() {
+    public Response(boolean status, String message) {
+        this.status = status;
+        this.message = message;
+    }
+
+    public Response(boolean status) {
+        this(status, "");
     }
 
     public int getIdCallback() {
@@ -39,9 +49,4 @@ public class Response {
         data.put(key, value);
         return this;
     }
-
-//    @Override
-//    public String toString() {
-//        return "Response [data=" + data + ", idCallback=" + idCallback + "]";
-//    }
 }

@@ -64,4 +64,8 @@ public class Layout implements Serializable {
         this.title = title;
         return this;
     }
+
+    /*public Map<int, Map<int, int>> getVicinity(Cell cell) {
+        
+    }*/
 }

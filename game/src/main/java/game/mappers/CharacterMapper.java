@@ -2,6 +2,7 @@ package game.mappers;
 
 import game.character.Character;
 import static game.mappers.Mapper.em;
+import game.world.exceptions.BadCoordinatesException;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public class CharacterMapper extends Mapper {
 
-    public Character getById(int id) {
+    public Character getById(int id) throws BadCoordinatesException {
         return em.find(Character.class, id);
     }
 

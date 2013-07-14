@@ -1,5 +1,6 @@
 package game.mob;
 
+import com.google.gson.annotations.Expose;
 import game.layout.Cell;
 import game.layout.CellContent;
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ public class MobLayout extends CellContent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Expose
     private long id;
     private long idMob;
     private int idLayout;
@@ -24,26 +26,37 @@ public class MobLayout extends CellContent {
     private int y;
 
     @Transient
+    @Expose
     private int hp;
     @Transient
+    @Expose
     private String name;
     @Transient
+    @Expose
     private int lvl;
     @Transient
+    @Expose
     private int maxHp;
     @Transient
+    @Expose
     private int minDamage;
     @Transient
+    @Expose
     private int maxDamage;
     @Transient
+    @Expose
     private long experience;
     @Transient
+    @Expose
     private String image;
     @Transient
+    @Expose
     private int strength;
     @Transient
+    @Expose
     private int dexterity;
     @Transient
+    @Expose
     private int endurance;
 
     public MobLayout() {
