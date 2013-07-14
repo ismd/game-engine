@@ -6,6 +6,7 @@ import game.mappers.UserMapper;
 import game.server.controllers.AbstractController;
 import game.user.User;
 import game.world.World;
+import game.world.exceptions.BadCoordinatesException;
 import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -59,13 +60,11 @@ public class RequestRouter {
                 character = setCharacter(request);
                 characters.put(request.getWs(), character);
 
-                return new Response()
-                    .appendData("status", "ok")
-                    .appendData("character", character);
+                return new Response(true).appendData("character", character);
+            } catch (BadAuthKeyException e) {
+                return new Response(false, "Неверный ключ");
             } catch (Exception e) {
-                return new Response()
-                    .appendData("status", "error")
-                    .appendData("message", "Неверный ключ");
+                return new Response(false, "Ошибка");
             }
         }
 
@@ -74,7 +73,7 @@ public class RequestRouter {
             .invoke(controllersObjects.get(request.getController()), character, request.getArgs());
     }
 
-    private Character setCharacter(Request request) throws BadAuthKeyException {
+    private Character setCharacter(Request request) throws BadAuthKeyException, BadCoordinatesException {
         Map<String, Object> args = request.getArgs();
 
         Double id = (Double)args.get("id");
@@ -87,7 +86,7 @@ public class RequestRouter {
             throw new BadAuthKeyException();
         }
 
-        return character;
+        return (Character)character.setCell(world.getLayout(character.getIdLayout()).getCell(character.getX(), character.getY()));
     }
 }
 
