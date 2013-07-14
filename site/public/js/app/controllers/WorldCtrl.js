@@ -1,6 +1,6 @@
 'use strict';
 
-function WorldCtrl($scope, World) {
+function WorldCtrl($scope, World, Ws) {
     $scope.selectedItem = null;
 
     $scope.cell = {
@@ -22,10 +22,38 @@ function WorldCtrl($scope, World) {
     };
 
     $scope.move = function(direction) {
-        console.log('Moving ' + direction);
-        /*Cell.move(direction).then(function() {
+        var newX = $scope.cell.x;
+        var newY = $scope.cell.y;
 
-        });*/
+        switch (direction) {
+            case 'top':
+                newY--;
+                break;
+
+            case 'right':
+                newX++;
+                break;
+
+            case 'bottom':
+                newY++;
+                break;
+
+            case 'left':
+                newX--;
+                break;
+        }
+
+        Ws.send({
+            controller: 'Character',
+            action: 'move',
+            args: {
+                idLayout: $scope.cell.idLayout,
+                x: newX,
+                y: newY
+            }
+        }).then(function(data) {
+
+        });
     };
 
     $scope.$on('cell-update', function(e, data) {
@@ -43,4 +71,4 @@ function WorldCtrl($scope, World) {
     });
 }
 
-WorldCtrl.$inject = ['$scope', 'World'];
+WorldCtrl.$inject = ['$scope', 'World', 'Ws'];

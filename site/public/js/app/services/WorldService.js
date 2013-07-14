@@ -9,7 +9,7 @@ angular.module('worldService', []).factory('World', function(Ws, $rootScope, $q)
     var ctx    = canvas.get(0).getContext('2d');
 
     var sprites = new Image();
-    sprites.src = '/img/world/layouts/sprites.png';
+    sprites.src = '/img/world/cells.png';
 
     var player = new Image();
     player.src = '/img/world/hero.png';
