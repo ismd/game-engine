@@ -14,7 +14,7 @@ public class Npc extends CellContent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private int id;
     private String name;
     private String greeting;
     private String image;
@@ -25,11 +25,11 @@ public class Npc extends CellContent {
     public Npc() {
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public Npc setId(long id) {
+    public Npc setId(int id) {
         this.id = id;
         return this;
     }

@@ -15,24 +15,24 @@ public class Mob implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private int id;
     private String name;
     private int level;
     private int maxHp;
     private int minDamage;
     private int maxDamage;
     private int maxInWorld;
-    private long experience;
+    private int experience;
     private String image;
     private int strength;
     private int dexterity;
     private int endurance;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public Mob setId(long id) {
+    public Mob setId(int id) {
         this.id = id;
         return this;
     }
@@ -91,11 +91,11 @@ public class Mob implements Serializable {
         return this;
     }
 
-    public long getExperience() {
+    public int getExperience() {
         return experience;
     }
 
-    public Mob setExperience(long experience) {
+    public Mob setExperience(int experience) {
         this.experience = experience;
         return this;
     }

@@ -11,7 +11,7 @@ import org.hibernate.Session;
  */
 public class MobMapper extends Mapper {
 
-    public Mob getById(long id) {
+    public Mob getById(int id) {
         return em.find(Mob.class, id);
     }
 

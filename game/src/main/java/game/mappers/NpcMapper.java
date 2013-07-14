@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class NpcMapper extends Mapper {
 
-    public Npc getById(long id) {
+    public Npc getById(int id) {
         return em.find(Npc.class, id);
     }
 

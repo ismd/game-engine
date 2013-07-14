@@ -15,26 +15,26 @@ public class MobCell implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private long idMob;
+    private int id;
+    private int idMob;
     private int idLayout;
     private int x;
     private int y;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public MobCell setId(long id) {
+    public MobCell setId(int id) {
         this.id = id;
         return this;
     }
 
-    public long getIdMob() {
+    public int getIdMob() {
         return idMob;
     }
 
-    public MobCell setIdMob(long idMob) {
+    public MobCell setIdMob(int idMob) {
         this.idMob = idMob;
         return this;
     }

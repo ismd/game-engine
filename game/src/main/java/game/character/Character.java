@@ -18,13 +18,13 @@ public class Character extends CellContent {
     @Expose
     private int id;
     @Expose
-    private long idUser;
+    private int idUser;
     @Expose
     private String name;
     @Expose
     private int level;
     @Expose
-    private long money;
+    private int money;
     @Expose
     private int idLayout;
     @Expose
@@ -48,12 +48,12 @@ public class Character extends CellContent {
     @Expose
     private String image;
     @Expose
-    private long experience;
+    private int experience;
 
     public Character() {
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -66,11 +66,11 @@ public class Character extends CellContent {
         return this;
     }
 
-    public long getIdUser() {
+    public int getIdUser() {
         return idUser;
     }
 
-    public Character setIdUser(long idUser) {
+    public Character setIdUser(int idUser) {
         this.idUser = idUser;
         return this;
     }
@@ -84,11 +84,11 @@ public class Character extends CellContent {
         return this;
     }
 
-    public long getMoney() {
+    public int getMoney() {
         return money;
     }
 
-    public Character setMoney(long money) {
+    public Character setMoney(int money) {
         this.money = money;
         return this;
     }
@@ -192,11 +192,11 @@ public class Character extends CellContent {
         return this;
     }
 
-    public long getExperience() {
+    public int getExperience() {
         return experience;
     }
 
-    public Character setExperience(long experience) {
+    public Character setExperience(int experience) {
         this.experience = experience;
         return this;
     }

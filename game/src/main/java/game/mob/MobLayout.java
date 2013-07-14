@@ -19,8 +19,8 @@ public class MobLayout extends CellContent {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Expose
-    private long id;
-    private long idMob;
+    private int id;
+    private int idMob;
     private int idLayout;
     private int x;
     private int y;
@@ -45,7 +45,7 @@ public class MobLayout extends CellContent {
     private int maxDamage;
     @Transient
     @Expose
-    private long experience;
+    private int experience;
     @Transient
     @Expose
     private String image;
@@ -88,20 +88,20 @@ public class MobLayout extends CellContent {
         setCell(cell);
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public MobLayout setId(long id) {
+    public MobLayout setId(int id) {
         this.id = id;
         return this;
     }
 
-    public long getIdMob() {
+    public int getIdMob() {
         return idMob;
     }
 
-    public MobLayout setIdMob(long idMob) {
+    public MobLayout setIdMob(int idMob) {
         this.idMob = idMob;
         return this;
     }
@@ -187,11 +187,11 @@ public class MobLayout extends CellContent {
         return this;
     }
 
-    public long getExperience() {
+    public int getExperience() {
         return experience;
     }
 
-    public MobLayout setExperience(long experience) {
+    public MobLayout setExperience(int experience) {
         this.experience = experience;
         return this;
     }

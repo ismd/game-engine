@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class UserMapper extends Mapper {
 
-    public User getById(long id) {
+    public User getById(int id) {
         em.clear();
         return em.find(User.class, id);
     }
