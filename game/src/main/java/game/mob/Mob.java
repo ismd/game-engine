@@ -17,7 +17,7 @@ public class Mob implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
-    private int lvl;
+    private int level;
     private int maxHp;
     private int minDamage;
     private int maxDamage;
@@ -47,11 +47,11 @@ public class Mob implements Serializable {
     }
 
     public int getLevel() {
-        return lvl;
+        return level;
     }
 
     public Mob setLevel(int level) {
-        this.lvl = level;
+        this.level = level;
         return this;
     }
 

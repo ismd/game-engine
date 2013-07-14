@@ -33,7 +33,7 @@ public class MobLayout extends CellContent {
     private String name;
     @Transient
     @Expose
-    private int lvl;
+    private int level;
     @Transient
     @Expose
     private int maxHp;
@@ -152,11 +152,11 @@ public class MobLayout extends CellContent {
     }
 
     public int getLevel() {
-        return lvl;
+        return level;
     }
 
-    public MobLayout setLevel(int lvl) {
-        this.lvl = lvl;
+    public MobLayout setLevel(int level) {
+        this.level = level;
         return this;
     }
 

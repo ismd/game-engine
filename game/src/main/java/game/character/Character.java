@@ -22,7 +22,7 @@ public class Character extends CellContent {
     @Expose
     private String name;
     @Expose
-    private int lvl;
+    private int level;
     @Expose
     private long money;
     @Expose
@@ -76,11 +76,11 @@ public class Character extends CellContent {
     }
 
     public int getLevel() {
-        return lvl;
+        return level;
     }
 
     public Character setLevel(int level) {
-        this.lvl = level;
+        this.level = level;
         return this;
     }
 
