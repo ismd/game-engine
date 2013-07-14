@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('main', ['userService', 'characterService', 'layoutService', 'registrationService',
-    'characterCreateService', 'cellContentService', 'backgroundImageDirective',
-    'cellContentService', 'wsService'])
+angular.module('main', ['userService', 'characterService', 'registrationService',
+    'characterCreateService', 'backgroundImageDirective', 'worldService',
+    'wsService'])
     .config(function($routeProvider, $locationProvider, $httpProvider) {
         $locationProvider.html5Mode(true);
 
@@ -19,7 +19,8 @@ angular.module('main', ['userService', 'characterService', 'layoutService', 'reg
                 controller: CharacterCreateCtrl
             }).
             when('/world', {
-                templateUrl: '/partial/world'
+                templateUrl: '/partial/world',
+                controller: WorldCtrl
             }).
             when('/world/inventory', {
                 templateUrl: '/partial/world/inventory'

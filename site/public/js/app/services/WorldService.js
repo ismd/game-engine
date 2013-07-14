@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('layoutService', []).factory('Layout', function(Ws, $http, $rootScope) {
+angular.module('worldService', []).factory('World', function(Ws, $rootScope) {
     var service = {};
 
     var idLayout,
@@ -24,10 +24,11 @@ angular.module('layoutService', []).factory('Layout', function(Ws, $http, $rootS
         //initLayout();
     };
 
-    service.init = function(init_idLayout, init_x, init_y) {
-        idLayout = init_idLayout;
-        x        = init_x;
-        y        = init_y;
+    service.init = function() {
+        return Ws.send({
+            controller: 'Layout',
+            action: 'getCurrentCell'
+        });
     };
 
     service.move = function(direction) {
@@ -51,7 +52,7 @@ angular.module('layoutService', []).factory('Layout', function(Ws, $http, $rootS
                 newX--;
                 break;
         }
-
+return;
         Ws.send({
             controller: 'Character',
             action: 'move',
@@ -60,7 +61,14 @@ angular.module('layoutService', []).factory('Layout', function(Ws, $http, $rootS
                 y: newY
             }
         }).then(function(data) {
-            console.log(data);
+            if ('ok' !== data.status) {
+                alert(data.message);
+                return;
+            }
+
+            move(data.x, data.y, data.layout);
+        }, function() {
+
         });
 
         /*$http.post('/api/character/move', {
@@ -106,23 +114,6 @@ angular.module('layoutService', []).factory('Layout', function(Ws, $http, $rootS
         });
 
         ctx.drawImage(player, 150, 100, 50, 50);
-    }
-
-    function initLayout() {
-        $http.get('/api/layout/vicinity').success(function(data) {
-            if ('ok' !== data.status) {
-                alert(data.message);
-                return;
-            }
-
-            player.src = '/img/world/hero.png';
-
-            player.onload = function() {
-                drawLayout(angular.fromJson(data.layout));
-            };
-        }).error(function() {
-            alert('Не удалось обратиться к серверу');
-        });
     }
 
     return service;

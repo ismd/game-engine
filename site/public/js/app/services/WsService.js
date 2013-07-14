@@ -10,15 +10,14 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
     var ws = new WebSocket('ws://' + config.host + ':' + config.port);
 
     var opened = false;
+    var initialized = false;
     var queue = [];
 
     ws.onopen = function() {
         opened = true;
         console.log('Socket has been opened!');
 
-        for (var i = 0; i < queue.length; i++) {
-            wsSend(queue[i]);
-        }
+        sendQueue();
     };
 
     ws.onmessage = function(message) {
@@ -41,10 +40,14 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
 
         request.idCallback = idCallback;
 
-        if (opened) {
+        if (opened && initialized) {
             wsSend(request);
         } else {
-            queue.push(request);
+            if ('Character' === request.controller && 'set' === request.action) {
+                queue.unshift(request);
+            } else {
+                queue.push(request);
+            }
         }
 
         return defer.promise;
@@ -56,14 +59,22 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
     }
 
     function listener(data) {
-        console.log('Received response: ', data.data);
+        console.log('Received response: ', data);
 
         if (callbacks.hasOwnProperty(data.idCallback)) {
             var idCallback = data.idCallback;
 
-            delete data.idCallback;
+            if (data.status) {
+                $rootScope.$apply(callbacks[idCallback].cb.resolve(data.data, data.message));
 
-            $rootScope.$apply(callbacks[idCallback].cb.resolve(data.data));
+                if (!initialized) {
+                    initialized = true;
+                    sendQueue();
+                }
+            } else {
+                $rootScope.$apply(callbacks[idCallback].cb.reject(data.data, data.message));
+            }
+
             delete callbacks[idCallback];
         }
     }
@@ -76,6 +87,25 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
         }
 
         return idCurrentCallback;
+    }
+
+    function sendQueue() {
+        if (!initialized) {
+            for (var i = 0; i < queue.length; i++) {
+                var request = queue[i];
+                if ('Character' === request.controller && 'set' === request.action) {
+                    wsSend(request);
+                    queue.splice(i, 1);
+                    return;
+                }
+            }
+
+            return;
+        }
+
+        while (queue.length > 0) {
+            wsSend(queue.shift());
+        }
     }
 
     return service;

@@ -5,7 +5,7 @@ class LayoutController extends PsAuthController {
     /**
      * Выводит содержимое текущей клетки
      */
-    public function cellAction() {
+    /*public function cellAction() {
         $npcMapper       = new NpcMapper;
         $characterMapper = new CharacterMapper;
         $mobMapper       = new MobMapper;
@@ -47,7 +47,7 @@ class LayoutController extends PsAuthController {
         }
 
         $this->view->json($content);
-    }
+    }*/
 
     /**
      * Возвращает окрестности клетки

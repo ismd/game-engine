@@ -6,7 +6,7 @@
 class RegistrationController extends PsController {
 
     public function init() {
-        if (null != $this->session->user) {
+        if (null != $this->getSession()->user) {
             die;
         }
     }

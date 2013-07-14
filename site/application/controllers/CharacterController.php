@@ -89,7 +89,7 @@ class CharacterController extends PsAuthController {
      * @post x
      * @post y
      */
-    public function moveAction() {
+    /*public function moveAction() {
         $post = $this->getRequest()->getPost();
 
         $x = (int)$post->x;
@@ -118,17 +118,17 @@ class CharacterController extends PsAuthController {
                 'message' => $e->getMessage(),
             ));
         }
-    }
+    }*/
 
     /**
      * Список вещей персонажа
      */
-    public function itemsAction() {
+    /*public function itemsAction() {
         $items = array();
         foreach ($this->getSession()->character->getItems() as $item) {
             $items[] = $item->toArray();
         }
 
         $this->view->json($items);
-    }
+    }*/
 }
