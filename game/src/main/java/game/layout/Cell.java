@@ -1,6 +1,9 @@
 package game.layout;
 
 import com.google.gson.annotations.Expose;
+import game.character.Character;
+import game.mob.MobLayout;
+import game.npc.Npc;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,6 +43,23 @@ public class Cell {
     public Cell addContent(CellContent item) {
         content.get(item.getType()).add(item);
         item.setCell(this);
+        return this;
+    }
+
+    public Cell removeContent(CellContent item) {
+        List<CellContent> list;
+
+        if (item instanceof Character) {
+            list = content.get(ContentType.CHARACTER);
+        } else if (item instanceof MobLayout) {
+            list = content.get(ContentType.MOB);
+        } else if (item instanceof Npc) {
+            list = content.get(ContentType.NPC);
+        } else {
+            list = content.get(ContentType.UNKNOWN);
+        }
+
+        list.remove(item);
         return this;
     }
 

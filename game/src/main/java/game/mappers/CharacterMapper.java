@@ -16,7 +16,7 @@ public class CharacterMapper extends Mapper {
 
     public void save(Character character) {
         em.getTransaction().begin();
-        em.persist(character);
+        em.merge(character);
         em.getTransaction().commit();
     }
 

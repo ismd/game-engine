@@ -30,6 +30,8 @@ public class RequestRouter {
     private final Map<WebSocket, Character> characters = new HashMap<>();
 
     RequestRouter(String layoutsPath) throws FileNotFoundException {
+        world = new World(layoutsPath);
+
         Reflections reflections = new Reflections("game.server.controllers");
 
         Set<Class<? extends AbstractController>> allControllers
@@ -48,8 +50,6 @@ public class RequestRouter {
                 Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
-        world = new World(layoutsPath);
     }
 
     Response executeRequest(Request request) throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
@@ -64,6 +64,7 @@ public class RequestRouter {
             } catch (BadAuthKeyException e) {
                 return new Response(false, "Неверный ключ");
             } catch (Exception e) {
+                System.out.println(e.getMessage());
                 return new Response(false, "Ошибка");
             }
         }

@@ -8,6 +8,5 @@ import javax.persistence.Persistence;
  */
 abstract class Mapper {
 
-    protected final static EntityManager em
-        = Persistence.createEntityManagerFactory("game").createEntityManager();
+    protected final static EntityManager em = Persistence.createEntityManagerFactory("game").createEntityManager();
 }

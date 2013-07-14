@@ -63,27 +63,27 @@ public class MobLayout extends CellContent {
     }
 
     public MobLayout(Mob mob) {
-        setIdMob(mob.getId());
+        idMob = mob.getId();
 
         setHp(mob.getMaxHp());
-        setTitle(mob.getName());
-        setLevel(mob.getLevel());
-        setMaxHp(mob.getMaxHp());
-        setMinDamage(mob.getMinDamage());
-        setMaxDamage(mob.getMaxDamage());
-        setExperience(mob.getExperience());
-        setImage(mob.getImage());
-        setStrength(mob.getStrength());
-        setDexterity(mob.getDexterity());
-        setEndurance(mob.getEndurance());
+        name = mob.getName();
+        level = mob.getLevel();
+        maxHp = mob.getMaxHp();
+        minDamage = mob.getMinDamage();
+        maxDamage = mob.getMaxDamage();
+        experience = mob.getExperience();
+        image = mob.getImage();
+        strength = mob.getStrength();
+        dexterity = mob.getDexterity();
+        endurance = mob.getEndurance();
     }
 
     public MobLayout(Mob mob, Cell cell) {
         this(mob);
 
-        setIdLayout(cell.getLayout().getId());
-        setX(cell.getX());
-        setY(cell.getY());
+        idLayout = cell.getLayout().getId();
+        x = cell.getX();
+        y = cell.getY();
 
         setCell(cell);
     }
@@ -92,45 +92,8 @@ public class MobLayout extends CellContent {
         return id;
     }
 
-    public MobLayout setId(int id) {
-        this.id = id;
-        return this;
-    }
-
     public int getIdMob() {
         return idMob;
-    }
-
-    public MobLayout setIdMob(int idMob) {
-        this.idMob = idMob;
-        return this;
-    }
-
-    public int getIdLayout() {
-        return idLayout;
-    }
-
-    public MobLayout setIdLayout(int idLayout) {
-        this.idLayout = idLayout;
-        return this;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public MobLayout setX(int x) {
-        this.x = x;
-        return this;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public MobLayout setY(int y) {
-        this.y = y;
-        return this;
     }
 
     public int getHp() {
@@ -142,93 +105,43 @@ public class MobLayout extends CellContent {
         return this;
     }
 
-    public String getTitle() {
+    public String getName() {
         return name;
-    }
-
-    public MobLayout setTitle(String title) {
-        this.name = title;
-        return this;
     }
 
     public int getLevel() {
         return level;
     }
 
-    public MobLayout setLevel(int level) {
-        this.level = level;
-        return this;
-    }
-
     public int getMaxHp() {
         return maxHp;
-    }
-
-    public MobLayout setMaxHp(int maxHp) {
-        this.maxHp = maxHp;
-        return this;
     }
 
     public int getMinDamage() {
         return minDamage;
     }
 
-    public MobLayout setMinDamage(int minDamage) {
-        this.minDamage = minDamage;
-        return this;
-    }
-
     public int getMaxDamage() {
         return maxDamage;
-    }
-
-    public MobLayout setMaxDamage(int maxDamage) {
-        this.maxDamage = maxDamage;
-        return this;
     }
 
     public int getExperience() {
         return experience;
     }
 
-    public MobLayout setExperience(int experience) {
-        this.experience = experience;
-        return this;
-    }
-
     public String getImage() {
         return image;
-    }
-
-    public MobLayout setImage(String image) {
-        this.image = image;
-        return this;
     }
 
     public int getStrength() {
         return strength;
     }
 
-    public MobLayout setStrength(int strength) {
-        this.strength = strength;
-        return this;
-    }
-
     public int getDexterity() {
         return dexterity;
     }
 
-    public MobLayout setDexterity(int dexterity) {
-        this.dexterity = dexterity;
-        return this;
-    }
-
     public int getEndurance() {
         return endurance;
-    }
-
-    public MobLayout setEndurance(int endurance) {
-        this.endurance = endurance;
-        return this;
     }
 }

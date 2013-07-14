@@ -31,7 +31,6 @@ public class World {
     public World(String dir) throws FileNotFoundException {
         log.info("Initializing world");
         initializeLayouts(dir);
-        initializeCharacters();
         initializeMobs();
         initializeNpcs();
     }
@@ -48,27 +47,6 @@ public class World {
 
             reader = new FileReader(dir + "/" + layout.getValue().getId() + ".txt");
             layout.getValue().setCells(gson.fromJson(reader, int[][][].class));
-        }
-    }
-
-    private void initializeCharacters() {
-        log.info("Initializing characters");
-
-        for (Character character : new CharacterMapper().getAll()) {
-            log.info("Placing character `{}' ({}) on layout {} (x: {}, y: {})",
-                character.getName(),
-                character.getId(),
-                character.getIdLayout(),
-                character.getX(),
-                character.getY());
-
-            try {
-                layouts.get(character.getIdLayout())
-                    .getCell(character.getX(), character.getY())
-                    .addContent(character);
-            } catch (BadCoordinatesException ex) {
-                log.error("Can't place character");
-            }
         }
     }
 

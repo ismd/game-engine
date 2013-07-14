@@ -8,5 +8,5 @@ import game.world.World;
  */
 abstract public class AbstractController {
 
-    protected final World world = RequestRouter.world;
+    protected World world = RequestRouter.world;
 }

@@ -1,6 +1,7 @@
 package game.layout;
 
 import game.character.Character;
+import game.mappers.CharacterMapper;
 import game.mob.MobLayout;
 import game.npc.Npc;
 import java.io.Serializable;
@@ -17,6 +18,14 @@ abstract public class CellContent implements Serializable {
     }
 
     public CellContent setCell(Cell cell) {
+        if (this instanceof Character) {
+            Character character = (Character)this;
+            character.setIdLayout(cell.getLayout().getId());
+            character.setX(cell.getX());
+            character.setY(cell.getY());
+            new CharacterMapper().save(character);
+        }
+
         this.cell = cell;
         return this;
     }

@@ -93,33 +93,6 @@ public class Character extends CellContent {
         return this;
     }
 
-    public int getIdLayout() {
-        return idLayout;
-    }
-
-    public Character setIdLayout(int idLayout) {
-        this.idLayout = idLayout;
-        return this;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public Character setX(int x) {
-        this.x = x;
-        return this;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public Character setY(int y) {
-        this.y = y;
-        return this;
-    }
-
     public int getStrength() {
         return strength;
     }
@@ -199,5 +172,32 @@ public class Character extends CellContent {
     public Character setExperience(int experience) {
         this.experience = experience;
         return this;
+    }
+
+    public Character setIdLayout(int idLayout) {
+        this.idLayout = idLayout;
+        return this;
+    }
+
+    public int getIdLayout() {
+        return idLayout;
+    }
+
+    public Character setX(int x) {
+        this.x = x;
+        return this;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public Character setY(int y) {
+        this.y = y;
+        return this;
+    }
+
+    public int getY() {
+        return y;
     }
 }
