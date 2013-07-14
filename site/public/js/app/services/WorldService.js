@@ -92,6 +92,19 @@ return;
     service.drawVicinity = function(vicinity) {
         for (var x = 0; x < 7; x++) {
             for (var y = 0; y < 5; y++) {
+                if (null === vicinity[x][y]) {
+                    ctx.drawImage(sprites,
+                                  0,
+                                  CELL_HEIGHT,
+                                  CELL_WIDTH,
+                                  CELL_HEIGHT,
+                                  x * CELL_WIDTH,
+                                  y * CELL_HEIGHT,
+                                  CELL_WIDTH,
+                                  CELL_HEIGHT);
+                    continue;
+                }
+
                 ctx.drawImage(sprites,
                               vicinity[x][y]['x'] * CELL_WIDTH,
                               vicinity[x][y]['y'] * CELL_HEIGHT,

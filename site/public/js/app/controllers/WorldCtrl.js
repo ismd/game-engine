@@ -1,6 +1,6 @@
 'use strict';
 
-function WorldCtrl($scope, World, Ws) {
+function WorldCtrl($scope, World, Ws, Character) {
     $scope.selectedItem = null;
 
     $scope.cell = {
@@ -56,6 +56,11 @@ function WorldCtrl($scope, World, Ws) {
         });
     };
 
+    var idCharacter;
+    Character.getCharacter().then(function(character) {
+        idCharacter = character.id;
+    });
+
     $scope.$on('cell-update', function(e, data) {
         var cell = data.cell;
 
@@ -65,10 +70,17 @@ function WorldCtrl($scope, World, Ws) {
 
         World.drawVicinity(cell.vicinity);
 
+        for (var i = 0; i < cell.content.CHARACTER.length; i++) {
+            if (idCharacter === cell.content.CHARACTER[i].id) {
+                cell.content.CHARACTER.splice(i, 1);
+                break;
+            }
+        }
+
         $scope.cell.content.npcs = cell.content.NPC;
         $scope.cell.content.characters = cell.content.CHARACTER;
         $scope.cell.content.mobs = cell.content.MOB;
     });
 }
 
-WorldCtrl.$inject = ['$scope', 'World', 'Ws'];
+WorldCtrl.$inject = ['$scope', 'World', 'Ws', 'Character'];

@@ -11,7 +11,7 @@ class MobNotFoundException extends Exception {
 class MobMapper extends PsDbMapper {
 
     /**
-     * Возвращает моба по id из таблицы MobLayout
+     * Возвращает конкретного моба по id из таблицы Mob
      * @param int $id
      * @return Mob
      * @throws MobNotFoundException
@@ -19,13 +19,13 @@ class MobMapper extends PsDbMapper {
     public function getById($id) {
         $id = (int)$id;
 
-        $query = $this->db->query("SELECT mm.id, mm.idLayout, "
-            . "mm.x, mm.y, mm.hp, "
-            . "m.id as idMob, m.name, m.level, m.maxHp, m.minDamage, "
-            . "m.maxDamage, m.experience, m.image, m.strength, "
-            . "m.dexterity, m.endurance "
-            . "FROM MobLayout mm "
-            . "INNER JOIN Mob m ON mm.idMob = m.id "
+        $query = $this->db->query("SELECT m.id, m.idLayout, "
+            . "m.x, m.y, m.hp, m.idMob, "
+            . "mi.name, m.level, mi.maxHp, mi.minDamage, "
+            . "mi.maxDamage, mi.experience, mi.image, mi.strength, "
+            . "mi.dexterity, mi.endurance "
+            . "FROM Mob m "
+            . "INNER JOIN MobInfo mi ON m.idMob = mi.id "
             . "LIMIT 1");
 
         if ($query->num_rows == 0) {
@@ -41,15 +41,15 @@ class MobMapper extends PsDbMapper {
      * @return Mob[]
      */
     public function getByCell(Cell $cell) {
-        $query = $this->db->query("SELECT mm.id, mm.idLayout, mm.x, "
-            . "mm.y, mm.hp, m.id as idMob, "
-            . "m.name, m.level, m.maxHp, m.minDamage, m.maxDamage, "
-            . "m.experience, m.image, m.strength, "
-            . "m.dexterity, m.endurance "
-            . "FROM MobLayout mm "
-            . "INNER JOIN Mob m ON mm.idMob = m.id "
-            . "WHERE mm.idLayout = " . $cell->getLayout()->getId() . " AND mm.x = " . $cell->getX()
-            . "AND mm.y = " . $cell->getY());
+        $query = $this->db->query("SELECT m.id, m.idLayout, m.x, "
+            . "m.y, m.hp, m.idMob, "
+            . "mi.name, mi.level, mi.maxHp, mi.minDamage, mi.maxDamage, "
+            . "mi.experience, mi.image, mi.strength, "
+            . "mi.dexterity, mi.endurance "
+            . "FROM Mob m "
+            . "INNER JOIN MobInfo mi ON m.idMob = mi.id "
+            . "WHERE m.idLayout = " . $cell->getLayout()->getId() . " AND m.x = " . $cell->getX()
+            . "AND m.y = " . $cell->getY());
 
         $mobs = array();
         while ($mob = $query->fetch_assoc()) {
