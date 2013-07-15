@@ -53,25 +53,39 @@ public class RequestRouter {
     }
 
     Response executeRequest(Request request) throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        if ("init".equals(request.getAction())) {
+            return init(request);
+        }
+
         Character character = characters.get(request.getWs());
 
-        if (null == character || ("Character".equals(request.getController())) && "set".equals(request.getAction())) {
-            try {
-                character = setCharacter(request);
-                characters.put(request.getWs(), character);
-
-                return new Response(true).appendData("character", character);
-            } catch (BadAuthKeyException e) {
-                return new Response(false, "Неверный ключ");
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                return new Response(false, "Ошибка");
-            }
+        if (null == character) {
+            return new Response(false, "Ошибка при проверке пользователя", true, "logout-success");
         }
 
         return (Response)controllers.get(request.getController())
             .getDeclaredMethod(request.getAction(), Character.class, Map.class)
             .invoke(controllersObjects.get(request.getController()), character, request.getArgs());
+    }
+
+    private Response init(Request request) {
+        try {
+            Character character = setCharacter(request);
+
+            for (Map.Entry<WebSocket, Character> entry : characters.entrySet()) {
+                if (character.getIdUser() == entry.getValue().getIdUser()) {
+                    removeCharacter(entry.getKey());
+                }
+            }
+
+            characters.put(request.getWs(), character);
+
+            return new Response(true).appendData("character", character);
+        } catch (BadAuthKeyException e) {
+            return new Response(false, "Ошибка при проверке пользователя", true, "logout-success");
+        } catch (Exception e) {
+            return new Response(false, "Ошибка");
+        }
     }
 
     private Character setCharacter(Request request) throws BadAuthKeyException, BadCoordinatesException {
