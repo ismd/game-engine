@@ -21,11 +21,35 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
     };
 
     ws.onmessage = function(message) {
-        listener(angular.fromJson(message.data));
+        var data = angular.fromJson(message.data);
+        console.log('Received response: ', data);
+
+        if (data.broadcast) {
+            $rootScope.$broadcast(data.broadcastName, data.data);
+        }
+
+        if (callbacks.hasOwnProperty(data.idCallback)) {
+            var idCallback = data.idCallback;
+
+            if (data.status) {
+                $rootScope.$apply(callbacks[idCallback].cb.resolve(data.data));
+
+                if (!initialized) {
+                    initialized = true;
+                    sendQueue();
+                }
+            } else {
+                $rootScope.$apply(callbacks[idCallback].cb.reject(data.message));
+            }
+
+            delete callbacks[idCallback];
+        }
     };
 
     ws.onerror = function() {
         opened = false;
+        initialized = false;
+        queue = [];
         alert('Не удалось подключиться к серверу');
     };
 
@@ -42,12 +66,12 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
 
         if (opened && initialized) {
             wsSend(request);
+        } else if (opened && 'init' === request.action) {
+            wsSend(request);
+        } else if ('init' === request.action) {
+            queue.unshift(request);
         } else {
-            if ('Character' === request.controller && 'set' === request.action) {
-                queue.unshift(request);
-            } else {
-                queue.push(request);
-            }
+            queue.push(request);
         }
 
         return defer.promise;
@@ -56,31 +80,6 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
     function wsSend(request) {
         console.log('Sending request: ', request);
         ws.send(JSON.stringify(request));
-    }
-
-    function listener(data) {
-        console.log('Received response: ', data);
-
-        if (data.broadcast) {
-            $rootScope.$broadcast(data.broadcastName, data.data);
-        }
-
-        if (callbacks.hasOwnProperty(data.idCallback)) {
-            var idCallback = data.idCallback;
-
-            if (data.status) {
-                $rootScope.$apply(callbacks[idCallback].cb.resolve(data.data, data.message));
-
-                if (!initialized) {
-                    initialized = true;
-                    sendQueue();
-                }
-            } else {
-                $rootScope.$apply(callbacks[idCallback].cb.reject(data.data, data.message));
-            }
-
-            delete callbacks[idCallback];
-        }
     }
 
     function getIdCallback() {
@@ -97,7 +96,7 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
         if (!initialized) {
             for (var i = 0; i < queue.length; i++) {
                 var request = queue[i];
-                if ('Character' === request.controller && 'set' === request.action) {
+                if ('init' === request.action) {
                     wsSend(request);
                     queue.splice(i, 1);
                     return;
@@ -111,6 +110,10 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
             wsSend(queue.shift());
         }
     }
+
+    $rootScope.$on('logout-success', function(e) {
+        queue = [];
+    });
 
     return service;
 });

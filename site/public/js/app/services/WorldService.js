@@ -5,8 +5,7 @@ angular.module('worldService', []).factory('World', function(Ws, $rootScope, $q)
 
     //var layout = [];
 
-    var canvas = $('canvas#layout');
-    var ctx    = canvas.get(0).getContext('2d');
+    var canvas, ctx;
 
     var sprites = new Image();
     sprites.src = '/img/world/cells.png';
@@ -14,7 +13,10 @@ angular.module('worldService', []).factory('World', function(Ws, $rootScope, $q)
     var player = new Image();
     player.src = '/img/world/hero.png';
 
-    sprites.onload = function() {
+    service.init = function() {
+        canvas = $('canvas#layout');
+        ctx    = canvas.get(0).getContext('2d');
+
         Ws.send({
             controller: 'Layout',
             action: 'getCurrentCell'
@@ -118,7 +120,7 @@ return;
         }
 
         ctx.drawImage(player, 150, 100, 50, 50);
-    }
+    };
 
     return service;
 });

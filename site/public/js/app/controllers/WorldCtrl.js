@@ -14,6 +14,8 @@ function WorldCtrl($scope, World, Ws, Character) {
         }
     };
 
+    World.init();
+
     $scope.selectItem = function(type, id) {
         $scope.selectedItem = {
             type: type,

@@ -1,6 +1,6 @@
 'use strict';
 
-function CharacterCtrl($scope, Character, $location) {
+function CharacterCtrl($scope, Character, Redirector) {
     Character.getCharacter().then(function(character) {
         $scope.character = character;
     });
@@ -9,7 +9,8 @@ function CharacterCtrl($scope, Character, $location) {
         Character.setCharacter(id)
             .then(function(character) {
                 $scope.character = character;
-                $location.path('/world');
+
+                Redirector.redirect('/world');
             }, function(message) {
                 $scope.setCharacterMessage = message;
             });
@@ -25,4 +26,4 @@ function CharacterCtrl($scope, Character, $location) {
     });
 }
 
-CharacterCtrl.$inject = ['$scope', 'Character', '$location'];
+CharacterCtrl.$inject = ['$scope', 'Character', 'Redirector'];

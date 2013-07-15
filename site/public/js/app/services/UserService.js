@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('userService', []).factory('User', function($q, $rootScope, $http, $location, $window) {
+angular.module('userService', []).factory('User', function($q, $rootScope, $http, Redirector, $window) {
     var service = {};
     var authKey = $window.authKey;
 
@@ -37,7 +37,7 @@ angular.module('userService', []).factory('User', function($q, $rootScope, $http
             }
 
             $rootScope.$broadcast('logout-success');
-            $location.path('/');
+            Redirector.redirect('/');
             defer.resolve();
         }).error(function() {
             defer.reject('Не удалось обратиться к серверу');

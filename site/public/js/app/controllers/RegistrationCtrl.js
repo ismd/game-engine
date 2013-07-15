@@ -1,11 +1,11 @@
 'use strict';
 
-function RegistrationCtrl($scope, Registration, User, $location) {
+function RegistrationCtrl($scope, Registration, User, Redirector) {
 
     $scope.register = function() {
         Registration.register($scope.user)
             .then(function() {
-                $location.path('/');
+                Redirector.redirect('/');
                 User.login($scope.user.login, $scope.user.password);
             }, function(message) {
                 $scope.message = message;
@@ -13,4 +13,4 @@ function RegistrationCtrl($scope, Registration, User, $location) {
     };
 }
 
-RegistrationCtrl.$inject = ['$scope', 'Registration', 'User', '$location'];
+RegistrationCtrl.$inject = ['$scope', 'Registration', 'User', 'Redirector'];

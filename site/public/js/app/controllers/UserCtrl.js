@@ -47,6 +47,10 @@ function UserCtrl($scope, $window, User) {
             $scope.user.characters.push(character);
         }
     });
+
+    $scope.$on('logout-success', function(e, character) {
+        delete($scope.user);
+    });
 }
 
 UserCtrl.$inject = ['$scope', '$window', 'User'];

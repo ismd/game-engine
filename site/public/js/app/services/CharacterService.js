@@ -10,6 +10,11 @@ angular.module('characterService', []).factory('Character', function($q, $rootSc
     service.setCharacter = function(id) {
         var defer = $q.defer();
 
+        if (undefined === id) {
+            defer.reject();
+            return defer.promise;
+        }
+
         if (requestSended) {
             queue.push(defer);
             return defer.promise;
@@ -18,8 +23,7 @@ angular.module('characterService', []).factory('Character', function($q, $rootSc
         requestSended = true;
 
         Ws.send({
-            controller: 'Character',
-            action: 'set',
+            action: 'init',
             args: {
                 id: id,
                 key: User.getAuthKey()
@@ -39,8 +43,10 @@ angular.module('characterService', []).factory('Character', function($q, $rootSc
             $http.post('/api/character/setId', {
                 id: id
             });
-        }, function(data, message) {
+        }, function(message) {
+            requestSended = false;
             defer.reject(message);
+            User.logout();
         });
 
         return defer.promise;
