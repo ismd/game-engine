@@ -36,7 +36,7 @@ public class World {
     }
 
     private void initializeLayouts(String dir) throws FileNotFoundException {
-        log.info("Initializing layouts");
+        log.info("Initializing layouts " + dir);
 
         Gson gson = new Gson();
         FileReader reader;

@@ -11,8 +11,13 @@ import java.net.UnknownHostException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+        if (1 != args.length) {
+            System.out.println("Usage: server.jar <layoutsPath>");
+            return;
+        }
+
         try {
-            Server server = new Server(8081, "/home/ismd/coding/game/layouts");
+            Server server = new Server(8081, args[0]);
             server.start();
             System.out.println("Server started on port: " + server.getPort());
         } catch (UnknownHostException e) {
