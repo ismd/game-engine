@@ -29,10 +29,8 @@ class RegistrationController extends PsController {
             'site'      => $post->site,
         ));
 
-        $mapper = new UserMapper;
-
         try {
-            $mapper->save($user);
+            UserMapper::getInstance()->save($user);
             $this->view->json(array(
                 'status'  => 'ok',
                 'message' => '',
