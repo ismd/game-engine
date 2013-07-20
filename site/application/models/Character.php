@@ -43,19 +43,22 @@ class Character extends Abstract_Character {
      */
     public function setDefaultValues() {
         $this->setLevel(1);
-        $this->setMoney(0);
-        $this->setIdLayout(1);
-        $this->setX(2);
-        $this->setY(2);
-        $this->setStrength(5);
-        $this->setDexterity(5);
-        $this->setEndurance(5);
-        $this->setHp(25);
-        $this->setMaxHp(25);
-        $this->setMinDamage(5);
-        $this->setMaxDamage(10);
-        $this->setImage('player.png');
         $this->setExperience(0);
+
+        $values = PsConfig::getInstance()->config->new_character;
+
+        $this->setMoney($values->money);
+        $this->setIdLayout($values->id_layout);
+        $this->setX($values->x);
+        $this->setY($values->y);
+        $this->setStrength($values->strength);
+        $this->setDexterity($values->dexterity);
+        $this->setEndurance($values->endurance);
+        $this->setHp($values->max_hp);
+        $this->setMaxHp($values->max_hp);
+        $this->setMinDamage($values->min_damage);
+        $this->setMaxDamage($values->max_damage);
+        $this->setImage($values->image);
 
         return $this;
     }
