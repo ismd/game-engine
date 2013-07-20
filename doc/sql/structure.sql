@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Июл 14 2013 г., 07:52
+-- Время создания: Июл 20 2013 г., 14:06
 -- Версия сервера: 5.5.31-MariaDB-log
 -- Версия PHP: 5.4.17
 
@@ -114,6 +114,39 @@ CREATE TABLE IF NOT EXISTS `Layout` (
 
 CREATE TABLE IF NOT EXISTS `Mob` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idMob` int(11) NOT NULL,
+  `idLayout` tinyint(4) NOT NULL,
+  `x` tinyint(4) NOT NULL,
+  `y` tinyint(4) NOT NULL,
+  `hp` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `coordinates` (`idLayout`,`x`,`y`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `MobAvailableCell`
+--
+
+CREATE TABLE IF NOT EXISTS `MobAvailableCell` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idMob` int(11) NOT NULL,
+  `idLayout` tinyint(4) NOT NULL,
+  `x` tinyint(4) NOT NULL,
+  `y` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `coordinates` (`idLayout`,`x`,`y`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `MobInfo`
+--
+
+CREATE TABLE IF NOT EXISTS `MobInfo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(40) NOT NULL,
   `level` tinyint(4) NOT NULL,
   `maxHp` int(11) NOT NULL,
@@ -127,39 +160,6 @@ CREATE TABLE IF NOT EXISTS `Mob` (
   `endurance` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `MobCell`
---
-
-CREATE TABLE IF NOT EXISTS `MobCell` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `idMob` int(11) NOT NULL,
-  `idLayout` tinyint(4) NOT NULL,
-  `x` tinyint(4) NOT NULL,
-  `y` tinyint(4) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `coordinates` (`idLayout`,`x`,`y`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `MobLayout`
---
-
-CREATE TABLE IF NOT EXISTS `MobLayout` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `idMob` int(11) NOT NULL,
-  `idLayout` tinyint(4) NOT NULL,
-  `x` tinyint(4) NOT NULL,
-  `y` tinyint(4) NOT NULL,
-  `hp` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `coordinates` (`idLayout`,`x`,`y`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 

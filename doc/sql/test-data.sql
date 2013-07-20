@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Июл 14 2013 г., 07:52
+-- Время создания: Июл 20 2013 г., 14:06
 -- Версия сервера: 5.5.31-MariaDB-log
 -- Версия PHP: 5.4.17
 
@@ -28,7 +28,7 @@ USE `game`;
 
 INSERT INTO `Character` (`id`, `idUser`, `name`, `level`, `money`, `idLayout`, `x`, `y`, `strength`, `dexterity`, `endurance`, `hp`, `maxHp`, `minDamage`, `maxDamage`, `image`, `experience`) VALUES
 (3, 4, 'ismd', 3, 10, 1, 3, 2, 10, 10, 10, 100, 100, 5, 10, 'player.png', 0),
-(4, 4, 'ismd1', 1, 10, 1, 3, 2, 10, 10, 10, 100, 100, 5, 10, 'player.png', 0),
+(4, 4, 'ismd1', 1, 10, 1, 3, 3, 10, 10, 10, 100, 100, 5, 10, 'player.png', 0),
 (5, 5, 'test', 1, 0, 1, 3, 2, 5, 5, 5, 25, 25, 5, 10, 'player.png', 0),
 (6, 5, 'test1', 1, 0, 1, 2, 2, 5, 5, 5, 25, 25, 5, 10, 'player.png', 0),
 (7, 5, 'test2', 1, 0, 1, 2, 2, 5, 5, 5, 25, 25, 5, 10, 'player.png', 0),
@@ -87,20 +87,35 @@ INSERT INTO `Layout` (`id`, `title`) VALUES
 -- Дамп данных таблицы `Mob`
 --
 
-INSERT INTO `Mob` (`id`, `name`, `level`, `maxHp`, `minDamage`, `maxDamage`, `maxInWorld`, `experience`, `image`, `strength`, `dexterity`, `endurance`) VALUES
-(1, 'Кот', 1, 10, 1, 2, 5, 3, 'cat.png', 1, 1, 1),
-(2, 'Собака', 2, 15, 2, 3, 2, 5, 'dog.png', 2, 2, 2),
-(3, 'Кот Вася', 3, 20, 3, 5, 2, 10, 'vasya.png', 3, 3, 3);
+INSERT INTO `Mob` (`id`, `idMob`, `idLayout`, `x`, `y`, `hp`) VALUES
+(1, 1, 1, 3, 2, 10),
+(2, 1, 1, 3, 2, 10),
+(3, 1, 1, 3, 2, 10),
+(4, 1, 1, 3, 3, 10),
+(5, 1, 1, 3, 2, 10),
+(6, 2, 1, 3, 2, 15),
+(7, 2, 1, 3, 2, 15),
+(8, 3, 1, 3, 2, 20),
+(9, 3, 1, 3, 2, 20);
 
 --
--- Дамп данных таблицы `MobCell`
+-- Дамп данных таблицы `MobAvailableCell`
 --
 
-INSERT INTO `MobCell` (`id`, `idMob`, `idLayout`, `x`, `y`) VALUES
+INSERT INTO `MobAvailableCell` (`id`, `idMob`, `idLayout`, `x`, `y`) VALUES
 (1, 1, 1, 3, 2),
 (2, 2, 1, 3, 2),
 (3, 3, 1, 3, 2),
 (4, 1, 1, 3, 3);
+
+--
+-- Дамп данных таблицы `MobInfo`
+--
+
+INSERT INTO `MobInfo` (`id`, `name`, `level`, `maxHp`, `minDamage`, `maxDamage`, `maxInWorld`, `experience`, `image`, `strength`, `dexterity`, `endurance`) VALUES
+(1, 'Кот', 1, 10, 1, 2, 5, 3, 'cat.png', 1, 1, 1),
+(2, 'Собака', 2, 15, 2, 3, 2, 5, 'dog.png', 2, 2, 2),
+(3, 'Кот Вася', 3, 20, 3, 5, 2, 10, 'vasya.png', 3, 3, 3);
 
 --
 -- Дамп данных таблицы `Npc`
@@ -114,7 +129,7 @@ INSERT INTO `Npc` (`id`, `name`, `greeting`, `image`, `idLayout`, `x`, `y`) VALU
 --
 
 INSERT INTO `User` (`id`, `login`, `password`, `email`, `info`, `site`, `registered`, `authKey`) VALUES
-(4, 'ismd', '202cb962ac59075b964b07152d234b70', '', NULL, NULL, '2012-05-22 17:35:00', '4106ed0f2162311ca1d964fbdc71cf3b'),
+(4, 'ismd', '202cb962ac59075b964b07152d234b70', '', NULL, NULL, '2012-05-22 17:35:00', '8c5a94b8b8daf033bc7310371a255922'),
 (5, 'ismd1', '25d55ad283aa400af464c76d713c07ad', '', '', '', '2012-05-24 14:57:32', NULL),
 (6, 'asdasd', 'a3dcb4d229de6fde0db5686dee47145d', '', '', '', '2012-05-24 17:06:05', NULL),
 (7, 'ismd2', 'f5bb0c8de146c67b44babbf4e6584cc0', '', '', '', '2012-12-24 20:38:08', NULL),
