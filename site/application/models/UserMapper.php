@@ -125,9 +125,9 @@ class UserMapper extends PsDbMapper {
         $user->setPassword(md5($user->getPassword()));
 
         if (null == $user->getId()) {
-            $stmt = $this->db->prepare("INSERT INTO User "
-                . "(login, password, email, info, site, registered, authKey) "
-                . "(?, ?, ?, ?, ?, NOW(), NULL)");
+            $stmt = $this->db->prepare("INSERT INTO `User` "
+                . "(login, password, email, info, site, registered) VALUES "
+                . "(?, ?, ?, ?, ?, NOW())");
 
             $stmt->bind_param('sssss',
                 $user->getLogin(),

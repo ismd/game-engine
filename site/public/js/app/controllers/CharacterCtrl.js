@@ -9,7 +9,6 @@ function CharacterCtrl($scope, Character, Redirector) {
         Character.setCharacter(id)
             .then(function(character) {
                 $scope.character = character;
-
                 Redirector.redirect('/world');
             }, function(message) {
                 $scope.setCharacterMessage = message;
@@ -23,6 +22,11 @@ function CharacterCtrl($scope, Character, Redirector) {
     $scope.$on('move', function(e, x, y) {
         $scope.character.x = x;
         $scope.character.y = y;
+    });
+
+    $scope.$on('set-character-success', function(e, character) {
+        $scope.character = character;
+        Redirector.redirect('/world');
     });
 }
 

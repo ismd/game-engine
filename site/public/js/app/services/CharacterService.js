@@ -33,11 +33,11 @@ angular.module('characterService', []).factory('Character', function($q, $rootSc
             requestSended = false;
             $('div#select-character').modal('hide');
 
-            $rootScope.$broadcast('set-character-success', data.character);
-            defer.resolve(data.character);
+            $rootScope.$broadcast('set-character-success', character);
+            defer.resolve(character);
 
             for (var i = 0; i < queue.length; i++) {
-                queue[i].resolve(data.character);
+                queue[i].resolve(character);
             }
 
             $http.post('/api/character/setId', {

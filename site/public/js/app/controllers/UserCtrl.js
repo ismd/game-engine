@@ -15,13 +15,7 @@ function UserCtrl($scope, $window, User) {
         User.login(username, password)
             .then(function(user) {
                 $scope.loginInProcess = false;
-                $scope.user = user;
-                User.showCharactersList()
-                    .then(function(characters) {
-                        $scope.user.characters = characters;
-                    }, function(message) {
-                        alert(message);
-                    });
+                setUser(user);
             }, function(message) {
                 $scope.loginInProcess = false;
                 $scope.loginMessage   = message;
@@ -48,9 +42,23 @@ function UserCtrl($scope, $window, User) {
         }
     });
 
+    $scope.$on('login-success', function(e, user) {
+        setUser(user);
+    });
+
     $scope.$on('logout-success', function(e, character) {
         delete($scope.user);
     });
+
+    function setUser(user) {
+        $scope.user = user;
+        User.showCharactersList()
+            .then(function(characters) {
+                $scope.user.characters = characters;
+            }, function(message) {
+                alert(message);
+            });
+    }
 }
 
 UserCtrl.$inject = ['$scope', '$window', 'User'];

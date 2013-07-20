@@ -20,6 +20,7 @@ angular.module('userService', []).factory('User', function($q, $rootScope, $http
 
             $('div#auth-form').modal('hide');
             defer.resolve(data.user);
+            $rootScope.$broadcast('login-success', data.user);
         }).error(function() {
             defer.reject('Не удалось обратиться к серверу');
         });
