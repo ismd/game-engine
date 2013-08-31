@@ -53,10 +53,11 @@ public class RequestRouter {
     }
 
     Response executeRequest(Request request) throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-        if ("init".equals(request.getAction())) {
-            return init(request);
-        } else if ("logout".equals(request.getAction())) {
-            return logout(request.getWs());
+        switch (request.getAction()) {
+            case "init":
+                return init(request);
+            case "logout":
+                return logout(request);
         }
 
         Character character = characters.get(request.getWs());
@@ -113,8 +114,8 @@ public class RequestRouter {
         characters.remove(ws);
     }
 
-    Response logout(WebSocket ws) {
-        removeCharacter(ws);
+    Response logout(Request request) {
+        removeCharacter(request.getWs());
         return new Response(true);
     }
 }

@@ -31,21 +31,21 @@ angular.module('userService', []).factory('User', function($q, $rootScope, $http
     service.logout = function() {
         var defer = $q.defer();
 
-        $http.post('/api/auth/logout').success(function(data) {
-            if ('ok' !== data.status) {
-                defer.reject();
-                return;
-            }
+        Ws.send({
+            action: 'logout'
+        }).then(function() {
+            $http.post('/api/auth/logout').success(function(data) {
+                if ('ok' !== data.status) {
+                    defer.reject();
+                    return;
+                }
 
-            Ws.send({
-                action: 'logout'
-            }).then(function() {
                 $rootScope.$broadcast('logout-success');
                 Redirector.redirect('/');
                 defer.resolve();
+            }).error(function() {
+                defer.reject('Не удалось обратиться к серверу');
             });
-        }).error(function() {
-            defer.reject('Не удалось обратиться к серверу');
         });
 
         return defer.promise;
