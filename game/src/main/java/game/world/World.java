@@ -2,11 +2,10 @@ package game.world;
 
 import game.layout.Layout;
 import com.google.gson.Gson;
-import game.character.Character;
-import game.mappers.CharacterMapper;
-import game.mappers.LayoutMapper;
-import game.mappers.MobMapper;
-import game.mappers.NpcMapper;
+import game.dao.DaoFactory;
+import game.dao.LayoutDao;
+import game.dao.MobDao;
+import game.dao.NpcDao;
 import game.mob.MobInfo;
 import game.mob.MobAvailableCell;
 import game.mob.Mob;
@@ -41,7 +40,7 @@ public class World {
         Gson gson = new Gson();
         FileReader reader;
 
-        layouts = new LayoutMapper().getAll();
+        layouts = DaoFactory.getInstance().getLayoutDao().getAll();
         for (Map.Entry<Integer, Layout> layout : layouts.entrySet()) {
             log.info("Parsing layout ({}) {}", layout.getValue().getId(), layout.getValue().getTitle());
 
@@ -53,14 +52,14 @@ public class World {
     private void initializeMobs() {
         log.info("Initializing mobs");
 
-        MobMapper mobMapper = new MobMapper();
-        mobMapper.removeAllFromWorld();
+        MobDao mobDao = DaoFactory.getInstance().getMobDao();
+        mobDao.removeAllFromWorld();
 
         Random random = new Random(System.currentTimeMillis());
 
-        for (MobInfo mob : mobMapper.getAllAvailable()) {
+        for (MobInfo mob : mobDao.getAllAvailable()) {
             int maxInWorld = mob.getMaxInWorld();
-            List<MobAvailableCell> availableCells = mobMapper.getAvailableCells(mob);
+            List<MobAvailableCell> availableCells = mobDao.getAvailableCells(mob);
 
             if (0 == availableCells.size()) {
                 log.warn("No available cells for mob `{}' ({})", mob.getName(), mob.getId());
@@ -90,7 +89,7 @@ public class World {
                 try {
                     Mob m = new Mob(mob);
                     layouts.get(idLayout).getCell(x, y).addContent(m);
-                    mobMapper.save(m);
+                    DaoFactory.getInstance().getMobDao().add(m);
                 } catch (BadCoordinatesException e) {
                     log.error("Can't place mob");
                 }
@@ -101,7 +100,7 @@ public class World {
     private void initializeNpcs() {
         log.info("Initializing NPCs");
 
-        for (Npc npc : new NpcMapper().getAll()) {
+        for (Npc npc : DaoFactory.getInstance().getNpcDao().getAll()) {
             log.info("Placing NPC `{}' ({}) on layout {} (x: {}, y: {})",
                 npc.getName(),
                 npc.getId(),

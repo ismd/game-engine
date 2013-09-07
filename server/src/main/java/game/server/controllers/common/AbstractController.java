@@ -1,7 +1,8 @@
-package game.server.controllers;
+package game.server.controllers.common;
 
+import game.User;
 import game.server.RequestRouter;
-import game.world.World;
+import game.World;
 
 /**
  * @author ismd
@@ -9,4 +10,8 @@ import game.world.World;
 abstract public class AbstractController {
 
     protected World world = RequestRouter.world;
+
+    public boolean init(User user) {
+        return true;
+    }
 }

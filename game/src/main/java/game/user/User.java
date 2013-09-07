@@ -13,14 +13,13 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    private String login;
-    private String email;
-    private String info;
-    private String site;
+    protected int id;
+    protected String login;
+    protected String email;
+    protected String info;
+    protected String site;
 //    @Temporal(TemporalType.TIMESTAMP)
 //    private Timestamp registered;
-    private String authKey;
 
     public User() {
     }
@@ -78,13 +77,4 @@ public class User {
 //        this.registered = registered;
 //        return this;
 //    }
-
-    public String getAuthKey() {
-        return authKey;
-    }
-
-    public User setAuthKey(String authKey) {
-        this.authKey = authKey;
-        return this;
-    }
 }

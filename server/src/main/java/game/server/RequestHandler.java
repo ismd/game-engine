@@ -18,7 +18,6 @@ public class RequestHandler implements Runnable {
     private WebSocket ws;
     private RequestRouter requestRouter;
     private String message;
-    private Request request;
     
     public static Map<WebSocket, Character> characters = new HashMap<>();
 
@@ -31,7 +30,7 @@ public class RequestHandler implements Runnable {
     @Override
     public void run() {
         Gson gson = new Gson();
-        request = gson.fromJson(message, Request.class);
+        Request request = gson.fromJson(message, Request.class);
 
         try {
             Response response = requestRouter.executeRequest(request.setWs(ws));

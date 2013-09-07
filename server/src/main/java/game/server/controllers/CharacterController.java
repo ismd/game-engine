@@ -1,5 +1,7 @@
 package game.server.controllers;
 
+import game.User;
+import game.server.controllers.common.AbstractAuthController;
 import game.character.Character;
 import game.layout.Cell;
 import game.server.Response;
@@ -9,9 +11,11 @@ import java.util.Map;
 /**
  * @author ismd
  */
-public class CharacterController extends AbstractController {
+public class CharacterController extends AbstractAuthController {
 
-    public Response move(Character character, Map<String, Double> args) {
+    public Response move(User user, Map<String, Double> args) {
+        Character character = user.getCurrentCharacter();
+
         int idLayout = args.get("idLayout").intValue();
         int x = args.get("x").intValue();
         int y = args.get("y").intValue();
