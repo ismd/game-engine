@@ -22,7 +22,7 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
 
     ws.onmessage = function(message) {
         var data = angular.fromJson(message.data);
-        console.log('Received response: ', data);
+        console.log('Received response:', data);
 
         if (data.broadcast) {
             $rootScope.$broadcast(data.broadcastName, data.data);
@@ -66,11 +66,13 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
 
         if (opened && initialized) {
             wsSend(request);
-        } else if (opened && 'init' === request.action) {
+        } else if (opened && 'User' === request.controller && 'login' === request.action) {
             wsSend(request);
-        } else if ('init' === request.action) {
+        } else if ('User' === request.controller && 'login' === request.action) {
+            console.log('Pushing at the beginning of queue', request);
             queue.unshift(request);
         } else {
+            console.log('Pushing at the end of queue', request);
             queue.push(request);
         }
 

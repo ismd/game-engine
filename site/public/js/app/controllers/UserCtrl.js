@@ -12,6 +12,7 @@ function UserCtrl($scope, $window, User) {
         }
 
         $scope.loginInProcess = true;
+
         User.login(username, password)
             .then(function(user) {
                 $scope.loginInProcess = false;

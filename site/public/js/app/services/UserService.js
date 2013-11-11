@@ -1,28 +1,28 @@
 'use strict';
 
-angular.module('userService', []).factory('User', function($q, $rootScope, $http, Redirector, $window, Ws) {
+angular.module('userService', []).factory('User', function($q, $rootScope, $http, Redirector, Ws) {
     var service = {};
-    var authKey = $window.authKey;
+
+    var user = null;
 
     service.login = function(username, password) {
         var defer = $q.defer();
 
-        $http.post('/api/auth/login', {
-            username: username,
-            password: password
-        }).success(function(data) {
-            if ('ok' !== data.status) {
-                defer.reject(data.message);
-                return;
+        Ws.send({
+            controller: 'User',
+            action: 'login',
+            args: {
+                username: username,
+                password: password
             }
-
-            authKey = data.key;
+        }).then(function(data) {
+            user = data;
 
             $('div#auth-form').modal('hide');
-            defer.resolve(data.user);
-            $rootScope.$broadcast('login-success', data.user);
-        }).error(function() {
-            defer.reject('Не удалось обратиться к серверу');
+            defer.resolve(user);
+            $rootScope.$broadcast('login-success', user);
+        }, function(message) {
+            defer.reject(message);
         });
 
         return defer.promise;
@@ -32,20 +32,12 @@ angular.module('userService', []).factory('User', function($q, $rootScope, $http
         var defer = $q.defer();
 
         Ws.send({
+            controller: 'User',
             action: 'logout'
         }).then(function() {
-            $http.post('/api/auth/logout').success(function(data) {
-                if ('ok' !== data.status) {
-                    defer.reject();
-                    return;
-                }
-
-                $rootScope.$broadcast('logout-success');
-                Redirector.redirect('/');
-                defer.resolve();
-            }).error(function() {
-                defer.reject('Не удалось обратиться к серверу');
-            });
+            $rootScope.$broadcast('logout-success');
+            Redirector.redirect('/');
+            defer.resolve();
         });
 
         return defer.promise;
@@ -63,10 +55,6 @@ angular.module('userService', []).factory('User', function($q, $rootScope, $http
         });
 
         return defer.promise;
-    };
-
-    service.getAuthKey = function() {
-        return authKey;
     };
 
     return service;
