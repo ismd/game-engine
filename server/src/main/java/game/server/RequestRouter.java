@@ -57,20 +57,22 @@ public class RequestRouter {
 
     Response executeRequest(Request request) throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         User user = World.users.get(request.getWs());
+        String controller = request.getController();
+        AbstractController controllerObject = controllersObjects.get(controller);
 
         // Проверяем аутентификацию
         try {
             if (!(boolean)AbstractController.class
                 .getDeclaredMethod("init", User.class)
-                .invoke(controllersObjects.get(request.getController()), user)) {
+                .invoke(controllerObject, user)) {
                 return new Response(false, "Аутентификация не пройдена");
             }
         } catch (NullPointerException ex) {
             return new Response(false, "Ошибка");
         }
 
-        return (Response)controllers.get(request.getController())
+        return (Response)controllers.get(controller)
             .getDeclaredMethod(request.getAction(), Request.class)
-            .invoke(controllersObjects.get(request.getController()), request);
+            .invoke(controllerObject, request);
     }
 }
