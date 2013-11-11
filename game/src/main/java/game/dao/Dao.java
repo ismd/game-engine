@@ -9,7 +9,7 @@ import org.hibernate.cfg.Configuration;
  */
 abstract public class Dao {
 
-    protected final SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+    protected final static SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
     protected Object getById(Class c, int id) {
         return sessionFactory.openSession().load(c, id);
