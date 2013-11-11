@@ -19,8 +19,8 @@ public class RequestRouter {
 
     public static World world;
 
-    private Map<String, Class<? extends AbstractController>> controllers = new HashMap<>();
-    private Map<String, AbstractController> controllersObjects = new HashMap<>();
+    private final Map<String, Class<? extends AbstractController>> controllers = new HashMap<>();
+    private final Map<String, AbstractController> controllersObjects = new HashMap<>();
 
     RequestRouter(String layoutsPath) throws FileNotFoundException {
         world = new World(layoutsPath);

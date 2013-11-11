@@ -23,19 +23,16 @@ abstract public class CellContent implements Serializable {
             character.setIdLayout(cell.getLayout().getId());
             character.setX(cell.getX());
             character.setY(cell.getY());
-            DaoFactory.getInstance().getCharacterDao().add(character);
         } else if (this instanceof Mob) {
             Mob mob = (Mob)this;
             mob.setIdLayout(cell.getLayout().getId());
             mob.setX(cell.getX());
             mob.setY(cell.getY());
-            DaoFactory.getInstance().getMobDao().add(mob);
         } else if (this instanceof Npc) {
             Npc npc = (Npc)this;
             npc.setIdLayout(cell.getLayout().getId());
             npc.setX(cell.getX());
             npc.setY(cell.getY());
-            DaoFactory.getInstance().getNpcDao().add(npc);
         }
 
         this.cell = cell;
