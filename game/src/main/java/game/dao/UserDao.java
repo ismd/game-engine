@@ -1,7 +1,9 @@
 package game.dao;
 
 import game.user.User;
-import org.hibernate.Session;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -16,13 +18,18 @@ public class UserDao extends Dao {
         return (User)getById(User.class, id);
     }
 
-    public User getByLoginAndPassword(String login, String password) {
-        Session session = sessionFactory.openSession();
+    public User getByLoginAndPassword(String login, String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        byte[] digest = MessageDigest.getInstance("MD5").digest(password.getBytes());
 
-        return (User)session.createCriteria(User.class)
+        StringBuilder sb = new StringBuilder();
+        for (byte b : digest) {
+            sb.append(Integer.toHexString((int) (b & 0xff)));
+        }
+
+        return (User)sessionFactory.openSession().createCriteria(User.class)
             .add(Restrictions.eq("login", login))
-            .add(Restrictions.eq("password", password))
+            .add(Restrictions.eq("password", sb.toString()))
             .setMaxResults(1)
-            .list();
+            .list().get(0);
     }
 }

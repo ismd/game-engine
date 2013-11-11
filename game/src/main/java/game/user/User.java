@@ -15,6 +15,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected int id;
     protected String login;
+    protected String password;
     protected String email;
     protected String info;
     protected String site;
@@ -22,6 +23,14 @@ public class User {
 //    private Timestamp registered;
 
     public User() {
+    }
+
+    public User(User user) {
+        id = user.getId();
+        login = user.getLogin();
+        email = user.getEmail();
+        info = user.getInfo();
+        site = user.getSite();
     }
 
     public int getId() {

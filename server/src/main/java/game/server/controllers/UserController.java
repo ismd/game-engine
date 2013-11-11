@@ -22,16 +22,15 @@ public class UserController extends AbstractController {
         try {
             Map<String, Object> args = request.getArgs();
 
-            User user = (User)DaoFactory.getInstance().getUserDao().getByLoginAndPassword(
+            User user = new User(DaoFactory.getInstance().getUserDao().getByLoginAndPassword(
                 (String)args.get("username"),
-                (String)args.get("password"));
+                (String)args.get("password")));
 
             World.users.put(request.getWs(), user);
+            return new Response(true);
         } catch (Exception e) {
             return new Response(false, "Неверный логин или пароль");
         }
-
-        return new Response(false, "Ошибка");
 
         /*try {
             for (Map.Entry<WebSocket, game.character.Character> entry : characters.entrySet()) {

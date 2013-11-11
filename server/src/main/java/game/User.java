@@ -11,6 +11,10 @@ public class User extends game.user.User {
 
     private Character currentCharacter;
 
+    public User(game.user.User user) {
+        super(user);
+    }
+
     public User setCurrentCharacter(Character character) {
         this.currentCharacter = character;
         return this;

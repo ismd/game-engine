@@ -60,7 +60,7 @@ public class RequestRouter {
 
         // Проверяем аутентификацию
         try {
-            if (!(boolean)controllers.get(request.getController())
+            if (!(boolean)AbstractController.class
                 .getDeclaredMethod("init", User.class)
                 .invoke(controllersObjects.get(request.getController()), user)) {
                 return new Response(false, "Аутентификация не пройдена");
@@ -70,7 +70,7 @@ public class RequestRouter {
         }
 
         return (Response)controllers.get(request.getController())
-            .getDeclaredMethod(request.getAction(), User.class, Map.class)
-            .invoke(controllersObjects.get(request.getController()), user, request.getArgs());
+            .getDeclaredMethod(request.getAction(), Request.class)
+            .invoke(controllersObjects.get(request.getController()), request);
     }
 }

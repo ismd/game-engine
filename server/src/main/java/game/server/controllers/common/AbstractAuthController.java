@@ -7,11 +7,8 @@ import game.User;
  */
 abstract public class AbstractAuthController extends AbstractController {
 
+    @Override
     public boolean init(User user) {
-        if (null == user.getCurrentCharacter()) {
-            return false;
-        }
-
-        return true;
+        return null != user.getCurrentCharacter();
     }
 }
