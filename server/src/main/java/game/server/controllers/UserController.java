@@ -22,6 +22,7 @@ public class UserController extends AbstractController {
         try {
             Map<String, Object> args = request.getArgs();
 
+            // Метод возвращает null, если пользователь не найден. Исключение всё равно случится.
             User user = new User(DaoFactory.getInstance().getUserDao().getByLoginAndPassword(
                 (String)args.get("username"),
                 (String)args.get("password")));

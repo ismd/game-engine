@@ -4,6 +4,7 @@ import game.user.User;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -26,10 +27,12 @@ public class UserDao extends Dao {
             sb.append(Integer.toHexString((int) (b & 0xff)));
         }
 
-        return (User)sessionFactory.openSession().createCriteria(User.class)
+        List result = sessionFactory.openSession().createCriteria(User.class)
             .add(Restrictions.eq("login", login))
             .add(Restrictions.eq("password", sb.toString()))
             .setMaxResults(1)
-            .list().get(0);
+            .list();
+
+        return 1 == result.size() ? (User)result.get(0) : null;
     }
 }
