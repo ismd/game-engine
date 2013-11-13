@@ -27,7 +27,6 @@ class AuthController extends PsController {
                 'status'  => 'ok',
                 'message' => '',
                 'user'    => $user->toArray(),
-                'key'     => $mapper->generateAuthKey($user),
             ));
         } catch (UserBadLoginOrPasswordException $e) {
             $this->view->json(array(

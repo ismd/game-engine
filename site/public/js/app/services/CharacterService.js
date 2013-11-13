@@ -24,8 +24,7 @@ angular.module('characterService', []).factory('Character', function($q, $rootSc
         Ws.send({
             action: 'init',
             args: {
-                id: id,
-                key: User.getAuthKey()
+                id: id
             }
         }).then(function(data) {
             character = data.character;
