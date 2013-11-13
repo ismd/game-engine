@@ -1,9 +1,8 @@
 'use strict';
 
 angular.module('userService', []).factory('User', function($q, $rootScope, $http, Redirector, Ws) {
-    var service = {};
-
-    var user = null;
+    var service = {},
+        user = null;
 
     service.login = function(username, password) {
         var defer = $q.defer();
@@ -48,10 +47,13 @@ angular.module('userService', []).factory('User', function($q, $rootScope, $http
 
         $('div#select-character').modal();
 
-        $http.get('/api/user/characters').success(function(data) {
+        Ws.send({
+            controller: 'User',
+            action: 'listCharacters'
+        }).then(function(data) {
             defer.resolve(data);
-        }).error(function() {
-            defer.reject('Не удалось обратиться к серверу');
+        }, function(message) {
+            defer.reject(message);
         });
 
         return defer.promise;
