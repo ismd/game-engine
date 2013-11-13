@@ -32,22 +32,6 @@ public class UserController extends AbstractController {
         } catch (Exception e) {
             return new Response(false, "Неверный логин или пароль");
         }
-
-        /*try {
-            for (Map.Entry<WebSocket, game.character.Character> entry : characters.entrySet()) {
-                if (character.getIdUser() == entry.getValue().getIdUser()) {
-                    removeCharacter(entry.getKey());
-                }
-            }
-
-            characters.put(request.getWs(), character);
-
-            return new Response(true).appendData("character", character);
-        } catch (BadAuthKeyException e) {
-            return new Response(false, "Ошибка при проверке пользователя", true, "logout-success");
-        } catch (Exception e) {
-            return new Response(false, "Ошибка");
-        }*/
     }
 
     public Response logout(Request request) {
@@ -79,7 +63,7 @@ public class UserController extends AbstractController {
         return new Response(false);
     }
 
-    public Response listCharacters(User user, Map<String, Double> args) {
-        return new Response(true).appendData("characters", user.getCharacters());
+    public Response listCharacters(Request request) {
+        return new Response(true).appendData("characters", World.users.get(request.getWs()).getCharacters());
     }
 }
