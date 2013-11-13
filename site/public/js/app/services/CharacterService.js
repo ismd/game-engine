@@ -1,11 +1,10 @@
 'use strict';
 
 angular.module('characterService', []).factory('Character', function($q, $rootScope, $http, Ws, User, $window) {
-    var service = {};
-
-    var character;
-    var requestSended = false;
-    var queue = [];
+    var service = {},
+        character,
+        requestSended = false,
+        queue = [];
 
     service.setCharacter = function(id) {
         var defer = $q.defer();

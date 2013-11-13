@@ -13,14 +13,12 @@ function UserCtrl($scope, $window, User) {
 
         $scope.loginInProcess = true;
 
-        User.login(username, password)
-            .then(function(user) {
-                $scope.loginInProcess = false;
-                setUser(user);
-            }, function(message) {
-                $scope.loginInProcess = false;
-                $scope.loginMessage   = message;
-            });
+        User.login(username, password).then(function(user) {
+            $scope.loginInProcess = false;
+        }, function(message) {
+            $scope.loginInProcess = false;
+            $scope.loginMessage   = message;
+        });
     };
 
     $scope.logout = function() {
@@ -53,12 +51,11 @@ function UserCtrl($scope, $window, User) {
 
     function setUser(user) {
         $scope.user = user;
-        User.showCharactersList()
-            .then(function(characters) {
-                $scope.user.characters = characters;
-            }, function(message) {
-                alert(message);
-            });
+        User.showCharactersList().then(function(characters) {
+            $scope.user.characters = characters;
+        }, function(message) {
+            alert(message);
+        });
     }
 }
 

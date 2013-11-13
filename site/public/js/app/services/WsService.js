@@ -3,15 +3,15 @@
 angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) {
     var service = {};
 
-    var callbacks = {};
-    var idCurrentCallback = 0;
+    var callbacks = {},
+        idCurrentCallback = 0;
 
-    var config = $window.ws;
-    var ws = new WebSocket('ws://' + config.host + ':' + config.port);
+    var config = $window.ws,
+        ws = new WebSocket('ws://' + config.host + ':' + config.port);
 
-    var opened = false;
-    var initialized = false;
-    var queue = [];
+    var opened = false,
+        initialized = false,
+        queue = [];
 
     ws.onopen = function() {
         opened = true;
@@ -32,11 +32,12 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
             var idCallback = data.idCallback;
 
             if (data.status) {
-                $rootScope.$apply(callbacks[idCallback].cb.resolve(data.data));
-
                 if (!initialized) {
                     initialized = true;
+                    $rootScope.$apply(callbacks[idCallback].cb.resolve(data.data));
                     sendQueue();
+                } else {
+                    $rootScope.$apply(callbacks[idCallback].cb.resolve(data.data));
                 }
             } else {
                 $rootScope.$apply(callbacks[idCallback].cb.reject(data.message));
