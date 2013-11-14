@@ -12,8 +12,9 @@
 
         <script src="/js/lib/jquery.js"></script>
         <script src="/js/lib/bootstrap.js"></script>
-        <script src="/js/lib/angular.js"></script>
-        <script src="/js/lib/angular-resource.js"></script>
+        <script src="/js/lib/angular/angular.js"></script>
+        <script src="/js/lib/angular/angular-route.js"></script>
+        <script src="/js/lib/angular/angular-resource.js"></script>
         <script src="/js/app/init.js"></script>
 
         <script src="/js/app/controllers/RegistrationCtrl.js"></script>
@@ -38,6 +39,13 @@
             host: '<?= $this->ws['host'] ?>',
             port: <?= $this->ws['port'] ?>
         };
+
+        <?php if (null != $this->user): ?>
+        window.user = {
+            id: <?= $this->user['id'] ?>,
+            auth_key: '<?= $this->user['auth_key'] ?>'
+        };
+        <?php endif ?>
         </script>
     </head>
     <body ng-controller="UserCtrl">
