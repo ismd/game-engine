@@ -51,7 +51,7 @@ class MobMapper extends PsDbMapper {
             . "WHERE m.idLayout = " . $cell->getLayout()->getId() . " AND m.x = " . $cell->getX()
             . "AND m.y = " . $cell->getY());
 
-        $mobs = array();
+        $mobs = [];
         while ($mob = $query->fetch_assoc()) {
             $mobs[] = new Mob($mob);
         }

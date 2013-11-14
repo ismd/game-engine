@@ -21,7 +21,7 @@ class AttributeMapper extends PsDbMapper {
         $stmt->execute();
         $result = $stmt->get_result();
 
-        $attributes = array();
+        $attributes = [];
         while ($attribute = $result->fetch_assoc()) {
             $attributes[] = new Attribute($attribute);
         }

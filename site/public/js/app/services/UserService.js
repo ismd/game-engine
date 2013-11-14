@@ -39,9 +39,13 @@ angular.module('userService', []).factory('User', function($q, $rootScope, $http
             controller: 'User',
             action: 'logout'
         }).then(function() {
-            $rootScope.$broadcast('logout-success');
-            Redirector.redirect('/');
-            defer.resolve();
+            webLogout().then(function() {
+                $rootScope.$broadcast('logout-success');
+                Redirector.redirect('/');
+                defer.resolve();
+            }, function(message) {
+                defer.reject(message);
+            });
         });
 
         return defer.promise;
@@ -77,6 +81,23 @@ angular.module('userService', []).factory('User', function($q, $rootScope, $http
             username: username,
             password: password
         }).success(function(data) {
+            if ('ok' !== data.status) {
+                defer.reject(data.message);
+                return;
+            }
+
+            defer.resolve();
+        }).error(function() {
+            defer.reject('Не удалось обратиться к серверу');
+        });
+
+        return defer.promise;
+    }
+
+    function webLogout() {
+        var defer = $q.defer();
+
+        $http.post('/api/auth/logout').success(function(data) {
             if ('ok' !== data.status) {
                 defer.reject(data.message);
                 return;

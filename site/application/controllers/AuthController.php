@@ -23,21 +23,21 @@ class AuthController extends PsController {
             $user = $mapper->getByLoginAndPassword($username, $password);
             $this->getSession()->user = $user;
 
-            $this->view->json(array(
+            $this->view->json([
                 'status'  => 'ok',
                 'message' => '',
                 'user'    => $user->toArray(),
-            ));
+            ]);
         } catch (UserBadLoginOrPasswordException $e) {
-            $this->view->json(array(
+            $this->view->json([
                 'status'  => 'error',
                 'message' => $e->getMessage(),
-            ));
+            ]);
         } catch (Exception $e) {
-            $this->view->json(array(
+            $this->view->json([
                 'status'  => 'error',
                 'message' => 'Ошибка',
-            ));
+            ]);
         }
     }
 
@@ -45,15 +45,10 @@ class AuthController extends PsController {
      * Разлогиниваемся
      */
     public function logoutAction() {
-        // Проверяем, не в бою ли персонаж
-        // FIXME: сделать проверку
-        //if () {
-        //}
-
         $this->getSession()->clear();
 
-        $this->view->json(array(
+        $this->view->json([
             'status' => 'ok',
-        ));
+        ]);
     }
 }

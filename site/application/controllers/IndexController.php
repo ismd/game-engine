@@ -10,27 +10,9 @@ class IndexController extends PsController {
         $this->view->controller = $this->registry->router->getController();
 
         $config = PsConfig::getInstance()->config->websocket;
-        $this->view->ws = array(
+        $this->view->ws = [
             'host' => $config->host,
             'port' => $config->port,
-        );
-
-        $session = $this->getSession();
-        if (null != $session->user) {
-            $this->view->user = $session->user;
-
-            $userCharacters = $session->user->getCharacters();
-
-            $characters = array();
-            foreach ($userCharacters as $character) {
-                $characters[] = $character->toArray();
-            }
-
-            $this->view->userCharacters = $characters;
-        }
-
-        if (null != $session->idCharacter) {
-            $this->view->idCharacter = $session->idCharacter;
-        }
+        ];
     }
 }

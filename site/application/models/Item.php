@@ -19,18 +19,15 @@ class Item extends Abstract_Item {
     protected $_attributes;
 
     public function toArray() {
-        $attributes = array();
+        $attributes = [];
         foreach ($this->getAttributes() as $attribute) {
             $attributes[] = $attribute->toArray();
         }
 
-        return array_merge(
-            parent::toArray(),
-            array(
-                'type'       => $this->getType(),
-                'attributes' => $attributes,
-            )
-        );
+        return array_merge(parent::toArray(), [
+            'type'       => $this->getType(),
+            'attributes' => $attributes,
+        ]);
     }
 
     public function setType($value) {

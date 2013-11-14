@@ -15,10 +15,10 @@ class CharacterController extends PsAuthController {
     public function createAction() {
         $post = $this->getRequest()->getPost();
         PsLogger::getInstance()->log($post);
-        $character = new Character(array(
+        $character = new Character([
             'user' => $this->getSession()->user,
             'name' => $post->name,
-        ));
+        ]);
 
         // Устанавливаем начальные значения
         $character->setDefaultValues();
@@ -30,105 +30,34 @@ class CharacterController extends PsAuthController {
             // Добавляем созданного персонажа в список персонажей пользователя
             $this->getSession()->user->setCharacters(array_merge(
                 $this->getSession()->user->getCharacters(),
-                array($mapper->getById($id))
+                [$mapper->getById($id)]
             ));
 
-            $this->view->json(array(
+            $this->view->json([
                 'status'  => 'ok',
                 'message' => '',
                 'id'      => $id,
-            ));
+            ]);
         } catch (CharacterLongNameException $e) {
-            $this->view->json(array(
+            $this->view->json([
                 'status'  => 'error',
                 'message' => $e->getMessage(),
-            ));
+            ]);
         } catch (CharacterShortNameException $e) {
-            $this->view->json(array(
+            $this->view->json([
                 'status'  => 'error',
                 'message' => $e->getMessage(),
-            ));
+            ]);
         } catch (CharacterNameExistsException $e) {
-            $this->view->json(array(
+            $this->view->json([
                 'status'  => 'error',
                 'message' => $e->getMessage(),
-            ));
+            ]);
         } catch (Exception $e) {
-            $this->view->json(array(
+            $this->view->json([
                 'status'  => 'error',
                 'message' => 'Ошибка',
-            ));
+            ]);
         }
     }
-
-    /**
-     * Устанавливает id текущего персонажа для сессии
-     * @post id
-     */
-    public function setIdAction() {
-        $idCharacter = (int)$this->getRequest()->getPost()->id;
-
-        if (!$this->getSession()->user->hasCharacter($idCharacter)) {
-            $this->view->json(array(
-                'status'  => 'error',
-                'message' => 'Ошибка',
-            ));
-            return;
-        }
-
-        $this->getSession()->idCharacter = $idCharacter;
-
-        $this->view->json(array(
-            'status'    => 'ok',
-            'message'   => '',
-        ));
-    }
-
-    /**
-     * Перемещение персонажа
-     * @post x
-     * @post y
-     */
-    /*public function moveAction() {
-        $post = $this->getRequest()->getPost();
-
-        $x = (int)$post->x;
-        $y = (int)$post->y;
-
-        $cell = new Cell($this->getSession()->character->getCell()->getLayout(), $x, $y);
-
-        try {
-            $this->getSession()->character->move($cell);
-
-            $this->view->json(array(
-                'status'  => 'ok',
-                'message' => '',
-                'layout'  => json_encode($this->getSession()->character->getCell()->getVicinity()),
-                'x'       => $cell->x,
-                'y'       => $cell->y,
-            ));
-        } catch (FastMoveException $e) {
-            $this->view->json(array(
-                'status'  => 'error',
-                'message' => $e->getMessage(),
-            ));
-        } catch (CantMoveHereException $e) {
-            $this->view->json(array(
-                'status'  => 'error',
-                'message' => $e->getMessage(),
-            ));
-        }
-    }*/
-
-    /**
-     * Список вещей персонажа
-     */
-    /*public function itemsAction() {
-        $items = array();
-        foreach ($this->getSession()->character->getItems() as $item) {
-            $items[] = $item->toArray();
-        }
-
-        $this->view->json($items);
-    }*/
 }

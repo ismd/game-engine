@@ -11,11 +11,11 @@ abstract class Abstract_Attribute extends PsModel {
     private $_value;
 
     public function toArray() {
-        return array(
+        return [
             'id'    => $this->getId(),
             'title' => $this->getTitle(),
             'value' => $this->getValue(),
-        );
+        ];
     }
 
     public function setId($value) {

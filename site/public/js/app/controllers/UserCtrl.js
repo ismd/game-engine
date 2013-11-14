@@ -1,8 +1,6 @@
 'use strict';
 
 function UserCtrl($scope, $window, User) {
-    $scope.user = $window.user;
-
     // true, когда происходит процесс авторизации
     $scope.loginInProcess = false;
 

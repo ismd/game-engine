@@ -24,11 +24,11 @@ abstract class Abstract_Cell extends PsModel {
         $x = (int)$x;
         $y = (int)$y;
 
-        $options = array(
+        $options = [
             'layout' => $layout,
             'x'      => $x,
             'y'      => $y,
-        );
+        ];
 
         parent::__construct($options);
     }

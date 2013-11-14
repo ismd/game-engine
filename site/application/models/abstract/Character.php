@@ -25,7 +25,7 @@ abstract class Abstract_Character extends PsModel {
     private $_y;
 
     public function toArray() {
-        return array(
+        return [
             'id'         => $this->getId(),
             'idUser'     => $this->getIdUser(),
             'name'       => $this->getName(),
@@ -43,7 +43,7 @@ abstract class Abstract_Character extends PsModel {
             'idLayout'   => $this->getIdLayout(),
             'x'          => $this->getX(),
             'y'          => $this->getY(),
-        );
+        ];
     }
 
     public function setId($value) {

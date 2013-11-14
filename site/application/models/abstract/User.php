@@ -15,14 +15,14 @@ abstract class Abstract_User extends PsModel {
     private $_registered;
 
     public function toArray() {
-        return array(
+        return [
             'id'         => $this->getId(),
             'login'      => $this->getLogin(),
             'email'      => $this->getEmail(),
             'info'       => $this->getInfo(),
             'site'       => $this->getSite(),
             'registered' => $this->getRegistered(),
-        );
+        ];
     }
 
     public function setId($value) {

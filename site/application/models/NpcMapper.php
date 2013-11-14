@@ -43,7 +43,7 @@ class NpcMapper extends PsDbMapper {
             . "WHERE idMap = " . $cell->getLayout()->getId() . " AND x = " . $cell->getX()
             . "AND y = " . $cell->getY());
 
-        $npcs = array();
+        $npcs = [];
         while ($npc = $query->fetch_assoc()) {
             $npcs[] = new Npc($npc);
         }

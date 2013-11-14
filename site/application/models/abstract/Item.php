@@ -13,13 +13,13 @@ abstract class Abstract_Item extends PsModel {
     private $_description;
 
     public function toArray() {
-        return array(
+        return [
             'id'          => $this->getId(),
             'title'       => $this->getTitle(),
             'idType'      => $this->getIdType(),
             'price'       => $this->getPrice(),
             'description' => $this->getDescription(),
-        );
+        ];
     }
 
     public function setId($value) {

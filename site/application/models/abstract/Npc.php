@@ -16,7 +16,7 @@ abstract class Abstract_Npc extends PsModel {
     private $_y;
 
     public function toArray() {
-        return array(
+        return [
             'id'       => $this->getId(),
             'idNpc'    => $this->getIdNpc(),
             'name'     => $this->getName(),
@@ -25,7 +25,7 @@ abstract class Abstract_Npc extends PsModel {
             'idLayout' => $this->getIdLayout(),
             'x'        => $this->getX(),
             'y'        => $this->getY(),
-        );
+        ];
     }
 
     public function setId($value) {

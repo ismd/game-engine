@@ -54,7 +54,7 @@ class ItemMapper extends PsDbMapper {
         $stmt->execute();
         $result = $stmt->get_result();
 
-        $items = array();
+        $items = [];
         while ($item = $result->fetch_assoc()) {
             $items[] = new Item($item);
         }

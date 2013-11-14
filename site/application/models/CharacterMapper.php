@@ -93,7 +93,7 @@ class CharacterMapper extends PsDbMapper {
         $stmt->execute();
         $result = $stmt->get_result();
 
-        $characters = array();
+        $characters = [];
         while ($character = $result->fetch_assoc()) {
             $characters[] = new Character($character);
         }
@@ -120,7 +120,7 @@ class CharacterMapper extends PsDbMapper {
         $stmt->execute();
         $result = $stmt->get_result();
 
-        $characters = array();
+        $characters = [];
         while ($character = $result->fetch_assoc()) {
             $characters[] = new Character($character);
         }

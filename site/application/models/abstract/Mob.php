@@ -24,7 +24,7 @@ abstract class Abstract_Mob extends PsModel {
     private $_y;
 
     public function toArray() {
-        return array(
+        return [
             'id'         => $this->getId(),
             'idMob'      => $this->getIdMob(),
             'name'       => $this->getName(),
@@ -41,7 +41,7 @@ abstract class Abstract_Mob extends PsModel {
             'idLayout'   => $this->getIdLayout(),
             'x'          => $this->getX(),
             'y'          => $this->getY(),
-        );
+        ];
     }
 
     public function setId($value) {

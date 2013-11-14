@@ -66,7 +66,7 @@ class FightModel extends AbstractModel {
         $filename = time() . '_' . $character['id'];
         $xml->asXML(SITEPATH . 'fights/' . $filename . '.xml');
 
-        return array('filename' => $filename, 'id' => 1);
+        return ['filename' => $filename, 'id' => 1];
     }
 
     public function status($fight, $character) {
@@ -77,7 +77,7 @@ class FightModel extends AbstractModel {
             die;
         }
 
-        $status      = array('character' => array(), 'events' => array());
+        $status      = ['character' => [], 'events' => []];
         $idInFight   = $fight['id'];
 
         $xml = simplexml_load_file($filename);
