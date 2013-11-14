@@ -66,4 +66,22 @@ public class UserController extends AbstractController {
     public Response listCharacters(Request request) {
         return new Response(true).appendData("characters", World.users.get(request.getWs()).getCharacters());
     }
+
+    public Response register(Request request) {
+        Map args = request.getArgs();
+        
+        if (!args.get("password").equals(args.get("password1"))) {
+            return new Response(false, "Пароли не совпадают");
+        }
+
+        User user = new User();
+
+        user.setLogin((String)args.get("login"));
+        user.setPassword((String)args.get("password"));
+        user.setEmail((String)args.get("email"));
+        user.setInfo((String)args.get("info"));
+        user.setSite((String)args.get("site"));
+
+        return new Response(true);
+    }
 }

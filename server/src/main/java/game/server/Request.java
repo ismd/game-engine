@@ -1,6 +1,5 @@
 package game.server;
 
-import game.character.Character;
 import java.util.Map;
 import org.java_websocket.WebSocket;
 
@@ -9,9 +8,9 @@ import org.java_websocket.WebSocket;
  */
 public class Request {
 
-    private String controller;
-    private String action;
-    private Map<String, Object> args;
+    private final String controller;
+    private final String action;
+    private final Map<String, Object> args;
     private int idCallback;
     private WebSocket ws;
 

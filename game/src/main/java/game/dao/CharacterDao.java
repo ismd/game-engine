@@ -27,4 +27,15 @@ public class CharacterDao extends Dao {
         session.close();
         return characters;
     }
+
+    public Character addCharacter(Character character) {
+        Session session = sessionFactory.openSession();
+
+        session.beginTransaction();
+        session.save(character);
+        session.getTransaction().commit();
+
+        session.close();
+        return character;
+    }
 }

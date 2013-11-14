@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -34,5 +35,16 @@ public class UserDao extends Dao {
             .list();
 
         return 1 == result.size() ? (User)result.get(0) : null;
+    }
+
+    public User addUser(User user) {
+        Session session = sessionFactory.openSession();
+
+        session.beginTransaction();
+        session.save(user);
+        session.getTransaction().commit();
+
+        session.close();
+        return user;
     }
 }

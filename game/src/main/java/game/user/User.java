@@ -51,6 +51,15 @@ public class User {
         return this;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public User setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
     public String getEmail() {
         return email;
     }

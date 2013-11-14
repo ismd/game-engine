@@ -49,4 +49,29 @@ public class CharacterController extends AbstractAuthController {
 
         return new Response(true);
     }
+
+    public Response create(Request request) {
+        User user = World.users.get(request.getWs());
+        Character character = new Character();
+
+        character.setIdUser(user.getId());
+        character.setName((String)request.getArgs().get("name"));
+        character.setLevel(1);
+        character.setMoney(10);
+        character.setIdLayout(1);
+        character.setX(3);
+        character.setY(3);
+        character.setStrength(10);
+        character.setDexterity(10);
+        character.setEndurance(10);
+        character.setHp(20);
+        character.setMaxHp(20);
+        character.setMinDamage(3);
+        character.setMaxDamage(5);
+        character.setImage("player.png");
+        character.setExperience(0);
+
+        DaoFactory.getInstance().getCharacterDao().addCharacter(character);
+        return new Response(true);
+    }
 }
