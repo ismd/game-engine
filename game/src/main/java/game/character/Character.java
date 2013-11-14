@@ -53,6 +53,26 @@ public class Character extends CellContent {
     public Character() {
     }
 
+    public Character(Character character) {
+        id = character.getId();
+        idUser = character.getIdUser();
+        name = character.getName();
+        level = character.getLevel();
+        money = character.getMoney();
+        idLayout = character.getIdLayout();
+        x = character.getX();
+        y = character.getY();
+        strength = character.getStrength();
+        dexterity = character.getDexterity();
+        endurance = character.getEndurance();
+        hp = character.getHp();
+        maxHp = character.getMaxHp();
+        minDamage = character.getMinDamage();
+        maxDamage = character.getMaxDamage();
+        image = character.getImage();
+        experience = character.getExperience();
+    }
+
     public int getId() {
         return id;
     }

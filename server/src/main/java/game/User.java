@@ -1,7 +1,7 @@
 package game;
 
-import game.character.Character;
 import game.dao.DaoFactory;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,8 +16,14 @@ public class User extends game.user.User {
     }
 
     public User setCurrentCharacter(Character character) {
-        this.currentCharacter = character;
-        return this;
+        for (Character c : getCharacters()) {
+            if (c.getId() == character.getId()) {
+                this.currentCharacter = character;
+                return this;
+            }
+        }
+
+        return null;
     }
 
     public Character getCurrentCharacter() {
@@ -25,6 +31,12 @@ public class User extends game.user.User {
     }
 
     public List<Character> getCharacters() {
-        return DaoFactory.getInstance().getCharacterDao().getByIdUser(id);
+        List<Character> result = new ArrayList<>();
+
+        for (game.character.Character character : DaoFactory.getInstance().getCharacterDao().getByIdUser(id)) {
+            result.add(new Character(character));
+        }
+
+        return result;
     }
 }

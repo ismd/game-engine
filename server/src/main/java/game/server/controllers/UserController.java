@@ -1,6 +1,6 @@
 package game.server.controllers;
 
-import game.character.Character;
+import game.Character;
 import game.server.controllers.common.AbstractController;
 import game.server.Response;
 import game.User;
@@ -51,7 +51,7 @@ public class UserController extends AbstractController {
         String key = (String)args.get("key");
 
         try {
-            Character character = DaoFactory.getInstance().getCharacterDao().getById(id.intValue());
+            Character character = new Character(DaoFactory.getInstance().getCharacterDao().getById(id.intValue()));
             character.setCell(world.getLayout(character.getIdLayout()).getCell(character.getX(), character.getY()));
             World.users.get(request.getWs()).setCurrentCharacter(character);
 
