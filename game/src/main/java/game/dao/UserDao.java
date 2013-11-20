@@ -2,6 +2,7 @@ package game.dao;
 
 import game.user.User;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -21,16 +22,12 @@ public class UserDao extends Dao {
     }
 
     public User getByLoginAndPassword(String login, String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        byte[] digest = MessageDigest.getInstance("MD5").digest(password.getBytes());
-
-        StringBuilder sb = new StringBuilder();
-        for (byte b : digest) {
-            sb.append(Integer.toHexString((int) (b & 0xff)));
-        }
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(password.getBytes());
 
         List result = sessionFactory.openSession().createCriteria(User.class)
             .add(Restrictions.eq("login", login))
-            .add(Restrictions.eq("password", sb.toString()))
+            .add(Restrictions.eq("password", String.format("%032x", new BigInteger(1, md.digest()))))
             .setMaxResults(1)
             .list();
 
