@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('main', ['userService', 'characterService', 'registrationService',
+angular.module('main', ['ngRoute', 'userService', 'characterService', 'registrationService',
     'characterCreateService', 'backgroundImageDirective', 'worldService',
     'wsService', 'redirectorService', 'autoResizableDirective'])
     .config(function($routeProvider, $locationProvider, $httpProvider) {
