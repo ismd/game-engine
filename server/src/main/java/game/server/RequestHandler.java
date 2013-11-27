@@ -15,9 +15,9 @@ import org.java_websocket.WebSocket;
  */
 public class RequestHandler implements Runnable {
 
-    private WebSocket ws;
-    private RequestRouter requestRouter;
-    private String message;
+    private final WebSocket ws;
+    private final RequestRouter requestRouter;
+    private final String message;
     
     public static Map<WebSocket, Character> characters = new HashMap<>();
 

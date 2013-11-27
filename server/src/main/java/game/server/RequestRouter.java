@@ -1,6 +1,5 @@
 package game.server;
 
-import game.User;
 import game.server.controllers.common.AbstractController;
 import game.server.controllers.common.AbstractAuthController;
 import game.World;
@@ -56,18 +55,17 @@ public class RequestRouter {
     }
 
     Response executeRequest(Request request) throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-        User user = World.users.get(request.getWs());
         String controller = request.getController();
         AbstractController controllerObject = controllersObjects.get(controller);
 
         // Проверяем аутентификацию
         try {
             if (!(boolean)AbstractController.class
-                .getDeclaredMethod("init", User.class)
-                .invoke(controllerObject, user)) {
+                .getDeclaredMethod("init", Request.class)
+                .invoke(controllerObject, request)) {
                 return new Response(false, "Аутентификация не пройдена");
             }
-        } catch (NullPointerException ex) {
+        } catch (NullPointerException e) {
             return new Response(false, "Ошибка");
         }
 

@@ -1,8 +1,7 @@
 'use strict';
 
-angular.module('userService', []).factory('User', function($q, $rootScope, $http, Redirector, Ws) {
-    var service = {},
-        user = null;
+angular.module('userService', []).factory('User', function($q, $rootScope, Redirector, Ws) {
+    var service = {};
 
     service.login = function(username, password) {
         var defer = $q.defer();
@@ -15,16 +14,8 @@ angular.module('userService', []).factory('User', function($q, $rootScope, $http
                 password: password
             }
         }).then(function(data) {
-            // Ещё аутентифицируемся на веб-сервере
-            webLogin(username, password).then(function() {
-                user = data;
-
-                $('div#auth-form').modal('hide');
-                defer.resolve(user);
-                $rootScope.$broadcast('login-success', user);
-            }, function(message) {
-                defer.reject(message);
-            });
+            $('div#auth-form').modal('hide');
+            defer.resolve(data.user);
         }, function(message) {
             defer.reject(message);
         });
@@ -39,13 +30,8 @@ angular.module('userService', []).factory('User', function($q, $rootScope, $http
             controller: 'User',
             action: 'logout'
         }).then(function() {
-            webLogout().then(function() {
-                $rootScope.$broadcast('logout-success');
-                Redirector.redirect('/');
-                defer.resolve();
-            }, function(message) {
-                defer.reject(message);
-            });
+            Redirector.redirect('/');
+            defer.resolve();
         });
 
         return defer.promise;
@@ -60,56 +46,13 @@ angular.module('userService', []).factory('User', function($q, $rootScope, $http
             controller: 'User',
             action: 'listCharacters'
         }).then(function(data) {
-            defer.resolve(data);
+            defer.resolve(data.characters);
         }, function(message) {
             defer.reject(message);
         });
 
         return defer.promise;
     };
-
-    /**
-     * Аутентификация на веб-сервере
-     * @param string username
-     * @param string password
-     * @returns promise
-     */
-    function webLogin(username, password) {
-        var defer = $q.defer();
-
-        $http.post('/api/auth/login', {
-            username: username,
-            password: password
-        }).success(function(data) {
-            if ('ok' !== data.status) {
-                defer.reject(data.message);
-                return;
-            }
-
-            defer.resolve();
-        }).error(function() {
-            defer.reject('Не удалось обратиться к серверу');
-        });
-
-        return defer.promise;
-    }
-
-    function webLogout() {
-        var defer = $q.defer();
-
-        $http.post('/api/auth/logout').success(function(data) {
-            if ('ok' !== data.status) {
-                defer.reject(data.message);
-                return;
-            }
-
-            defer.resolve();
-        }).error(function() {
-            defer.reject('Не удалось обратиться к серверу');
-        });
-
-        return defer.promise;
-    }
 
     return service;
 });

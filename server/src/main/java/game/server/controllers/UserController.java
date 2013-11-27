@@ -1,16 +1,15 @@
 package game.server.controllers;
 
-import game.Character;
 import game.server.controllers.common.AbstractController;
 import game.server.Response;
-import game.User;
 import game.World;
 import game.dao.DaoFactory;
 import game.server.Request;
-import game.world.exceptions.BadCoordinatesException;
+import game.user.User;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.java_websocket.WebSocket;
 
 /**
@@ -23,12 +22,20 @@ public class UserController extends AbstractController {
             Map<String, Object> args = request.getArgs();
 
             // Метод возвращает null, если пользователь не найден. Исключение всё равно случится.
-            User user = new User(DaoFactory.getInstance().getUserDao().getByLoginAndPassword(
+            User user = DaoFactory.getInstance().getUserDao().getByLoginAndPassword(
                 (String)args.get("username"),
-                (String)args.get("password")));
+                (String)args.get("password"));
 
             World.users.put(request.getWs(), user);
-            return new Response(true);
+
+            // Генерируем authKey
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(String.valueOf(System.currentTimeMillis()).getBytes());
+            String key = String.format("%032x", new BigInteger(1, md.digest()));
+
+            DaoFactory.getInstance().getUserDao().update(user.setAuthKey(key));
+
+            return new Response(true, true, "login-success").appendData("user", user);
         } catch (Exception e) {
             return new Response(false, "Неверный логин или пароль");
         }
@@ -41,47 +48,40 @@ public class UserController extends AbstractController {
         character.getCell().removeContent(character);
         World.users.remove(ws);
 
-        return new Response(true);
-    }
-
-    public Response setCharacter(Request request) {
-        Map<String, Object> args = request.getArgs();
-
-        Double id = (Double)args.get("id");
-        String key = (String)args.get("key");
-
-        try {
-            Character character = new Character(DaoFactory.getInstance().getCharacterDao().getById(id.intValue()));
-            character.setCell(world.getLayout(character.getIdLayout()).getCell(character.getX(), character.getY()));
-            World.users.get(request.getWs()).setCurrentCharacter(character);
-
-            return new Response(true).appendData("character", character);
-        } catch (BadCoordinatesException ex) {
-            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return new Response(false);
+        return new Response(true, true, "logout-success");
     }
 
     public Response listCharacters(Request request) {
         return new Response(true).appendData("characters", World.users.get(request.getWs()).getCharacters());
     }
 
-    public Response register(Request request) {
+    public Response register(Request request) throws NoSuchAlgorithmException {
         Map args = request.getArgs();
-        
+
+        if (null == args.get("login")) {
+            return new Response(false, "Необходимо указать логин");
+        }
+
         if (!args.get("password").equals(args.get("password1"))) {
             return new Response(false, "Пароли не совпадают");
         }
 
-        User user = new User();
+        if (null == args.get("email")) {
+            return new Response(false, "Необходимо указать e-mail");
+        }
 
-        user.setLogin((String)args.get("login"));
-        user.setPassword((String)args.get("password"));
-        user.setEmail((String)args.get("email"));
-        user.setInfo((String)args.get("info"));
-        user.setSite((String)args.get("site"));
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(((String)args.get("password")).getBytes());
+        String password = String.format("%032x", new BigInteger(1, md.digest()));
 
-        return new Response(true);
+        User user = new User().
+            setLogin((String)args.get("login")).
+            setPassword(password).
+            setEmail((String)args.get("email")).
+            setInfo((String)args.get("info")).
+            setSite((String)args.get("site"));
+
+        DaoFactory.getInstance().getUserDao().addUser(user);
+        return new Response(true).appendData("user", user);
     }
 }

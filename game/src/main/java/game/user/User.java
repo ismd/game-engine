@@ -1,9 +1,17 @@
 package game.user;
 
+import com.google.gson.annotations.Expose;
+import game.character.Character;
+import game.dao.DaoFactory;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 /**
  * @author ismd
@@ -11,16 +19,26 @@ import javax.persistence.Id;
 @Entity
 public class User {
 
+    @Transient
+    private Character currentCharacter;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected int id;
-    protected String login;
-    protected String password;
-    protected String email;
-    protected String info;
-    protected String site;
-//    @Temporal(TemporalType.TIMESTAMP)
-//    private Timestamp registered;
+    @Expose
+    private int id;
+    @Expose
+    private String login;
+    private String password;
+    @Expose
+    private String email;
+    @Expose
+    private String info;
+    @Expose
+    private String site;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date registered;
+    @Expose
+    private String authKey;
 
     public User() {
     }
@@ -31,6 +49,31 @@ public class User {
         email = user.getEmail();
         info = user.getInfo();
         site = user.getSite();
+    }
+
+    public User setCurrentCharacter(Character character) {
+        for (Character c : getCharacters()) {
+            if (c.getId() == character.getId()) {
+                currentCharacter = character;
+                return this;
+            }
+        }
+
+        return null;
+    }
+
+    public Character getCurrentCharacter() {
+        return currentCharacter;
+    }
+
+    public List<Character> getCharacters() {
+        List<Character> result = new ArrayList<>();
+
+        for (game.character.Character character : DaoFactory.getInstance().getCharacterDao().getByIdUser(getId())) {
+            result.add(new Character(character));
+        }
+
+        return result;
     }
 
     public int getId() {
@@ -87,12 +130,21 @@ public class User {
         return this;
     }
 
-//    public Timestamp getRegistered() {
-//        return registered;
-//    }
-//
-//    public User setRegistered(Timestamp registered) {
-//        this.registered = registered;
-//        return this;
-//    }
+    public Date getRegistered() {
+        return registered;
+    }
+
+    public User setRegistered(Date registered) {
+        this.registered = registered;
+        return this;
+    }
+
+    public String getAuthKey() {
+        return authKey;
+    }
+
+    public User setAuthKey(String authKey) {
+        this.authKey = authKey;
+        return this;
+    }
 }

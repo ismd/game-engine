@@ -1,7 +1,6 @@
 package game.layout;
 
 import game.character.Character;
-import game.dao.DaoFactory;
 import game.mob.Mob;
 import game.npc.Npc;
 import java.io.Serializable;

@@ -1,15 +1,21 @@
 'use strict';
 
-angular.module('characterCreateService', []).factory('CharacterCreate', function($q, $http) {
+angular.module('characterCreateService', []).factory('CharacterCreate', function($q, Ws) {
     var service = {};
 
-    service.create = function(data) {
+    service.create = function(character) {
         var defer = $q.defer();
 
-        $http.post('/api/character/create', data).success(function(data) {
-            'ok' === data.status ? defer.resolve(data.id) : defer.reject(data.message);
-        }).error(function() {
-            defer.reject('Не удалось обратиться к серверу');
+        Ws.send({
+            controller: 'Character',
+            action: 'create',
+            args: {
+                name: character.name
+            }
+        }).then(function(data) {
+            defer.resolve(data.character);
+        }, function(message) {
+            defer.reject(message);
         });
 
         return defer.promise;

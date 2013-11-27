@@ -24,10 +24,6 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
         var data = angular.fromJson(message.data);
         console.log('Received response:', data);
 
-        if (data.broadcast) {
-            $rootScope.$broadcast(data.broadcastName, data.data);
-        }
-
         if (callbacks.hasOwnProperty(data.idCallback)) {
             var idCallback = data.idCallback;
 
@@ -41,6 +37,10 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
                 }
             } else {
                 $rootScope.$apply(callbacks[idCallback].cb.reject(data.message));
+            }
+
+            if (data.broadcast) {
+                $rootScope.$broadcast(data.broadcastName, data.data);
             }
 
             delete callbacks[idCallback];
@@ -67,7 +67,9 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
 
         if (opened && initialized) {
             wsSend(request);
-        } else if (opened && 'User' === request.controller && 'login' === request.action) {
+        } else if (opened &&
+                (('User' === request.controller && 'login' === request.action) ||
+                ('User' === request.controller && 'register' === request.action))) {
             wsSend(request);
         } else if ('User' === request.controller && 'login' === request.action) {
             console.log('Pushing at the beginning of queue', request);

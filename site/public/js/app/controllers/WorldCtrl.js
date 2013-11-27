@@ -45,23 +45,10 @@ function WorldCtrl($scope, World, Ws, Character) {
                 break;
         }
 
-        Ws.send({
-            controller: 'Character',
-            action: 'move',
-            args: {
-                idLayout: $scope.cell.idLayout,
-                x: newX,
-                y: newY
-            }
-        }).then(function(data) {
-
+        Character.move($scope.cell.idLayout, newX, newY).then(function() {
+            $scope.selectedItem = null;
         });
     };
-
-    var idCharacter;
-    Character.getCharacter().then(function(character) {
-        idCharacter = character.id;
-    });
 
     $scope.$on('cell-update', function(e, data) {
         var cell = data.cell;
@@ -73,15 +60,14 @@ function WorldCtrl($scope, World, Ws, Character) {
         World.drawVicinity(cell.vicinity);
 
         for (var i = 0; i < cell.content.CHARACTER.length; i++) {
-            if (idCharacter === cell.content.CHARACTER[i].id) {
-                cell.content.CHARACTER.splice(i, 1);
-                break;
-            }
+            cell.content.CHARACTER.splice(i, 1);
         }
 
         $scope.cell.content.npcs = cell.content.NPC;
         $scope.cell.content.characters = cell.content.CHARACTER;
         $scope.cell.content.mobs = cell.content.MOB;
+
+        $scope.$apply();
     });
 }
 

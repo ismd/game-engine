@@ -6,12 +6,6 @@
 
 class RegistrationController extends PsController {
 
-    public function init() {
-        if (null != $this->getSession()->user) {
-            die;
-        }
-    }
-
     public function indexPartial() {
     }
 }

@@ -14,13 +14,5 @@ class IndexController extends PsController {
             'host' => $config->host,
             'port' => $config->port,
         ];
-
-        $session = $this->getSession();
-        if (null != $session->user) {
-            $this->view->user = [
-                'id'       => $session->user->getId(),
-                'auth_key' => $session->user->getAuthKey(),
-            ];
-        }
     }
 }

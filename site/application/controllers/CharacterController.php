@@ -4,7 +4,7 @@
  * @author ismd
  */
 
-class CharacterController extends PsAuthController {
+class CharacterController extends PsController {
 
     public function createPartial() {
     }

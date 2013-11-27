@@ -1,7 +1,7 @@
 package game.server.controllers;
 
-import game.Character;
-import game.User;
+import game.character.Character;
+import game.user.User;
 import game.World;
 import game.dao.DaoFactory;
 import game.server.controllers.common.AbstractAuthController;
@@ -18,12 +18,13 @@ import java.util.logging.Logger;
  */
 public class CharacterController extends AbstractAuthController {
 
-    public Response move(User user, Map<String, Double> args) {
-        Character character = user.getCurrentCharacter();
+    public Response move(Request request) {
+        Character character = World.users.get(request.getWs()).getCurrentCharacter();
+        Map<String, Object> args = request.getArgs();
 
-        int idLayout = args.get("idLayout").intValue();
-        int x = args.get("x").intValue();
-        int y = args.get("y").intValue();
+        int idLayout = (int)(double)args.get("idLayout");
+        int x = (int)(double)args.get("x");
+        int y = (int)(double)args.get("y");
 
         try {
             Cell cell = world.getLayout(idLayout).getCell(x, y);
@@ -38,40 +39,48 @@ public class CharacterController extends AbstractAuthController {
     }
 
     public Response set(Request request) {
-        int id = (int)request.getArgs().get("id");
+        int id = (int)(double)request.getArgs().get("id");
 
         try {
-            World.users.get(request.getWs()).setCurrentCharacter(new Character(DaoFactory.getInstance().getCharacterDao().getById(id)));
+            Character character = new Character(DaoFactory.getInstance().getCharacterDao().getById(id));
+            User user = World.users.get(request.getWs());
+
+            if (character.getIdUser() != user.getId()) {
+                return new Response(false, "Ошибка");
+            }
+
+            character.setCell(world.getLayout(character.getIdLayout()).getCell(character.getX(), character.getY()));
+            user.setCurrentCharacter(character);
+
+            return new Response(true, true, "set-character-success").appendData("character", character);
         } catch (BadCoordinatesException ex) {
             Logger.getLogger(CharacterController.class.getName()).log(Level.SEVERE, null, ex);
             return new Response(false, "Ошибка");
         }
-
-        return new Response(true);
     }
 
     public Response create(Request request) {
         User user = World.users.get(request.getWs());
-        Character character = new Character();
 
-        character.setIdUser(user.getId());
-        character.setName((String)request.getArgs().get("name"));
-        character.setLevel(1);
-        character.setMoney(10);
-        character.setIdLayout(1);
-        character.setX(3);
-        character.setY(3);
-        character.setStrength(10);
-        character.setDexterity(10);
-        character.setEndurance(10);
-        character.setHp(20);
-        character.setMaxHp(20);
-        character.setMinDamage(3);
-        character.setMaxDamage(5);
-        character.setImage("player.png");
-        character.setExperience(0);
+        Character character = new Character().
+            setIdUser(user.getId()).
+            setName((String)request.getArgs().get("name")).
+            setLevel(1).
+            setMoney(10).
+            setIdLayout(1).
+            setX(3).
+            setY(3).
+            setStrength(10).
+            setDexterity(10).
+            setEndurance(10).
+            setHp(20).
+            setMaxHp(20).
+            setMinDamage(3).
+            setMaxDamage(5).
+            setImage("player.png").
+            setExperience(0);
 
         DaoFactory.getInstance().getCharacterDao().addCharacter(character);
-        return new Response(true);
+        return new Response(true).appendData("character", character);
     }
 }

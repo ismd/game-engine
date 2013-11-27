@@ -1,19 +1,21 @@
 'use strict';
 
 function CharacterCtrl($scope, Character, Redirector) {
-    Character.getCharacter().then(function(character) {
-        $scope.character = character;
-    });
+    $scope.character = null;
 
     $scope.setCharacter = function(id) {
-        Character.setCharacter(id)
-            .then(function(character) {
-                $scope.character = character;
-                Redirector.redirect('/world');
-            }, function(message) {
-                $scope.setCharacterMessage = message;
-            });
+        Character.setCharacter(id).then(function() {
+            // Обработка при броадкасте set-character-success
+        }, function(message) {
+            $scope.setCharacterMessage = message;
+        });
     };
+
+    $scope.$on('set-character-success', function(e, data) {
+        $scope.character = data.character;
+        Redirector.redirect('/world');
+        $scope.$apply();
+    });
 
     $scope.$on('logout-success', function(e) {
         delete($scope.character);
@@ -24,10 +26,9 @@ function CharacterCtrl($scope, Character, Redirector) {
         $scope.character.y = y;
     });
 
-    $scope.$on('set-character-success', function(e, character) {
-        $scope.character = character;
-        Redirector.redirect('/world');
-    });
+    $scope.redirectToCharacterCreate = function() {
+        Redirector.redirect('/character/create');
+    };
 }
 
 CharacterCtrl.$inject = ['$scope', 'Character', 'Redirector'];

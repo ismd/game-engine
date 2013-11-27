@@ -1,15 +1,26 @@
 'use strict';
 
-angular.module('registrationService', []).factory('Registration', function($q, $http) {
+angular.module('registrationService', []).factory('Registration', function($q, Ws) {
     var service = {};
 
-    service.register = function(data) {
+    service.register = function(user) {
         var defer = $q.defer();
 
-        $http.post('/api/registration/register', data).success(function(data) {
-            'ok' === data.status ? defer.resolve() : defer.reject(data.message);
-        }).error(function() {
-            defer.reject('Не удалось обратиться к серверу');
+        Ws.send({
+            controller: 'User',
+            action: 'register',
+            args: {
+                login: user.login,
+                password: user.password,
+                password1: user.password1,
+                email: user.email,
+                info: user.info,
+                site: user.site
+            }
+        }).then(function(data) {
+            defer.resolve(data.user);
+        }, function(message) {
+            defer.reject(message);
         });
 
         return defer.promise;

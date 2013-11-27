@@ -3,8 +3,8 @@
 function CharacterCreateCtrl($scope, CharacterCreate, Character) {
 
     $scope.create = function() {
-        CharacterCreate.create($scope.newCharacter).then(function(id) {
-            Character.setCharacter(id);
+        CharacterCreate.create($scope.newCharacter).then(function(character) {
+            Character.setCharacter(character.id);
         }, function(message) {
             $scope.message = message;
         });

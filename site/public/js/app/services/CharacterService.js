@@ -1,65 +1,43 @@
 'use strict';
 
-angular.module('characterService', []).factory('Character', function($q, $rootScope, $http, Ws, User, $window) {
-    var service = {},
-        character,
-        requestSended = false,
-        queue = [];
+angular.module('characterService', []).factory('Character', function($q, Ws) {
+    var service = {};
 
     service.setCharacter = function(id) {
         var defer = $q.defer();
 
-        if (undefined === id) {
-            defer.reject();
-            return defer.promise;
-        }
-
-        if (requestSended) {
-            queue.push(defer);
-            return defer.promise;
-        }
-
-        requestSended = true;
-
         Ws.send({
-            action: 'init',
+            controller: 'Character',
+            action: 'set',
             args: {
                 id: id
             }
         }).then(function(data) {
-            character = data.character;
-            requestSended = false;
             $('div#select-character').modal('hide');
-
-            $rootScope.$broadcast('set-character-success', character);
-            defer.resolve(character);
-
-            for (var i = 0; i < queue.length; i++) {
-                queue[i].resolve(character);
-            }
-
-            $http.post('/api/character/setId', {
-                id: id
-            });
+            defer.resolve(data.character);
         }, function(message) {
-            requestSended = false;
             defer.reject(message);
-            User.logout();
         });
 
         return defer.promise;
     };
 
-    service.getCharacter = function() {
+    service.move = function(idLayout, x, y) {
         var defer = $q.defer();
 
-        if (character) {
-            defer.resolve(character);
-        } else {
-            service.setCharacter($window.idCharacter).then(function(character) {
-                defer.resolve(character);
-            });
-        }
+        Ws.send({
+            controller: 'Character',
+            action: 'move',
+            args: {
+                idLayout: idLayout,
+                x: x,
+                y: y
+            }
+        }).then(function(data) {
+            defer.resolve(data.cell);
+        }, function(message) {
+            defer.reject(message);
+        });
 
         return defer.promise;
     };

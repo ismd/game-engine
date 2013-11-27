@@ -1,6 +1,8 @@
 'use strict';
 
-function UserCtrl($scope, $window, User) {
+function UserCtrl($scope, User) {
+    $scope.user = null;
+
     // true, когда происходит процесс авторизации
     $scope.loginInProcess = false;
 
@@ -11,8 +13,8 @@ function UserCtrl($scope, $window, User) {
 
         $scope.loginInProcess = true;
 
-        User.login(username, password).then(function(user) {
-            $scope.loginInProcess = false;
+        User.login(username, password).then(function() {
+            // Обработка в броадкасте login-success
         }, function(message) {
             $scope.loginInProcess = false;
             $scope.loginMessage   = message;
@@ -25,8 +27,9 @@ function UserCtrl($scope, $window, User) {
         });
     };
 
-    $scope.$on('set-character-success', function(e, character) {
-        var found = false;
+    $scope.$on('set-character-success', function(e, data) {
+        var character = data.character,
+            found = false;
 
         angular.forEach($scope.user.characters, function(item) {
             if (item.id === character.id) {
@@ -39,22 +42,21 @@ function UserCtrl($scope, $window, User) {
         }
     });
 
-    $scope.$on('login-success', function(e, user) {
-        setUser(user);
-    });
+    $scope.$on('login-success', function(e, data) {
+        $scope.user = data.user;
 
-    $scope.$on('logout-success', function(e, character) {
-        delete($scope.user);
-    });
-
-    function setUser(user) {
-        $scope.user = user;
         User.showCharactersList().then(function(characters) {
             $scope.user.characters = characters;
         }, function(message) {
             alert(message);
         });
-    }
+
+        $scope.loginInProcess = false;
+    });
+
+    $scope.$on('logout-success', function(e) {
+        delete($scope.user);
+    });
 }
 
-UserCtrl.$inject = ['$scope', '$window', 'User'];
+UserCtrl.$inject = ['$scope', 'User'];

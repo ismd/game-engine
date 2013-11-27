@@ -23,7 +23,6 @@ public class Cell {
     private int x;
     @Expose
     private int y;
-    @Expose
     private SpriteCoordinate spriteCoordinate;
     @Expose
     private SpriteCoordinate[][] vicinity = new SpriteCoordinate[7][5];

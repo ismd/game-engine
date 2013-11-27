@@ -4,17 +4,11 @@
  * @author ismd
  */
 
-class WorldController extends PsAuthController {
+class WorldController extends PsController {
 
-    /**
-     * Главная страница мира
-     */
     public function indexPartial() {
     }
 
-    /**
-     * Страница инвентаря
-     */
     public function inventoryPartial() {
     }
 }

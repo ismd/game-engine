@@ -39,13 +39,6 @@
             host: '<?= $this->ws['host'] ?>',
             port: <?= $this->ws['port'] ?>
         };
-
-        <?php if (null != $this->user): ?>
-        window.user = {
-            id: <?= $this->user['id'] ?>,
-            auth_key: '<?= $this->user['auth_key'] ?>'
-        };
-        <?php endif ?>
         </script>
     </head>
     <body ng-controller="UserCtrl">
@@ -56,7 +49,7 @@
                     <div class="sidebar-nav-fixed with-borders">
                         <div ng-switch on="user" class="row">
                             <!-- Пользователь не выбран -->
-                            <div ng-switch-when="undefined" class="span2">
+                            <div ng-switch-when="null" class="span2">
                                 <button class="left-pannel-button btn btn-primary"
                                         href="#auth-form"
                                         role="button"
@@ -75,7 +68,7 @@
                                 <!-- Инфа о персонаже -->
                                 <div ng-switch on="character" class="row">
                                     <!-- Персонаж не выбран -->
-                                    <div ng-switch-when="undefined" class="span2">
+                                    <div ng-switch-when="null" class="span2">
                                         <a id="select-character-open"
                                            href="#select-character"
                                            role="button"
@@ -155,33 +148,37 @@
                             <h3>Выберите персонажа</h3>
                         </div>
                         <div class="modal-body">
-                            <img ng-show="!user.characters" class="loading" src="/img/loading.gif" />
+                            <div ng-switch on="user.characters">
+                                <img ng-switch-when="null" class="loading" src="/img/loading.gif" />
 
-                            <table ng-show="user.characters" class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Имя</th>
-                                        <th>Уровень</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="character in user.characters">
-                                        <td ng-click="setCharacter(character.id)">
-                                            <img ng-src="/img/world/characters/{{character.image}}" />
-                                            {{character.name}}
-                                        </td>
-                                        <td>{{character.level}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                <table ng-switch-default ng-show="0 < user.characters.length" class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Имя</th>
+                                            <th>Уровень</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="character in user.characters">
+                                            <td ng-click="setCharacter(character.id)">
+                                                <img ng-src="/img/world/characters/{{character.image}}" />
+                                                {{character.name}}
+                                            </td>
+                                            <td>{{character.level}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                            <div ng-show="0 == user.characters.length">
+                            <div ng-show="0 === user.characters.length">
                                 У вас пока нет созданных персонажей
                             </div>
                         </div>
                         <div class="modal-footer">
                             <p class="text-error">{{setCharacterMessage}}</p>
-                            <a href="/character/create" class="btn" data-dismiss="modal">Создать персонажа</a>
+                            <button ng-click="redirectToCharacterCreate()"
+                                    class="btn"
+                                    data-dismiss="modal">Создать персонажа</button>
                         </div>
                     </div>
                 </div>
