@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('userService', []).factory('User', function($q, $rootScope, Redirector, Ws) {
+angular.module('userService', []).factory('User', function($q, Common, Ws, $rootScope) {
     var service = {};
 
     service.login = function(username, password) {
@@ -15,8 +15,34 @@ angular.module('userService', []).factory('User', function($q, $rootScope, Redir
             }
         }).then(function(data) {
             $('div#auth-form').modal('hide');
+
+            localStorage.setItem('user', JSON.stringify(data.user));
             defer.resolve(data.user);
         }, function(message) {
+            defer.reject(message);
+        });
+
+        return defer.promise;
+    };
+
+    service.loginByAuthKey = function(id, authKey) {
+        var defer = $q.defer();
+
+        Ws.send({
+            controller: 'User',
+            action: 'loginByAuthKey',
+            args: {
+                id: id,
+                authKey: authKey
+            }
+        }).then(function(data) {
+            localStorage.setItem('user', JSON.stringify(data.user));
+            localStorage.setItem('character', JSON.stringify(data.character));
+            defer.resolve(data.user);
+        }, function(message) {
+            localStorage.setItem('user', null);
+            localStorage.setItem('character', null);
+            $rootScope.$broadcast('logout-success');
             defer.reject(message);
         });
 
@@ -30,7 +56,7 @@ angular.module('userService', []).factory('User', function($q, $rootScope, Redir
             controller: 'User',
             action: 'logout'
         }).then(function() {
-            Redirector.redirect('/');
+            Common.redirect('/');
             defer.resolve();
         });
 

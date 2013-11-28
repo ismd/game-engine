@@ -70,7 +70,7 @@ public class RequestRouter {
         }
 
         return (Response)controllers.get(controller)
-            .getDeclaredMethod(request.getAction(), Request.class)
+            .getDeclaredMethod(request.getAction() + "Action", Request.class)
             .invoke(controllerObject, request);
     }
 }

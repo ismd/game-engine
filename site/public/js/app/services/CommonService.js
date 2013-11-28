@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('redirectorService', []).factory('Redirector', function($location, $route) {
+angular.module('commonService', []).factory('Common', function($location, $route) {
     var service = {};
 
     service.redirect = function(url) {

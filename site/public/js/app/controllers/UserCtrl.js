@@ -1,7 +1,11 @@
 'use strict';
 
 function UserCtrl($scope, User) {
-    $scope.user = null;
+    $scope.user = JSON.parse(localStorage.getItem('user'));
+
+    if (null !== $scope.user) {
+        User.loginByAuthKey($scope.user.id, $scope.user.authKey);
+    }
 
     // true, когда происходит процесс авторизации
     $scope.loginInProcess = false;
@@ -22,9 +26,7 @@ function UserCtrl($scope, User) {
     };
 
     $scope.logout = function() {
-        User.logout().then(function() {
-            delete($scope.user);
-        });
+        User.logout();
     };
 
     $scope.$on('set-character-success', function(e, data) {
@@ -55,7 +57,13 @@ function UserCtrl($scope, User) {
     });
 
     $scope.$on('logout-success', function(e) {
-        delete($scope.user);
+        $scope.user = null;
+        $scope.$apply();
+        localStorage.setItem('user', null);
+    });
+
+    $scope.$on('init', function(e, data) {
+        $scope.user = data.user;
     });
 }
 

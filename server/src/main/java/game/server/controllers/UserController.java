@@ -1,5 +1,6 @@
 package game.server.controllers;
 
+import game.character.Character;
 import game.server.controllers.common.AbstractController;
 import game.server.Response;
 import game.World;
@@ -17,7 +18,7 @@ import org.java_websocket.WebSocket;
  */
 public class UserController extends AbstractController {
 
-    public Response login(Request request) {
+    public Response loginAction(Request request) {
         try {
             Map<String, Object> args = request.getArgs();
 
@@ -41,9 +42,9 @@ public class UserController extends AbstractController {
         }
     }
 
-    public Response logout(Request request) {
+    public Response logoutAction(Request request) {
         WebSocket ws = request.getWs();
-        game.character.Character character = World.users.get(ws).getCurrentCharacter();
+        Character character = World.users.get(ws).getCurrentCharacter();
 
         character.getCell().removeContent(character);
         World.users.remove(ws);
@@ -51,11 +52,11 @@ public class UserController extends AbstractController {
         return new Response(true, true, "logout-success");
     }
 
-    public Response listCharacters(Request request) {
+    public Response listCharactersAction(Request request) {
         return new Response(true).appendData("characters", World.users.get(request.getWs()).getCharacters());
     }
 
-    public Response register(Request request) throws NoSuchAlgorithmException {
+    public Response registerAction(Request request) throws NoSuchAlgorithmException {
         Map args = request.getArgs();
 
         if (null == args.get("login")) {
@@ -83,5 +84,27 @@ public class UserController extends AbstractController {
 
         DaoFactory.getInstance().getUserDao().addUser(user);
         return new Response(true).appendData("user", user);
+    }
+
+    public Response loginByAuthKeyAction(Request request) {
+        Map<String, Object> args = request.getArgs();
+
+        int id = (int)(double)args.get("id");
+        String authKey = (String)args.get("authKey");
+
+        for (Map.Entry<WebSocket, User> entry : World.users.entrySet()) {
+            User user = entry.getValue();
+
+            if (id == user.getId() && authKey.equals(user.getAuthKey())) {
+                World.users.put(request.getWs(), user);
+                World.users.remove(entry.getKey());
+
+                return new Response(true, true, "init").
+                    appendData("user", user).
+                    appendData("character", user.getCurrentCharacter());
+            }
+        }
+
+        return new Response(false);
     }
 }

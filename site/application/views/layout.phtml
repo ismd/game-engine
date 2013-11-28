@@ -17,19 +17,20 @@
         <script src="/js/lib/angular/angular-resource.js"></script>
         <script src="/js/app/init.js"></script>
 
+        <script src="/js/app/controllers/CommonCtrl.js"></script>
         <script src="/js/app/controllers/RegistrationCtrl.js"></script>
         <script src="/js/app/controllers/CharacterCreateCtrl.js"></script>
         <script src="/js/app/controllers/UserCtrl.js"></script>
         <script src="/js/app/controllers/CharacterCtrl.js"></script>
         <script src="/js/app/controllers/WorldCtrl.js"></script>
 
+        <script src="/js/app/services/CommonService.js"></script>
         <script src="/js/app/services/WsService.js"></script>
         <script src="/js/app/services/RegistrationService.js"></script>
         <script src="/js/app/services/CharacterCreateService.js"></script>
         <script src="/js/app/services/UserService.js"></script>
         <script src="/js/app/services/CharacterService.js"></script>
         <script src="/js/app/services/WorldService.js"></script>
-        <script src="/js/app/services/RedirectorService.js"></script>
 
         <script src="/js/app/directives/BackgroundImageDirective.js"></script>
         <script src="/js/app/directives/AutoResizableDirective.js"></script>
@@ -41,9 +42,9 @@
         };
         </script>
     </head>
-    <body ng-controller="UserCtrl">
-        <div ng-controller="CharacterCtrl" class="container">
-            <div class="row">
+    <body ng-controller="CommonCtrl">
+        <div ng-controller="UserCtrl" class="container">
+            <div ng-controller="CharacterCtrl" class="row">
                 <!-- Sidebar -->
                 <div class="span2">
                     <div class="sidebar-nav-fixed with-borders">
@@ -176,7 +177,7 @@
                         </div>
                         <div class="modal-footer">
                             <p class="text-error">{{setCharacterMessage}}</p>
-                            <button ng-click="redirectToCharacterCreate()"
+                            <button ng-click="redirect('/character/create')"
                                     class="btn"
                                     data-dismiss="modal">Создать персонажа</button>
                         </div>

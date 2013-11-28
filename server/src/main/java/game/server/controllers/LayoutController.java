@@ -10,7 +10,7 @@ import game.server.Response;
  */
 public class LayoutController extends AbstractAuthController {
 
-    public Response getCurrentCell(Request request) {
+    public Response getCurrentCellAction(Request request) {
         return new Response(true, true, "cell-update").
             appendData("cell", World.users.get(request.getWs()).getCurrentCharacter().getCell());
     }

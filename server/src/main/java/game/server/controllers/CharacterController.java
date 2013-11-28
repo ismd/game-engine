@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class CharacterController extends AbstractAuthController {
 
-    public Response move(Request request) {
+    public Response moveAction(Request request) {
         Character character = World.users.get(request.getWs()).getCurrentCharacter();
         Map<String, Object> args = request.getArgs();
 
@@ -32,34 +32,49 @@ public class CharacterController extends AbstractAuthController {
             character.getCell().removeContent(character);
             character.setCell(cell.addContent(character));
 
+            DaoFactory.getInstance().getCharacterDao().update(character);
+
             return new Response(true, true, "cell-update").appendData("cell", cell);
         } catch (BadCoordinatesException e) {
             return new Response(false, "Невозможно переместиться");
         }
     }
 
-    public Response set(Request request) {
+    public Response setAction(Request request) {
         int id = (int)(double)request.getArgs().get("id");
 
-        try {
-            Character character = new Character(DaoFactory.getInstance().getCharacterDao().getById(id));
-            User user = World.users.get(request.getWs());
+        User user = World.users.get(request.getWs());
+        Character c = null;
 
-            if (character.getIdUser() != user.getId()) {
-                return new Response(false, "Ошибка");
+        for (Character character : user.getCharacters()) {
+            Cell cell = character.getCell();
+
+            if (null != cell) {
+                cell.removeContent(character);
             }
 
-            character.setCell(world.getLayout(character.getIdLayout()).getCell(character.getX(), character.getY()));
-            user.setCurrentCharacter(character);
+            if (id == character.getId()) {
+                try {
+                    cell = world.getLayout(character.getIdLayout()).getCell(character.getX(), character.getY());
+                    character.setCell(cell.addContent(character));
+                } catch (BadCoordinatesException e) {
+                    Logger.getLogger(CharacterController.class.getName()).log(Level.SEVERE, null, e);
+                }
 
-            return new Response(true, true, "set-character-success").appendData("character", character);
-        } catch (BadCoordinatesException ex) {
-            Logger.getLogger(CharacterController.class.getName()).log(Level.SEVERE, null, ex);
-            return new Response(false, "Ошибка");
+                user.setCurrentCharacter(character);
+                c = character;
+            }
         }
+
+        if (null == c) {
+            return new Response(false);
+        }
+
+        return new Response(true, true, "set-character-success").
+            appendData("character", c);
     }
 
-    public Response create(Request request) {
+    public Response createAction(Request request) {
         User user = World.users.get(request.getWs());
 
         Character character = new Character().
@@ -79,6 +94,8 @@ public class CharacterController extends AbstractAuthController {
             setMaxDamage(5).
             setImage("player.png").
             setExperience(0);
+
+        user.addCharacter(character);
 
         DaoFactory.getInstance().getCharacterDao().addCharacter(character);
         return new Response(true).appendData("character", character);

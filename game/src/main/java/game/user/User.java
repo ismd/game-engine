@@ -22,6 +22,10 @@ public class User {
     @Transient
     private Character currentCharacter;
 
+    @Expose
+    @Transient
+    private List<Character> characters;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Expose
@@ -67,13 +71,20 @@ public class User {
     }
 
     public List<Character> getCharacters() {
-        List<Character> result = new ArrayList<>();
+        if (null == characters) {
+            characters = new ArrayList<>();
 
-        for (game.character.Character character : DaoFactory.getInstance().getCharacterDao().getByIdUser(getId())) {
-            result.add(new Character(character));
+            for (Character character : DaoFactory.getInstance().getCharacterDao().getByIdUser(getId())) {
+                characters.add(new Character(character));
+            }
         }
 
-        return result;
+        return characters;
+    }
+
+    public List<Character> addCharacter(Character character) {
+        characters.add(character);
+        return characters;
     }
 
     public int getId() {

@@ -69,9 +69,11 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
             wsSend(request);
         } else if (opened &&
                 (('User' === request.controller && 'login' === request.action) ||
-                ('User' === request.controller && 'register' === request.action))) {
+                ('User' === request.controller && 'register' === request.action) ||
+                'User' === request.controller && 'loginByAuthKey' === request.action)) {
             wsSend(request);
-        } else if ('User' === request.controller && 'login' === request.action) {
+        } else if (('User' === request.controller && 'login' === request.action) ||
+                ('User' === request.controller && 'loginByAuthKey' === request.action)) {
             console.log('Pushing at the beginning of queue', request);
             queue.unshift(request);
         } else {
@@ -101,7 +103,7 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
         if (!initialized) {
             for (var i = 0; i < queue.length; i++) {
                 var request = queue[i];
-                if ('init' === request.action) {
+                if ('User' === request.controller && 'loginByAuthKey' === request.action) {
                     wsSend(request);
                     queue.splice(i, 1);
                     return;

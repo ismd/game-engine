@@ -2,7 +2,7 @@
 
 angular.module('main', ['ngRoute', 'userService', 'characterService', 'registrationService',
     'characterCreateService', 'backgroundImageDirective', 'worldService',
-    'wsService', 'redirectorService', 'autoResizableDirective'])
+    'wsService', 'commonService', 'autoResizableDirective'])
     .config(function($routeProvider, $locationProvider, $httpProvider) {
         $locationProvider.html5Mode(true);
 

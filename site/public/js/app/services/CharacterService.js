@@ -3,7 +3,7 @@
 angular.module('characterService', []).factory('Character', function($q, Ws) {
     var service = {};
 
-    service.setCharacter = function(id) {
+    service.set = function(id) {
         var defer = $q.defer();
 
         Ws.send({
@@ -14,6 +14,8 @@ angular.module('characterService', []).factory('Character', function($q, Ws) {
             }
         }).then(function(data) {
             $('div#select-character').modal('hide');
+
+            localStorage.setItem('character', JSON.stringify(data.character));
             defer.resolve(data.character);
         }, function(message) {
             defer.reject(message);
