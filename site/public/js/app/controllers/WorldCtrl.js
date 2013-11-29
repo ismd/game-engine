@@ -59,9 +59,12 @@ function WorldCtrl($scope, World, Ws, Character) {
 
         World.drawVicinity(cell.vicinity);
 
-        for (var i = 0; i < cell.content.CHARACTER.length; i++) {
-            cell.content.CHARACTER.splice(i, 1);
-        }
+        /*for (var i = 0; i < cell.content.CHARACTER.length; i++) {
+            if (idCharacter cell.content.CHARACTER[i].id) {
+                cell.content.CHARACTER.splice(i, 1);
+                break;
+            }
+        }*/
 
         $scope.cell.content.npcs = cell.content.NPC;
         $scope.cell.content.characters = cell.content.CHARACTER;
