@@ -2,16 +2,21 @@ package game.character;
 
 import com.google.gson.annotations.Expose;
 import game.layout.CellContent;
+import game.user.User;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 /**
  * @author ismd
  */
 @Entity
 public class Character extends CellContent {
+
+    @Transient
+    private User user;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -53,24 +58,13 @@ public class Character extends CellContent {
     public Character() {
     }
 
-    public Character(Character character) {
-        id = character.getId();
-        idUser = character.getIdUser();
-        name = character.getName();
-        level = character.getLevel();
-        money = character.getMoney();
-        idLayout = character.getIdLayout();
-        x = character.getX();
-        y = character.getY();
-        strength = character.getStrength();
-        dexterity = character.getDexterity();
-        endurance = character.getEndurance();
-        hp = character.getHp();
-        maxHp = character.getMaxHp();
-        minDamage = character.getMinDamage();
-        maxDamage = character.getMaxDamage();
-        image = character.getImage();
-        experience = character.getExperience();
+    public User getUser() {
+        return user;
+    }
+
+    public Character setUser(User user) {
+        this.user = user;
+        return this;
     }
 
     public int getId() {

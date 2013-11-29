@@ -35,9 +35,9 @@ public class RequestHandler implements Runnable {
         try {
             Response response = requestRouter.executeRequest(request.setWs(ws));
 
-            gson = new GsonBuilder()
-                .excludeFieldsWithoutExposeAnnotation()
-                .create();
+            gson = new GsonBuilder().
+                excludeFieldsWithoutExposeAnnotation().
+                create();
 
             String json = gson.toJson(response.setIdCallback(request.getIdCallback()));
 

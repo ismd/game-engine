@@ -1,5 +1,7 @@
 package game.server;
 
+import game.World;
+import game.user.User;
 import java.io.FileNotFoundException;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
@@ -30,7 +32,11 @@ class Server extends WebSocketServer {
 
     @Override
     public void onClose(WebSocket ws, int i, String string, boolean bln) {
-        //requestRouter.removeCharacter(ws);
+        User user = World.users.get(ws);
+
+        user.getCurrentCharacter().getCell().removeContent(user.getCurrentCharacter());
+        World.users.remove(ws);
+
         System.out.println("Disconnected from "
             + ws.getRemoteSocketAddress().getAddress().getHostAddress());
     }

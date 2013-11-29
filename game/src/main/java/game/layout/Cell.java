@@ -14,16 +14,16 @@ import java.util.Map;
  */
 public class Cell {
 
-    private Layout layout;
+    private final Layout layout;
     @Expose
     private final Map<ContentType, List<CellContent>> content = new HashMap<>();
     @Expose
-    private int idLayout;
+    private final int idLayout;
     @Expose
-    private int x;
+    private final int x;
     @Expose
-    private int y;
-    private SpriteCoordinate spriteCoordinate;
+    private final int y;
+    private final SpriteCoordinate spriteCoordinate;
     @Expose
     private SpriteCoordinate[][] vicinity = new SpriteCoordinate[7][5];
 
@@ -89,5 +89,9 @@ public class Cell {
 
     public SpriteCoordinate[][] getVicinity() {
         return vicinity;
+    }
+
+    public Map<ContentType, List<CellContent>> getContent() {
+        return content;
     }
 }

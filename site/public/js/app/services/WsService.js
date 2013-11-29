@@ -44,6 +44,8 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
             }
 
             delete callbacks[idCallback];
+        } else if (data.broadcast) {
+            $rootScope.$broadcast(data.broadcastName, data.data);
         }
     };
 

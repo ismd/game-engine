@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
+import org.java_websocket.WebSocket;
 
 /**
  * @author ismd
@@ -21,6 +22,9 @@ public class User {
 
     @Transient
     private Character currentCharacter;
+
+    @Transient
+    private WebSocket ws;
 
     @Expose
     @Transient
@@ -47,12 +51,8 @@ public class User {
     public User() {
     }
 
-    public User(User user) {
-        id = user.getId();
-        login = user.getLogin();
-        email = user.getEmail();
-        info = user.getInfo();
-        site = user.getSite();
+    public Character getCurrentCharacter() {
+        return currentCharacter;
     }
 
     public User setCurrentCharacter(Character character) {
@@ -66,8 +66,13 @@ public class User {
         return null;
     }
 
-    public Character getCurrentCharacter() {
-        return currentCharacter;
+    public WebSocket getWebSocket() {
+        return ws;
+    }
+
+    public User setWebSocket(WebSocket ws) {
+        this.ws = ws;
+        return this;
     }
 
     public List<Character> getCharacters() {
@@ -75,7 +80,8 @@ public class User {
             characters = new ArrayList<>();
 
             for (Character character : DaoFactory.getInstance().getCharacterDao().getByIdUser(getId())) {
-                characters.add(new Character(character));
+                character.setUser(this);
+                characters.add(character);
             }
         }
 
@@ -83,6 +89,8 @@ public class User {
     }
 
     public List<Character> addCharacter(Character character) {
+        character.setUser(this);
+
         characters.add(character);
         return characters;
     }

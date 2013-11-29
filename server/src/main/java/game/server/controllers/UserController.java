@@ -27,6 +27,7 @@ public class UserController extends AbstractController {
                 (String)args.get("username"),
                 (String)args.get("password"));
 
+            user.setWebSocket(request.getWs());
             World.users.put(request.getWs(), user);
 
             // Генерируем authKey
@@ -96,6 +97,7 @@ public class UserController extends AbstractController {
             User user = entry.getValue();
 
             if (id == user.getId() && authKey.equals(user.getAuthKey())) {
+                user.setWebSocket(request.getWs());
                 World.users.put(request.getWs(), user);
                 World.users.remove(entry.getKey());
 
