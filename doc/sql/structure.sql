@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4.1
+-- version 4.0.9
 -- http://www.phpmyadmin.net
 --
--- Хост: localhost
--- Время создания: Июл 20 2013 г., 14:06
--- Версия сервера: 5.5.31-MariaDB-log
--- Версия PHP: 5.4.17
+-- Host: localhost
+-- Generation Time: Nov 30, 2013 at 12:16 PM
+-- Server version: 5.5.33a-MariaDB-log
+-- PHP Version: 5.5.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,15 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- База данных: `game`
+-- Database: `game`
 --
-CREATE DATABASE IF NOT EXISTS `game` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `game`;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `Character`
+-- Table structure for table `Character`
 --
 
 CREATE TABLE IF NOT EXISTS `Character` (
@@ -49,12 +47,12 @@ CREATE TABLE IF NOT EXISTS `Character` (
   PRIMARY KEY (`id`),
   KEY `idUser` (`idUser`),
   KEY `coordinates` (`idLayout`,`x`,`y`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `CharacterItem`
+-- Table structure for table `CharacterItem`
 --
 
 CREATE TABLE IF NOT EXISTS `CharacterItem` (
@@ -63,12 +61,12 @@ CREATE TABLE IF NOT EXISTS `CharacterItem` (
   `idItem` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idCharacter` (`idCharacter`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `Item`
+-- Table structure for table `Item`
 --
 
 CREATE TABLE IF NOT EXISTS `Item` (
@@ -80,24 +78,24 @@ CREATE TABLE IF NOT EXISTS `Item` (
   PRIMARY KEY (`id`),
   KEY `idType` (`idType`),
   KEY `price` (`price`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `ItemType`
+-- Table structure for table `ItemType`
 --
 
 CREATE TABLE IF NOT EXISTS `ItemType` (
   `id` tinyint(4) NOT NULL AUTO_INCREMENT,
   `title` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `Layout`
+-- Table structure for table `Layout`
 --
 
 CREATE TABLE IF NOT EXISTS `Layout` (
@@ -109,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `Layout` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `Mob`
+-- Table structure for table `Mob`
 --
 
 CREATE TABLE IF NOT EXISTS `Mob` (
@@ -126,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `Mob` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `MobAvailableCell`
+-- Table structure for table `MobAvailableCell`
 --
 
 CREATE TABLE IF NOT EXISTS `MobAvailableCell` (
@@ -142,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `MobAvailableCell` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `MobInfo`
+-- Table structure for table `MobInfo`
 --
 
 CREATE TABLE IF NOT EXISTS `MobInfo` (
@@ -164,7 +162,7 @@ CREATE TABLE IF NOT EXISTS `MobInfo` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `Npc`
+-- Table structure for table `Npc`
 --
 
 CREATE TABLE IF NOT EXISTS `Npc` (
@@ -181,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `Npc` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `NpcItem`
+-- Table structure for table `NpcItem`
 --
 
 CREATE TABLE IF NOT EXISTS `NpcItem` (
@@ -195,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `NpcItem` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `User`
+-- Table structure for table `User`
 --
 
 CREATE TABLE IF NOT EXISTS `User` (
@@ -205,10 +203,10 @@ CREATE TABLE IF NOT EXISTS `User` (
   `email` varchar(40) NOT NULL,
   `info` text,
   `site` varchar(40) DEFAULT NULL,
-  `registered` datetime NOT NULL,
+  `registered` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `authKey` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
