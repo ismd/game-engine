@@ -2,10 +2,10 @@
 -- version 4.0.9
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Nov 30, 2013 at 01:12 PM
--- Server version: 5.5.33a-MariaDB-log
--- PHP Version: 5.5.5
+-- Хост: localhost
+-- Время создания: Ноя 30 2013 г., 15:27
+-- Версия сервера: 5.5.33a-MariaDB-log
+-- Версия PHP: 5.5.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `game`
+-- База данных: `game`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Character`
+-- Структура таблицы `Character`
 --
 
 CREATE TABLE IF NOT EXISTS `Character` (
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `Character` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `CharacterItem`
+-- Структура таблицы `CharacterItem`
 --
 
 CREATE TABLE IF NOT EXISTS `CharacterItem` (
@@ -66,21 +66,21 @@ CREATE TABLE IF NOT EXISTS `CharacterItem` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Chat`
+-- Структура таблицы `ChatMessage`
 --
 
-CREATE TABLE IF NOT EXISTS `Chat` (
+CREATE TABLE IF NOT EXISTS `ChatMessage` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `from` int(11) NOT NULL,
-  `to` int(11) DEFAULT NULL,
-  `message` int(11) NOT NULL,
+  `idSender` int(11) NOT NULL,
+  `idReceiver` int(11) DEFAULT NULL,
+  `message` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Item`
+-- Структура таблицы `Item`
 --
 
 CREATE TABLE IF NOT EXISTS `Item` (
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `Item` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ItemType`
+-- Структура таблицы `ItemType`
 --
 
 CREATE TABLE IF NOT EXISTS `ItemType` (
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `ItemType` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Layout`
+-- Структура таблицы `Layout`
 --
 
 CREATE TABLE IF NOT EXISTS `Layout` (
@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `Layout` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Mob`
+-- Структура таблицы `Mob`
 --
 
 CREATE TABLE IF NOT EXISTS `Mob` (
@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `Mob` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `MobAvailableCell`
+-- Структура таблицы `MobAvailableCell`
 --
 
 CREATE TABLE IF NOT EXISTS `MobAvailableCell` (
@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `MobAvailableCell` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `MobInfo`
+-- Структура таблицы `MobInfo`
 --
 
 CREATE TABLE IF NOT EXISTS `MobInfo` (
@@ -176,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `MobInfo` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Npc`
+-- Структура таблицы `Npc`
 --
 
 CREATE TABLE IF NOT EXISTS `Npc` (
@@ -193,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `Npc` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `NpcItem`
+-- Структура таблицы `NpcItem`
 --
 
 CREATE TABLE IF NOT EXISTS `NpcItem` (
@@ -207,7 +207,7 @@ CREATE TABLE IF NOT EXISTS `NpcItem` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `User`
+-- Структура таблицы `User`
 --
 
 CREATE TABLE IF NOT EXISTS `User` (
