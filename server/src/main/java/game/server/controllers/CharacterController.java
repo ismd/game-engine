@@ -1,7 +1,5 @@
 package game.server.controllers;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import game.character.Character;
 import game.user.User;
 import game.World;

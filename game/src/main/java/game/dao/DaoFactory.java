@@ -12,6 +12,7 @@ public class DaoFactory {
     private static MobDao mobDao = null;
     private static NpcDao npcDao = null;
     private static UserDao userDao = null;
+    private static ChatMessageDao chatMessageDao = null;
 
     private DaoFactory() {
     }
@@ -62,5 +63,13 @@ public class DaoFactory {
         }
 
         return userDao;
+    }
+
+    public ChatMessageDao getChatMessageDao() {
+        if (null == chatMessageDao) {
+            chatMessageDao = new ChatMessageDao();
+        }
+
+        return chatMessageDao;
     }
 }

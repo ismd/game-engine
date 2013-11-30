@@ -18,5 +18,6 @@
     <mapping class="game.mob.MobInfo"/>
     <mapping class="game.npc.Npc"/>
     <mapping class="game.user.User"/>
+    <mapping class="game.chat.ChatMessage"/>
   </session-factory>
 </hibernate-configuration>
