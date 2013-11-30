@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 30, 2013 at 12:16 PM
+-- Generation Time: Nov 30, 2013 at 01:12 PM
 -- Server version: 5.5.33a-MariaDB-log
 -- PHP Version: 5.5.5
 
@@ -62,6 +62,20 @@ CREATE TABLE IF NOT EXISTS `CharacterItem` (
   PRIMARY KEY (`id`),
   KEY `idCharacter` (`idCharacter`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Chat`
+--
+
+CREATE TABLE IF NOT EXISTS `Chat` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `from` int(11) NOT NULL,
+  `to` int(11) DEFAULT NULL,
+  `message` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 

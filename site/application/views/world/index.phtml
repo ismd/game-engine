@@ -114,6 +114,26 @@
 </div>
 
 <!-- Чат -->
-<div class="row-fluid">
-    <div auto-resizable ng-style="style()" id="chat" class="span12 with-borders"></div>
+<div ng-controller="ChatCtrl" id="chat-all" class="with-borders">
+    <div class="row-fluid">
+        <div chat
+             ng-style="resize()"
+             id="chat"
+             class="span12">
+            <table class="table table-condensed table-hover">
+                <tbody>
+                    <tr ng-repeat="message in chat">
+                        <td>{{message.message}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div id="chat-controls" class="span12">
+            <input ng-model="message" id="message" type="text" placeholder="Введите сообщение" />
+            <button ng-click="sendMessage(message)" id="send" class="btn">Отправить</button>
+        </div>
+    </div>
 </div>

@@ -1,9 +1,7 @@
 'use strict';
 
-angular.module('worldService', []).factory('World', function(Ws, $rootScope, $q) {
+angular.module('worldService', []).factory('World', function(Ws) {
     var service = {};
-
-    //var layout = [];
 
     var canvas, ctx;
 
