@@ -32,13 +32,7 @@ class Server extends WebSocketServer {
 
     @Override
     public void onClose(WebSocket ws, int i, String string, boolean bln) {
-        User user = World.users.get(ws);
-
-        user.getCurrentCharacter().getCell().removeContent(user.getCurrentCharacter());
-        World.users.remove(ws);
-
-        System.out.println("Disconnected from "
-            + ws.getRemoteSocketAddress().getAddress().getHostAddress());
+        executor.execute(new Disconnector(ws));
     }
 
     @Override

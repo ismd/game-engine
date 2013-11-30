@@ -10,9 +10,12 @@ import game.server.controllers.common.AbstractAuthController;
 import game.layout.Cell;
 import game.layout.CellContent;
 import game.layout.ContentType;
+import game.server.Notifier;
 import game.server.Request;
 import game.server.Response;
 import game.world.exceptions.BadCoordinatesException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -110,9 +113,7 @@ public class CharacterController extends AbstractAuthController {
     }
 
     private void notifyCharactersExcept(Cell cell, Character character) {
-        Gson gson = new GsonBuilder().
-            excludeFieldsWithoutExposeAnnotation().
-            create();
+        List<Character> characters = new ArrayList<>();
 
         for (CellContent c : cell.getContent().get(ContentType.CHARACTER)) {
             Character c1 = (Character)c;
@@ -121,11 +122,10 @@ public class CharacterController extends AbstractAuthController {
                 continue;
             }
 
-            try {
-                c1.getUser().getWebSocket().send(gson.toJson(new Response(true, true, "cell-update").
-                    appendData("cell", cell)));
-            } catch (Exception e) {
-            }
+            characters.add(c1);
         }
+
+        new Notifier().notifyByCharacter(characters, new Response(true, true, "cell-update").
+            appendData("cell", cell));
     }
 }
