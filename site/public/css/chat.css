@@ -25,6 +25,7 @@ div#chat table td.sender-name {
     width: 1px;
     padding-right: 10px;
     border-right: 1px dotted silver;
+    white-space: nowrap;
 }
 
 div#chat-controls {
