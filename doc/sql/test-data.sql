@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Ноя 30 2013 г., 15:27
+-- Время создания: Ноя 30 2013 г., 17:08
 -- Версия сервера: 5.5.33a-MariaDB-log
 -- Версия PHP: 5.5.5
 
@@ -29,15 +29,6 @@ INSERT INTO `Character` (`id`, `idUser`, `name`, `level`, `money`, `idLayout`, `
 (2, 2, 'hi', 1, 10, 1, 3, 2, 10, 10, 10, 20, 20, 3, 5, 'player.png', 0);
 
 --
--- Дамп данных таблицы `ChatMessage`
---
-
-INSERT INTO `ChatMessage` (`id`, `idSender`, `idReceiver`, `message`) VALUES
-(1, 1, 0, 'test'),
-(2, 2, 0, 'test@@!!!!!'),
-(3, 2, 0, 'Привет');
-
---
 -- Дамп данных таблицы `ItemType`
 --
 
@@ -60,8 +51,8 @@ INSERT INTO `Layout` (`id`, `title`) VALUES
 INSERT INTO `Mob` (`id`, `idMob`, `idLayout`, `x`, `y`, `hp`) VALUES
 (1, 1, 1, 3, 2, 10),
 (2, 1, 1, 3, 2, 10),
-(3, 1, 1, 3, 2, 10),
-(4, 1, 1, 3, 3, 10),
+(3, 1, 1, 3, 3, 10),
+(4, 1, 1, 3, 2, 10),
 (5, 1, 1, 3, 3, 10),
 (6, 2, 1, 3, 2, 15),
 (7, 2, 1, 3, 2, 15),
@@ -99,8 +90,8 @@ INSERT INTO `Npc` (`id`, `name`, `greeting`, `image`, `idLayout`, `x`, `y`) VALU
 --
 
 INSERT INTO `User` (`id`, `login`, `password`, `email`, `info`, `site`, `registered`, `authKey`) VALUES
-(1, '1', 'c4ca4238a0b923820dcc509a6f75849b', '1', '1', '1', '2013-11-29 17:00:00', '7ae11a8491e03e83a0ffc27ed9566fa6'),
-(2, '2', 'c81e728d9d4c2f636f067f89cc14862c', '2', NULL, NULL, '2013-11-29 17:00:00', '679f9f7cfd01d0386eec011605431e4a');
+(1, '1', 'c4ca4238a0b923820dcc509a6f75849b', '1', '1', '1', '2013-11-29 17:00:00', '19c875689925f0aa11030f6525baa51c'),
+(2, '2', 'c81e728d9d4c2f636f067f89cc14862c', '2', NULL, NULL, '2013-11-29 17:00:00', '2f924f0c6ec10c8fc7f3a3349bc8c6b5');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

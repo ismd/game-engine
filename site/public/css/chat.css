@@ -1,0 +1,45 @@
+div#chat {
+    min-height: 150px;
+    padding: 0 5px 0 5px;
+    margin: 0;
+    overflow-y: auto;
+    border-bottom: 1px solid silver;
+}
+
+div#chat table {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+div#chat table tr:first-child td {
+    border-top: 0;
+}
+
+div#chat table td.sended {
+    width: 1px;
+    padding-right: 10px;
+    border-right: 1px dotted silver;
+}
+
+div#chat table td.sender-name {
+    width: 1px;
+    padding-right: 10px;
+    border-right: 1px dotted silver;
+}
+
+div#chat-controls {
+    height: 30px;
+}
+
+div#chat-controls input#message {
+    margin: 0;
+    width: 83%;
+    border: 0;
+}
+
+div#chat-controls button#send {
+    width: 15%;
+    border: 0;
+    height: 100%;
+    float: right;
+}

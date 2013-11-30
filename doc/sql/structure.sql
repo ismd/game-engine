@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Ноя 30 2013 г., 15:27
+-- Время создания: Ноя 30 2013 г., 17:09
 -- Версия сервера: 5.5.33a-MariaDB-log
 -- Версия PHP: 5.5.5
 
@@ -74,8 +74,9 @@ CREATE TABLE IF NOT EXISTS `ChatMessage` (
   `idSender` int(11) NOT NULL,
   `idReceiver` int(11) DEFAULT NULL,
   `message` text NOT NULL,
+  `sended` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 

@@ -4,9 +4,16 @@ function ChatCtrl($scope, Chat) {
     $scope.chat = [];
     $scope.message = null;
 
+    var offset = new Date().getTimezoneOffset();
+
     $scope.$on('chat-new-messages', function(e, data) {
         for (var i = 0; i < data.messages.length; i++) {
-            $scope.chat.push(data.messages[i]);
+            var message = data.messages[i];
+
+            message.sended = new Date(message.sended);
+            message.sended = message.sended.setMinutes(message.sended.getMinutes() - offset);
+
+            $scope.chat.push(message);
             $scope.$apply();
         }
     });

@@ -123,6 +123,8 @@
             <table class="table table-condensed table-hover">
                 <tbody>
                     <tr ng-repeat="message in chat">
+                        <td class="sended">{{message.sended | date: 'H:mm:ss'}}</td>
+                        <td class="sender-name">{{message.senderName}}</td>
                         <td>{{message.message}}</td>
                     </tr>
                 </tbody>
