@@ -43,7 +43,8 @@ public class User {
     private String info;
     @Expose
     private String site;
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Expose
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date registered;
     @Expose
     private String authKey;
