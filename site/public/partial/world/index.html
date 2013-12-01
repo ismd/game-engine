@@ -42,12 +42,12 @@
                         <tr>
                             <td>
                                 <button id="kill"
-                                        ng-class="{disabled: 'mob' != selectedItem.type}"
+                                        ng-class="{disabled: 'mob' !== selectedItem.type}"
                                         class="btn btn-small btn-danger">Убить</button>
                             </td>
                             <td>
                                 <button id="talk"
-                                        ng-class="{disabled: 'npc' != selectedItem.type}"
+                                        ng-class="{disabled: 'npc' !== selectedItem.type}"
                                         class="btn btn-small btn-success">Общаться</button>
                             </td>
                             <td>
@@ -114,15 +114,17 @@
 </div>
 
 <!-- Чат -->
-<div ng-controller="ChatCtrl" id="chat-all" class="with-borders">
-    <div class="row-fluid">
-        <div chat
-             ng-style="resize()"
-             id="chat"
-             class="span12">
+<div ng-controller="ChatCtrl"
+     id="chat"
+     class="with-borders">
+    <div chat
+         ng-style="resize()"
+         id="top-part"
+         class="row-fluid">
+        <div id="messages">
             <table class="table table-condensed table-hover">
                 <tbody>
-                    <tr ng-repeat="message in chat">
+                    <tr ng-repeat="message in chat.messages">
                         <td class="sended">{{message.sended | date: 'H:mm:ss'}}</td>
                         <td class="sender-name">{{message.senderName}}</td>
                         <td>{{message.message}}</td>
@@ -130,12 +132,32 @@
                 </tbody>
             </table>
         </div>
+
+        <div id="members">
+            <div id="members-title">
+                Пользователи:
+            </div>
+
+            <div id="members-list">
+                <ul>
+                    <li ng-repeat="member in chat.members">{{member.name}}</li>
+                </ul>
+            </div>
+        </div>
     </div>
 
-    <div class="row-fluid">
-        <div id="chat-controls" class="span12">
-            <input ng-model="message" id="message" type="text" placeholder="Введите сообщение" />
-            <button ng-click="sendMessage(message)" id="send" class="btn">Отправить</button>
+    <div id="controls" class="row-fluid">
+        <div id="message">
+            <input ng-model="chat.message"
+                   enter="sendMessage(chat.message)"
+                   type="text"
+                   class="border-box"
+                   placeholder="Введите сообщение" />
+        </div>
+
+        <div id="send" class="span2">
+            <button ng-click="sendMessage(chat.message)"
+                    class="btn">Отправить</button>
         </div>
     </div>
 </div>

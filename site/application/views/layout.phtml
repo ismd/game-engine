@@ -37,6 +37,7 @@
 
         <script src="/js/app/directives/BackgroundImageDirective.js"></script>
         <script src="/js/app/directives/ChatDirective.js"></script>
+        <script src="/js/app/directives/EnterDirective.js"></script>
 
         <script>
         window.ws = {
@@ -54,7 +55,7 @@
                         <div ng-switch on="user" class="row">
                             <!-- Пользователь не выбран -->
                             <div ng-switch-when="null" class="span2">
-                                <button class="left-pannel-button btn btn-primary"
+                                <button class="left-panel-button btn btn-primary"
                                         href="#auth-form"
                                         role="button"
                                         data-toggle="modal"

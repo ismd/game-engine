@@ -4,10 +4,12 @@ angular.module('chatDirective', []).directive('chat', function($window) {
     return function(scope, element) {
         var window = angular.element($window),
             offsetTop = element.offset().top,
-            divHeight,
-            table = element.find('table'),
-            tableHeight = 0,
-            interval;
+            interval,
+            messagesDiv = element.find('div#messages'),
+            table = messagesDiv.find('table');
+
+        var messagesHeight = 0,
+            tableHeight = 0;
 
         scope.getWindowHeight = function() {
             return window.height();
@@ -18,13 +20,11 @@ angular.module('chatDirective', []).directive('chat', function($window) {
         };
 
         scope.$watch(scope.getWindowHeight, function(newValue) {
-            scope.windowHeight = newValue;
-
             scope.resize = function() {
-                divHeight = newValue - offsetTop - 50;
+                messagesHeight = newValue - offsetTop - 50;
 
                 return {
-                    height: divHeight + 'px'
+                    height: messagesHeight + 'px'
                 };
             };
         }, true);
@@ -32,13 +32,18 @@ angular.module('chatDirective', []).directive('chat', function($window) {
         scope.$watch(scope.getTableHeight, function(height) {
             clearInterval(interval);
 
+            if (height <= messagesHeight) {
+                return;
+            }
+
             interval = setInterval(function() {
-                if (tableHeight > height - divHeight + 1) {
+                if (tableHeight >= height - messagesHeight) {
                     clearInterval(interval);
+                    return;
                 }
 
                 tableHeight++;
-                element.scrollTop(tableHeight);
+                messagesDiv.scrollTop(tableHeight);
             }, 10);
         }, true);
 
