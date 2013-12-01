@@ -13,8 +13,7 @@ import javax.persistence.Id;
 @Entity
 public class MobAvailableCell implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     private int idMob;
     private int idLayout;

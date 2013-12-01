@@ -14,8 +14,7 @@ import javax.persistence.Transient;
 @Entity
 public class Layout implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
 
     private String title;

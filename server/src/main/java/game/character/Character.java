@@ -19,8 +19,7 @@ public class Character extends CellContent implements Serializable {
     @Transient
     private User user;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     @Expose
     private int id;
     @Expose

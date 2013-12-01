@@ -16,15 +16,13 @@ import javax.persistence.Temporal;
 @Entity
 public class ChatMessage implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     private Integer idSender;
     private Integer idReceiver;
     @Expose
     private String message;
-    @Expose
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Expose @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date sended;
 
     protected ChatMessage() {

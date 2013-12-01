@@ -14,8 +14,7 @@ import javax.persistence.Id;
 @Entity
 public class Npc extends CellContent implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     @Expose
     private int id;
     @Expose

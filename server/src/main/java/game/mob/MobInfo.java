@@ -13,8 +13,7 @@ import javax.persistence.Id;
 @Entity
 public class MobInfo implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     @Expose
     private String name;

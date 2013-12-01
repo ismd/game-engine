@@ -27,13 +27,10 @@ public class User implements Serializable {
     @Transient
     private WebSocket ws;
 
-    @Expose
-    @Transient
+    @Expose @Transient
     private List<Character> characters;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Expose
+    @Id @GeneratedValue(strategy = GenerationType.AUTO) @Expose
     private int id;
     @Expose
     private String login;
