@@ -36,10 +36,6 @@ public class ChatMessage implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date sended;
 
-    @Expose
-    @Transient
-    private String senderName;
-
     protected ChatMessage() {
     }
 
@@ -53,7 +49,6 @@ public class ChatMessage implements Serializable {
         }
 
         this.message = message;
-        senderName = senderCharacter.getName();
         sended = new Date();
     }
 

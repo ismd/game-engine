@@ -1,5 +1,6 @@
 package game.server.controllers;
 
+import game.Online;
 import game.World;
 import game.character.Character;
 import game.chat.ChatMessage;
@@ -32,5 +33,16 @@ public class ChatController extends AbstractAuthController {
             appendData("messages", messages));
 
         return new Response(true);
+    }
+
+    public Response initAction(Request request) {
+        return new Response(true).
+            appendData("members", Online.characters).
+            appendData("messages", DaoFactory.getInstance().getChatMessageDao().getLastMessages());
+    }
+
+    public Response getMembersAction(Request request) {
+        return new Response(true, true, "chat-update-members").
+            appendData("members", Online.characters);
     }
 }

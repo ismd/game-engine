@@ -1,5 +1,6 @@
 package game.server.controllers;
 
+import game.Online;
 import game.World;
 import game.character.Character;
 import game.dao.DaoFactory;
@@ -48,9 +49,11 @@ public class UserController extends AbstractController {
         WebSocket ws = request.getWs();
         Character character = World.users.get(ws).getCurrentCharacter();
 
-        character.getCell().removeContent(character);
-        World.users.remove(ws);
+        if (null != character) {
+            Online.removeCharacter(character);
+        }
 
+        World.users.remove(ws);
         return new Response(true, true, "logout-success");
     }
 

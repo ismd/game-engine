@@ -1,13 +1,9 @@
 package game.server;
 
+import game.Online;
 import game.World;
 import game.character.Character;
-import game.layout.Cell;
-import game.layout.CellContent;
-import game.layout.ContentType;
 import game.user.User;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.java_websocket.WebSocket;
@@ -38,21 +34,13 @@ public class Disconnector implements Runnable {
                 return;
             }
 
-            try {
-                Cell cell = user.getCurrentCharacter().getCell();
-                cell.removeContent(user.getCurrentCharacter());
+            World.users.remove(ws);
 
-                List<Character> characters = new ArrayList<>();
-                for (CellContent c : cell.getContent().get(ContentType.CHARACTER)) {
-                    characters.add((Character)c);
-                }
-
-                new Notifier().notifyByCharacter(characters,
-                    new Response(true, true, "cell-update").appendData("cell", cell));
-            } catch (Exception e) {
+            Character character = user.getCurrentCharacter();
+            if (null != character) {
+                Online.removeCharacter(character);
             }
 
-            World.users.remove(ws);
             System.out.println("User " + user.getLogin() + " disconnected from " + ip);
         } catch (Exception e) {
             Logger.getLogger(Disconnector.class.getName()).log(Level.SEVERE, null, e);

@@ -1,16 +1,17 @@
 package game.server.controllers;
 
-import game.character.Character;
-import game.user.User;
+import game.Online;
 import game.World;
+import game.character.Character;
 import game.dao.DaoFactory;
-import game.server.controllers.common.AbstractAuthController;
 import game.layout.Cell;
 import game.layout.CellContent;
 import game.layout.ContentType;
 import game.server.Notifier;
 import game.server.Request;
 import game.server.Response;
+import game.server.controllers.common.AbstractAuthController;
+import game.user.User;
 import game.world.exceptions.BadCoordinatesException;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,14 +59,14 @@ public class CharacterController extends AbstractAuthController {
             Cell cell = character.getCell();
 
             if (null != cell) {
-                cell.removeContent(character);
+                Online.removeCharacter(character);
             }
 
             if (id == character.getId()) {
                 try {
                     cell = world.getLayout(character.getIdLayout()).getCell(character.getX(), character.getY());
                     character.setCell(cell.addContent(character));
-                    notifyCharactersExcept(cell, character);
+                    Online.addCharacter(character);
                 } catch (BadCoordinatesException e) {
                     Logger.getLogger(CharacterController.class.getName()).log(Level.SEVERE, null, e);
                 }
@@ -118,7 +119,7 @@ public class CharacterController extends AbstractAuthController {
 
             if (c1 == character) {
                 continue;
-            }
+}
 
             characters.add(c1);
         }
