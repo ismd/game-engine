@@ -29,8 +29,8 @@
                      ng-click="selectItem('mob', item.id)"
                      ng-class="{selected: item.id === selectedItem.id && 'mob' === selectedItem.type}"
                      data-id="{{item.id}}"
-                     title="{{item.name}}"
-                     background-image="/img/world/mobs/{{item.image}}" />
+                     title="{{item.mobInfo.name}} ({{item.hp}}/{{item.mobInfo.maxHp}})"
+                     background-image="/img/world/mobs/{{item.mobInfo.image}}" />
             </div>
         </div>
 
