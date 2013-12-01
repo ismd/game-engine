@@ -3,9 +3,9 @@
 <hibernate-configuration>
   <session-factory>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="connection.url">jdbc:mysql://web-machine.local/game</property>
-    <property name="connection.username"></property>
-    <property name="connection.password"></property>
+    <property name="connection.url">jdbc:mysql://localhost/db</property>
+    <property name="connection.username">username</property>
+    <property name="connection.password">password</property>
     <property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
     <property name="show_sql">true</property>
     <property name="globally_quoted_identifiers">true</property>
