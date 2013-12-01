@@ -1,16 +1,17 @@
 package game.server.controllers;
 
-import game.character.Character;
-import game.server.controllers.common.AbstractController;
-import game.server.Response;
 import game.World;
+import game.character.Character;
 import game.dao.DaoFactory;
 import game.server.Request;
+import game.server.Response;
+import game.server.controllers.common.AbstractController;
 import game.user.User;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
+import java.util.Map.Entry;
 import org.java_websocket.WebSocket;
 
 /**
@@ -93,7 +94,7 @@ public class UserController extends AbstractController {
         int id = (int)(double)args.get("id");
         String authKey = (String)args.get("authKey");
 
-        for (Map.Entry<WebSocket, User> entry : World.users.entrySet()) {
+        for (Entry<WebSocket, User> entry : World.users.entrySet()) {
             User user = entry.getValue();
 
             if (id == user.getId() && authKey.equals(user.getAuthKey())) {

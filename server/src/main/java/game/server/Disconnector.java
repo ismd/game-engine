@@ -1,7 +1,7 @@
 package game.server;
 
-import game.character.Character;
 import game.World;
+import game.character.Character;
 import game.layout.Cell;
 import game.layout.CellContent;
 import game.layout.ContentType;
@@ -15,7 +15,7 @@ import org.java_websocket.WebSocket;
  */
 public class Disconnector implements Runnable {
 
-    // Таймаут отключения
+    // Таймаут отключения в секундах
     private final int timeout = 60;
     private final WebSocket ws;
 
@@ -53,6 +53,7 @@ public class Disconnector implements Runnable {
             System.out.println("Disconnected from "
                 + ws.getRemoteSocketAddress().getAddress().getHostAddress());
         } catch (Exception e) {
+            System.out.println("Error while disconnecting");
             Thread.currentThread().interrupt();
         }
     }
