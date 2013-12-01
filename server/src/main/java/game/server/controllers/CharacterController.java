@@ -5,12 +5,10 @@ import game.World;
 import game.character.Character;
 import game.dao.DaoFactory;
 import game.layout.Cell;
-import game.layout.CellContent;
-import game.layout.ContentType;
 import game.server.Notifier;
-import game.server.Request;
-import game.server.Response;
 import game.server.controllers.common.AbstractAuthController;
+import game.server.request.Request;
+import game.server.response.Response;
 import game.user.User;
 import game.world.exceptions.BadCoordinatesException;
 import java.util.ArrayList;
@@ -41,7 +39,7 @@ public class CharacterController extends AbstractAuthController {
             character.setCell(newCell.addContent(character));
             notifyCharactersExcept(newCell, character);
 
-            DaoFactory.getInstance().getCharacterDao().update(character);
+            DaoFactory.getInstance().characterDao.update(character);
 
             return new Response(true, true, "cell-update").appendData("cell", newCell);
         } catch (BadCoordinatesException e) {
@@ -87,44 +85,44 @@ public class CharacterController extends AbstractAuthController {
     public Response createAction(Request request) {
         User user = World.users.get(request.getWs());
 
-        Character character = new Character().
-            setIdUser(user.getId()).
-            setName((String)request.getArgs().get("name")).
-            setLevel(1).
-            setMoney(10).
-            setIdLayout(1).
-            setX(3).
-            setY(3).
-            setStrength(10).
-            setDexterity(10).
-            setEndurance(10).
-            setHp(20).
-            setMaxHp(20).
-            setMinDamage(3).
-            setMaxDamage(5).
-            setImage("player.png").
-            setExperience(0);
+        Character character = new Character()
+                .setIdUser(user.getId())
+                .setName((String)request.getArgs().get("name"))
+                .setLevel(1)
+                .setMoney(10)
+                .setIdLayout(1)
+                .setX(3)
+                .setY(3)
+                .setStrength(10)
+                .setDexterity(10)
+                .setEndurance(10)
+                .setHp(20)
+                .setMaxHp(20)
+                .setMinDamage(3)
+                .setMaxDamage(5)
+                .setImage("player.png")
+                .setExperience(0);
 
         user.addCharacter(character);
 
-        DaoFactory.getInstance().getCharacterDao().addCharacter(character);
+        DaoFactory.getInstance().characterDao.add(character);
         return new Response(true).appendData("character", character);
     }
 
     private void notifyCharactersExcept(Cell cell, Character character) {
         List<Character> characters = new ArrayList<>();
 
-        for (CellContent c : cell.getContent().get(ContentType.CHARACTER)) {
-            Character c1 = (Character)c;
-
-            if (c1 == character) {
+        for (Character c : cell.getCharacters()) {
+            if (c == character) {
                 continue;
-}
+            }
 
-            characters.add(c1);
+            characters.add(c);
         }
 
-        new Notifier().notifyByCharacter(characters, new Response(true, true, "cell-update").
-            appendData("cell", cell));
+        new Notifier().notifyByCharacter(
+                characters,
+                new Response(true, true, "cell-update").appendData("cell", cell)
+        );
     }
 }

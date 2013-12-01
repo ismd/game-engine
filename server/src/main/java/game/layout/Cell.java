@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import game.character.Character;
 import game.mob.Mob;
 import game.npc.Npc;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,8 +16,10 @@ import java.util.Map;
 public class Cell {
 
     private final Layout layout;
+
     @Expose
     private final Map<ContentType, List<CellContent>> content = new HashMap<>();
+
     @Expose
     private final int idLayout;
     @Expose
@@ -93,5 +96,35 @@ public class Cell {
 
     public Map<ContentType, List<CellContent>> getContent() {
         return content;
+    }
+
+    public List<Character> getCharacters() {
+        List<Character> characters = new ArrayList<>();
+
+        for (CellContent cc : content.get(ContentType.CHARACTER)) {
+            characters.add((Character)cc);
+        }
+
+        return characters;
+    }
+
+    public List<Mob> getMobs() {
+        List<Mob> mobs = new ArrayList<>();
+
+        for (CellContent cc : content.get(ContentType.MOB)) {
+            mobs.add((Mob)cc);
+        }
+
+        return mobs;
+    }
+
+    public List<Npc> getNpcs() {
+        List<Npc> npcs = new ArrayList<>();
+
+        for (CellContent cc : content.get(ContentType.NPC)) {
+            npcs.add((Npc)cc);
+        }
+
+        return npcs;
     }
 }

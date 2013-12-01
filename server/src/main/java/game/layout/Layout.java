@@ -45,9 +45,9 @@ public class Layout implements Serializable {
             }
         }
 
-        for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[i].length; j++) {
-                cells[i][j].setVicinity(getVicinity(cells[i][j]));
+        for (Cell[] cell : cells) {
+            for (Cell cell1 : cell) {
+                cell1.setVicinity(getVicinity(cell1));
             }
         }
 

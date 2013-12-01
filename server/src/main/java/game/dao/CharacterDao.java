@@ -21,21 +21,10 @@ public class CharacterDao extends Dao {
     public List<Character> getByIdUser(int id) {
         Session session = sessionFactory.openSession();
         List<Character> characters = session.createCriteria(Character.class)
-            .add(Restrictions.eq("idUser", id))
-            .list();
+                .add(Restrictions.eq("idUser", id))
+                .list();
 
         session.close();
         return characters;
-    }
-
-    public Character addCharacter(Character character) {
-        Session session = sessionFactory.openSession();
-
-        session.beginTransaction();
-        session.save(character);
-        session.getTransaction().commit();
-
-        session.close();
-        return character;
     }
 }

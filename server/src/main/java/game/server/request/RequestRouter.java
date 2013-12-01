@@ -1,8 +1,9 @@
-package game.server;
+package game.server.request;
 
-import game.server.controllers.common.AbstractController;
-import game.server.controllers.common.AbstractAuthController;
 import game.World;
+import game.server.controllers.common.AbstractAuthController;
+import game.server.controllers.common.AbstractController;
+import game.server.response.Response;
 import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -21,7 +22,7 @@ public class RequestRouter {
     private final Map<String, Class<? extends AbstractController>> controllers = new HashMap<>();
     private final Map<String, AbstractController> controllersObjects = new HashMap<>();
 
-    RequestRouter(String layoutsPath) throws FileNotFoundException {
+    public RequestRouter(String layoutsPath) throws FileNotFoundException {
         world = new World(layoutsPath);
 
         // Создаём и сохраняем объекты всех контроллеров
@@ -45,8 +46,10 @@ public class RequestRouter {
         }
 
         try {
-            controllersObjects.put(controllerName,
-                (AbstractController)Class.forName(controller.getName()).newInstance());
+            controllersObjects.put(
+                    controllerName,
+                    (AbstractController)Class.forName(controller.getName()).newInstance()
+            );
 
             controllers.put(controllerName, controller);
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
@@ -60,9 +63,8 @@ public class RequestRouter {
 
         // Проверяем аутентификацию
         try {
-            if (!(boolean)AbstractController.class
-                .getDeclaredMethod("init", Request.class)
-                .invoke(controllerObject, request)) {
+            if (!(boolean)AbstractController.class.getDeclaredMethod("init", Request.class)
+                    .invoke(controllerObject, request)) {
                 return new Response(false, "Аутентификация не пройдена");
             }
         } catch (NullPointerException e) {
@@ -70,7 +72,7 @@ public class RequestRouter {
         }
 
         return (Response)controllers.get(controller)
-            .getDeclaredMethod(request.getAction() + "Action", Request.class)
-            .invoke(controllerObject, request);
+                .getDeclaredMethod(request.getAction() + "Action", Request.class)
+                .invoke(controllerObject, request);
     }
 }

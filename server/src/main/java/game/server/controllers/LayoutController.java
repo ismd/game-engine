@@ -2,8 +2,8 @@ package game.server.controllers;
 
 import game.World;
 import game.server.controllers.common.AbstractAuthController;
-import game.server.Request;
-import game.server.Response;
+import game.server.request.Request;
+import game.server.response.Response;
 
 /**
  * @author ismd
@@ -11,7 +11,7 @@ import game.server.Response;
 public class LayoutController extends AbstractAuthController {
 
     public Response getCurrentCellAction(Request request) {
-        return new Response(true, true, "cell-update").
-            appendData("cell", World.users.get(request.getWs()).getCurrentCharacter().getCell());
+        return new Response(true, true, "cell-update")
+                .appendData("cell", World.users.get(request.getWs()).getCurrentCharacter().getCell());
     }
 }

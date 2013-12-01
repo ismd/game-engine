@@ -1,8 +1,9 @@
-package game.server;
+package game.server.request;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import game.character.Character;
+import game.server.response.Response;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class RequestHandler implements Runnable {
     
     public static Map<WebSocket, Character> characters = new HashMap<>();
 
-    RequestHandler(WebSocket ws, RequestRouter requestRouter, String message) {
+    public RequestHandler(WebSocket ws, RequestRouter requestRouter, String message) {
         this.ws = ws;
         this.requestRouter = requestRouter;
         this.message = message;
@@ -35,9 +36,9 @@ public class RequestHandler implements Runnable {
         try {
             Response response = requestRouter.executeRequest(request.setWs(ws));
 
-            gson = new GsonBuilder().
-                excludeFieldsWithoutExposeAnnotation().
-                create();
+            gson = new GsonBuilder()
+                    .excludeFieldsWithoutExposeAnnotation()
+                    .create();
 
             String json = gson.toJson(response.setIdCallback(request.getIdCallback()));
 

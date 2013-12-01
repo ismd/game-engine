@@ -1,12 +1,12 @@
 package game.world;
 
-import game.layout.Layout;
 import com.google.gson.Gson;
 import game.dao.DaoFactory;
 import game.dao.MobDao;
-import game.mob.MobInfo;
-import game.mob.MobAvailableCell;
+import game.layout.Layout;
 import game.mob.Mob;
+import game.mob.MobAvailableCell;
+import game.mob.MobInfo;
 import game.npc.Npc;
 import game.world.exceptions.BadCoordinatesException;
 import java.io.FileNotFoundException;
@@ -38,9 +38,12 @@ public class World {
         Gson gson = new Gson();
         FileReader reader;
 
-        layouts = DaoFactory.getInstance().getLayoutDao().getAll();
+        layouts = DaoFactory.getInstance().layoutDao.getAll();
         for (Map.Entry<Integer, Layout> layout : layouts.entrySet()) {
-            log.info("Parsing layout ({}) {}", layout.getValue().getId(), layout.getValue().getTitle());
+            log.info("Parsing layout ({}) {}",
+                    layout.getValue().getId(),
+                    layout.getValue().getTitle()
+            );
 
             reader = new FileReader(dir + "/" + layout.getValue().getId() + ".txt");
             layout.getValue().setCells(gson.fromJson(reader, int[][][].class));
@@ -50,7 +53,7 @@ public class World {
     private void initializeMobs() {
         log.info("Initializing mobs");
 
-        MobDao mobDao = DaoFactory.getInstance().getMobDao();
+        MobDao mobDao = DaoFactory.getInstance().mobDao;
         mobDao.removeAllFromWorld();
 
         Random random = new Random(System.currentTimeMillis());
@@ -60,7 +63,10 @@ public class World {
             List<MobAvailableCell> availableCells = mobDao.getAvailableCells(mob);
 
             if (0 == availableCells.size()) {
-                log.warn("No available cells for mob `{}' ({})", mob.getName(), mob.getId());
+                log.warn("No available cells for mob `{}' ({})",
+                        mob.getName(),
+                        mob.getId()
+                );
                 continue;
             }
 
@@ -78,16 +84,17 @@ public class World {
                 int y = mobCell.getY();
 
                 log.info("Placing mob `{}' ({}) on layout {} (x: {}, y: {})",
-                    mob.getName(),
-                    mob.getId(),
-                    idLayout,
-                    x,
-                    y);
+                        mob.getName(),
+                        mob.getId(),
+                        idLayout,
+                        x,
+                        y
+                );
 
                 try {
                     Mob m = new Mob(mob);
                     layouts.get(idLayout).getCell(x, y).addContent(m);
-                    DaoFactory.getInstance().getMobDao().add(m);
+                    mobDao.add(m);
                 } catch (BadCoordinatesException e) {
                     log.error("Can't place mob");
                 }
@@ -98,13 +105,14 @@ public class World {
     private void initializeNpcs() {
         log.info("Initializing NPCs");
 
-        for (Npc npc : DaoFactory.getInstance().getNpcDao().getAll()) {
+        for (Npc npc : DaoFactory.getInstance().npcDao.getAll()) {
             log.info("Placing NPC `{}' ({}) on layout {} (x: {}, y: {})",
-                npc.getName(),
-                npc.getId(),
-                npc.getIdLayout(),
-                npc.getX(),
-                npc.getY());
+                    npc.getName(),
+                    npc.getId(),
+                    npc.getIdLayout(),
+                    npc.getX(),
+                    npc.getY()
+            );
 
             try {
                 layouts.get(npc.getIdLayout()).getCell(npc.getX(), npc.getY()).addContent(npc);

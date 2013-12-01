@@ -1,5 +1,6 @@
 package game.server;
 
+import game.server.response.Response;
 import com.google.gson.GsonBuilder;
 import game.World;
 import game.character.Character;
@@ -35,10 +36,10 @@ public class Notifier {
     }
 
     public void notifyByWebSocket(List<WebSocket> websockets, Response response) {
-        String message = new GsonBuilder().
-            excludeFieldsWithoutExposeAnnotation().
-            create().
-            toJson(response);
+        String message = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .create()
+                .toJson(response);
 
         for (WebSocket ws : websockets) {
             ws.send(message);
@@ -46,10 +47,10 @@ public class Notifier {
     }
 
     public void notifyAll(Response response) {
-        String message = new GsonBuilder().
-            excludeFieldsWithoutExposeAnnotation().
-            create().
-            toJson(response);
+        String message = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .create()
+                .toJson(response);
 
         for (Entry<WebSocket, User> entry : World.users.entrySet()) {
             entry.getKey().send(message);

@@ -3,6 +3,7 @@ package game.user;
 import com.google.gson.annotations.Expose;
 import game.character.Character;
 import game.dao.DaoFactory;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +19,7 @@ import org.java_websocket.WebSocket;
  * @author ismd
  */
 @Entity
-public class User {
+public class User implements Serializable {
 
     @Transient
     private Character currentCharacter;
@@ -43,8 +44,7 @@ public class User {
     private String info;
     @Expose
     private String site;
-    @Expose
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Expose @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date registered;
     @Expose
     private String authKey;
@@ -80,7 +80,7 @@ public class User {
         if (null == characters) {
             characters = new ArrayList<>();
 
-            for (Character character : DaoFactory.getInstance().getCharacterDao().getByIdUser(getId())) {
+            for (Character character : DaoFactory.getInstance().characterDao.getByIdUser(getId())) {
                 character.setUser(this);
                 characters.add(character);
             }
@@ -96,71 +96,70 @@ public class User {
         return characters;
     }
 
+    // Геттеры
+
     public int getId() {
         return id;
-    }
-
-    public User setId(int id) {
-        this.id = id;
-        return this;
     }
 
     public String getLogin() {
         return login;
     }
 
-    public User setLogin(String login) {
-        this.login = login;
-        return this;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public User setPassword(String password) {
-        this.password = password;
-        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public User setEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
     public String getInfo() {
         return info;
-    }
-
-    public User setInfo(String info) {
-        this.info = info;
-        return this;
     }
 
     public String getSite() {
         return site;
     }
 
+    public Date getRegistered() {
+        return registered;
+    }
+
+    public String getAuthKey() {
+        return authKey;
+    }
+    
+    // Сеттеры
+    
+    public User setLogin(String login) {
+        this.login = login;
+        return this;
+    }
+    
+    public User setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+    
+    public User setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+    
+    public User setInfo(String info) {
+        this.info = info;
+        return this;
+    }
+    
     public User setSite(String site) {
         this.site = site;
         return this;
     }
 
-    public Date getRegistered() {
-        return registered;
-    }
-
     public User setRegistered(Date registered) {
         this.registered = registered;
         return this;
-    }
-
-    public String getAuthKey() {
-        return authKey;
     }
 
     public User setAuthKey(String authKey) {

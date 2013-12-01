@@ -1,7 +1,7 @@
 package game.dao;
 
-import game.mob.MobInfo;
 import game.mob.MobAvailableCell;
+import game.mob.MobInfo;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -31,8 +31,8 @@ public class MobDao extends Dao {
         Session session = sessionFactory.openSession();
 
         List cells = session.createCriteria(MobAvailableCell.class)
-            .add(Restrictions.eq("idMob", mob.getId()))
-            .list();
+                .add(Restrictions.eq("idMob", mob.getId()))
+                .list();
 
         session.close();
         return cells;

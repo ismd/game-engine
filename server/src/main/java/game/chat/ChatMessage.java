@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
-import javax.persistence.Transient;
 
 /**
  * @author ismd
@@ -17,18 +16,10 @@ import javax.persistence.Transient;
 @Entity
 public class ChatMessage implements Serializable {
 
-    @Transient
-    private Character senderCharacter;
-    @Transient
-    private Character receiverCharacter;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Expose
     private int id;
-    @Expose
     private Integer idSender;
-    @Expose
     private Integer idReceiver;
     @Expose
     private String message;
@@ -40,8 +31,6 @@ public class ChatMessage implements Serializable {
     }
 
     public ChatMessage(Character senderCharacter, Character receiverCharacter, String message) {
-        this.senderCharacter = senderCharacter;
-        this.receiverCharacter = receiverCharacter;
         this.idSender = senderCharacter.getId();
 
         if (null != receiverCharacter) {
@@ -52,13 +41,7 @@ public class ChatMessage implements Serializable {
         sended = new Date();
     }
 
-    public Character getSenderCharacter() {
-        return senderCharacter;
-    }
-
-    public Character getReceiverCharacter() {
-        return receiverCharacter;
-    }
+    // Геттеры
 
     public int getId() {
         return id;
@@ -68,13 +51,23 @@ public class ChatMessage implements Serializable {
         return idSender;
     }
 
+    public int getIdReceiver() {
+        return idReceiver;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public Date getSended() {
+        return sended;
+    }
+    
+    // Сеттеры
+
     public ChatMessage setIdSender(int idSender) {
         this.idSender = idSender;
         return this;
-    }
-
-    public int getIdReceiver() {
-        return idReceiver;
     }
 
     public ChatMessage setIdReceiver(int idReceiver) {
@@ -82,17 +75,9 @@ public class ChatMessage implements Serializable {
         return this;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
     public ChatMessage setMesage(String message) {
         this.message = message;
         return this;
-    }
-
-    public Date getSended() {
-        return sended;
     }
 
     public ChatMessage setSended(Date sended) {

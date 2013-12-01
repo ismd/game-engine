@@ -8,12 +8,20 @@ import com.google.gson.annotations.Expose;
 public class SpriteCoordinate {
 
     @Expose
-    private int x;
+    private final int x;
     @Expose
-    private int y;
+    private final int y;
 
     SpriteCoordinate(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

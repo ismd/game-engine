@@ -4,9 +4,9 @@ import game.Online;
 import game.World;
 import game.character.Character;
 import game.dao.DaoFactory;
-import game.server.Request;
-import game.server.Response;
 import game.server.controllers.common.AbstractController;
+import game.server.request.Request;
+import game.server.response.Response;
 import game.user.User;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -25,9 +25,10 @@ public class UserController extends AbstractController {
             Map<String, Object> args = request.getArgs();
 
             // Метод возвращает null, если пользователь не найден. Исключение всё равно случится.
-            User user = DaoFactory.getInstance().getUserDao().getByLoginAndPassword(
+            User user = DaoFactory.getInstance().userDao.getByLoginAndPassword(
                 (String)args.get("username"),
-                (String)args.get("password"));
+                (String)args.get("password")
+            );
 
             user.setWebSocket(request.getWs());
             World.users.put(request.getWs(), user);
@@ -37,7 +38,7 @@ public class UserController extends AbstractController {
             md.update(String.valueOf(System.currentTimeMillis()).getBytes());
             String key = String.format("%032x", new BigInteger(1, md.digest()));
 
-            DaoFactory.getInstance().getUserDao().update(user.setAuthKey(key));
+            DaoFactory.getInstance().userDao.update(user.setAuthKey(key));
 
             return new Response(true, true, "login-success").appendData("user", user);
         } catch (Exception e) {
@@ -80,14 +81,14 @@ public class UserController extends AbstractController {
         md.update(((String)args.get("password")).getBytes());
         String password = String.format("%032x", new BigInteger(1, md.digest()));
 
-        User user = new User().
-            setLogin((String)args.get("login")).
-            setPassword(password).
-            setEmail((String)args.get("email")).
-            setInfo((String)args.get("info")).
-            setSite((String)args.get("site"));
+        User user = new User()
+                .setLogin((String)args.get("login"))
+                .setPassword(password)
+                .setEmail((String)args.get("email"))
+                .setInfo((String)args.get("info"))
+                .setSite((String)args.get("site"));
 
-        DaoFactory.getInstance().getUserDao().addUser(user);
+        DaoFactory.getInstance().userDao.add(user);
         return new Response(true).appendData("user", user);
     }
 
@@ -105,9 +106,9 @@ public class UserController extends AbstractController {
                 World.users.put(request.getWs(), user);
                 World.users.remove(entry.getKey());
 
-                return new Response(true, true, "init").
-                    appendData("user", user).
-                    appendData("character", user.getCurrentCharacter());
+                return new Response(true, true, "init")
+                        .appendData("user", user)
+                        .appendData("character", user.getCurrentCharacter());
             }
         }
 

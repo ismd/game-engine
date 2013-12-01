@@ -1,4 +1,4 @@
-package game.server;
+package game.server.request;
 
 import java.util.Map;
 import org.java_websocket.WebSocket;

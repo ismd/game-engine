@@ -32,4 +32,13 @@ abstract public class Dao {
         session.getTransaction().commit();
         session.close();
     }
+
+    public void delete(Object object) {
+        Session session = sessionFactory.openSession();
+
+        session.beginTransaction();
+        session.delete(object);
+        session.getTransaction().commit();
+        session.close();
+    }
 }

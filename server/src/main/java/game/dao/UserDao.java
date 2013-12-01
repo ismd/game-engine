@@ -6,7 +6,6 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -26,22 +25,11 @@ public class UserDao extends Dao {
         md.update(password.getBytes());
 
         List result = sessionFactory.openSession().createCriteria(User.class)
-            .add(Restrictions.eq("login", login))
-            .add(Restrictions.eq("password", String.format("%032x", new BigInteger(1, md.digest()))))
-            .setMaxResults(1)
-            .list();
+                .add(Restrictions.eq("login", login))
+                .add(Restrictions.eq("password", String.format("%032x", new BigInteger(1, md.digest()))))
+                .setMaxResults(1)
+                .list();
 
         return 1 == result.size() ? (User)result.get(0) : null;
-    }
-
-    public User addUser(User user) {
-        Session session = sessionFactory.openSession();
-
-        session.beginTransaction();
-        session.save(user);
-        session.getTransaction().commit();
-
-        session.close();
-        return user;
     }
 }

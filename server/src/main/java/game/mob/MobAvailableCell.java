@@ -20,27 +20,37 @@ public class MobAvailableCell implements Serializable {
     private int idLayout;
     private int x;
     private int y;
+    
+    public MobAvailableCell() {
+    }
+
+    // Геттеры
 
     public int getId() {
         return id;
-    }
-
-    public MobAvailableCell setId(int id) {
-        this.id = id;
-        return this;
     }
 
     public int getIdMob() {
         return idMob;
     }
 
+    public int getIdLayout() {
+        return idLayout;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    // Сеттеры
+
     public MobAvailableCell setIdMob(int idMob) {
         this.idMob = idMob;
         return this;
-    }
-
-    public int getIdLayout() {
-        return idLayout;
     }
 
     public MobAvailableCell setIdLayout(int idLayout) {
@@ -48,17 +58,9 @@ public class MobAvailableCell implements Serializable {
         return this;
     }
 
-    public int getX() {
-        return x;
-    }
-
     public MobAvailableCell setX(int x) {
         this.x = x;
         return this;
-    }
-
-    public int getY() {
-        return y;
     }
 
     public MobAvailableCell setY(int y) {

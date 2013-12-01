@@ -1,7 +1,7 @@
 package game.server.controllers.common;
 
 import game.World;
-import game.server.Request;
+import game.server.request.Request;
 import game.user.User;
 
 /**

@@ -7,14 +7,20 @@ public class DaoFactory {
 
     private static DaoFactory instance = null;
 
-    private static CharacterDao characterDao = null;
-    private static LayoutDao layoutDao = null;
-    private static MobDao mobDao = null;
-    private static NpcDao npcDao = null;
-    private static UserDao userDao = null;
-    private static ChatMessageDao chatMessageDao = null;
+    public final CharacterDao characterDao;
+    public final LayoutDao layoutDao;
+    public final MobDao mobDao;
+    public final NpcDao npcDao;
+    public final UserDao userDao;
+    public final ChatMessageDao chatMessageDao;
 
     private DaoFactory() {
+        characterDao = new CharacterDao();
+        layoutDao = new LayoutDao();
+        mobDao = new MobDao();
+        npcDao = new NpcDao();
+        userDao = new UserDao();
+        chatMessageDao = new ChatMessageDao();
     }
 
     public static synchronized DaoFactory getInstance() {
@@ -23,53 +29,5 @@ public class DaoFactory {
         }
 
         return instance;
-    }
-
-    public CharacterDao getCharacterDao() {
-        if (null == characterDao) {
-            characterDao = new CharacterDao();
-        }
-
-        return characterDao;
-    }
-
-    public LayoutDao getLayoutDao() {
-        if (null == layoutDao) {
-            layoutDao = new LayoutDao();
-        }
-
-        return layoutDao;
-    }
-
-    public MobDao getMobDao() {
-        if (null == mobDao) {
-            mobDao = new MobDao();
-        }
-
-        return mobDao;
-    }
-
-    public NpcDao getNpcDao() {
-        if (null == npcDao) {
-            npcDao = new NpcDao();
-        }
-
-        return npcDao;
-    }
-
-    public UserDao getUserDao() {
-        if (null == userDao) {
-            userDao = new UserDao();
-        }
-
-        return userDao;
-    }
-
-    public ChatMessageDao getChatMessageDao() {
-        if (null == chatMessageDao) {
-            chatMessageDao = new ChatMessageDao();
-        }
-
-        return chatMessageDao;
     }
 }

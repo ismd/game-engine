@@ -3,12 +3,11 @@ package game.layout;
 import game.character.Character;
 import game.mob.Mob;
 import game.npc.Npc;
-import java.io.Serializable;
 
 /**
  * @author ismd
  */
-abstract public class CellContent implements Serializable {
+abstract public class CellContent {
 
     private Cell cell;
 

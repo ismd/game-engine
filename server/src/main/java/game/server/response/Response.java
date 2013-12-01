@@ -1,4 +1,4 @@
-package game.server;
+package game.server.response;
 
 import com.google.gson.annotations.Expose;
 import java.util.HashMap;

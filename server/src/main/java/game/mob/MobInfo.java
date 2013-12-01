@@ -1,5 +1,6 @@
 package game.mob;
 
+import com.google.gson.annotations.Expose;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,38 +16,79 @@ public class MobInfo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Expose
     private String name;
     private int level;
+    @Expose
     private int maxHp;
     private int minDamage;
     private int maxDamage;
     private int maxInWorld;
     private int experience;
+    @Expose
     private String image;
     private int strength;
     private int dexterity;
     private int endurance;
 
-    public int getId() {
-        return id;
+    protected MobInfo() {
     }
 
-    public MobInfo setId(int id) {
-        this.id = id;
-        return this;
+    // Геттеры
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
+    public int getLevel() {
+        return level;
+    }
+
+    public int getMaxHp() {
+        return maxHp;
+    }
+
+    public int getMinDamage() {
+        return minDamage;
+    }
+
+    public int getMaxDamage() {
+        return maxDamage;
+    }
+
+    public int getMaxInWorld() {
+        return maxInWorld;
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public int getStrength() {
+        return strength;
+    }
+
+    public int getDexterity() {
+        return dexterity;
+    }
+
+    public int getEndurance() {
+        return endurance;
+    }
+    
+    // Сеттеры
+
     public MobInfo setName(String name) {
         this.name = name;
         return this;
-    }
-
-    public int getLevel() {
-        return level;
     }
 
     public MobInfo setLevel(int level) {
@@ -54,17 +96,9 @@ public class MobInfo implements Serializable {
         return this;
     }
 
-    public int getMaxHp() {
-        return maxHp;
-    }
-
     public MobInfo setMaxHp(int maxHp) {
         this.maxHp = maxHp;
         return this;
-    }
-
-    public int getMinDamage() {
-        return minDamage;
     }
 
     public MobInfo setMinDamage(int minDamage) {
@@ -72,17 +106,9 @@ public class MobInfo implements Serializable {
         return this;
     }
 
-    public int getMaxDamage() {
-        return maxDamage;
-    }
-
     public MobInfo setMaxDamage(int maxDamage) {
         this.maxDamage = maxDamage;
         return this;
-    }
-
-    public int getMaxInWorld() {
-        return maxInWorld;
     }
 
     public MobInfo setMaxInWorld(int maxInWorld) {
@@ -90,17 +116,9 @@ public class MobInfo implements Serializable {
         return this;
     }
 
-    public int getExperience() {
-        return experience;
-    }
-
     public MobInfo setExperience(int experience) {
         this.experience = experience;
         return this;
-    }
-
-    public String getImage() {
-        return image;
     }
 
     public MobInfo setImage(String image) {
@@ -108,17 +126,9 @@ public class MobInfo implements Serializable {
         return this;
     }
 
-    public int getStrength() {
-        return strength;
-    }
-
     public MobInfo setStrength(int strength) {
         this.strength = strength;
         return this;
-    }
-
-    public int getDexterity() {
-        return dexterity;
     }
 
     public MobInfo setDexterity(int dexterity) {
@@ -126,12 +136,9 @@ public class MobInfo implements Serializable {
         return this;
     }
 
-    public int getEndurance() {
-        return endurance;
-    }
-
     public MobInfo setEndurance(int endurance) {
         this.endurance = endurance;
         return this;
     }
 }
+

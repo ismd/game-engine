@@ -3,6 +3,7 @@ package game.mob;
 import com.google.gson.annotations.Expose;
 import game.layout.Cell;
 import game.layout.CellContent;
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +15,10 @@ import javax.persistence.Transient;
  * @author ismd
  */
 @Entity
-public class Mob extends CellContent {
+public class Mob extends CellContent implements Serializable {
+
+    @Expose @Transient
+    MobInfo mobInfo;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,65 +31,21 @@ public class Mob extends CellContent {
     @Expose
     private int hp;
 
-    @Transient
-    @Expose
-    private String name;
-    @Transient
-    @Expose
-    private int level;
-    @Transient
-    @Expose
-    private int maxHp;
-    @Transient
-    @Expose
-    private int minDamage;
-    @Transient
-    @Expose
-    private int maxDamage;
-    @Transient
-    @Expose
-    private int experience;
-    @Transient
-    @Expose
-    private String image;
-    @Transient
-    @Expose
-    private int strength;
-    @Transient
-    @Expose
-    private int dexterity;
-    @Transient
-    @Expose
-    private int endurance;
-
-    public Mob() {
+    protected Mob() {
     }
 
     public Mob(MobInfo mob) {
         idMob = mob.getId();
-
-        setHp(mob.getMaxHp());
-        name = mob.getName();
-        level = mob.getLevel();
-        maxHp = mob.getMaxHp();
-        minDamage = mob.getMinDamage();
-        maxDamage = mob.getMaxDamage();
-        experience = mob.getExperience();
-        image = mob.getImage();
-        strength = mob.getStrength();
-        dexterity = mob.getDexterity();
-        endurance = mob.getEndurance();
+        hp = mob.getMaxHp();
+        mobInfo = mob;
     }
 
     public Mob(MobInfo mob, Cell cell) {
         this(mob);
-
-        idLayout = cell.getLayout().getId();
-        x = cell.getX();
-        y = cell.getY();
-
         setCell(cell);
     }
+
+    // Геттеры
 
     public int getId() {
         return id;
@@ -95,54 +55,23 @@ public class Mob extends CellContent {
         return idMob;
     }
 
+    public int getIdLayout() {
+        return idLayout;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     public int getHp() {
         return hp;
     }
 
-    public final Mob setHp(int hp) {
-        this.hp = hp;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public int getMaxHp() {
-        return maxHp;
-    }
-
-    public int getMinDamage() {
-        return minDamage;
-    }
-
-    public int getMaxDamage() {
-        return maxDamage;
-    }
-
-    public int getExperience() {
-        return experience;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public int getStrength() {
-        return strength;
-    }
-
-    public int getDexterity() {
-        return dexterity;
-    }
-
-    public int getEndurance() {
-        return endurance;
-    }
+    // Сеттеры
 
     public Mob setIdLayout(int idLayout) {
         this.idLayout = idLayout;
@@ -158,4 +87,10 @@ public class Mob extends CellContent {
         this.y = y;
         return this;
     }
+
+    public Mob setHp(int hp) {
+        this.hp = hp;
+        return this;
+    }
 }
+

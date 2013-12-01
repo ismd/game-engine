@@ -2,6 +2,7 @@ package game.npc;
 
 import com.google.gson.annotations.Expose;
 import game.layout.CellContent;
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +12,7 @@ import javax.persistence.Id;
  * @author ismd
  */
 @Entity
-public class Npc extends CellContent {
+public class Npc extends CellContent implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,6 +31,8 @@ public class Npc extends CellContent {
     public Npc() {
     }
 
+    // Геттеры
+
     public int getId() {
         return id;
     }
@@ -46,11 +49,6 @@ public class Npc extends CellContent {
         return image;
     }
 
-    public Npc setIdLayout(int idLayout) {
-        this.idLayout = idLayout;
-        return this;
-    }
-
     public int getIdLayout() {
         return idLayout;
     }
@@ -59,13 +57,20 @@ public class Npc extends CellContent {
         return x;
     }
 
-    public Npc setX(int x) {
-        this.x = x;
+    public int getY() {
+        return y;
+    }
+
+    // Сеттеры
+
+    public Npc setIdLayout(int idLayout) {
+        this.idLayout = idLayout;
         return this;
     }
 
-    public int getY() {
-        return y;
+    public Npc setX(int x) {
+        this.x = x;
+        return this;
     }
 
     public Npc setY(int y) {
