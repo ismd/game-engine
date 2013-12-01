@@ -58,7 +58,6 @@ function UserCtrl($scope, User) {
 
     $scope.$on('logout-success', function(e) {
         $scope.user = null;
-        $scope.$apply();
         localStorage.setItem('user', null);
     });
 
