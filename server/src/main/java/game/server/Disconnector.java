@@ -53,7 +53,6 @@ public class Disconnector implements Runnable {
             }
 
             World.users.remove(ws);
-
             System.out.println("User " + user.getLogin() + " disconnected from " + ip);
         } catch (Exception e) {
             Logger.getLogger(Disconnector.class.getName()).log(Level.SEVERE, null, e);
