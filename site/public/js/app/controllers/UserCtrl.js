@@ -1,6 +1,6 @@
 'use strict';
 
-function UserCtrl($scope, User) {
+function UserCtrl($scope, User, Common) {
     $scope.user = JSON.parse(localStorage.getItem('user'));
 
     if (null !== $scope.user) {
@@ -26,7 +26,9 @@ function UserCtrl($scope, User) {
     };
 
     $scope.logout = function() {
-        User.logout();
+        User.logout().then(function() {
+            Common.redirect('/');
+        });
     };
 
     $scope.$on('set-character-success', function(e, data) {
@@ -66,4 +68,4 @@ function UserCtrl($scope, User) {
     });
 }
 
-UserCtrl.$inject = ['$scope', 'User'];
+UserCtrl.$inject = ['$scope', 'User', 'Common'];
