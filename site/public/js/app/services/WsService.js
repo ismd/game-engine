@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) {
+angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window, Common) {
     var service = {};
 
     var callbacks = {},
@@ -122,6 +122,7 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window) 
 
     $rootScope.$on('logout-success', function(e) {
         queue = [];
+        Common.redirect('/world');
     });
 
     return service;
