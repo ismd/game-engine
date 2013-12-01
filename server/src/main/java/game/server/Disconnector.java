@@ -53,7 +53,7 @@ public class Disconnector implements Runnable {
             System.out.println("Disconnected from "
                 + ws.getRemoteSocketAddress().getAddress().getHostAddress());
         } catch (Exception e) {
-            System.out.println("Error while disconnecting");
+            System.out.println("Error while disconnecting" + e.getMessage());
             Thread.currentThread().interrupt();
         }
     }
