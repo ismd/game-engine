@@ -122,7 +122,7 @@ angular.module('wsService', []).factory('Ws', function($q, $rootScope, $window, 
 
     $rootScope.$on('logout-success', function(e) {
         queue = [];
-        Common.redirect('/world');
+        Common.redirect('/');
     });
 
     return service;

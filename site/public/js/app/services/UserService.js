@@ -56,7 +56,6 @@ angular.module('userService', []).factory('User', function($q, Common, Ws, $root
             controller: 'User',
             action: 'logout'
         }).then(function() {
-            Common.redirect('/');
             defer.resolve();
         });
 
