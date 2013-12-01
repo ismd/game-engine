@@ -20,9 +20,11 @@ public class Disconnector implements Runnable {
     // Таймаут отключения в секундах
     private final int timeout = 60;
     private final WebSocket ws;
+    private final String ip;
 
     public Disconnector(WebSocket ws) {
         this.ws = ws;
+        ip = ws.getRemoteSocketAddress().getAddress().getHostAddress();
     }
 
     @Override
@@ -52,10 +54,9 @@ public class Disconnector implements Runnable {
 
             World.users.remove(ws);
 
-            System.out.println("Disconnected from "
-                + ws.getRemoteSocketAddress().getAddress().getHostAddress());
+            System.out.println("User " + user.getLogin() + " disconnected from " + ip);
         } catch (Exception e) {
-            Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(Disconnector.class.getName()).log(Level.SEVERE, null, e);
             Thread.currentThread().interrupt();
         }
     }
