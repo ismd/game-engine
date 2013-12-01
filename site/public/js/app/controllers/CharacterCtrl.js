@@ -19,7 +19,6 @@ function CharacterCtrl($scope, Character, Common) {
 
     $scope.$on('logout-success', function(e) {
         $scope.character = null;
-        $scope.$apply();
         localStorage.setItem('character', null);
     });
 
