@@ -8,6 +8,8 @@ import game.layout.ContentType;
 import game.user.User;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.java_websocket.WebSocket;
 
 /**
@@ -53,7 +55,7 @@ public class Disconnector implements Runnable {
             System.out.println("Disconnected from "
                 + ws.getRemoteSocketAddress().getAddress().getHostAddress());
         } catch (Exception e) {
-            System.out.println("Error while disconnecting" + e.getMessage());
+            Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, e);
             Thread.currentThread().interrupt();
         }
     }
