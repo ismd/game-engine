@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Ноя 30 2013 г., 17:08
+-- Время создания: Дек 01 2013 г., 10:00
 -- Версия сервера: 5.5.33a-MariaDB-log
 -- Версия PHP: 5.5.5
 
@@ -25,8 +25,8 @@ SET time_zone = "+00:00";
 --
 
 INSERT INTO `Character` (`id`, `idUser`, `name`, `level`, `money`, `idLayout`, `x`, `y`, `strength`, `dexterity`, `endurance`, `hp`, `maxHp`, `minDamage`, `maxDamage`, `image`, `experience`) VALUES
-(1, 1, '1-pers', 1, 10, 1, 3, 2, 10, 10, 10, 20, 20, 3, 5, 'player.png', 0),
-(2, 2, 'hi', 1, 10, 1, 3, 2, 10, 10, 10, 20, 20, 3, 5, 'player.png', 0);
+(1, 1, '1-pers', 1, 10, 1, 3, 3, 10, 10, 10, 20, 20, 3, 5, 'player.png', 0),
+(2, 2, 'hi', 1, 10, 1, 3, 3, 10, 10, 10, 20, 20, 3, 5, 'player.png', 0);
 
 --
 -- Дамп данных таблицы `ItemType`
@@ -50,9 +50,9 @@ INSERT INTO `Layout` (`id`, `title`) VALUES
 
 INSERT INTO `Mob` (`id`, `idMob`, `idLayout`, `x`, `y`, `hp`) VALUES
 (1, 1, 1, 3, 2, 10),
-(2, 1, 1, 3, 2, 10),
-(3, 1, 1, 3, 3, 10),
-(4, 1, 1, 3, 2, 10),
+(2, 1, 1, 3, 3, 10),
+(3, 1, 1, 3, 2, 10),
+(4, 1, 1, 3, 3, 10),
 (5, 1, 1, 3, 3, 10),
 (6, 2, 1, 3, 2, 15),
 (7, 2, 1, 3, 2, 15),
@@ -90,8 +90,8 @@ INSERT INTO `Npc` (`id`, `name`, `greeting`, `image`, `idLayout`, `x`, `y`) VALU
 --
 
 INSERT INTO `User` (`id`, `login`, `password`, `email`, `info`, `site`, `registered`, `authKey`) VALUES
-(1, '1', 'c4ca4238a0b923820dcc509a6f75849b', '1', '1', '1', '2013-11-29 17:00:00', '19c875689925f0aa11030f6525baa51c'),
-(2, '2', 'c81e728d9d4c2f636f067f89cc14862c', '2', NULL, NULL, '2013-11-29 17:00:00', '2f924f0c6ec10c8fc7f3a3349bc8c6b5');
+(1, '1', 'c4ca4238a0b923820dcc509a6f75849b', '1', '1', '1', '2013-11-29 17:00:00', 'eb9aaae91047e034d77b67d3f4fc622f'),
+(2, '2', 'c81e728d9d4c2f636f067f89cc14862c', '2', NULL, NULL, '2013-11-29 17:00:00', 'e1f57e10ee69cef1aff2a9f72c1d89f6');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
