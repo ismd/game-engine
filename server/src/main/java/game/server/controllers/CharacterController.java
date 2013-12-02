@@ -1,18 +1,15 @@
 package game.server.controllers;
 
+import game.Notifier;
 import game.Online;
-import game.World;
 import game.character.Character;
 import game.dao.DaoFactory;
 import game.layout.Cell;
-import game.server.Notifier;
 import game.server.controllers.common.AbstractAuthController;
 import game.server.request.Request;
 import game.server.response.Response;
 import game.user.User;
 import game.world.exceptions.BadCoordinatesException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,8 +19,7 @@ import java.util.logging.Logger;
  */
 public class CharacterController extends AbstractAuthController {
 
-    public Response moveAction(Request request) {
-        Character character = World.users.get(request.getWs()).getCurrentCharacter();
+    public Response moveAction(Request request, Character character) {
         Map<String, Object> args = request.getArgs();
 
         int idLayout = (int)(double)args.get("idLayout");
@@ -32,45 +28,55 @@ public class CharacterController extends AbstractAuthController {
 
         try {
             Cell oldCell = character.getCell();
-            Cell newCell = world.getLayout(idLayout).getCell(x, y);
+            Cell newCell = Online.world.getLayout(idLayout).getCell(x, y);
 
+            // Уведомляем персонажей на старой клетке
             oldCell.removeContent(character);
-            notifyCharactersExcept(oldCell, character);
+            new Notifier().notifyByCharacter(
+                    oldCell.getCharacters(),
+                    new Response(true, true, "cell-update").appendData("cell", oldCell)
+            );
+
+            // Уведомляем персонажей на новой клетке
             character.setCell(newCell.addContent(character));
-            notifyCharactersExcept(newCell, character);
+            new Notifier().notifyByCharacter(
+                    newCell.getCharacters(),
+                    new Response(true, true, "cell-update").appendData("cell", newCell)
+            );
 
             DaoFactory.getInstance().characterDao.update(character);
 
-            return new Response(true, true, "cell-update").appendData("cell", newCell);
+            return new Response(true);
         } catch (BadCoordinatesException e) {
             return new Response(false, "Невозможно переместиться");
         }
     }
 
-    public Response setAction(Request request) {
+    public Response setAction(Request request, Character character) {
         int id = (int)(double)request.getArgs().get("id");
 
-        User user = World.users.get(request.getWs());
+        User user = Online.users.get(request.getWs());
         Character c = null;
 
-        for (Character character : user.getCharacters()) {
-            Cell cell = character.getCell();
+        // Удаляем всех персонажей пользователя с карты
+        for (Character ch : user.getCharacters()) {
+            Cell cell = ch.getCell();
 
             if (null != cell) {
-                Online.removeCharacter(character);
+                Online.removeCharacter(ch);
             }
 
-            if (id == character.getId()) {
+            if (id == ch.getId()) {
                 try {
-                    cell = world.getLayout(character.getIdLayout()).getCell(character.getX(), character.getY());
-                    character.setCell(cell.addContent(character));
-                    Online.addCharacter(character);
+                    cell = Online.world.getLayout(ch.getIdLayout()).getCell(ch.getX(), ch.getY());
+                    ch.setCell(cell.addContent(ch));
+                    Online.addCharacter(ch);
                 } catch (BadCoordinatesException e) {
                     Logger.getLogger(CharacterController.class.getName()).log(Level.SEVERE, null, e);
                 }
 
-                user.setCurrentCharacter(character);
-                c = character;
+                user.setCurrentCharacter(ch);
+                c = ch;
             }
         }
 
@@ -82,10 +88,10 @@ public class CharacterController extends AbstractAuthController {
             appendData("character", c);
     }
 
-    public Response createAction(Request request) {
-        User user = World.users.get(request.getWs());
+    public Response createAction(Request request, Character character) {
+        User user = Online.users.get(request.getWs());
 
-        Character character = new Character()
+        Character ch = new Character()
                 .setIdUser(user.getId())
                 .setName((String)request.getArgs().get("name"))
                 .setLevel(1)
@@ -103,26 +109,9 @@ public class CharacterController extends AbstractAuthController {
                 .setImage("player.png")
                 .setExperience(0);
 
-        user.addCharacter(character);
+        user.addCharacter(ch);
 
-        DaoFactory.getInstance().characterDao.add(character);
-        return new Response(true).appendData("character", character);
-    }
-
-    private void notifyCharactersExcept(Cell cell, Character character) {
-        List<Character> characters = new ArrayList<>();
-
-        for (Character c : cell.getCharacters()) {
-            if (c == character) {
-                continue;
-            }
-
-            characters.add(c);
-        }
-
-        new Notifier().notifyByCharacter(
-                characters,
-                new Response(true, true, "cell-update").appendData("cell", cell)
-        );
+        DaoFactory.getInstance().characterDao.add(ch);
+        return new Response(true).appendData("character", ch);
     }
 }

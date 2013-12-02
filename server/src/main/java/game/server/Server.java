@@ -1,7 +1,9 @@
 package game.server;
 
+import game.Online;
 import game.server.request.RequestHandler;
 import game.server.request.RequestRouter;
+import game.world.World;
 import java.io.FileNotFoundException;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
@@ -17,11 +19,12 @@ import org.java_websocket.server.WebSocketServer;
 class Server extends WebSocketServer {
 
     private final ExecutorService executor = Executors.newCachedThreadPool();
-    private final RequestRouter requestRouter;
 
     Server(int port, String layoutsPath) throws UnknownHostException, FileNotFoundException {
         super(new InetSocketAddress(port));
-        requestRouter = new RequestRouter(layoutsPath);
+
+        RequestRouter.init();
+        Online.world = new World(layoutsPath);
     }
 
     @Override
@@ -38,7 +41,7 @@ class Server extends WebSocketServer {
     @Override
     public void onMessage(WebSocket ws, String message) {
         System.out.println("Message: " + message);
-        executor.execute(new RequestHandler(ws, requestRouter, message));
+        executor.execute(new RequestHandler(ws, message));
     }
 
     @Override

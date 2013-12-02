@@ -53,15 +53,15 @@ public class User implements Serializable {
         return currentCharacter;
     }
 
-    public User setCurrentCharacter(Character character) {
+    public boolean setCurrentCharacter(Character character) {
         for (Character c : getCharacters()) {
             if (c.getId() == character.getId()) {
                 currentCharacter = character;
-                return this;
+                return true;
             }
         }
 
-        return null;
+        return false;
     }
 
     public WebSocket getWebSocket() {

@@ -1,6 +1,6 @@
 package game.server.controllers.common;
 
-import game.World;
+import game.Online;
 import game.server.request.Request;
 import game.user.User;
 
@@ -11,7 +11,7 @@ abstract public class AbstractAuthController extends AbstractController {
 
     @Override
     public boolean init(Request request) {
-        User user = World.users.get(request.getWs());
+        User user = Online.users.get(request.getWs());
 
         if (null != user && null != user.getCurrentCharacter()) {
             return true;

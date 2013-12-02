@@ -1,10 +1,10 @@
 package game.server.request;
 
-import game.World;
+import game.Online;
+import game.character.Character;
 import game.server.controllers.common.AbstractAuthController;
 import game.server.controllers.common.AbstractController;
 import game.server.response.Response;
-import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,14 +17,10 @@ import org.reflections.Reflections;
  */
 public class RequestRouter {
 
-    public static World world;
+    private final static Map<String, Class<? extends AbstractController>> controllers = new HashMap<>();
+    private final static Map<String, AbstractController> controllersObjects = new HashMap<>();
 
-    private final Map<String, Class<? extends AbstractController>> controllers = new HashMap<>();
-    private final Map<String, AbstractController> controllersObjects = new HashMap<>();
-
-    public RequestRouter(String layoutsPath) throws FileNotFoundException {
-        world = new World(layoutsPath);
-
+    public static void init() {
         // Создаём и сохраняем объекты всех контроллеров
         Reflections reflections = new Reflections("game.server.controllers");
 
@@ -37,7 +33,7 @@ public class RequestRouter {
         }
     }
 
-    private void initController(Class<? extends AbstractController> controller) {
+    private static void initController(Class<? extends AbstractController> controller) {
         String controllerName = controller.getName().substring("game.server.controllers.".length(),
             controller.getName().lastIndexOf("Controller"));
 
@@ -71,8 +67,14 @@ public class RequestRouter {
             return new Response(false, "Ошибка");
         }
 
+        Character character = null;
+        try {
+            character = Online.users.get(request.getWs()).getCurrentCharacter();
+        } catch (Exception e) {
+        }
+
         return (Response)controllers.get(controller)
-                .getDeclaredMethod(request.getAction() + "Action", Request.class)
-                .invoke(controllerObject, request);
+                .getDeclaredMethod(request.getAction() + "Action", Request.class, Character.class)
+                .invoke(controllerObject, request, character);
     }
 }

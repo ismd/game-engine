@@ -1,68 +1,59 @@
 package game.server.controllers;
 
 import game.Online;
-import game.World;
 import game.character.Character;
 import game.dao.DaoFactory;
+import game.layout.Cell;
 import game.server.controllers.common.AbstractController;
 import game.server.request.Request;
 import game.server.response.Response;
 import game.user.User;
-import java.math.BigInteger;
-import java.security.MessageDigest;
+import game.util.Md5;
+import game.world.exceptions.BadCoordinatesException;
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
-import java.util.Map.Entry;
-import org.java_websocket.WebSocket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author ismd
  */
 public class UserController extends AbstractController {
 
-    public Response loginAction(Request request) {
-        try {
-            Map<String, Object> args = request.getArgs();
+    public Response loginAction(Request request, Character character) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        Map<String, Object> args = request.getArgs();
 
-            // Метод возвращает null, если пользователь не найден. Исключение всё равно случится.
-            User user = DaoFactory.getInstance().userDao.getByLoginAndPassword(
+        User user = DaoFactory.getInstance().userDao.getByLoginAndPassword(
                 (String)args.get("username"),
                 (String)args.get("password")
-            );
+        );
 
-            user.setWebSocket(request.getWs());
-            World.users.put(request.getWs(), user);
-
-            // Генерируем authKey
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(String.valueOf(System.currentTimeMillis()).getBytes());
-            String key = String.format("%032x", new BigInteger(1, md.digest()));
-
-            DaoFactory.getInstance().userDao.update(user.setAuthKey(key));
-
-            return new Response(true, true, "login-success").appendData("user", user);
-        } catch (Exception e) {
-            return new Response(false, "Неверный логин или пароль");
+        if (null == user) {
+            return new Response(false);
         }
+
+        user.setWebSocket(request.getWs());
+        Online.addUser(user);
+
+        // Генерируем authKey
+        DaoFactory.getInstance().userDao
+                .update(user.setAuthKey(Md5.get(System.currentTimeMillis())));
+
+        return new Response(true, true, "login-success").appendData("user", user);
     }
 
-    public Response logoutAction(Request request) {
-        WebSocket ws = request.getWs();
-        Character character = World.users.get(ws).getCurrentCharacter();
-
-        if (null != character) {
-            Online.removeCharacter(character);
-        }
-
-        World.users.remove(ws);
+    public Response logoutAction(Request request, Character character) {
+        Online.removeUser(Online.users.get(request.getWs()));
         return new Response(true, true, "logout-success");
     }
 
-    public Response listCharactersAction(Request request) {
-        return new Response(true).appendData("characters", World.users.get(request.getWs()).getCharacters());
+    public Response listCharactersAction(Request request, Character character) {
+        return new Response(true)
+                .appendData("characters", Online.users.get(request.getWs()).getCharacters());
     }
 
-    public Response registerAction(Request request) throws NoSuchAlgorithmException {
+    public Response registerAction(Request request, Character character) {
         Map args = request.getArgs();
 
         if (null == args.get("login")) {
@@ -77,13 +68,9 @@ public class UserController extends AbstractController {
             return new Response(false, "Необходимо указать e-mail");
         }
 
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(((String)args.get("password")).getBytes());
-        String password = String.format("%032x", new BigInteger(1, md.digest()));
-
         User user = new User()
                 .setLogin((String)args.get("login"))
-                .setPassword(password)
+                .setPassword(Md5.get(args.get("password")))
                 .setEmail((String)args.get("email"))
                 .setInfo((String)args.get("info"))
                 .setSite((String)args.get("site"));
@@ -92,26 +79,58 @@ public class UserController extends AbstractController {
         return new Response(true).appendData("user", user);
     }
 
-    public Response loginByAuthKeyAction(Request request) {
+    public Response loginByAuthKeyAction(Request request, Character character) {
         Map<String, Object> args = request.getArgs();
 
-        int id = (int)(double)args.get("id");
-        String authKey = (String)args.get("authKey");
+        User user = DaoFactory.getInstance().userDao.getByIdAndAuthKey(
+                (int)(double)args.get("id"),
+                (String)args.get("authKey")
+        );
 
-        for (Entry<WebSocket, User> entry : World.users.entrySet()) {
-            User user = entry.getValue();
-
-            if (id == user.getId() && authKey.equals(user.getAuthKey())) {
-                user.setWebSocket(request.getWs());
-                World.users.put(request.getWs(), user);
-                World.users.remove(entry.getKey());
-
-                return new Response(true, true, "init")
-                        .appendData("user", user)
-                        .appendData("character", user.getCurrentCharacter());
-            }
+        if (null == user) {
+            return new Response(false);
         }
 
-        return new Response(false);
+        user.setWebSocket(request.getWs());
+        Online.addUser(user);
+
+        // Генерируем authKey
+        DaoFactory.getInstance().userDao
+                .update(user.setAuthKey(Md5.get(System.currentTimeMillis())));
+
+        // Устанавливаем персонажа
+        Character c = null;
+
+        try {
+            int idCharacter = (int)(double)args.get("idCharacter");
+            
+            for (Character ch : user.getCharacters()) {
+                Cell cell = ch.getCell();
+
+                if (null != cell) {
+                    Online.removeCharacter(ch);
+                }
+
+                if (idCharacter == ch.getId()) {
+                    try {
+                        cell = Online.world.getLayout(ch.getIdLayout()).getCell(ch.getX(), ch.getY());
+                        ch.setCell(cell.addContent(ch));
+
+                        Online.addCharacter(ch);
+                    } catch (BadCoordinatesException e) {
+                        Logger.getLogger(CharacterController.class.getName()).log(Level.SEVERE, null, e);
+                    }
+
+                    user.setCurrentCharacter(ch);
+                    c = ch;
+                }
+            }
+
+            return new Response(true, true, "init")
+                    .appendData("user", user)
+                    .appendData("character", c);
+        } catch (NullPointerException e) {
+            return new Response(false);
+        }
     }
 }

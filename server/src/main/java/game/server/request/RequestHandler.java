@@ -17,14 +17,12 @@ import org.java_websocket.WebSocket;
 public class RequestHandler implements Runnable {
 
     private final WebSocket ws;
-    private final RequestRouter requestRouter;
     private final String message;
     
     public static Map<WebSocket, Character> characters = new HashMap<>();
 
-    public RequestHandler(WebSocket ws, RequestRouter requestRouter, String message) {
+    public RequestHandler(WebSocket ws, String message) {
         this.ws = ws;
-        this.requestRouter = requestRouter;
         this.message = message;
     }
 
@@ -34,7 +32,7 @@ public class RequestHandler implements Runnable {
         Request request = gson.fromJson(message, Request.class);
 
         try {
-            Response response = requestRouter.executeRequest(request.setWs(ws));
+            Response response = new RequestRouter().executeRequest(request.setWs(ws));
 
             gson = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()
@@ -44,7 +42,7 @@ public class RequestHandler implements Runnable {
 
             System.out.println("Sending: " + json);
             ws.send(json);
-        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, e);
         }
     }

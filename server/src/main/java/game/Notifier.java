@@ -1,14 +1,14 @@
-package game.server;
+package game;
 
-import game.server.response.Response;
 import com.google.gson.GsonBuilder;
-import game.World;
 import game.character.Character;
+import game.server.response.Response;
 import game.user.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 import org.java_websocket.WebSocket;
+import org.java_websocket.exceptions.WebsocketNotConnectedException;
 
 /**
  * @author ismd
@@ -52,8 +52,11 @@ public class Notifier {
                 .create()
                 .toJson(response);
 
-        for (Entry<WebSocket, User> entry : World.users.entrySet()) {
-            entry.getKey().send(message);
+        for (Entry<WebSocket, User> entry : Online.users.entrySet()) {
+            try {
+                entry.getKey().send(message);
+            } catch (WebsocketNotConnectedException e) {
+            }
         }
     }
 }
