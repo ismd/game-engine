@@ -2,12 +2,16 @@
     <legend>Создание персонажа</legend>
     <p>
         <label for="name">Имя</label>
-        <input ng-model="newCharacter.name" id="name" type="text" />
+        <input ng-model="newCharacter.name"
+               enter="create()"
+               id="name"
+               type="text" />
     </p>
     <p class="text-error">
         {{message}}
     </p>
     <p>
-        <button ng-click="create()" class="btn">Создать</button>
+        <button ng-click="create()"
+                class="btn">Создать</button>
     </p>
 </fieldset>
