@@ -6,8 +6,8 @@
             <!-- NPC -->
             <div class="npcs">
                 <div ng-repeat="item in cell.content.npcs"
-                     ng-click="selectItem('npc', item.id)"
-                     ng-class="{selected: item.id === selectedItem.id && 'npc' === selectedItem.type}"
+                     ng-click="selectItem('npc', item)"
+                     ng-class="{selected: item.id === selectedItem.item.id && 'npc' === selectedItem.type}"
                      data-id="{{item.id}}"
                      title="{{item.name}}"
                      background-image="/img/world/npcs/{{item.image}}" />
@@ -16,8 +16,8 @@
             <!-- Персонажи -->
             <div class="characters">
                 <div ng-repeat="item in cell.content.characters | filter: {id: '!' + character.id}"
-                     ng-click="selectItem('character', item.id)"
-                     ng-class="{selected: item.id === selectedItem.id && 'character' === selectedItem.type}"
+                     ng-click="selectItem('character', item)"
+                     ng-class="{selected: item.id === selectedItem.item.id && 'character' === selectedItem.type}"
                      data-id="{{item.id}}"
                      title="{{item.name}}"
                      background-image="/img/world/characters/{{item.image}}" />
@@ -26,8 +26,8 @@
             <!-- Мобы -->
             <div class="mobs">
                 <div ng-repeat="item in cell.content.mobs"
-                     ng-click="selectItem('mob', item.id)"
-                     ng-class="{selected: item.id === selectedItem.id && 'mob' === selectedItem.type}"
+                     ng-click="selectItem('mob', item)"
+                     ng-class="{selected: item.id === selectedItem.item.id && 'mob' === selectedItem.type}"
                      data-id="{{item.id}}"
                      title="{{item.mobInfo.name}} ({{item.hp}}/{{item.mobInfo.maxHp}})"
                      background-image="/img/world/mobs/{{item.mobInfo.image}}" />
@@ -47,7 +47,8 @@
                             </td>
                             <td>
                                 <button id="talk"
-                                        ng-class="{disabled: 'npc' !== selectedItem.type}"
+                                        ng-class="{disabled: 'npc' !== selectedItem.type && 'character' !== selectedItem.type}"
+                                        ng-click="talk(selectedItem)"
                                         class="btn btn-small btn-success">Общаться</button>
                             </td>
                             <td>

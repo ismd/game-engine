@@ -1,6 +1,6 @@
 'use strict';
 
-function WorldCtrl($scope, World, Ws, Character) {
+function WorldCtrl($scope, World, Ws, Character, Chat) {
     $scope.selectedItem = null;
 
     $scope.cell = {
@@ -16,10 +16,10 @@ function WorldCtrl($scope, World, Ws, Character) {
 
     World.init();
 
-    $scope.selectItem = function(type, id) {
+    $scope.selectItem = function(type, item) {
         $scope.selectedItem = {
             type: type,
-            id: id
+            item: item
         };
     };
 
@@ -65,6 +65,26 @@ function WorldCtrl($scope, World, Ws, Character) {
 
         $scope.$apply();
     });
+
+    $scope.talk = function(item) {
+        if (null === item) {
+            return;
+        }
+
+        if ('npc' === item.type) {
+            talkToNpc(item.item);
+        } else if ('character' === item.type) {
+            talkToCharacter(item.item);
+        }
+    };
+
+    function talkToNpc(npc) {
+        alert(npc.greeting);
+    }
+
+    function talkToCharacter(character) {
+        Chat.focus(character.name + ', ');
+    }
 }
 
-WorldCtrl.$inject = ['$scope', 'World', 'Ws', 'Character'];
+WorldCtrl.$inject = ['$scope', 'World', 'Ws', 'Character', 'Chat'];
