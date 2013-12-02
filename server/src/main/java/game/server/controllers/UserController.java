@@ -30,7 +30,7 @@ public class UserController extends AbstractController {
         );
 
         if (null == user) {
-            return new Response(false);
+            return new Response(false, "Неверный логин или пароль");
         }
 
         user.setWebSocket(request.getWs());
