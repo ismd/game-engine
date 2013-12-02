@@ -127,7 +127,7 @@
                     <tr ng-repeat="message in chat.messages">
                         <td class="sended">{{message.sended | date: 'H:mm:ss'}}</td>
                         <td ng-click="answerMember(message.sender)"
-                            class="sender-name">{{message.sender.name}}:</td>
+                            class="sender-name"><b>{{message.sender.name}}</b>:</td>
                         <td class="message">{{message.message}}</td>
                     </tr>
                 </tbody>
