@@ -51,10 +51,8 @@ angular.module('chatService', []).factory('Chat', function(Ws, $q, $rootScope) {
         return defer.promise;
     };
 
-    var input = $('div#chat div#controls input');
     service.focus = function(message) {
-        input.val(message);
-        input.focus();
+        $('div#chat div#controls input').val(message).focus();
     };
 
     return service;

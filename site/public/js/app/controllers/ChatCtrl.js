@@ -44,7 +44,6 @@ function ChatCtrl($scope, Chat) {
     }
 
     $scope.answerMember = function(character) {
-        //$scope.chat.message = character.name + ', ';
         Chat.focus(character.name + ', ');
     };
 }
