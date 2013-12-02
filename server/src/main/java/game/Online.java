@@ -1,6 +1,7 @@
 package game;
 
 import game.character.Character;
+import game.layout.Cell;
 import game.server.response.Response;
 import game.user.User;
 import game.world.World;
@@ -36,11 +37,15 @@ public class Online {
     }
 
     public static void addCharacter(Character character) {
+        Cell cell = character.getCell();
         characters.add(character);
 
+        List<Character> characters = cell.getCharacters();
+        characters.remove(character);
+
         notifier.notifyByCharacter(
-                getCharactersExcept(character.getCell().getCharacters(), character),
-                new Response(true, true, "cell-update").appendData("cell", character.getCell())
+                characters,
+                new Response(true, true, "cell-update").appendData("cell", cell)
         );
 
         notifier.notifyAll(new Response(true, true, "chat-update-members")
@@ -48,29 +53,17 @@ public class Online {
     }
 
     public static void removeCharacter(Character character) {
-        character.getCell().removeContent(character);
+        Cell cell = character.getCell();
+
+        cell.removeContent(character);
         characters.remove(character);
 
         notifier.notifyByCharacter(
-                getCharactersExcept(character.getCell().getCharacters(), character),
-                new Response(true, true, "cell-update").appendData("cell", character.getCell())
+                cell.getCharacters(),
+                new Response(true, true, "cell-update").appendData("cell", cell)
         );
 
         notifier.notifyAll(new Response(true, true, "chat-update-members")
                 .appendData("members", characters));
-    }
-
-    private static List<Character> getCharactersExcept(List<Character> characters, Character character) {
-        List<Character> c = new ArrayList<>();
-
-        for (Character ch : characters) {
-            if (ch == character) {
-                continue;
-            }
-
-            c.add(ch);
-        }
-
-        return c;
     }
 }
