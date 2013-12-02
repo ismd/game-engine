@@ -22,6 +22,7 @@ public class ChatMessageDao extends Dao {
         List<ChatMessage> messages = session.createCriteria(ChatMessage.class)
                 .add(Restrictions.gt("sended", new Date(new Date().getTime() - timeout)))
                 .addOrder(Order.asc("sended"))
+                .setMaxResults(15)
                 .list();
 
         session.close();
