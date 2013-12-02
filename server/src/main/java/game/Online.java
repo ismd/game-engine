@@ -40,11 +40,11 @@ public class Online {
         Cell cell = character.getCell();
         characters.add(character);
 
-        List<Character> characters = cell.getCharacters();
-        characters.remove(character);
+        List<Character> cellCharacters = cell.getCharacters();
+        cellCharacters.remove(character);
 
         notifier.notifyByCharacter(
-                characters,
+                cellCharacters,
                 new Response(true, true, "cell-update").appendData("cell", cell)
         );
 
