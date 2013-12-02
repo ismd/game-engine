@@ -66,6 +66,12 @@ function UserCtrl($scope, User, Common) {
     $scope.$on('init', function(e, data) {
         $scope.user = data.user;
     });
+
+    $scope.openLoginForm = function() {
+        setTimeout(function() {
+            $('div#auth-form input[ng-model="username"]').focus();
+        }, 500);
+    };
 }
 
 UserCtrl.$inject = ['$scope', 'User', 'Common'];

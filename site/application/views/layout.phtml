@@ -55,7 +55,8 @@
                         <div ng-switch on="user" class="row">
                             <!-- Пользователь не выбран -->
                             <div ng-switch-when="null" class="span2">
-                                <button class="left-panel-button btn btn-primary"
+                                <button ng-click="openLoginForm()"
+                                        class="left-panel-button btn btn-primary"
                                         href="#auth-form"
                                         role="button"
                                         data-toggle="modal"
@@ -127,9 +128,15 @@
                         <div class="modal-body">
                             <form>
                                 <label for="username">Логин</label>
-                                <input ng-model="username" type="text" placeholder="Введите логин" />
+                                <input ng-model="username"
+                                       enter="login(username, password)"
+                                       type="text"
+                                       placeholder="Введите логин" />
                                 <label for="password">Пароль</label>
-                                <input ng-model="password" type="password" placeholder="Введите пароль" />
+                                <input ng-model="password"
+                                       enter="login(username, password)"
+                                       type="password"
+                                       placeholder="Введите пароль" />
                             </form>
 
                             <p class="text-error">{{loginMessage}}</p>
@@ -164,8 +171,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="character in user.characters">
-                                            <td ng-click="setCharacter(character.id)">
+                                        <tr ng-repeat="character in user.characters"
+                                            ng-click="setCharacter(character.id)">
+                                            <td>
                                                 <img ng-src="/img/world/characters/{{character.image}}" />
                                                 {{character.name}}
                                             </td>
