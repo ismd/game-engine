@@ -1,5 +1,6 @@
 package game.dao;
 
+import com.google.common.collect.Lists;
 import game.chat.ChatMessage;
 import java.util.Date;
 import java.util.List;
@@ -21,11 +22,11 @@ public class ChatMessageDao extends Dao {
         Session session = sessionFactory.openSession();
         List<ChatMessage> messages = session.createCriteria(ChatMessage.class)
                 .add(Restrictions.gt("sended", new Date(new Date().getTime() - timeout)))
-                .addOrder(Order.asc("sended"))
+                .addOrder(Order.desc("sended"))
                 .setMaxResults(15)
                 .list();
 
         session.close();
-        return messages;
+        return Lists.reverse(messages);
     }
 }
