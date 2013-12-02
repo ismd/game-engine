@@ -36,12 +36,22 @@ div#chat div#messages table tr:first-child td {
     border-top: 0;
 }
 
-div#chat div#messages table td.sended,
-div#chat div#messages table td.sender-name {
+div#chat div#messages table td.sended {
     width: 1px;
     padding-right: 10px;
     border-right: 1px dotted silver;
     white-space: nowrap;
+}
+
+div#chat div#messages table td.sender-name {
+    width: 1px;
+    white-space: nowrap;
+    text-align: right;
+    cursor: pointer;
+}
+
+div#chat div#messages table td.message {
+    padding-left: 0;
 }
 
 div#chat div#controls {
@@ -75,4 +85,9 @@ div#chat div#controls div#send button {
 div#chat div#members div#members-title {
     text-align: center;
     border-bottom: 1px solid silver;
+}
+
+div#chat div#members div#members-list ul li {
+    list-style-type: square;
+    cursor: pointer;
 }

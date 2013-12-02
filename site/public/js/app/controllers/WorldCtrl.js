@@ -3,8 +3,6 @@
 function WorldCtrl($scope, World, Ws, Character) {
     $scope.selectedItem = null;
 
-    $('div#chat div#controls input').focus();
-
     $scope.cell = {
         idLayout: '...',
         x: '...',

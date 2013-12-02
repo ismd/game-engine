@@ -7,7 +7,10 @@ function ChatCtrl($scope, Chat) {
         message: null
     };
 
-    var offset = new Date().getTimezoneOffset();
+    var offset = new Date().getTimezoneOffset(),
+        input = $('div#chat div#controls input');
+
+    input.focus();
 
     Chat.init().then(function(data) {
         setMessages(data.messages);
@@ -40,6 +43,11 @@ function ChatCtrl($scope, Chat) {
             $scope.chat.messages.push(message);
         }
     }
+
+    $scope.answerMember = function(character) {
+        $scope.chat.message = character.name + ', ';
+        input.focus();
+    };
 }
 
 ChatCtrl.$inject = ['$scope', 'Chat'];

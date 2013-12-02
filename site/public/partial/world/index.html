@@ -126,8 +126,9 @@
                 <tbody>
                     <tr ng-repeat="message in chat.messages">
                         <td class="sended">{{message.sended | date: 'H:mm:ss'}}</td>
-                        <td class="sender-name">{{message.sender.name}}</td>
-                        <td>{{message.message}}</td>
+                        <td ng-click="answerMember(message.sender)"
+                            class="sender-name">{{message.sender.name}}:</td>
+                        <td class="message">{{message.message}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -140,7 +141,10 @@
 
             <div id="members-list">
                 <ul>
-                    <li ng-repeat="member in chat.members">{{member.name}} ({{member.level}})</li>
+                    <li ng-repeat="member in chat.members"
+                        ng-click="answerMember(member)">
+                        {{member.name}} ({{member.level}})
+                    </li>
                 </ul>
             </div>
         </div>
