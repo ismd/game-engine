@@ -42,7 +42,10 @@ public class Notifier {
                 .toJson(response);
 
         for (WebSocket ws : websockets) {
-            ws.send(message);
+            try {
+                ws.send(message);
+            } catch (WebsocketNotConnectedException e) {
+            }
         }
     }
 
