@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('userService', []).factory('User', function($q, Common, Ws, $rootScope) {
+angular.module('userService', []).factory('User', function($q, Ws, $rootScope) {
     var service = {};
 
     service.login = function(username, password) {
@@ -28,12 +28,15 @@ angular.module('userService', []).factory('User', function($q, Common, Ws, $root
     service.loginByAuthKey = function(id, authKey) {
         var defer = $q.defer();
 
+        var character = JSON.parse(localStorage.getItem('character'));
+
         Ws.send({
             controller: 'User',
             action: 'loginByAuthKey',
             args: {
                 id: id,
-                authKey: authKey
+                authKey: authKey,
+                idCharacter: null !== character ? character.id : null
             }
         }).then(function(data) {
             localStorage.setItem('user', JSON.stringify(data.user));
