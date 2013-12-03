@@ -52,7 +52,7 @@ public class Online {
 
     public static void addCharacter(Character character) {
         Cell cell = character.getCell();
-        characters.add(character.getId(), character);
+        characters.add(character);
 
         List<Character> cellCharacters = cell.getCharacters();
         cellCharacters.remove(character);
@@ -82,12 +82,11 @@ public class Online {
     }
 
     public static void removeCharacterById(int id) {
-        Character character = characters.get(id);
-
-        if (null == character) {
-            return;
+        for (Character character : characters) {
+            if (id == character.getId()) {
+                removeCharacter(character);
+                return;
+            }
         }
-
-        removeCharacter(character);
     }
 }
