@@ -1,6 +1,5 @@
 package game.server.controllers;
 
-import game.Notifier;
 import game.Online;
 import game.character.Character;
 import game.chat.ChatMessage;
@@ -27,7 +26,7 @@ public class ChatController extends AbstractAuthController {
         List<ChatMessage> messages = new ArrayList<>();
         messages.add(message.setMesage(msg));
 
-        new Notifier().notifyAll(new Response(true, true, "chat-new-messages")
+        Online.notifier.notifyAll(new Response(true, true, "chat-new-messages")
                 .appendData("messages", messages));
 
         return new Response(true);

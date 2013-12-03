@@ -33,6 +33,8 @@ public class UserController extends AbstractController {
             return new Response(false, "Неверный логин или пароль");
         }
 
+        Online.removeUserById(user.getId());
+
         user.setWebSocket(request.getWs());
         Online.addUser(user);
 
@@ -81,15 +83,18 @@ public class UserController extends AbstractController {
 
     public Response loginByAuthKeyAction(Request request, Character character) {
         Map<String, Object> args = request.getArgs();
+        int id = (int)(double)args.get("id");
 
         User user = DaoFactory.getInstance().userDao.getByIdAndAuthKey(
-                (int)(double)args.get("id"),
+                id,
                 (String)args.get("authKey")
         );
 
         if (null == user) {
             return new Response(false);
         }
+
+        Online.removeUserById(id);
 
         user.setWebSocket(request.getWs());
         Online.addUser(user);

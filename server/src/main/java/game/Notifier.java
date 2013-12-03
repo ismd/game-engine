@@ -15,6 +15,9 @@ import org.java_websocket.exceptions.WebsocketNotConnectedException;
  */
 public class Notifier {
 
+    Notifier() {
+    }
+
     public void notifyByCharacter(List<Character> characters, Response response) {
         List<User> users = new ArrayList<>();
 

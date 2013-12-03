@@ -1,6 +1,5 @@
 package game.server.controllers;
 
-import game.Notifier;
 import game.Online;
 import game.character.Character;
 import game.dao.DaoFactory;
@@ -32,14 +31,14 @@ public class CharacterController extends AbstractAuthController {
 
             // Уведомляем персонажей на старой клетке
             oldCell.removeContent(character);
-            new Notifier().notifyByCharacter(
+            Online.notifier.notifyByCharacter(
                     oldCell.getCharacters(),
                     new Response(true, true, "cell-update").appendData("cell", oldCell)
             );
 
             // Уведомляем персонажей на новой клетке
             character.setCell(newCell.addContent(character));
-            new Notifier().notifyByCharacter(
+            Online.notifier.notifyByCharacter(
                     newCell.getCharacters(),
                     new Response(true, true, "cell-update").appendData("cell", newCell)
             );

@@ -11,16 +11,16 @@ public class Disconnector implements Runnable {
 
     private final WebSocket ws;
     private final String ip;
+    private final User user;
 
     public Disconnector(WebSocket ws) {
         this.ws = ws;
         ip = ws.getRemoteSocketAddress().getAddress().getHostAddress();
+        user = Online.users.get(ws);
     }
 
     @Override
     public void run() {
-        User user = Online.users.get(ws);
-
         if (null == user) {
             return;
         }
