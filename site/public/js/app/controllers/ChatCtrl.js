@@ -27,6 +27,10 @@ function ChatCtrl($scope, Chat) {
     });
 
     $scope.sendMessage = function(message) {
+        if (null === message) {
+            return;
+        }
+
         Chat.send(message).then(function() {
             $scope.chat.message = null;
         });
