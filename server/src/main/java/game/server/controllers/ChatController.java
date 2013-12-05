@@ -19,6 +19,10 @@ public class ChatController extends AbstractAuthController {
         Character receiverCharacter = null;
         String msg = (String)request.getArgs().get("message");
 
+        if (null == msg) {
+            return new Response(false);
+        }
+
         ChatMessage message = new ChatMessage(character, receiverCharacter, msg);
 
         DaoFactory.getInstance().chatMessageDao.add(message);
