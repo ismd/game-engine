@@ -22,6 +22,11 @@ public class Layout implements Serializable {
     @Transient
     private Cell[][] cells; // Значения хранятся как [y, x]
 
+    @Transient
+    private final int cellsHorizontal = 9;
+    @Transient
+    private final int cellsVertical = 9;
+
     public Layout() {
     }
 
@@ -66,17 +71,18 @@ public class Layout implements Serializable {
         return this;
     }
 
-    public SpriteCoordinate[][] getVicinity(Cell cell) {
-        SpriteCoordinate[][] vicinity = new SpriteCoordinate[7][5];
+    private SpriteCoordinate[][] getVicinity(Cell cell) {
+        SpriteCoordinate[][] vicinity = new SpriteCoordinate[cellsHorizontal][cellsVertical];
 
         int x = cell.getX();
         int y = cell.getY();
 
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (int i = 0; i < cellsVertical; i++) {
+            for (int j = 0; j < cellsHorizontal; j++) {
                 try {
-                    vicinity[i][j] = getCell(x + i - 3, y + j - 2).getSpriteCoordinate();
-                } catch (BadCoordinatesException ex) {
+                    vicinity[i][j] = getCell(x + i - cellsHorizontal / 2,
+                            y + j - cellsVertical / 2).getSpriteCoordinate();
+                } catch (BadCoordinatesException e) {
                     vicinity[i][j] = null;
                 }
             }
