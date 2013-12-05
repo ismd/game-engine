@@ -1,0 +1,13 @@
+div#move-buttons {
+    text-align: center;
+    margin: 5px 0;
+}
+
+canvas#layout {
+    float: left;
+}
+
+div#right-of-layout {
+    text-align: right;
+    margin-right: 10px;
+}

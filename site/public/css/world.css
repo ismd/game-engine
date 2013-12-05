@@ -35,29 +35,11 @@ div#cell-content div.mobs div:first-child {
 
 div#main-panel,
 div#location-info {
-    height: 136px;
+    height: 155px;
     border-top: 0;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     padding: 5px;
-}
-
-div#move-buttons {
-    text-align: center;
-    margin: 5px 0;
-}
-
-canvas#layout {
-    float: left;
-}
-
-div#right-of-layout {
-    text-align: right;
-    margin-right: 10px;
-}
-
-div#location-info table tbody tr:first-child td {
-    border-top: 0;
 }
 
 div#main-panel table {
@@ -66,4 +48,8 @@ div#main-panel table {
 
 div#main-panel button {
     width: 80px;
+}
+
+div#location-info table tbody tr:first-child td {
+    border-top: 0;
 }

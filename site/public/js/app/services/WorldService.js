@@ -8,8 +8,8 @@ angular.module('worldService', []).factory('World', function(Ws) {
     var sprites = new Image();
     sprites.src = '/img/world/cells.png';
 
-    var player = new Image();
-    player.src = '/img/world/hero.png';
+    var hero = new Image();
+    hero.src = '/img/world/hero.png';
 
     service.init = function() {
         canvas = $('canvas#layout');
@@ -21,16 +21,20 @@ angular.module('worldService', []).factory('World', function(Ws) {
         });
     };
 
-    var CELL_WIDTH = 50,
-        CELL_HEIGHT = 50;
+    var CELL_WIDTH = 30,
+        CELL_HEIGHT = 30,
+        CELLS_HORIZONTAL = 9,
+        CELLS_VERTICAL = 9,
+        HERO_WIDTH = 20,
+        HERO_HEIGHT = 20;
 
     service.drawVicinity = function(vicinity) {
-        for (var x = 0; x < 7; x++) {
-            for (var y = 0; y < 5; y++) {
+        for (var x = 0; x < CELLS_HORIZONTAL; x++) {
+            for (var y = 0; y < CELLS_VERTICAL; y++) {
                 if (null === vicinity[x][y]) {
                     ctx.drawImage(sprites,
                                   0,
-                                  CELL_HEIGHT,
+                                  0,
                                   CELL_WIDTH,
                                   CELL_HEIGHT,
                                   x * CELL_WIDTH,
@@ -52,7 +56,11 @@ angular.module('worldService', []).factory('World', function(Ws) {
             }
         }
 
-        ctx.drawImage(player, 150, 100, 50, 50);
+        ctx.drawImage(hero,
+                      CELL_WIDTH * Math.floor(CELLS_HORIZONTAL / 2) + (CELL_WIDTH - HERO_WIDTH) / 2,
+                      CELL_HEIGHT * Math.floor(CELLS_VERTICAL / 2) + (CELL_HEIGHT - HERO_HEIGHT) / 2,
+                      HERO_WIDTH,
+                      HERO_HEIGHT);
     };
 
     return service;

@@ -1,6 +1,6 @@
 <div class="row-fluid">
     <!-- Левый верхний угол -->
-    <div class="span7">
+    <div class="span8">
         <!-- Содержимое клетки -->
         <div id="cell-content" class="span12">
             <!-- NPC -->
@@ -10,7 +10,7 @@
                      ng-class="{selected: item.id === selectedItem.item.id && 'npc' === selectedItem.type}"
                      data-id="{{item.id}}"
                      title="{{item.name}}"
-                     background-image="/img/world/npcs/{{item.image}}" />
+                     background-image="/img/world/npcs/{{item.image}}"></div>
             </div>
 
             <!-- Персонажи -->
@@ -20,7 +20,7 @@
                      ng-class="{selected: item.id === selectedItem.item.id && 'character' === selectedItem.type}"
                      data-id="{{item.id}}"
                      title="{{item.name}}"
-                     background-image="/img/world/characters/{{item.image}}" />
+                     background-image="/img/world/characters/{{item.image}}"></div>
             </div>
 
             <!-- Мобы -->
@@ -30,7 +30,7 @@
                      ng-class="{selected: item.id === selectedItem.item.id && 'mob' === selectedItem.type}"
                      data-id="{{item.id}}"
                      title="{{item.mobInfo.name}} ({{item.hp}}/{{item.mobInfo.maxHp}})"
-                     background-image="/img/world/mobs/{{item.mobInfo.image}}" />
+                     background-image="/img/world/mobs/{{item.mobInfo.image}}"></div>
             </div>
         </div>
 
@@ -87,10 +87,10 @@
         </div>
     </div>
 
-    <div id="top-right" class="span5">
+    <div id="top-right" class="span4">
         <!-- Карта -->
         <div class="span12">
-            <canvas id="layout" width="350" height="250">Обновите браузер</canvas>
+            <canvas id="layout" width="270" height="270">Обновите браузер</canvas>
 
             <div id="right-of-layout">
                 <i class="icon-star"></i><br />
@@ -105,10 +105,28 @@
         <!-- Кнопки перемещения -->
         <div class="row-fluid">
             <div id="move-buttons" class="span12">
-                <button ng-click="move('top')" id="move-top"><i class="icon-arrow-up"></i></button><br />
-                <button ng-click="move('left')" id="move-left"><i class="icon-arrow-left"></i></button>
-                <button ng-click="move('right')" id="move-right"><i class="icon-arrow-right"></i></button><br />
-                <button ng-click="move('bottom')" id="move-bottom"><i class="icon-arrow-down"></i></button>
+                <button ng-click="move('top')"
+                        ng-class="{disabled: movingInProcess}"
+                        class="btn">
+                    <i class="icon-arrow-up"></i>
+                </button>
+                <br />
+                <button ng-click="move('left')"
+                        ng-class="{disabled: movingInProcess}"
+                        class="btn">
+                    <i class="icon-arrow-left"></i>
+                </button>
+                <button ng-click="move('right')"
+                        ng-class="{disabled: movingInProcess}"
+                        class="btn">
+                    <i class="icon-arrow-right"></i>
+                </button>
+                <br />
+                <button ng-click="move('bottom')"
+                        ng-class="{disabled: movingInProcess}"
+                        class="btn">
+                    <i class="icon-arrow-down"></i>
+                </button>
             </div>
         </div>
     </div>

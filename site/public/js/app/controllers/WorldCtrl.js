@@ -2,6 +2,7 @@
 
 function WorldCtrl($scope, World, Ws, Character, Chat) {
     $scope.selectedItem = null;
+    $scope.movingInProcess = false;
 
     $scope.cell = {
         idLayout: '...',
@@ -24,6 +25,12 @@ function WorldCtrl($scope, World, Ws, Character, Chat) {
     };
 
     $scope.move = function(direction) {
+        if ($scope.movingInProcess) {
+            return;
+        }
+
+        $scope.movingInProcess = true;
+
         var newX = $scope.cell.x;
         var newY = $scope.cell.y;
 
@@ -47,6 +54,9 @@ function WorldCtrl($scope, World, Ws, Character, Chat) {
 
         Character.move($scope.cell.idLayout, newX, newY).then(function() {
             $scope.selectedItem = null;
+            $scope.movingInProcess = false;
+        }, function() {
+            $scope.movingInProcess = false;
         });
     };
 

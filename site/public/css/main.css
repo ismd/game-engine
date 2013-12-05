@@ -36,3 +36,7 @@ a.left-panel-button {
 div#select-character table tbody tr {
     cursor: pointer;
 }
+
+a#select-character-open {
+    width: 84%;
+}
