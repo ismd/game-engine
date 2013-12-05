@@ -7,7 +7,8 @@ function ChatCtrl($scope, Chat) {
         message: null
     };
 
-    var offset = new Date().getTimezoneOffset();
+    var TIMEZONE_OFFSET = new Date().getTimezoneOffset(),
+        MAX_MESSAGES_IN_CHAT = 100;
 
     Chat.focus();
 
@@ -33,6 +34,7 @@ function ChatCtrl($scope, Chat) {
 
         Chat.send(message).then(function() {
             $scope.chat.message = null;
+            Chat.focus();
         });
     };
 
@@ -41,9 +43,13 @@ function ChatCtrl($scope, Chat) {
             var message = messages[i];
 
             message.sended = new Date(message.sended);
-            message.sended = message.sended.setMinutes(message.sended.getMinutes() - offset);
+            message.sended = message.sended.setMinutes(message.sended.getMinutes() - TIMEZONE_OFFSET);
 
             $scope.chat.messages.push(message);
+        }
+
+        while ($scope.chat.messages.length > MAX_MESSAGES_IN_CHAT) {
+            $scope.chat.messages.shift();
         }
     }
 
