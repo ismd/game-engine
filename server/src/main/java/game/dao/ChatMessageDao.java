@@ -14,6 +14,7 @@ import org.hibernate.criterion.Restrictions;
 public class ChatMessageDao extends Dao {
 
     private final int timeout = 60 * 60 * 1000;
+    private final int maxLastMessages = 10;
 
     ChatMessageDao() {
     }
@@ -23,7 +24,7 @@ public class ChatMessageDao extends Dao {
         List<ChatMessage> messages = session.createCriteria(ChatMessage.class)
                 .add(Restrictions.gt("sended", new Date(new Date().getTime() - timeout)))
                 .addOrder(Order.desc("sended"))
-                .setMaxResults(15)
+                .setMaxResults(maxLastMessages)
                 .list();
 
         session.close();
