@@ -160,7 +160,7 @@
 
             <div id="members-list">
                 <ul>
-                    <li ng-repeat="member in chat.members"
+                    <li ng-repeat="member in chat.members | orderBy: 'name'"
                         ng-click="answerMember(member)">
                         {{member.name}} ({{member.level}})
                     </li>
