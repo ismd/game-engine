@@ -15,6 +15,7 @@ import java.util.Map;
  */
 public class Cell {
 
+    @Expose
     private final Layout layout;
 
     @Expose

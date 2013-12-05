@@ -1,5 +1,6 @@
 package game.layout;
 
+import com.google.gson.annotations.Expose;
 import game.world.exceptions.BadCoordinatesException;
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -14,9 +15,10 @@ import javax.persistence.Transient;
 @Entity
 public class Layout implements Serializable {
 
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    @Id @GeneratedValue(strategy=GenerationType.AUTO) @Expose
     private int id;
 
+    @Expose
     private String title;
 
     @Transient

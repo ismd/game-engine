@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +40,7 @@ public class World {
         FileReader reader;
 
         layouts = DaoFactory.getInstance().layoutDao.getAll();
-        for (Map.Entry<Integer, Layout> layout : layouts.entrySet()) {
+        for (Entry<Integer, Layout> layout : layouts.entrySet()) {
             log.info("Parsing layout ({}) {}",
                     layout.getValue().getId(),
                     layout.getValue().getTitle()
