@@ -18,8 +18,9 @@ import java.util.logging.Logger;
  */
 public class CharacterController extends AbstractAuthController {
 
-    public Response moveAction(Request request, Character character) {
+    public Response moveAction(Request request, User user) {
         Map<String, Object> args = request.getArgs();
+        Character character = user.getCurrentCharacter();
 
         int idLayout = (int)(double)args.get("idLayout");
         int x = (int)(double)args.get("x");
@@ -51,10 +52,8 @@ public class CharacterController extends AbstractAuthController {
         }
     }
 
-    public Response setAction(Request request, Character character) {
+    public Response setAction(Request request, User user) {
         int id = (int)(double)request.getArgs().get("id");
-
-        User user = Online.users.get(request.getWs());
         Character c = null;
 
         // Удаляем всех персонажей пользователя с карты
@@ -87,9 +86,7 @@ public class CharacterController extends AbstractAuthController {
             appendData("character", c);
     }
 
-    public Response createAction(Request request, Character character) {
-        User user = Online.users.get(request.getWs());
-
+    public Response createAction(Request request, User user) {
         Character ch = new Character()
                 .setIdUser(user.getId())
                 .setName((String)request.getArgs().get("name"))

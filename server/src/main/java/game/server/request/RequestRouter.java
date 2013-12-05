@@ -1,10 +1,10 @@
 package game.server.request;
 
 import game.Online;
-import game.character.Character;
 import game.server.controllers.common.AbstractAuthController;
 import game.server.controllers.common.AbstractController;
 import game.server.response.Response;
+import game.user.User;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,14 +67,14 @@ public class RequestRouter {
             return new Response(false, "Ошибка");
         }
 
-        Character character = null;
+        User user = null;
         try {
-            character = Online.users.get(request.getWs()).getCurrentCharacter();
+            user = Online.users.get(request.getWs());
         } catch (Exception e) {
         }
 
         return (Response)controllers.get(controller)
-                .getDeclaredMethod(request.getAction() + "Action", Request.class, Character.class)
-                .invoke(controllerObject, request, character);
+                .getDeclaredMethod(request.getAction() + "Action", Request.class, User.class)
+                .invoke(controllerObject, request, user);
     }
 }

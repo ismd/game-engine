@@ -21,41 +21,41 @@ import java.util.logging.Logger;
  */
 public class UserController extends AbstractController {
 
-    public Response loginAction(Request request, Character character) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    public Response loginAction(Request request, User user) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         Map<String, Object> args = request.getArgs();
 
-        User user = DaoFactory.getInstance().userDao.getByLoginAndPassword(
+        User u = DaoFactory.getInstance().userDao.getByLoginAndPassword(
                 (String)args.get("username"),
                 (String)args.get("password")
         );
 
-        if (null == user) {
+        if (null == u) {
             return new Response(false, "Неверный логин или пароль");
         }
 
-        Online.removeUserById(user.getId());
+        Online.removeUserById(u.getId());
 
-        user.setWebSocket(request.getWs());
-        Online.addUser(user);
+        u.setWebSocket(request.getWs());
+        Online.addUser(u);
 
         // Генерируем authKey
         DaoFactory.getInstance().userDao
-                .update(user.setAuthKey(Md5.get(System.currentTimeMillis())));
+                .update(u.setAuthKey(Md5.get(System.currentTimeMillis())));
 
-        return new Response(true, true, "login-success").appendData("user", user);
+        return new Response(true, true, "login-success").appendData("user", u);
     }
 
-    public Response logoutAction(Request request, Character character) {
-        Online.removeUser(Online.users.get(request.getWs()));
+    public Response logoutAction(Request request, User user) {
+        Online.removeUser(user);
         return new Response(true, true, "logout-success");
     }
 
-    public Response listCharactersAction(Request request, Character character) {
+    public Response listCharactersAction(Request request, User user) {
         return new Response(true)
-                .appendData("characters", Online.users.get(request.getWs()).getCharacters());
+                .appendData("characters", user.getCharacters());
     }
 
-    public Response registerAction(Request request, Character character) {
+    public Response registerAction(Request request, User user) {
         Map args = request.getArgs();
 
         if (null == args.get("login")) {
@@ -70,38 +70,38 @@ public class UserController extends AbstractController {
             return new Response(false, "Необходимо указать e-mail");
         }
 
-        User user = new User()
+        User u = new User()
                 .setLogin((String)args.get("login"))
                 .setPassword(Md5.get(args.get("password")))
                 .setEmail((String)args.get("email"))
                 .setInfo((String)args.get("info"))
                 .setSite((String)args.get("site"));
 
-        DaoFactory.getInstance().userDao.add(user);
-        return new Response(true).appendData("user", user);
+        DaoFactory.getInstance().userDao.add(u);
+        return new Response(true).appendData("user", u);
     }
 
-    public Response loginByAuthKeyAction(Request request, Character character) {
+    public Response loginByAuthKeyAction(Request request, User user) {
         Map<String, Object> args = request.getArgs();
         int id = (int)(double)args.get("id");
 
-        User user = DaoFactory.getInstance().userDao.getByIdAndAuthKey(
+        User u = DaoFactory.getInstance().userDao.getByIdAndAuthKey(
                 id,
                 (String)args.get("authKey")
         );
 
-        if (null == user) {
+        if (null == u) {
             return new Response(false);
         }
 
         Online.removeUserById(id);
 
-        user.setWebSocket(request.getWs());
-        Online.addUser(user);
+        u.setWebSocket(request.getWs());
+        Online.addUser(u);
 
         // Генерируем authKey
         DaoFactory.getInstance().userDao
-                .update(user.setAuthKey(Md5.get(System.currentTimeMillis())));
+                .update(u.setAuthKey(Md5.get(System.currentTimeMillis())));
 
         // Устанавливаем персонажа
         Character c = null;
@@ -109,7 +109,7 @@ public class UserController extends AbstractController {
         try {
             int idCharacter = (int)(double)args.get("idCharacter");
             
-            for (Character ch : user.getCharacters()) {
+            for (Character ch : u.getCharacters()) {
                 Cell cell = ch.getCell();
 
                 if (null != cell) {
@@ -126,13 +126,13 @@ public class UserController extends AbstractController {
                         Logger.getLogger(CharacterController.class.getName()).log(Level.SEVERE, null, e);
                     }
 
-                    user.setCurrentCharacter(ch);
+                    u.setCurrentCharacter(ch);
                     c = ch;
                 }
             }
 
             return new Response(true, true, "init")
-                    .appendData("user", user)
+                    .appendData("user", u)
                     .appendData("character", c);
         } catch (NullPointerException e) {
             return new Response(false);

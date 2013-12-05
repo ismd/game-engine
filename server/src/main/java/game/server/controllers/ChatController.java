@@ -7,6 +7,7 @@ import game.dao.DaoFactory;
 import game.server.controllers.common.AbstractAuthController;
 import game.server.request.Request;
 import game.server.response.Response;
+import game.user.User;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
  */
 public class ChatController extends AbstractAuthController {
 
-    public Response sendAction(Request request, Character character) {
+    public Response sendAction(Request request, User user) {
         Character receiverCharacter = null;
         String msg = (String)request.getArgs().get("message");
 
@@ -23,7 +24,7 @@ public class ChatController extends AbstractAuthController {
             return new Response(false);
         }
 
-        ChatMessage message = new ChatMessage(character, receiverCharacter, msg);
+        ChatMessage message = new ChatMessage(user.getCurrentCharacter(), receiverCharacter, msg);
 
         DaoFactory.getInstance().chatMessageDao.add(message);
 
@@ -36,13 +37,13 @@ public class ChatController extends AbstractAuthController {
         return new Response(true);
     }
 
-    public Response initAction(Request request, Character character) {
+    public Response initAction(Request request, User user) {
         return new Response(true)
                 .appendData("members", Online.characters)
                 .appendData("messages", DaoFactory.getInstance().chatMessageDao.getLastMessages());
     }
 
-    public Response getMembersAction(Request request, Character character) {
+    public Response getMembersAction(Request request, User user) {
         return new Response(true, true, "chat-update-members")
                 .appendData("members", Online.characters);
     }
