@@ -3,17 +3,15 @@
 angular.module('worldService', []).factory('World', function(Ws) {
     var service = {};
 
-    var canvas, ctx = null;
+    var ctx = null,
+        sprites = new Image(),
+        hero = new Image();
 
-    var sprites = new Image();
     sprites.src = '/img/world/cells.png';
-
-    var hero = new Image();
     hero.src = '/img/world/hero.png';
 
     service.init = function() {
-        canvas = $('canvas#layout');
-        ctx    = canvas.get(0).getContext('2d');
+        ctx = $('canvas#layout').get(0).getContext('2d');
 
         Ws.send({
             controller: 'Layout',
@@ -32,7 +30,7 @@ angular.module('worldService', []).factory('World', function(Ws) {
         if (null === ctx) {
             setTimeout(function() {
                 service.drawVicinity(vicinity);
-            }, 100);
+            }, 3000);
 
             return;
         }

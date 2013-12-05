@@ -1,5 +1,5 @@
 div#cell-content {
-    height: 115px;
+    height: 135px;
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
@@ -13,8 +13,8 @@ div#cell-content div {
 div#cell-content div.npcs div,
 div#cell-content div.characters div,
 div#cell-content div.mobs div {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     background-size: cover;
 }
 
@@ -30,12 +30,12 @@ div#cell-content div.mobs div:hover {
 
 div#cell-content div.characters div:first-child,
 div#cell-content div.mobs div:first-child {
-    margin-left: -4px;
+    margin-left: -8px;
 }
 
 div#main-panel,
 div#location-info {
-    height: 155px;
+    height: 135px;
     border-top: 0;
     border-top-left-radius: 0;
     border-top-right-radius: 0;

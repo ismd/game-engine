@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('characterCreateService', []).factory('CharacterCreate', function($q, Ws) {
+angular.module('characterCreateService', []).factory('CharacterCreate', function($q, Ws, Common) {
     var service = {};
 
     service.create = function(character) {
@@ -19,6 +19,10 @@ angular.module('characterCreateService', []).factory('CharacterCreate', function
         });
 
         return defer.promise;
+    };
+
+    service.focus = function() {
+        Common.focus($('input#name'));
     };
 
     return service;

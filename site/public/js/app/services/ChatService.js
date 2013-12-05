@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('chatService', []).factory('Chat', function(Ws, $q, $rootScope) {
+angular.module('chatService', []).factory('Chat', function(Ws, $q, Common) {
     var service = {};
 
     service.init = function() {
@@ -52,7 +52,7 @@ angular.module('chatService', []).factory('Chat', function(Ws, $q, $rootScope) {
     };
 
     service.focus = function(message) {
-        $('div#chat div#controls input').val(message).focus();
+        Common.focus($('div#chat div#controls input'), message);
     };
 
     return service;

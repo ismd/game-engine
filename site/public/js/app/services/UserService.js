@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('userService', []).factory('User', function($q, Ws, $rootScope) {
+angular.module('userService', []).factory('User', function($q, Ws, $rootScope, Common) {
     var service = {};
 
     service.login = function(username, password) {
@@ -80,6 +80,10 @@ angular.module('userService', []).factory('User', function($q, Ws, $rootScope) {
         });
 
         return defer.promise;
+    };
+
+    service.focus = function() {
+        Common.focus($('div#auth-form input[ng-model="username"]'));
     };
 
     return service;

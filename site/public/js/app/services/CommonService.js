@@ -11,5 +11,10 @@ angular.module('commonService', []).factory('Common', function($location, $route
         }
     };
 
+    service.focus = function(element, value) {
+        element.val(value).focus();
+        return element;
+    };
+
     return service;
 });

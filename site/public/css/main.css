@@ -37,6 +37,21 @@ div#select-character table tbody tr {
     cursor: pointer;
 }
 
+div#select-character table tbody tr td {
+    padding-top: 15px;
+    padding-bottom: 5px;
+}
+
+div#select-character table tbody tr td:first-child {
+    width: 40px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+div#select-character table tbody tr td:first-child img {
+    width: 100%;
+}
+
 a#select-character-open {
     width: 84%;
 }

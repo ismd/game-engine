@@ -69,7 +69,7 @@ function UserCtrl($scope, User, Common) {
 
     $scope.openLoginForm = function() {
         setTimeout(function() {
-            $('div#auth-form input[ng-model="username"]').focus();
+            User.focus();
         }, 500);
     };
 }
