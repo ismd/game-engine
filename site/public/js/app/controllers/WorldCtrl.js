@@ -5,6 +5,10 @@ function WorldCtrl($scope, World, Ws, Character, Chat) {
     $scope.movingInProcess = false;
 
     $scope.cell = {
+        layout: {
+            id: null,
+            title: '...'
+        },
         idLayout: '...',
         x: '...',
         y: '...',
@@ -63,6 +67,7 @@ function WorldCtrl($scope, World, Ws, Character, Chat) {
     $scope.$on('cell-update', function(e, data) {
         var cell = data.cell;
 
+        $scope.cell.layout = cell.layout;
         $scope.cell.idLayout = cell.idLayout;
         $scope.cell.x = cell.x;
         $scope.cell.y = cell.y;
