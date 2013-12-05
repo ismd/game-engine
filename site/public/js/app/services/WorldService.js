@@ -3,7 +3,7 @@
 angular.module('worldService', []).factory('World', function(Ws) {
     var service = {};
 
-    var canvas, ctx;
+    var canvas, ctx = null;
 
     var sprites = new Image();
     sprites.src = '/img/world/cells.png';
@@ -29,6 +29,14 @@ angular.module('worldService', []).factory('World', function(Ws) {
         HERO_HEIGHT = 20;
 
     service.drawVicinity = function(vicinity) {
+        if (null === ctx) {
+            setTimeout(function() {
+                service.drawVicinity(vicinity);
+            }, 100);
+
+            return;
+        }
+
         for (var x = 0; x < CELLS_HORIZONTAL; x++) {
             for (var y = 0; y < CELLS_VERTICAL; y++) {
                 if (null === vicinity[x][y]) {
