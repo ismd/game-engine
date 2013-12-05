@@ -39,7 +39,7 @@ function WorldCtrl($scope, World, Ws, Character, Chat) {
         var newY = $scope.cell.y;
 
         switch (direction) {
-            case 'top':
+            case 'up':
                 newY--;
                 break;
 
@@ -47,7 +47,7 @@ function WorldCtrl($scope, World, Ws, Character, Chat) {
                 newX++;
                 break;
 
-            case 'bottom':
+            case 'down':
                 newY++;
                 break;
 
@@ -100,6 +100,14 @@ function WorldCtrl($scope, World, Ws, Character, Chat) {
     function talkToCharacter(character) {
         Chat.focus(character.name + ', ');
     }
+
+    $scope.keyup = function(e) {
+        var key = e.key;
+
+        if ('Up' === key || 'Left' === key || 'Right' === key || 'Down' === key) {
+            $scope.move(key.toLowerCase());
+        }
+    };
 }
 
 WorldCtrl.$inject = ['$scope', 'World', 'Ws', 'Character', 'Chat'];
