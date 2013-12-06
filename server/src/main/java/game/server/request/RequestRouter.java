@@ -61,7 +61,7 @@ public class RequestRouter {
         try {
             if (!(boolean)AbstractController.class.getDeclaredMethod("init", Request.class)
                     .invoke(controllerObject, request)) {
-                return new Response(false, "Аутентификация не пройдена");
+                return new Response(false, true, "logout-success");
             }
         } catch (NullPointerException e) {
             return new Response(false, "Ошибка");
