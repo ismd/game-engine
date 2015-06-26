@@ -5,7 +5,8 @@
 
 class RedirectorActionHelper {
 
-    public function redirect() {
-        echo 'asd';
+    public function redirect($url) {
+        header('Location: ' . $url);
+        die;
     }
 }
