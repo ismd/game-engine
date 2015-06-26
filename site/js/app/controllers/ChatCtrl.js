@@ -1,0 +1,61 @@
+(function() {
+    'use strict';
+
+    window.mainModule.controller('ChatCtrl', ['$scope', 'Chat', function($scope, Chat) {
+        $scope.chat = {
+            messages: [],
+            members: [],
+            message: null
+        };
+
+        var TIMEZONE_OFFSET = new Date().getTimezoneOffset(),
+            MAX_MESSAGES_IN_CHAT = 100;
+
+        Chat.focus();
+
+        Chat.init().then(function(data) {
+            setMessages(data.messages);
+            $scope.chat.members = data.members;
+        });
+
+        $scope.$on('chat-new-messages', function(e, data) {
+            setMessages(data.messages);
+            $scope.$apply();
+        });
+
+        $scope.$on('chat-update-members', function(e, data) {
+            $scope.chat.members = data.members;
+            $scope.$apply();
+        });
+
+        $scope.sendMessage = function(message) {
+            if (null === message) {
+                return;
+            }
+
+            Chat.send(message).then(function() {
+                $scope.chat.message = null;
+                Chat.focus();
+            });
+        };
+
+        function setMessages(messages) {
+            for (var i = 0; i < messages.length; i++) {
+                var message = messages[i];
+
+                message.sended = new Date(message.sended);
+                message.sended = message.sended.setMinutes(message.sended.getMinutes() - TIMEZONE_OFFSET);
+
+                $scope.chat.messages.push(message);
+            }
+
+            while ($scope.chat.messages.length > MAX_MESSAGES_IN_CHAT) {
+                $scope.chat.messages.shift();
+            }
+        }
+
+        $scope.answerMember = function(character) {
+            Chat.focus(character.name + ', ');
+        };
+    }]);
+})();
