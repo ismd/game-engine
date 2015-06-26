@@ -54,13 +54,19 @@ gulp.task('js', function() {
         .pipe(gulp.dest('../public/js'));
 });
 
+// Fonts
+gulp.task('fonts', function() {
+    return gulp.src('bower_components/bootstrap/fonts/**/*')
+        .pipe(gulp.dest('../public/fonts'));
+});
+
 // Watch
 gulp.task('watch', function() {
     gulp.watch('../less/**/*.less', ['less']);
     gulp.watch('app/**/*.js', ['js']);
 });
 
-var tasks = ['less', 'js'];
+var tasks = ['less', 'js', 'fonts'];
 
 if ('development' === environment) {
     tasks.push('watch');
