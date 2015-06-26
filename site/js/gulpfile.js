@@ -60,4 +60,10 @@ gulp.task('watch', function() {
     gulp.watch('app/**/*.js', ['js']);
 });
 
-gulp.task('default', ['less', 'js', 'watch']);
+var tasks = ['less', 'js'];
+
+if ('development' === environment) {
+    tasks.push('watch');
+}
+
+gulp.task('default', tasks);
