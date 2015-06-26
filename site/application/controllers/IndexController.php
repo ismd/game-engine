@@ -6,10 +6,10 @@
 
 class IndexController extends PsController {
 
-    public function index() {
+    public function indexAction() {
         $this->view->controller = $this->registry->router->getController();
 
-        $config = PsConfig::getInstance()->config->websocket;
+        $config = PsConfig::getInstance()->websocket;
         $this->view->ws = [
             'host' => $config->host,
             'port' => $config->port,
