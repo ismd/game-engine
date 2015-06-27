@@ -28,6 +28,14 @@ class UploadController extends PsController {
             $extension = '.jpg';
             break;
 
+        case 'image/png':
+            $extension = '.png';
+            break;
+
+        case 'image/gif':
+            $extension = '.gif';
+            break;
+
         default:
             $this->view->json([
                 'status' => 'error',

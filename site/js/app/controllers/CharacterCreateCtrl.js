@@ -19,7 +19,7 @@
             filters: [{
                 name: 'type',
                 fn: function(item) {
-                    if ('image/jpeg' !== item.type) {
+                    if ('image/jpeg' !== item.type && 'image/png' !== item.type && 'image/gif' !== item.type) {
                         return false;
                     }
 
@@ -38,6 +38,8 @@
                 if (!$scope.newCharacter.name) {
                     $scope.errors.name = true;
                     return false;
+                } else {
+                    $scope.errors.name = false;
                 }
 
                 if (undefined === $scope.fileUploadError || $scope.fileUploadError) {

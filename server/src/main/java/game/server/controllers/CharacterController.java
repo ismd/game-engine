@@ -87,9 +87,20 @@ public class CharacterController extends AbstractAuthController {
     }
 
     public Response createAction(Request request, User user) {
+        Object name = request.getArgs().get("name");
+        Object image = request.getArgs().get("image");
+
+        if (null == name || "".equals((String)name)) {
+            return new Response(false, "Не введено имя");
+        }
+
+        if (null == image) {
+            return new Response(false, "Не загружена аватарка");
+        }
+
         Character ch = new Character()
             .setIdUser(user.getId())
-            .setName((String)request.getArgs().get("name"))
+            .setName((String)name)
             .setLevel(1)
             .setMoney(10)
             .setIdLayout(1)
@@ -102,7 +113,7 @@ public class CharacterController extends AbstractAuthController {
             .setMaxHp(20)
             .setMinDamage(3)
             .setMaxDamage(5)
-            .setImage((String)request.getArgs().get("image"))
+            .setImage((String)image)
             .setBiography((String)request.getArgs().get("biography"))
             .setExperience(0);
 
