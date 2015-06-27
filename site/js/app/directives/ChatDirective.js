@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    window.mainModule.directive('chat', function($window) {
+    window.mainModule.directive('chat', ['$window', function($window) {
         return function(scope, $element) {
             $window = $($window);
 
@@ -26,5 +26,5 @@
                 scope.$apply();
             });
         };
-    });
+    }]);
 })();
