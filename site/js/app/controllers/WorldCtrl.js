@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    window.mainModule.controller('WorldCtrl', ['$scope', 'World', 'Ws', 'Character', 'Chat', function($scope, World, Ws, Character, Chat) {
+    window.mainModule.controller('WorldCtrl', ['$scope', '$timeout', 'World', 'Ws', 'Character', 'Chat', function($scope, $timeout, World, Ws, Character, Chat) {
         $scope.selectedItem    = null;
         $scope.movingInProcess = false;
 
@@ -20,7 +20,9 @@
             }
         };
 
-        World.init();
+        $timeout(function() {
+            World.init();
+        });
 
         $scope.selectItem = function(type, item) {
             $scope.selectedItem = {
