@@ -2,7 +2,7 @@
     'use strict';
 
     window.mainModule.controller('WorldCtrl', ['$scope', 'World', 'Ws', 'Character', 'Chat', function($scope, World, Ws, Character, Chat) {
-        $scope.selectedItem = null;
+        $scope.selectedItem    = null;
         $scope.movingInProcess = false;
 
         $scope.cell = {

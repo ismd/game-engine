@@ -1,6 +1,11 @@
 (function() {
     'use strict';
 
+    $.extend($.scrollTo.defaults, {
+        axis: 'y',
+        duration: 500
+    });
+
     window.mainModule = angular.module('main', ['ngRoute'])
         .config(['$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
             $locationProvider.html5Mode(true);

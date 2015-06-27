@@ -1,63 +1,65 @@
-<div class="row-fluid" ng-keyup="keyup($event)">
+<div class="row" ng-keyup="keyup($event)">
     <!-- Левый верхний угол -->
-    <div class="span8">
-        <!-- Содержимое клетки -->
-        <div id="cell-content" class="span12">
-            <!-- NPC -->
-            <div class="npcs">
-                <div ng-repeat="item in cell.content.npcs"
-                     ng-click="selectItem('npc', item)"
-                     ng-class="{selected: item.id === selectedItem.item.id && 'npc' === selectedItem.type}"
-                     data-id="{{item.id}}"
-                     title="{{item.name}}"
-                     background-image="/img/world/npcs/{{item.image}}"></div>
-            </div>
+    <div class="col-md-8">
+        <div class="row">
+            <!-- Содержимое клетки -->
+            <div class="cell-content">
+                <!-- NPC -->
+                <div class="npcs">
+                    <div ng-repeat="item in cell.content.npcs"
+                         ng-click="selectItem('npc', item)"
+                         ng-class="{selected: item.id === selectedItem.item.id && 'npc' === selectedItem.type}"
+                         data-id="{{item.id}}"
+                         title="{{item.name}}"
+                         class="item"
+                         background-image="/img/world/npcs/{{item.image}}"></div>
+                </div>
 
-            <!-- Персонажи -->
-            <div class="characters">
-                <div ng-repeat="item in cell.content.characters | filter: {id: '!' + character.id}"
-                     ng-click="selectItem('character', item)"
-                     ng-class="{selected: item.id === selectedItem.item.id && 'character' === selectedItem.type}"
-                     data-id="{{item.id}}"
-                     title="{{item.name}}"
-                     background-image="/img/world/characters/{{item.image}}"></div>
-            </div>
+                <!-- Персонажи -->
+                <div class="characters">
+                    <div ng-repeat="item in cell.content.characters | filter: {id: '!' + character.id}"
+                         ng-click="selectItem('character', item)"
+                         ng-class="{selected: item.id === selectedItem.item.id && 'character' === selectedItem.type}"
+                         data-id="{{item.id}}"
+                         title="{{item.name}}"
+                         class="item"
+                         background-image="/img/world/characters/{{item.image}}"></div>
+                </div>
 
-            <!-- Мобы -->
-            <div class="mobs">
-                <div ng-repeat="item in cell.content.mobs"
-                     ng-click="selectItem('mob', item)"
-                     ng-class="{selected: item.id === selectedItem.item.id && 'mob' === selectedItem.type}"
-                     data-id="{{item.id}}"
-                     title="{{item.mobInfo.name}} ({{item.hp}}/{{item.mobInfo.maxHp}})"
-                     background-image="/img/world/mobs/{{item.mobInfo.image}}"></div>
+                <!-- Мобы -->
+                <div class="mobs">
+                    <div ng-repeat="item in cell.content.mobs"
+                         ng-click="selectItem('mob', item)"
+                         ng-class="{selected: item.id === selectedItem.item.id && 'mob' === selectedItem.type}"
+                         data-id="{{item.id}}"
+                         title="{{item.mobInfo.name}} ({{item.hp}}/{{item.mobInfo.maxHp}})"
+                         class="item"
+                         background-image="/img/world/mobs/{{item.mobInfo.image}}"></div>
+                </div>
             </div>
         </div>
 
-        <div class="row-fluid">
+        <div class="row">
             <!-- Действия -->
-            <div id="main-panel" class="span6 with-borders">
+            <div class="main-panel col-md-5">
                 <table>
                     <tbody>
                         <tr>
                             <td>
-                                <button id="kill"
-                                        ng-class="{disabled: 'mob' !== selectedItem.type}"
-                                        class="btn btn-small btn-danger">Убить</button>
+                                <button ng-class="{disabled: 'mob' !== selectedItem.type}"
+                                        class="btn btn-sm btn-danger">Убить</button>
                             </td>
                             <td>
-                                <button id="talk"
-                                        ng-class="{disabled: 'npc' !== selectedItem.type && 'character' !== selectedItem.type}"
+                                <button ng-class="{disabled: 'npc' !== selectedItem.type && 'character' !== selectedItem.type}"
                                         ng-click="talk(selectedItem)"
-                                        class="btn btn-small btn-success">Общаться</button>
+                                        class="btn btn-sm btn-success">Общаться</button>
                             </td>
                             <td>
-                                <button id="pick-up"
-                                        class="btn btn-small btn-warning disabled">Подобрать</button>
+                                <button class="btn btn-sm btn-warning disabled">Подобрать</button>
                             </td>
                         </tr>
                         <tr>
-                            <td><button id="look" class="btn btn-small btn-info disabled">Осмотреть</button></td>
+                            <td><button class="btn btn-sm btn-info disabled">Осмотреть</button></td>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
                         </tr>
@@ -65,9 +67,11 @@
                 </table>
             </div>
 
+            <div class="col-md-1"></div>
+
             <!-- Информация о локации -->
-            <div id="location-info" class="span6 with-borders">
-                <table class="table table-condensed">
+            <div class="location-info col-md-6">
+                <table class="table">
                     <tbody>
                         <tr>
                             <td>Зона</td>
@@ -87,45 +91,50 @@
         </div>
     </div>
 
-    <div id="top-right" class="span4">
-        <!-- Карта -->
-        <div class="span12">
-            <canvas id="layout" width="270" height="270">Обновите браузер</canvas>
+    <div class="map-block col-md-4">
+        <div class="row">
+            <!-- Карта -->
+            <canvas class="js-map map"
+                    width="270"
+                    height="270">Обновите браузер</canvas>
 
-            <div id="right-of-layout">
-                <i class="icon-star"></i><br />
-                <i class="icon-tag"></i><br />
-                <i class="icon-pencil"></i><br />
-                <i class="icon-eye-open"></i><br />
-                <i class="icon-wrench"></i><br />
-                <i class="icon-fullscreen"></i>
+            <div class="map-actions">
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span><br />
+                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span><br />
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span><br />
+                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span><br />
+                <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span><br />
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
             </div>
         </div>
 
-        <!-- Кнопки перемещения -->
-        <div class="row-fluid">
-            <div id="move-buttons" class="span12">
+        <div class="row">
+            <!-- Кнопки перемещения -->
+            <div class="col-md-12 text-center">
                 <button ng-click="move('up')"
                         ng-class="{disabled: movingInProcess}"
-                        class="btn">
-                    <i class="icon-arrow-up"></i>
+                        class="btn btn-default">
+                    <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
                 </button>
+
                 <br />
                 <button ng-click="move('left')"
                         ng-class="{disabled: movingInProcess}"
-                        class="btn">
-                    <i class="icon-arrow-left"></i>
+                        class="btn btn-default">
+                    <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>
                 </button>
+
                 <button ng-click="move('right')"
                         ng-class="{disabled: movingInProcess}"
-                        class="btn">
-                    <i class="icon-arrow-right"></i>
+                        class="btn btn-default">
+                    <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
                 </button>
                 <br />
+
                 <button ng-click="move('down')"
                         ng-class="{disabled: movingInProcess}"
-                        class="btn">
-                    <i class="icon-arrow-down"></i>
+                        class="btn btn-default">
+                    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
                 </button>
             </div>
         </div>
@@ -133,54 +142,50 @@
 </div>
 
 <!-- Чат -->
-<div ng-controller="ChatCtrl"
-     id="chat"
-     class="with-borders">
-    <div chat
-         ng-style="resize()"
-         id="top-part"
-         class="row-fluid">
-        <div id="messages">
-            <table class="table table-condensed table-hover">
-                <tbody>
-                    <tr ng-repeat="message in chat.messages">
-                        <td class="sended">{{message.sended | date: 'H:mm:ss'}}</td>
-                        <td ng-click="answerMember(message.sender)"
-                            class="sender-name"><b>{{message.sender.name}}</b>:</td>
-                        <td class="message">{{message.message}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+<div ng-controller="ChatCtrl" class="row chat">
+    <div chat ng-style="resize()" class="js-chat-messages col-md-10 messages">
+        <table class="table table-condensed table-hover">
+            <tbody>
+                <tr ng-repeat="message in chat.messages">
+                    <td class="sended">{{message.sended | date: 'H:mm:ss'}}</td>
 
-        <div id="members">
-            <div id="members-title">
-                Онлайн ({{chat.members.length}}):
-            </div>
+                    <td class="sender">
+                        <a href="javascript:void(0)"
+                           ng-click="answerMember(message.sender)">{{message.sender.name}}</a>:
+                    </td>
 
-            <div id="members-list">
-                <ul>
-                    <li ng-repeat="member in chat.members | orderBy: 'name'"
-                        ng-click="answerMember(member)">
-                        {{member.name}} ({{member.level}})
-                    </li>
-                </ul>
-            </div>
-        </div>
+                    <td class="message">{{message.message}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-    <div id="controls" class="row-fluid">
-        <div id="message">
-            <input ng-model="chat.message"
-                   enter="sendMessage(chat.message)"
-                   type="text"
-                   class="border-box"
-                   placeholder="Введите сообщение" />
+    <div class="members col-md-2">
+        <div class="title text-center">
+            Онлайн ({{chat.members.length}}):
         </div>
 
-        <div id="send" class="span2">
-            <button ng-click="sendMessage(chat.message)"
-                    class="btn">Отправить</button>
-        </div>
+        <ul>
+            <li ng-repeat="member in chat.members | orderBy: 'name'">
+                <a href="javascript:void(0)"
+                   ng-click="answerMember(member)">{{member.name}}</a>
+                ({{member.level}} ур.)
+            </li>
+        </ul>
+    </div>
+
+    <div class="controls">
+        <form ng-submit="sendMessage(chat.message)">
+            <div class="col-md-10 message-input">
+                <input ng-model="chat.message"
+                       type="text"
+                       class="js-message-text form-control"
+                       placeholder="Введите сообщение" />
+            </div>
+
+            <div class="col-md-2 message-submit">
+                <input type="submit" class="btn form-control" value="Отправить" />
+            </div>
+        </form>
     </div>
 </div>

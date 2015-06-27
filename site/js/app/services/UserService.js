@@ -4,6 +4,8 @@
     window.mainModule.factory('User', ['$q', 'Ws', '$rootScope', 'Common', function($q, Ws, $rootScope, Common) {
         var service = {};
 
+        var $selectCharacterPopup = $('.js-select-character-popup');
+
         service.login = function(username, password) {
             var defer = $q.defer();
 
@@ -29,7 +31,8 @@
         service.loginByAuthKey = function(id, authKey) {
             var defer = $q.defer();
 
-            var character = JSON.parse(localStorage.getItem('character'));
+            var characterLocalStorage = localStorage.getItem('character'),
+                character             = characterLocalStorage ? JSON.parse(characterLocalStorage) : null;
 
             Ws.send({
                 controller: 'User',
@@ -41,7 +44,7 @@
                 }
             }).then(function(data) {
                 localStorage.setItem('user', JSON.stringify(data.user));
-                localStorage.setItem('character', JSON.stringify(data.character));
+                localStorage.setItem('character', data.character ? JSON.stringify(data.character) : null);
                 defer.resolve(data.user);
             }, function(message) {
                 localStorage.setItem('user', null);
@@ -69,7 +72,7 @@
         service.showCharactersList = function() {
             var defer = $q.defer();
 
-            $('div#select-character').modal();
+            $selectCharacterPopup.modal();
 
             Ws.send({
                 controller: 'User',

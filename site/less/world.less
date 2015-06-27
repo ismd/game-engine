@@ -1,55 +1,45 @@
-div#cell-content {
+.cell-content {
     height: 135px;
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
-    background-color: #eeeeee;
+    background-color: #eee;
+    font-size: 0;
+
+    .npcs,
+    .characters,
+    .mobs {
+        display: inline-block;
+    }
+
+    .item {
+        width: 120px;
+        height: 120px;
+        background-size: cover;
+        cursor: pointer;
+
+        &.selected {
+            background-color: #dddddd;
+        }
+
+        &:hover {
+            background-color: @table-border-color;
+        }
+    }
 }
 
-div#cell-content div {
-    display: inline-block;
-}
-
-div#cell-content div.npcs div,
-div#cell-content div.characters div,
-div#cell-content div.mobs div {
-    width: 120px;
-    height: 120px;
-    background-size: cover;
-}
-
-div#cell-content div.selected {
-    background-color: #dddddd;
-}
-
-div#cell-content div.npcs div:hover,
-div#cell-content div.characters div:hover,
-div#cell-content div.mobs div:hover {
-    background-color: #cccccc;
-}
-
-div#cell-content div.characters div:first-child,
-div#cell-content div.mobs div:first-child {
-    margin-left: -8px;
-}
-
-div#main-panel,
-div#location-info {
+.main-panel,
+.location-info {
     height: 135px;
-    border-top: 0;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    padding: 5px;
+    border: 1px solid @table-border-color;
+    border-top-color: transparent;
+    .border-radius(0 0 5px 5px);
 }
 
-div#main-panel table {
-    margin-left: 6px;
-}
+.location-info {
+    padding: 0;
 
-div#main-panel button {
-    width: 80px;
-}
-
-div#location-info table tbody tr:first-child td {
-    border-top: 0;
+    tr:first-child td {
+        border-top-color: transparent;
+    }
 }

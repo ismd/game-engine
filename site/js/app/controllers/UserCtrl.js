@@ -11,6 +11,14 @@
         // true, когда происходит процесс авторизации
         $scope.loginInProcess = false;
 
+        $scope.showCharactersList = function() {
+            User.showCharactersList().then(function(characters) {
+                $scope.user.characters = characters;
+            }, function(message) {
+                alert(message);
+            });
+        };
+
         $scope.login = function(username, password) {
             if ($scope.loginInProcess) {
                 return;

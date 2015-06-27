@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    window.mainModule.controller('CharacterCtrl', ['$scope', 'Character', 'Common', function($scope, Character, Common) {
+    window.mainModule.controller('CharacterCtrl', ['$scope', 'Character', 'Common', 'User', function($scope, Character, Common, User) {
         $scope.character = null;
 
         $scope.setCharacter = function(id) {

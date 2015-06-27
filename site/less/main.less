@@ -1,55 +1,32 @@
-div,
-.border-box {
-    box-sizing: border-box;
-}
-
 body {
-    margin: 10px 0;
+    padding: 10px 0;
 }
 
-.sidebar-nav-fixed {
+.info-sidebar {
     position: fixed;
-    padding: 10px;
+    padding: 10px 0;
+    .border-radius();
+    border: 1px solid @table-border-color;
+
+    .btn {
+        width: 100%;
+    }
+
+    & > div {
+        width: 182px;
+    }
 }
 
-.with-borders {
-    border: 1px solid silver;
-    border-radius: 4px;
-}
+.select-character-popup {
+    .modal-body {
+        padding: 0;
+    }
 
-h4#character-name {
-    text-align: center;
-    margin: 0;
-    margin-top: -10px;
-}
+    .table {
+        margin-bottom: 0;
 
-button.left-panel-button {
-    width: 100%;
-}
-
-a.left-panel-button {
-    width: 85%;
-}
-
-div#select-character table tbody tr {
-    cursor: pointer;
-}
-
-div#select-character table tbody tr td {
-    padding-top: 15px;
-    padding-bottom: 5px;
-}
-
-div#select-character table tbody tr td:first-child {
-    width: 40px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-div#select-character table tbody tr td:first-child img {
-    width: 100%;
-}
-
-a#select-character-open {
-    width: 84%;
+        tr {
+            cursor: pointer;
+        }
+    }
 }

@@ -22,120 +22,229 @@
         <div ng-controller="UserCtrl" class="container">
             <div ng-controller="CharacterCtrl" class="row">
                 <!-- Sidebar -->
-                <div class="span2">
-                    <div class="sidebar-nav-fixed with-borders">
-                        <div ng-switch on="user" class="row">
-                            <!-- Пользователь не выбран -->
-                            <div ng-switch-when="null" class="span2">
-                                <button ng-click="openLoginForm()"
-                                        class="left-panel-button btn btn-primary"
-                                        href="#auth-form"
-                                        role="button"
-                                        data-toggle="modal"
-                                        target="_self">Войти в игру</button>
-                                <hr />
-                                <a class="left-panel-button btn" href="/registration">Регистрация</a>
-                                <br />
-                                <a class="left-panel-button btn" href="#">Забыли пароль</a>
+                <div class="col-md-2">
+                    <div ng-switch on="user" class="info-sidebar row">
+                        <!-- Пользователь не выбран -->
+                        <div ng-switch-when="null" class="col-md-12">
+                            <button ng-click="openLoginForm()"
+                                    class="btn btn-primary"
+                                    data-target="#auth-form"
+                                    data-toggle="modal">Войти в игру</button>
+
+                            <hr />
+                            <a class="btn btn-default"
+                               href="/registration">Регистрация</a>
+
+                            <br />
+                            <a class="btn btn-default"
+                               href="javascript:void(0)">Забыли пароль</a>
+                        </div>
+
+                        <!-- Персонаж выбран -->
+                        <div ng-switch-default class="col-md-12">
+                            <div class="text-center">Добро пожаловать, {{user.login}}</div>
+                            <hr />
+
+                            <!-- Инфа о персонаже -->
+                            <div>
+                                <!-- Персонаж не выбран -->
+                                <div ng-show="!character">
+                                    <a ng-click="showCharactersList()"
+                                       class="btn btn-default">Выбрать персонажа</a>
+                                </div>
+
+                                <!-- Персонаж выбран -->
+                                <div ng-show="character">
+                                    <h4 class="text-center">{{character.name}}</h4>
+
+                                    <table>
+                                        <tr>
+                                            <td>Уровень:</td>
+                                            <td>{{character.level}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Опыт:</td>
+                                            <td>{{character.experience}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Жизнь:</td>
+                                            <td>{{character.hp}}/{{character.maxHp}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Сила:</td>
+                                            <td>{{character.strength}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ловкость:</td>
+                                            <td>{{character.dexterity}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Выносливость:</td>
+                                            <td>{{character.endurance}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
 
-                            <!-- Персонаж выбран -->
-                            <div ng-switch-default class="span2">
-                                Добро пожаловать, {{user.login}}
-                                <hr />
-                                <!-- Инфа о персонаже -->
-                                <div ng-switch on="character" class="row">
-                                    <!-- Персонаж не выбран -->
-                                    <div ng-switch-when="null" class="span2">
-                                        <a id="select-character-open"
-                                           href="#select-character"
-                                           role="button"
-                                           data-toggle="modal"
-                                           class="btn"
-                                           target="_self">Выбрать персонажа</a>
-                                    </div>
+                <!-- Navbar -->
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="navbar navbar-default">
+                            <div class="container-fluid">
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navbar-collapse" aria-expanded="false">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                </div>
 
-                                    <!-- Персонаж выбран -->
-                                    <div ng-switch-default class="span2">
-                                        <h4 id="character-name">{{character.name}}</h4>
+                                <div class="collapse navbar-collapse">
+                                    <ul class="nav navbar-nav">
+                                        <li>
+                                            <a href="/">
+                                                <i class="icon-home"></i>
+                                                Главная
+                                            </a>
+                                        </li>
 
-                                        <table>
-                                            <tr>
-                                                <td>Уровень:</td>
-                                                <td>{{character.level}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Опыт:</td>
-                                                <td>{{character.experience}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Жизнь:</td>
-                                                <td>{{character.hp}}/{{character.maxHp}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Сила:</td>
-                                                <td>{{character.strength}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Ловкость:</td>
-                                                <td>{{character.dexterity}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Выносливость:</td>
-                                                <td>{{character.endurance}}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                                        <li ng-show="character" class="dropdown">
+                                            <a href="javascript:void(0)"
+                                               class="dropdown-toggle"
+                                               data-toggle="dropdown"
+                                               data-target="#"
+                                               aria-haspopup="true"
+                                               aria-expanded="true">
+                                                Игра
+                                                <b class="caret"></b>
+                                            </a>
+
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a href="/world">Мир</a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="/world/inventory">Инвентарь</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li>
+                                            <a href="/database">База знаний</a>
+                                        </li>
+
+                                        <li>
+                                            <a href="javascript:void(0)">Форум</a>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li ng-show="user" class="dropdown">
+                                            <a href="javascript:void(0)"
+                                               class="dropdown-toggle"
+                                               data-toggle="dropdown"
+                                               data-target="#"
+                                               aria-haspopup="true"
+                                               aria-expanded="true">
+                                                Настройки
+                                                <b class="caret"></b>
+                                            </a>
+
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a ng-click="showCharactersList()"
+                                                       href="javascript:void(0)">Выбрать персонажа</a>
+                                                </li>
+
+                                                <li>
+                                                    <a ng-click="logout()" href="javascript:void(0)">Выход</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Форма аутентификации -->
-                    <div id="auth-form" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h3>Вход в игру</h3>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <label for="username">Логин</label>
-                                <input ng-model="username"
-                                       enter="login(username, password)"
-                                       type="text"
-                                       placeholder="Введите логин" />
-                                <label for="password">Пароль</label>
-                                <input ng-model="password"
-                                       enter="login(username, password)"
-                                       type="password"
-                                       placeholder="Введите пароль" />
-                            </form>
-
-                            <p class="text-error">{{loginMessage}}</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button ng-click="login(username, password)"
-                                    ng-class="{disabled: loginInProcess}"
-                                    id="login-button"
-                                    class="btn btn-primary">Войти</button>
+                    <!-- Основной контент страницы -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div ng-view></div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Форма выбора персонажа -->
-                    <div id="select-character" class="modal hide fade" role="dialog">
-                        <div class="modal-header">
-                            <button type="button"
-                                    class="close"
-                                    data-dismiss="modal"
-                                    aria-hidden="true">&times;</button>
+                <!-- Форма аутентификации -->
+                <div id="auth-form" class="modal fade" role="dialog" tabindex="-1">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button"
+                                        class="close"
+                                        data-dismiss="modal"
+                                        aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
-                            <h3>Выберите персонажа</h3>
+                                <h3>Вход в игру</h3>
+                            </div>
+
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="username">Логин</label>
+                                        <input ng-model="username"
+                                               id="username"
+                                               class="form-control"
+                                               enter="login(username, password)"
+                                               type="text"
+                                               placeholder="Введите логин" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="password">Пароль</label>
+                                        <input ng-model="password"
+                                               id="password"
+                                               class="form-control"
+                                               enter="login(username, password)"
+                                               type="password"
+                                               placeholder="Введите пароль" />
+                                    </div>
+                                </form>
+
+                                <p class="text-danger">{{loginMessage}}</p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button ng-click="login(username, password)"
+                                        ng-class="{disabled: loginInProcess}"
+                                        class="btn btn-primary">Войти</button>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                            <div ng-switch on="user.characters">
-                                <img ng-switch-when="null" class="loading" src="/img/loading.gif" />
+                    </div>
+                </div>
 
-                                <table ng-switch-default ng-show="0 < user.characters.length" class="table table-hover">
+                <!-- Форма выбора персонажа -->
+                <div class="js-select-character-popup select-character-popup modal fade" role="dialog" tabindex="-1">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button"
+                                        class="close"
+                                        data-dismiss="modal"
+                                        aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                <h3>Выберите персонажа</h3>
+                            </div>
+
+                            <div class="modal-body">
+                                <img ng-show="!user.characters" class="loading" src="/img/loading.gif" />
+
+                                <table ng-show="user.characters.length > 0" class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th>&nbsp;</th>
@@ -143,6 +252,7 @@
                                             <th>Уровень</th>
                                         </tr>
                                     </thead>
+
                                     <tbody>
                                         <tr ng-repeat="character in user.characters"
                                             ng-click="setCharacter(character.id)">
@@ -152,85 +262,19 @@
                                         </tr>
                                     </tbody>
                                 </table>
+
+                                <div ng-show="0 === user.characters.length">
+                                    У вас пока нет созданных персонажей
+                                </div>
                             </div>
 
-                            <div ng-show="0 === user.characters.length">
-                                У вас пока нет созданных персонажей
+                            <div class="modal-footer">
+                                <p class="text-danger">{{setCharacterMessage}}</p>
+
+                                <button ng-click="redirect('/character/create')"
+                                        class="btn btn-primary"
+                                        data-dismiss="modal">Создать персонажа</button>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <p class="text-error">{{setCharacterMessage}}</p>
-                            <button ng-click="redirect('/character/create')"
-                                    class="btn"
-                                    data-dismiss="modal">Создать персонажа</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Navbar -->
-                <div class="span10">
-                    <div class="navbar">
-                        <div class="navbar-inner">
-                            <div class="container">
-                                <ul class="nav">
-                                    <li>
-                                        <a href="/">
-                                            <i class="icon-home"></i>
-                                            Главная
-                                        </a>
-                                    </li>
-                                    <li ng-show="character" class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-target="#">
-                                            Игра
-                                            <b class="caret"></b>
-                                        </a>
-
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a href="/world">Мир</a>
-                                            </li>
-                                            <li>
-                                                <a href="/world/inventory">Инвентарь</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="/database">База знаний</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Форум</a>
-                                    </li>
-                                </ul>
-
-                                <ul class="nav pull-right">
-                                    <li ng-show="user" class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-target="#">
-                                            Настройки
-                                            <b class="caret"></b>
-                                        </a>
-
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a id="select-character-open"
-                                                   href="#select-character"
-                                                   role="button"
-                                                   data-toggle="modal"
-                                                   target="_self">Выбрать персонажа</a>
-                                            </li>
-                                            <li>
-                                                <a ng-click="logout()" href="#">Выход</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Основной контент страницы -->
-                    <div class="row-fluid">
-                        <div class="span12">
-                            <div ng-view></div>
                         </div>
                     </div>
                 </div>

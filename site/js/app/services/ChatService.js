@@ -4,6 +4,9 @@
     window.mainModule.factory('Chat', ['Ws', '$q', 'Common', function(Ws, $q, Common) {
         var service = {};
 
+        var $chatMessages = $('.js-chat-messages'),
+            $messageText  = $('.js-message-text');
+
         service.init = function() {
             var defer = $q.defer();
 
@@ -53,7 +56,11 @@
         };
 
         service.focus = function(message) {
-            Common.focus($('div#chat div#controls input'), message);
+            Common.focus($messageText, message);
+        };
+
+        service.scrollMessages = function() {
+            $chatMessages.scrollTo('max');
         };
 
         return service;

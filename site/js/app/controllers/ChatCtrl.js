@@ -1,14 +1,14 @@
 (function() {
     'use strict';
 
-    window.mainModule.controller('ChatCtrl', ['$scope', 'Chat', function($scope, Chat) {
+    window.mainModule.controller('ChatCtrl', ['$scope', '$timeout', 'Chat', function($scope, $timeout, Chat) {
         $scope.chat = {
             messages: [],
             members: [],
             message: null
         };
 
-        var TIMEZONE_OFFSET = new Date().getTimezoneOffset(),
+        var TIMEZONE_OFFSET      = new Date().getTimezoneOffset(),
             MAX_MESSAGES_IN_CHAT = 100;
 
         Chat.focus();
@@ -16,11 +16,19 @@
         Chat.init().then(function(data) {
             setMessages(data.messages);
             $scope.chat.members = data.members;
+
+            $timeout(function() {
+                Chat.scrollMessages();
+            });
         });
 
         $scope.$on('chat-new-messages', function(e, data) {
             setMessages(data.messages);
             $scope.$apply();
+
+            $timeout(function() {
+                Chat.scrollMessages();
+            });
         });
 
         $scope.$on('chat-update-members', function(e, data) {

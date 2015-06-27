@@ -108,7 +108,7 @@ public class UserController extends AbstractController {
 
         try {
             int idCharacter = (int)(double)args.get("idCharacter");
-            
+
             for (Character ch : u.getCharacters()) {
                 Cell cell = ch.getCell();
 
@@ -135,7 +135,8 @@ public class UserController extends AbstractController {
                     .appendData("user", u)
                     .appendData("character", c);
         } catch (NullPointerException e) {
-            return new Response(false);
+            return new Response(true, true, "init")
+                .appendData("user", u);
         }
     }
 }

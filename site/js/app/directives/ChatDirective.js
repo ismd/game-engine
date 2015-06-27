@@ -2,22 +2,14 @@
     'use strict';
 
     window.mainModule.directive('chat', function($window) {
-        return function(scope, element) {
-            var window = angular.element($window),
-                offsetTop = element.offset().top,
-                interval,
-                messagesDiv = element.find('div#messages'),
-                table = messagesDiv.find('table');
+        return function(scope, $element) {
+            $window = $($window);
 
-            var messagesHeight = 0,
-                tableHeight = 0;
+            var offsetTop      = $element.offset().top,
+                messagesHeight = 0;
 
             scope.getWindowHeight = function() {
-                return window.height();
-            };
-
-            scope.getTableHeight = function() {
-                return table.height();
+                return $window.height();
             };
 
             scope.$watch(scope.getWindowHeight, function(newValue) {
@@ -30,25 +22,7 @@
                 };
             }, true);
 
-            scope.$watch(scope.getTableHeight, function(height) {
-                clearInterval(interval);
-
-                if (height <= messagesHeight) {
-                    return;
-                }
-
-                interval = setInterval(function() {
-                    if (tableHeight >= height - messagesHeight) {
-                        clearInterval(interval);
-                        return;
-                    }
-
-                    tableHeight++;
-                    messagesDiv.scrollTop(tableHeight);
-                }, 10);
-            }, true);
-
-            window.bind('resize', function() {
+            $window.resize(function() {
                 scope.$apply();
             });
         };

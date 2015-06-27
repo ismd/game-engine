@@ -4,6 +4,8 @@
     window.mainModule.factory('Character', ['$q', 'Ws', function($q, Ws) {
         var service = {};
 
+        var $selectCharacterPopup = $('.js-select-character-popup');
+
         service.set = function(id) {
             var defer = $q.defer();
 
@@ -14,7 +16,7 @@
                     id: id
                 }
             }).then(function(data) {
-                $('div#select-character').modal('hide');
+                $selectCharacterPopup.modal('hide');
 
                 localStorage.setItem('character', JSON.stringify(data.character));
                 defer.resolve(data.character);

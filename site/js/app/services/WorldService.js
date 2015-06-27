@@ -12,7 +12,7 @@
         hero.src = '/img/world/hero.png';
 
         service.init = function() {
-            ctx = $('canvas#layout').get(0).getContext('2d');
+            ctx = $('.js-map').get(0).getContext('2d');
 
             Ws.send({
                 controller: 'Layout',

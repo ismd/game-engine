@@ -6,6 +6,6 @@
 class ErrorController extends PsController {
 
     public function indexAction() {
-        $this->getHelper('redirector')->redirect('/');
+        $this->getHelper('index')->init($this->registry, $this->view);
     }
 }

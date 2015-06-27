@@ -1,18 +1,21 @@
+<form ng-submit="create()">
 <fieldset>
     <legend>Создание персонажа</legend>
-    <p>
+
+    <div class="form-group">
         <label for="name">Имя</label>
         <input ng-model="newCharacter.name"
-               enter="create()"
                id="name"
+               class="form-control"
                type="text"
                placeholder="Введите имя персонажа" />
-    </p>
-    <p class="text-error">
+    </div>
+
+    <p class="text-danger">
         {{message}}
     </p>
-    <p>
-        <button ng-click="create()"
-                class="btn">Создать</button>
-    </p>
+
+    <input type="submit"
+           class="btn btn-primary"
+           value="Создать" />
 </fieldset>
