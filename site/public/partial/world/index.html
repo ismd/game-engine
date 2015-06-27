@@ -6,35 +6,38 @@
             <div class="cell-content">
                 <!-- NPC -->
                 <div class="npcs">
-                    <div ng-repeat="item in cell.content.npcs"
-                         ng-click="selectItem('npc', item)"
-                         ng-class="{selected: item.id === selectedItem.item.id && 'npc' === selectedItem.type}"
-                         data-id="{{item.id}}"
-                         title="{{item.name}}"
-                         class="item"
-                         background-image="/img/world/npcs/{{item.image}}"></div>
+                    <a href="javascript:void(0)"
+                       ng-repeat="item in cell.content.npcs"
+                        ng-click="selectItem('npc', item)"
+                        ng-class="{selected: item.id === selectedItem.item.id && 'npc' === selectedItem.type}"
+                        data-id="{{item.id}}"
+                        title="{{item.name}}"
+                        class="item"
+                        background-image="/img/world/npcs/{{item.image}}"></a>
                 </div>
 
                 <!-- Персонажи -->
                 <div class="characters">
-                    <div ng-repeat="item in cell.content.characters | filter: {id: '!' + character.id}"
-                         ng-click="selectItem('character', item)"
-                         ng-class="{selected: item.id === selectedItem.item.id && 'character' === selectedItem.type}"
-                         data-id="{{item.id}}"
-                         title="{{item.name}}"
-                         class="item"
-                         background-image="/pictures/avatar/{{item.image}}"></div>
+                    <a href="javascript:void(0)"
+                       ng-repeat="item in cell.content.characters | filter: {id: '!' + character.id}"
+                       ng-click="selectItem('character', item)"
+                       ng-class="{selected: item.id === selectedItem.item.id && 'character' === selectedItem.type}"
+                       data-id="{{item.id}}"
+                       title="{{item.name}}"
+                       class="item"
+                       background-image="/pictures/avatar/{{item.image}}"></a>
                 </div>
 
                 <!-- Мобы -->
                 <div class="mobs">
-                    <div ng-repeat="item in cell.content.mobs"
-                         ng-click="selectItem('mob', item)"
-                         ng-class="{selected: item.id === selectedItem.item.id && 'mob' === selectedItem.type}"
-                         data-id="{{item.id}}"
-                         title="{{item.mobInfo.name}} ({{item.hp}}/{{item.mobInfo.maxHp}})"
-                         class="item"
-                         background-image="/img/world/mobs/{{item.mobInfo.image}}"></div>
+                    <a href="javascript:void(0)"
+                       ng-repeat="item in cell.content.mobs"
+                        ng-click="selectItem('mob', item)"
+                        ng-class="{selected: item.id === selectedItem.item.id && 'mob' === selectedItem.type}"
+                        data-id="{{item.id}}"
+                        title="{{item.mobInfo.name}} ({{item.hp}}/{{item.mobInfo.maxHp}})"
+                        class="item"
+                        background-image="/img/world/mobs/{{item.mobInfo.image}}"></a>
                 </div>
             </div>
         </div>
