@@ -7,8 +7,8 @@ fi
 if [ -n "$1" ]; then
     SERVER_PATH=$1
 else
-    SERVER_PATH="."
+    SERVER_PATH="server"
 fi
- 
+
 cd $SERVER_PATH
 mvn "-Dexec.args=-classpath %classpath game.server.Main ../layouts" -Dexec.executable=/usr/lib/jvm/java-7-openjdk/bin/java process-classes org.codehaus.mojo:exec-maven-plugin:1.2.1:exec

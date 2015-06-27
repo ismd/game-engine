@@ -5,5 +5,11 @@ if [[ $EUID -eq 0 ]]; then
 fi
 
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
- 
-nohup $DIR/start_game.sh 0<&- &> /var/log/game.log &
+
+if [ -n "$1" ]; then
+    LOG_FILE=$1
+else
+    LOG_FILE="/var/log/game.log"
+fi
+
+nohup $DIR/start_game.sh 0<&- &> $LOG_FILE &
