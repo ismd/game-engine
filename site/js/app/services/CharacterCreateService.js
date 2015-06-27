@@ -12,6 +12,7 @@
                 action: 'create',
                 args: {
                     name: character.name,
+                    image: character.image,
                     biography: character.biography
                 }
             }).then(function(data) {

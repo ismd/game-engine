@@ -6,7 +6,7 @@
         duration: 500
     });
 
-    window.mainModule = angular.module('main', ['ngRoute'])
+    window.mainModule = angular.module('main', ['ngRoute', 'angularFileUpload'])
         .config(['$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
             $locationProvider.html5Mode(true);
 

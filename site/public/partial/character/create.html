@@ -9,13 +9,24 @@
                    class="form-control"
                    type="text"
                    placeholder="Введите имя персонажа" />
+
+            <span ng-show="errors.name"
+                  class="text-danger">Необходимо указать имя</span>
         </div>
 
         <div class="form-group">
-            <label for="create-character-avatar">Аватар</label>
-            <input ng-model="newCharacter.avatar"
-                   id="create-character-avatar"
-                   type="file" />
+            <label for="create-character-image">Аватар</label> (png, jpg, gif)
+            <input ng-model="newCharacter.image"
+                   id="create-character-image"
+                   type="file"
+                   nv-file-select
+                   uploader="uploader" />
+
+            <span ng-show="fileUploadError"
+                  class="text-danger">Недопустимый формат или размер файла</span>
+
+            <span ng-show="errors.image"
+                  class="text-danger">Необходимо загрузить аватар</span>
         </div>
 
         <div class="form-group">

@@ -88,22 +88,23 @@ public class CharacterController extends AbstractAuthController {
 
     public Response createAction(Request request, User user) {
         Character ch = new Character()
-                .setIdUser(user.getId())
-                .setName((String)request.getArgs().get("name"))
-                .setLevel(1)
-                .setMoney(10)
-                .setIdLayout(1)
-                .setX(3)
-                .setY(3)
-                .setStrength(10)
-                .setDexterity(10)
-                .setEndurance(10)
-                .setHp(20)
-                .setMaxHp(20)
-                .setMinDamage(3)
-                .setMaxDamage(5)
-                .setImage("player.png")
-                .setExperience(0);
+            .setIdUser(user.getId())
+            .setName((String)request.getArgs().get("name"))
+            .setLevel(1)
+            .setMoney(10)
+            .setIdLayout(1)
+            .setX(3)
+            .setY(3)
+            .setStrength(10)
+            .setDexterity(10)
+            .setEndurance(10)
+            .setHp(20)
+            .setMaxHp(20)
+            .setMinDamage(3)
+            .setMaxDamage(5)
+            .setImage((String)request.getArgs().get("image"))
+            .setBiography((String)request.getArgs().get("biography"))
+            .setExperience(0);
 
         user.addCharacter(ch);
 

@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS `Character` (
   `maxDamage` int(11) NOT NULL,
   `image` varchar(40) NOT NULL,
   `experience` int(11) NOT NULL DEFAULT '0',
+  `biography` text,
   PRIMARY KEY (`id`),
   KEY `idUser` (`idUser`),
   KEY `coordinates` (`idLayout`,`x`,`y`)

@@ -52,6 +52,8 @@ public class Character extends CellContent implements Serializable {
     @Expose
     private String image;
     @Expose
+    private String biography;
+    @Expose
     private int experience;
 
     public Character() {
@@ -118,6 +120,10 @@ public class Character extends CellContent implements Serializable {
 
     public String getImage() {
         return image;
+    }
+
+    public String getBiography() {
+        return biography;
     }
 
     public int getExperience() {
@@ -198,6 +204,11 @@ public class Character extends CellContent implements Serializable {
         return this;
     }
 
+    public Character setBiography(String biography) {
+        this.biography = biography;
+        return this;
+    }
+
     public Character setExperience(int experience) {
         this.experience = experience;
         return this;
@@ -218,4 +229,3 @@ public class Character extends CellContent implements Serializable {
         return this;
     }
 }
-
