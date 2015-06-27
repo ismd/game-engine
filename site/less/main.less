@@ -12,15 +12,15 @@ body {
     .btn {
         width: 100%;
     }
-
-    & > div {
-        width: 182px;
-    }
 }
 
 .select-character-popup {
     .modal-body {
         padding: 0;
+
+        .no-characters {
+            padding: 15px;
+        }
     }
 
     .table {
@@ -35,6 +35,17 @@ body {
 
             th {
                 border-width: 1px;
+            }
+
+            th,
+            td {
+                &:first-child {
+                    width: 1px;
+                }
+
+                &:last-child {
+                    width: 150px;
+                }
             }
         }
     }

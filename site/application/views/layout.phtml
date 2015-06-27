@@ -251,21 +251,22 @@
                                         <tr>
                                             <th>&nbsp;</th>
                                             <th>Имя</th>
-                                            <th>Уровень</th>
+                                            <th class="text-center">Уровень</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
                                         <tr ng-repeat="character in user.characters"
                                             ng-click="setCharacter(character.id)">
-                                            <td><img ng-src="/pictures/avatar/{{character.image}}" /></td>
+                                            <td><img ng-src="/pictures/avatars_resized/120x120_{{character.image}}" /></td>
                                             <td>{{character.name}}</td>
-                                            <td>{{character.level}}</td>
+                                            <td class="text-center">{{character.level}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
 
-                                <div ng-show="0 === user.characters.length">
+                                <div ng-show="0 === user.characters.length"
+                                     class="no-characters">
                                     У вас пока нет созданных персонажей
                                 </div>
                             </div>
