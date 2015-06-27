@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- Дамп данных таблицы `Character`
 --
 
-INSERT INTO `Character` (`id`, `idUser`, `name`, `level`, `money`, `idLayout`, `x`, `y`, `strength`, `dexterity`, `endurance`, `hp`, `maxHp`, `minDamage`, `maxDamage`, `image`, `experience`) VALUES
+INSERT INTO `Character` (`id`, `idUser`, `name`, `level`, `money`, `idLayout`, `x`, `y`, `strength`, `speed`, `endurance`, `hp`, `maxHp`, `minDamage`, `maxDamage`, `image`, `experience`) VALUES
 (1, 1, '1-pers', 1, 10, 1, 3, 3, 10, 10, 10, 20, 20, 3, 5, 'player.png', 0),
 (2, 2, 'hi', 1, 10, 1, 3, 3, 10, 10, 10, 20, 20, 3, 5, 'player.png', 0);
 
@@ -73,7 +73,7 @@ INSERT INTO `MobAvailableCell` (`id`, `idMob`, `idLayout`, `x`, `y`) VALUES
 -- Дамп данных таблицы `MobInfo`
 --
 
-INSERT INTO `MobInfo` (`id`, `name`, `level`, `maxHp`, `minDamage`, `maxDamage`, `maxInWorld`, `experience`, `image`, `strength`, `dexterity`, `endurance`) VALUES
+INSERT INTO `MobInfo` (`id`, `name`, `level`, `maxHp`, `minDamage`, `maxDamage`, `maxInWorld`, `experience`, `image`, `strength`, `speed`, `endurance`) VALUES
 (1, 'Кот', 1, 10, 1, 2, 5, 3, 'cat.png', 1, 1, 1),
 (2, 'Собака', 2, 15, 2, 3, 2, 5, 'dog.png', 2, 2, 2),
 (3, 'Кот Вася', 3, 20, 3, 5, 2, 10, 'vasya.png', 3, 3, 3);

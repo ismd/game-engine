@@ -9,7 +9,13 @@
 
         $scope.newCharacter = {
             name: '',
-            biography: ''
+            biography: '',
+            strength: 3,
+            speed: 3,
+            endurance: 3,
+            perception: 3,
+            intelligence: 3,
+            will: 3
         };
 
         CharacterCreate.focus();

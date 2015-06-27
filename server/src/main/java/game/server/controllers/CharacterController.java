@@ -98,6 +98,13 @@ public class CharacterController extends AbstractAuthController {
             return new Response(false, "Не загружена аватарка");
         }
 
+        double strength = (double)request.getArgs().get("strength");
+        double speed = (double)request.getArgs().get("speed");
+        double endurance = (double)request.getArgs().get("endurance");
+        double perception = (double)request.getArgs().get("perception");
+        double intelligence = (double)request.getArgs().get("intelligence");
+        double will = (double)request.getArgs().get("will");
+
         Character ch = new Character()
             .setIdUser(user.getId())
             .setName((String)name)
@@ -106,9 +113,12 @@ public class CharacterController extends AbstractAuthController {
             .setIdLayout(1)
             .setX(3)
             .setY(3)
-            .setStrength(10)
-            .setDexterity(10)
-            .setEndurance(10)
+            .setStrength((int)strength)
+            .setSpeed((int)speed)
+            .setEndurance((int)endurance)
+            .setPerception((int)perception)
+            .setIntelligence((int)intelligence)
+            .setWill((int)will)
             .setHp(20)
             .setMaxHp(20)
             .setMinDamage(3)

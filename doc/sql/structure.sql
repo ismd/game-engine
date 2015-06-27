@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `Character` (
   `x` tinyint(4) NOT NULL,
   `y` tinyint(4) NOT NULL,
   `strength` tinyint(4) NOT NULL,
-  `dexterity` tinyint(4) NOT NULL,
+  `speed` tinyint(4) NOT NULL,
   `endurance` tinyint(4) NOT NULL,
   `hp` int(11) NOT NULL,
   `maxHp` int(11) NOT NULL,
@@ -170,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `MobInfo` (
   `experience` int(11) NOT NULL,
   `image` varchar(40) NOT NULL,
   `strength` tinyint(4) NOT NULL,
-  `dexterity` tinyint(4) NOT NULL,
+  `speed` tinyint(4) NOT NULL,
   `endurance` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;

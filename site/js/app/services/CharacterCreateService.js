@@ -13,7 +13,13 @@
                 args: {
                     name: character.name,
                     image: character.image,
-                    biography: character.biography
+                    biography: character.biography,
+                    strength: character.strength,
+                    speed: character.speed,
+                    endurance: character.endurance,
+                    perception: character.perception,
+                    intelligence: character.intelligence,
+                    will: character.will
                 }
             }).then(function(data) {
                 defer.resolve(data.character);

@@ -38,9 +38,15 @@ public class Character extends CellContent implements Serializable {
     @Expose
     private int strength;
     @Expose
-    private int dexterity;
+    private int speed;
     @Expose
     private int endurance;
+    @Expose
+    private int perception;
+    @Expose
+    private int intelligence;
+    @Expose
+    private int will;
     @Expose
     private int hp;
     @Expose
@@ -94,12 +100,24 @@ public class Character extends CellContent implements Serializable {
         return strength;
     }
 
-    public int getDexterity() {
-        return dexterity;
+    public int getSpeed() {
+        return speed;
     }
 
     public int getEndurance() {
         return endurance;
+    }
+
+    public int getPerception() {
+        return perception;
+    }
+
+    public int getIntelligence() {
+        return intelligence;
+    }
+
+    public int getWill() {
+        return will;
     }
 
     public int getHp() {
@@ -169,13 +187,28 @@ public class Character extends CellContent implements Serializable {
         return this;
     }
 
-    public Character setDexterity(int dexterity) {
-        this.dexterity = dexterity;
+    public Character setSpeed(int speed) {
+        this.speed = speed;
         return this;
     }
 
     public Character setEndurance(int endurance) {
         this.endurance = endurance;
+        return this;
+    }
+
+    public Character setPerception(int perception) {
+        this.perception = perception;
+        return this;
+    }
+
+    public Character setIntelligence(int intelligence) {
+        this.intelligence = intelligence;
+        return this;
+    }
+
+    public Character setWill(int will) {
+        this.will = will;
         return this;
     }
 
