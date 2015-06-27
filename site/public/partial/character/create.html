@@ -1,21 +1,37 @@
-<form ng-submit="create()">
-<fieldset>
-    <legend>Создание персонажа</legend>
+<form ng-submit="create()" class="create-character-form">
+    <fieldset>
+        <legend>Создание персонажа</legend>
 
-    <div class="form-group">
-        <label for="name">Имя</label>
-        <input ng-model="newCharacter.name"
-               id="name"
-               class="form-control"
-               type="text"
-               placeholder="Введите имя персонажа" />
-    </div>
+        <div class="form-group">
+            <label for="create-character-name">Имя</label>
+            <input ng-model="newCharacter.name"
+                   id="create-character-name"
+                   class="form-control"
+                   type="text"
+                   placeholder="Введите имя персонажа" />
+        </div>
 
-    <p class="text-danger">
-        {{message}}
-    </p>
+        <div class="form-group">
+            <label for="create-character-avatar">Аватар</label>
+            <input ng-model="newCharacter.avatar"
+                   id="create-character-avatar"
+                   type="file" />
+        </div>
 
-    <input type="submit"
-           class="btn btn-primary"
-           value="Создать" />
-</fieldset>
+        <div class="form-group">
+            <label for="create-character-biography">Биография</label>
+            <textarea ng-model="newCharacter.biography"
+                      id="create-character-biography"
+                      class="form-control"
+                      name="biography"></textarea>
+        </div>
+
+        <p class="text-danger">
+            {{message}}
+        </p>
+
+        <input type="submit"
+               class="btn btn-primary"
+               value="Создать" />
+    </fieldset>
+</form>

@@ -11,7 +11,8 @@
                 controller: 'Character',
                 action: 'create',
                 args: {
-                    name: character.name
+                    name: character.name,
+                    biography: character.biography
                 }
             }).then(function(data) {
                 defer.resolve(data.character);
