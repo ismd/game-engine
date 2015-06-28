@@ -169,9 +169,6 @@ CREATE TABLE IF NOT EXISTS `MobInfo` (
   `maxInWorld` int(11) NOT NULL,
   `experience` int(11) NOT NULL,
   `image` varchar(40) NOT NULL,
-  `strength` tinyint(4) NOT NULL,
-  `speed` tinyint(4) NOT NULL,
-  `endurance` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 

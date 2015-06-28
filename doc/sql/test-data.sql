@@ -73,10 +73,10 @@ INSERT INTO `MobAvailableCell` (`id`, `idMob`, `idLayout`, `x`, `y`) VALUES
 -- Дамп данных таблицы `MobInfo`
 --
 
-INSERT INTO `MobInfo` (`id`, `name`, `level`, `maxHp`, `minDamage`, `maxDamage`, `maxInWorld`, `experience`, `image`, `strength`, `speed`, `endurance`) VALUES
-(1, 'Кот', 1, 10, 1, 2, 5, 3, 'cat.png', 1, 1, 1),
-(2, 'Собака', 2, 15, 2, 3, 2, 5, 'dog.png', 2, 2, 2),
-(3, 'Кот Вася', 3, 20, 3, 5, 2, 10, 'vasya.png', 3, 3, 3);
+INSERT INTO `MobInfo` (`id`, `name`, `level`, `maxHp`, `minDamage`, `maxDamage`, `maxInWorld`, `experience`, `image`) VALUES
+(1, 'Кот', 1, 10, 1, 2, 5, 3, 'cat.png'),
+(2, 'Собака', 2, 15, 2, 3, 2, 5, 'dog.png'),
+(3, 'Кот Вася', 3, 20, 3, 5, 2, 10, 'vasya.png');
 
 --
 -- Дамп данных таблицы `Npc`

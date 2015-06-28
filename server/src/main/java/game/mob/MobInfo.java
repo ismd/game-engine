@@ -26,9 +26,6 @@ public class MobInfo implements Serializable {
     private int experience;
     @Expose
     private String image;
-    private int strength;
-    private int speed;
-    private int endurance;
 
     protected MobInfo() {
     }
@@ -71,18 +68,6 @@ public class MobInfo implements Serializable {
         return image;
     }
 
-    public int getStrength() {
-        return strength;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public int getEndurance() {
-        return endurance;
-    }
-
     // Сеттеры
 
     public MobInfo setName(String name) {
@@ -122,21 +107,6 @@ public class MobInfo implements Serializable {
 
     public MobInfo setImage(String image) {
         this.image = image;
-        return this;
-    }
-
-    public MobInfo setStrength(int strength) {
-        this.strength = strength;
-        return this;
-    }
-
-    public MobInfo setSpeed(int speed) {
-        this.speed = speed;
-        return this;
-    }
-
-    public MobInfo setEndurance(int endurance) {
-        this.endurance = endurance;
         return this;
     }
 }
