@@ -1,7 +1,8 @@
 (function() {
     'use strict';
 
-    window.mainModule.controller('WorldCtrl', ['$scope', '$timeout', 'World', 'Ws', 'Character', 'Chat', function($scope, $timeout, World, Ws, Character, Chat) {
+    window.mainModule.controller('WorldCtrl', ['$scope', '$timeout', '$document', 'World', 'Ws', 'Character', 'Chat',
+                                               function($scope, $timeout, $document, World, Ws, Character, Chat) {
         $scope.selectedItem    = null;
         $scope.movingInProcess = false;
 
@@ -94,22 +95,34 @@
             } else if ('character' === item.type) {
                 talkToCharacter(item.item);
             }
-        };
 
-        function talkToNpc(npc) {
-            alert(npc.greeting);
-        }
+            function talkToNpc(npc) {
+                alert(npc.greeting);
+            }
 
-        function talkToCharacter(character) {
-            Chat.focus(character.name + ', ');
-        }
-
-        $scope.keyup = function(e) {
-            var key = e.key;
-
-            if ('Up' === key || 'Left' === key || 'Right' === key || 'Down' === key) {
-                $scope.move(key.toLowerCase());
+            function talkToCharacter(character) {
+                Chat.focus(character.name + ', ');
             }
         };
+
+        $document.keydown(function(e) {
+            switch (e.keyCode) {
+            case 38:
+                $scope.move('up');
+                break;
+
+            case 39:
+                $scope.move('right');
+                break;
+
+            case 40:
+                $scope.move('down');
+                break;
+
+            case 37:
+                $scope.move('left');
+                break;
+            }
+        });
     }]);
 })();
