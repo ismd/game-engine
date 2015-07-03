@@ -16,6 +16,10 @@
                 scope.resize = function() {
                     messagesHeight = newValue - offsetTop - 50;
 
+                    if (messagesHeight < 120) {
+                        messagesHeight = 120;
+                    }
+
                     return {
                         height: messagesHeight + 'px'
                     };
