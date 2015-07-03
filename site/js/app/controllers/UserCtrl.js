@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    window.mainModule.controller('UserCtrl', ['$scope', 'User', 'Common', function($scope, User, Common) {
+    window.mainModule.controller('UserCtrl', ['$scope', '$timeout', 'User', 'Common', function($scope, $timeout, User, Common) {
         $scope.user = JSON.parse(localStorage.getItem('user'));
 
         if (null !== $scope.user) {
@@ -77,7 +77,7 @@
         });
 
         $scope.openLoginForm = function() {
-            setTimeout(function() {
+            $timeout(function() {
                 User.focus();
             }, 500);
         };
