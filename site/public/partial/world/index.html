@@ -8,12 +8,12 @@
                 <div class="npcs">
                     <a href="javascript:void(0)"
                        ng-repeat="item in cell.content.npcs"
-                        ng-click="selectItem('npc', item)"
-                        ng-class="{selected: item.id === selectedItem.item.id && 'npc' === selectedItem.type}"
-                        data-id="{{item.id}}"
-                        title="{{item.name}}"
-                        class="item"
-                        background-image="/img/world/npcs/{{item.image}}"></a>
+                       ng-click="selectItem('npc', item)"
+                       ng-class="{selected: item.id === selectedItem.item.id && 'npc' === selectedItem.type}"
+                       data-id="{{item.id}}"
+                       tooltip="{{item.name}}"
+                       class="item"
+                       background-image="/img/world/npcs/{{item.image}}"></a>
                 </div>
 
                 <!-- Персонажи -->
@@ -23,7 +23,7 @@
                        ng-click="selectItem('character', item)"
                        ng-class="{selected: item.id === selectedItem.item.id && 'character' === selectedItem.type}"
                        data-id="{{item.id}}"
-                       title="{{item.name}}"
+                       tooltip="{{item.name}}"
                        class="item"
                        background-image="/pictures/avatars_resized/120x120_{{item.image}}"></a>
                 </div>
@@ -32,12 +32,12 @@
                 <div class="mobs">
                     <a href="javascript:void(0)"
                        ng-repeat="item in cell.content.mobs"
-                        ng-click="selectItem('mob', item)"
-                        ng-class="{selected: item.id === selectedItem.item.id && 'mob' === selectedItem.type}"
-                        data-id="{{item.id}}"
-                        title="{{item.mobInfo.name}} ({{item.hp}}/{{item.mobInfo.maxHp}})"
-                        class="item"
-                        background-image="/img/world/mobs/{{item.mobInfo.image}}"></a>
+                       ng-click="selectItem('mob', item)"
+                       ng-class="{selected: item.id === selectedItem.item.id && 'mob' === selectedItem.type}"
+                       data-id="{{item.id}}"
+                       tooltip="{{item.mobInfo.name}} ({{item.hp}}/{{item.mobInfo.maxHp}})"
+                       class="item"
+                       background-image="/img/world/mobs/{{item.mobInfo.image}}"></a>
                 </div>
             </div>
         </div>
