@@ -1,0 +1,36 @@
+<p>
+    Аватар:
+    <img ng-src="/pictures/avatars_resized/120x120_{{character.image}}" />
+</p>
+
+<p>
+    Опыт:
+    {{character.experience}}
+</p>
+
+<p>
+    Минимальный урон:
+    {{character.minDamage}}
+</p>
+
+<p>
+    Максимальный урон:
+    {{character.maxDamage}}
+</p>
+
+<p>
+    Биография:
+    {{character.biography}}
+</p>
+
+<p>
+    Сила + {{characterStat(character.stat1)}} = {{characterArchetype(0, character.stat1)}}
+</p>
+
+<p>
+    Выносливость + {{characterStat(character.stat2)}} = {{characterArchetype(1, character.stat2)}}
+</p>
+
+<p>
+    Скорость + {{characterStat(character.stat3)}} = {{characterArchetype(2, character.stat3)}}
+</p>

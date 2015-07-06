@@ -10,26 +10,29 @@
         .config(['$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
             $locationProvider.html5Mode(true);
 
-            $routeProvider.
-                when('/', {
+            $routeProvider
+                .when('/', {
                     templateUrl: '/partial/news/index.html'
-                }).
-                when('/registration', {
-                    templateUrl: '/partial/registration/index.html',
-                    controller: 'RegistrationCtrl'
-                }).
-                when('/character/create', {
-                    templateUrl: '/partial/character/create.html',
-                    controller: 'CharacterCreateCtrl'
-                }).
-                when('/world', {
-                    templateUrl: '/partial/world/index.html',
-                    controller: 'WorldCtrl'
-                }).
-                when('/world/inventory', {
+                })
+                .when('/registration', {
+                    controller: 'RegistrationCtrl',
+                    templateUrl: '/partial/registration/index.html'
+                })
+                .when('/character/create', {
+                    controller: 'CharacterCreateCtrl',
+                    templateUrl: '/partial/character/create.html'
+                })
+                .when('/world', {
+                    controller: 'WorldCtrl',
+                    templateUrl: '/partial/world/index.html'
+                })
+                .when('/world/character', {
+                    templateUrl: '/partial/world/character.html'
+                })
+                .when('/world/inventory', {
                     templateUrl: '/partial/world/inventory.html'
-                }).
-                otherwise({
+                })
+                .otherwise({
                     redirectTo: '/'
                 });
 

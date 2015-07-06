@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    window.mainModule.controller('CharacterCreateCtrl', ['$scope', 'FileUploader', 'CharacterCreate', 'Character', function($scope, FileUploader, CharacterCreate, Character) {
+    window.mainModule.controller('CharacterCreateCtrl', ['$scope', 'FileUploader', 'CharacterCreate', 'Character', 'Stat', function($scope, FileUploader, CharacterCreate, Character, Stat) {
         $scope.errors = {
             name: false,
             image: false
@@ -13,12 +13,8 @@
             stats: [0, 1, 2]
         };
 
-        var stats      = ['Восприятие', 'Интеллект', 'Воля'],
-            archetypes = [
-                ['Наставник', 'Хранитель', 'Воин'],
-                ['Искатель', 'Творец', 'Вестник'],
-                ['Странник', 'Школяр', 'Стоик']
-            ];
+        var stats      = Stat.stats,
+            archetypes = Stat.archetypes;
 
         // Текущие выбранные характеристики и архетипы по порядку
         $scope.stats      = [stats[0], stats[1], stats[2]];
