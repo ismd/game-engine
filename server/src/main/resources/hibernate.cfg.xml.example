@@ -10,6 +10,7 @@
     <property name="show_sql">true</property>
     <property name="globally_quoted_identifiers">true</property>
     <property name="hibernate.connection.pool_size">20</property>
+    <property name="hibernate.connection.autoReconnect">true</property>
 
     <mapping class="game.character.Character"/>
     <mapping class="game.layout.Layout"/>
