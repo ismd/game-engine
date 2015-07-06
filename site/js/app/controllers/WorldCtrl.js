@@ -1,8 +1,8 @@
 (function() {
     'use strict';
 
-    window.mainModule.controller('WorldCtrl', ['$scope', '$timeout', '$document', 'World', 'Ws', 'Character', 'Chat',
-                                               function($scope, $timeout, $document, World, Ws, Character, Chat) {
+    window.mainModule.controller('WorldCtrl', ['$scope', '$timeout', '$document', '$location', 'World', 'Ws', 'Character', 'Chat',
+                                               function($scope, $timeout, $document, $location, World, Ws, Character, Chat) {
         $scope.selectedItem    = null;
         $scope.movingInProcess = false;
 
@@ -106,6 +106,10 @@
         };
 
         $document.keydown(function(e) {
+            if ('/world' !== $location.path()) {
+                return;
+            }
+
             switch (e.keyCode) {
             case 38:
                 $scope.move('up');
