@@ -12,4 +12,5 @@ else
     LOG_FILE="/var/log/game.log"
 fi
 
-nohup $DIR/run.sh 0<&- &> $LOG_FILE &
+#nohup $DIR/run.sh 0<&- &> $LOG_FILE &
+nohup $DIR/run.sh > $LOG_FILE 2>&1
