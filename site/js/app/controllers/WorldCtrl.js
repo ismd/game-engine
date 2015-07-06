@@ -6,6 +6,8 @@
         $scope.selectedItem    = null;
         $scope.movingInProcess = false;
 
+        World.focus();
+
         $scope.cell = {
             layout: {
                 id: null,

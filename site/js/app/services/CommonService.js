@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    window.mainModule.factory('Common', ['$location', '$route', function($location, $route) {
+    window.mainModule.factory('Common', ['$location', '$route', '$timeout', function($location, $route, $timeout) {
         var service = {};
 
         service.redirect = function(url) {
@@ -13,7 +13,11 @@
         };
 
         service.focus = function(element, value) {
-            element.val(value).focus();
+            $timeout(function() {
+                element.val(value);
+                element.focus();
+            });
+
             return element;
         };
 

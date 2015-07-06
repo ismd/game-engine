@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    window.mainModule.factory('World', ['Ws', function(Ws) {
+    window.mainModule.factory('World', ['Ws', 'Common', function(Ws, Common) {
         var service = {};
 
         var ctx         = null,
@@ -64,6 +64,10 @@
                               HERO_WIDTH,
                               HERO_HEIGHT);
             }
+        };
+
+        service.focus = function() {
+            Common.focus($('.js-message-text'));
         };
 
         return service;

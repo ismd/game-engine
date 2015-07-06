@@ -28,7 +28,7 @@
         };
 
         service.focus = function() {
-            Common.focus($('input#name'));
+            Common.focus($('#create-character-name'));
         };
 
         return service;
