@@ -1,3 +1,39 @@
 .create-character-form {
-    width: 300px;
+    &:extend(.clearfix all);
+
+    .column {
+        float: left;
+
+        &.info {
+            width: 250px;
+        }
+
+        &.stats {
+            padding-left: 50px;
+
+            .stats-column {
+                display: inline-block;
+                padding: 0 20px;
+
+                .item {
+                    height: 14px;
+                    margin-bottom: 15px;
+
+                    input {
+                        width: 60px;
+                    }
+
+                    &.separator {
+                        height: auto;
+                        margin-bottom: 8px;
+                    }
+
+                    &.archetype {
+                        font-size: 20px;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
 }

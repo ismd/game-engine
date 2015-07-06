@@ -18,6 +18,17 @@
             will: 3
         };
 
+        var stats      = ['Восприятие', 'Интеллект', 'Воля'],
+            archetypes = [
+                ['Наставник', 'Хранитель', 'Воин'],
+                ['Искатель', 'Творец', 'Вестник'],
+                ['Странник', 'Школяр', 'Стоик']
+            ];
+
+        // Текущие выбранные характеристики и архетипы по порядку
+        $scope.stats      = [stats[0], stats[1], stats[2]];
+        $scope.archetypes = [archetypes[0][0], archetypes[1][1], archetypes[2][2]];
+
         CharacterCreate.focus();
 
         $scope.uploader = new FileUploader({
@@ -79,6 +90,40 @@
 
         $scope.uploader.onWhenAddingFileFailed = function() {
             $scope.fileUploadError = true;
+        };
+
+        $scope.swap = function(top) {
+            var tmpStat;
+
+            if (top) {
+                tmpStat = $scope.stats[0];
+                $scope.stats[0] = $scope.stats[1];
+                $scope.stats[1] = tmpStat;
+            } else {
+                tmpStat = $scope.stats[1];
+                $scope.stats[1] = $scope.stats[2];
+                $scope.stats[2] = tmpStat;
+            }
+
+            setArchetype(0);
+            setArchetype(1);
+            setArchetype(2);
+
+            function setArchetype(i) {
+                switch ($scope.stats[i]) {
+                case stats[0]:
+                    $scope.archetypes[i] = archetypes[i][0];
+                    break;
+
+                case stats[1]:
+                    $scope.archetypes[i] = archetypes[i][1];
+                    break;
+
+                case stats[2]:
+                    $scope.archetypes[i] = archetypes[i][2];
+                    break;
+                }
+            }
         };
     }]);
 })();

@@ -2,88 +2,92 @@
     <fieldset>
         <legend>Создание персонажа</legend>
 
-        <div class="form-group">
-            <label for="create-character-name">Имя</label>
-            <input ng-model="newCharacter.name"
-                   id="create-character-name"
-                   class="form-control"
-                   type="text"
-                   placeholder="Введите имя персонажа" />
+        <div class="column info">
+            <div class="form-group">
+                <label for="create-character-name">Имя</label>
+                <input ng-model="newCharacter.name"
+                       id="create-character-name"
+                       class="form-control"
+                       type="text"
+                       placeholder="Введите имя персонажа" />
 
-            <span ng-show="errors.name"
-                  class="text-danger">Необходимо указать имя</span>
+                <span ng-show="errors.name"
+                      class="text-danger">Необходимо указать имя</span>
+            </div>
+
+            <div class="form-group">
+                <label for="create-character-image">Аватар</label> (png, jpg, gif)
+                <input ng-model="newCharacter.image"
+                       id="create-character-image"
+                       type="file"
+                       nv-file-select
+                       uploader="uploader" />
+
+                <span ng-show="fileUploadError"
+                      class="text-danger">Недопустимый формат или размер файла</span>
+
+                <span ng-show="errors.image"
+                      class="text-danger">Необходимо загрузить аватар</span>
+            </div>
+
+            <div class="form-group">
+                <label for="create-character-biography">Биография</label>
+                <textarea ng-model="newCharacter.biography"
+                          id="create-character-biography"
+                          class="form-control"></textarea>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="create-character-image">Аватар</label> (png, jpg, gif)
-            <input ng-model="newCharacter.image"
-                   id="create-character-image"
-                   type="file"
-                   nv-file-select
-                   uploader="uploader" />
+        <div class="column stats">
+            <h4>Меняйте характеристики местами для смены своих архетипов</h4>
 
-            <span ng-show="fileUploadError"
-                  class="text-danger">Недопустимый формат или размер файла</span>
+            <div class="stats-column">
+                <div class="item">Сила</div>
+                <div class="item separator">&nbsp;</div>
+                <div class="form-group item">Скорость</div>
+                <div class="item separator">&nbsp;</div>
+                <div class="form-group item">Выносливость</div>
+            </div>
 
-            <span ng-show="errors.image"
-                  class="text-danger">Необходимо загрузить аватар</span>
+            <div class="stats-column text-center">
+                <div class="form-group item">{{stats[0]}}</div>
+
+                <div class="item separator">
+                    <a ng-click="swap(true)"
+                       href="javascript:void(0)"
+                       title="Поменять местами">
+                        <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
+                    </a>
+                </div>
+
+                <div class="form-group item">{{stats[1]}}</div>
+
+                <div class="item separator">
+                    <a ng-click="swap(false)"
+                       href="javascript:void(0)"
+                       title="Поменять местами">
+                        <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
+                    </a>
+                </div>
+
+                <div class="form-group item">{{stats[2]}}</div>
+            </div>
+
+            <div class="stats-column text-right">
+                <div class="item archetype">{{archetypes[0]}}</div>
+                <div class="item separator">&nbsp;</div>
+                <div class="item archetype">{{archetypes[1]}}</div>
+                <div class="item separator">&nbsp;</div>
+                <div class="item archetype">{{archetypes[2]}}</div>
+            </div>
+
+            <p class="text-danger">
+                {{message}}
+            </p>
+
+            <input type="submit"
+                   class="btn btn-primary"
+                   value="Создать" />
         </div>
-
-        <div class="form-group">
-            <label for="create-character-biography">Биография</label>
-            <textarea ng-model="newCharacter.biography"
-                      id="create-character-biography"
-                      class="form-control"></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="create-character-strength">Сила</label>
-            <input ng-model="newCharacter.strength"
-                   type="number"
-                   class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label for="create-character-speed">Скорость</label>
-            <input ng-model="newCharacter.speed"
-                   type="number"
-                   class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label for="create-character-endurance">Выносливость</label>
-            <input ng-model="newCharacter.endurance"
-                   type="number"
-                   class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label for="create-character-perception">Восприятие</label>
-            <input ng-model="newCharacter.perception"
-                   type="number"
-                   class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label for="create-character-intelligence">Интеллект</label>
-            <input ng-model="newCharacter.intelligence"
-                   type="number"
-                   class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label for="create-character-will">Воля</label>
-            <input ng-model="newCharacter.will"
-                   type="number"
-                   class="form-control" />
-        </div>
-
-        <p class="text-danger">
-            {{message}}
-        </p>
-
-        <input type="submit"
-               class="btn btn-primary"
-               value="Создать" />
     </fieldset>
 </form>
