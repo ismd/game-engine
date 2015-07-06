@@ -14,12 +14,9 @@
                     name: character.name,
                     image: character.image,
                     biography: character.biography,
-                    strength: character.strength,
-                    speed: character.speed,
-                    endurance: character.endurance,
-                    perception: character.perception,
-                    intelligence: character.intelligence,
-                    will: character.will
+                    stat1: character.stats[0],
+                    stat2: character.stats[1],
+                    stat3: character.stats[2]
                 }
             }).then(function(data) {
                 defer.resolve(data.character);

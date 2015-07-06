@@ -60,6 +60,12 @@ public class Character extends CellContent implements Serializable {
     @Expose
     private String biography;
     @Expose
+    private int stat1;
+    @Expose
+    private int stat2;
+    @Expose
+    private int stat3;
+    @Expose
     private int experience;
 
     public Character() {
@@ -142,6 +148,18 @@ public class Character extends CellContent implements Serializable {
 
     public String getBiography() {
         return biography;
+    }
+
+    public int getStat1() {
+        return stat1;
+    }
+
+    public int getStat2() {
+        return stat2;
+    }
+
+    public int getStat3() {
+        return stat3;
     }
 
     public int getExperience() {
@@ -239,6 +257,21 @@ public class Character extends CellContent implements Serializable {
 
     public Character setBiography(String biography) {
         this.biography = biography;
+        return this;
+    }
+
+    public Character setStat1(int stat1) {
+        this.stat1 = stat1;
+        return this;
+    }
+
+    public Character setStat2(int stat2) {
+        this.stat2 = stat2;
+        return this;
+    }
+
+    public Character setStat3(int stat3) {
+        this.stat3 = stat3;
         return this;
     }
 

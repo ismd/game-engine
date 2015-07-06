@@ -98,12 +98,9 @@ public class CharacterController extends AbstractAuthController {
             return new Response(false, "Не загружена аватарка");
         }
 
-        double strength = (double)request.getArgs().get("strength");
-        double speed = (double)request.getArgs().get("speed");
-        double endurance = (double)request.getArgs().get("endurance");
-        double perception = (double)request.getArgs().get("perception");
-        double intelligence = (double)request.getArgs().get("intelligence");
-        double will = (double)request.getArgs().get("will");
+        double stat1 = (double)request.getArgs().get("stat1");
+        double stat2 = (double)request.getArgs().get("stat2");
+        double stat3 = (double)request.getArgs().get("stat3");
 
         Character ch = new Character()
             .setIdUser(user.getId())
@@ -113,18 +110,21 @@ public class CharacterController extends AbstractAuthController {
             .setIdLayout(1)
             .setX(3)
             .setY(3)
-            .setStrength((int)strength)
-            .setSpeed((int)speed)
-            .setEndurance((int)endurance)
-            .setPerception((int)perception)
-            .setIntelligence((int)intelligence)
-            .setWill((int)will)
+            .setStrength(7)
+            .setSpeed(7)
+            .setEndurance(7)
+            .setPerception(7)
+            .setIntelligence(7)
+            .setWill(7)
             .setHp(20)
             .setMaxHp(20)
             .setMinDamage(3)
             .setMaxDamage(5)
             .setImage((String)image)
             .setBiography((String)request.getArgs().get("biography"))
+            .setStat1((int)stat1)
+            .setStat2((int)stat2)
+            .setStat3((int)stat3)
             .setExperience(0);
 
         user.addCharacter(ch);

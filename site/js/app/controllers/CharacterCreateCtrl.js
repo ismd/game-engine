@@ -10,12 +10,7 @@
         $scope.newCharacter = {
             name: '',
             biography: '',
-            strength: 3,
-            speed: 3,
-            endurance: 3,
-            perception: 3,
-            intelligence: 3,
-            will: 3
+            stats: [0, 1, 2]
         };
 
         var stats      = ['Восприятие', 'Интеллект', 'Воля'],
@@ -113,14 +108,17 @@
                 switch ($scope.stats[i]) {
                 case stats[0]:
                     $scope.archetypes[i] = archetypes[i][0];
+                    $scope.newCharacter.stats[i] = 0;
                     break;
 
                 case stats[1]:
                     $scope.archetypes[i] = archetypes[i][1];
+                    $scope.newCharacter.stats[i] = 1;
                     break;
 
                 case stats[2]:
                     $scope.archetypes[i] = archetypes[i][2];
+                    $scope.newCharacter.stats[i] = 2;
                     break;
                 }
             }

@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    window.mainModule.factory('Registration', ['$q', 'Ws', function($q, Ws) {
+    window.mainModule.factory('Registration', ['$q', 'Ws', 'Common', function($q, Ws, Common) {
         var service = {};
 
         service.register = function(user) {
@@ -25,6 +25,10 @@
             });
 
             return defer.promise;
+        };
+
+        service.focus = function() {
+            Common.focus($('input#login'));
         };
 
         return service;
