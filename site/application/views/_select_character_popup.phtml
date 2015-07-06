@@ -1,0 +1,52 @@
+<div class="js-select-character-popup select-character-popup modal fade" role="dialog" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                <h3>Выберите персонажа</h3>
+            </div>
+
+            <div class="modal-body">
+                <img ng-show="!user.characters"
+                     class="loading"
+                     src="/img/loading.gif" />
+
+                <table ng-show="user.characters.length > 0" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>Имя</th>
+                            <th class="text-center">Уровень</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="character in user.characters"
+                            ng-click="setCharacter(character.id)">
+                            <td><img ng-src="/pictures/avatars_resized/120x120_{{character.image}}" /></td>
+                            <td>{{character.name}}</td>
+                            <td class="text-center">{{character.level}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div ng-show="0 === user.characters.length"
+                     class="no-characters">
+                    У вас пока нет созданных персонажей
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <p class="text-danger">{{setCharacterMessage}}</p>
+
+                <button ng-click="redirect('/character/create')"
+                        class="btn btn-primary"
+                        data-dismiss="modal">Создать персонажа</button>
+            </div>
+        </div>
+    </div>
+</div>
