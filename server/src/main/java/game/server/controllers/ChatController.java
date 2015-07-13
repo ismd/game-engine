@@ -28,7 +28,7 @@ public class ChatController extends AbstractAuthController {
 
         DaoFactory.getInstance().chatMessageDao.add(message);
 
-        List<ChatMessage> messages = new ArrayList<>();
+        List<ChatMessage> messages = new ArrayList();
         messages.add(message.setMesage(msg));
 
         Online.notifier.notifyAll(new Response(true, true, "chat-new-messages")

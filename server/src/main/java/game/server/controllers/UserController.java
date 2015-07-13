@@ -83,8 +83,8 @@ public class UserController extends AbstractController {
 
     public Response loginByAuthKeyAction(Request request, User user) {
         Map<String, Object> args = request.getArgs();
-        int id = (int)(double)args.get("id");
 
+        int id = Double.valueOf(args.get("id").toString()).intValue();
         User u = DaoFactory.getInstance().userDao.getByIdAndAuthKey(
                 id,
                 (String)args.get("authKey")
@@ -107,7 +107,7 @@ public class UserController extends AbstractController {
         Character c = null;
 
         try {
-            int idCharacter = (int)(double)args.get("idCharacter");
+            int idCharacter = Double.valueOf(args.get("idCharacter").toString()).intValue();
 
             for (Character ch : u.getCharacters()) {
                 Cell cell = ch.getCell();
@@ -136,7 +136,7 @@ public class UserController extends AbstractController {
                     .appendData("character", c);
         } catch (NullPointerException e) {
             return new Response(true, true, "init")
-                .appendData("user", u);
+                    .appendData("user", u);
         }
     }
 }

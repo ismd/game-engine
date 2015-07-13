@@ -22,9 +22,9 @@ public class CharacterController extends AbstractAuthController {
         Map<String, Object> args = request.getArgs();
         Character character = user.getCurrentCharacter();
 
-        int idLayout = (int)(double)args.get("idLayout");
-        int x = (int)(double)args.get("x");
-        int y = (int)(double)args.get("y");
+        int idLayout = Double.valueOf(args.get("idLayout").toString()).intValue();
+        int x = Double.valueOf(args.get("x").toString()).intValue();
+        int y = Double.valueOf(args.get("y").toString()).intValue();
 
         try {
             Cell oldCell = character.getCell();
@@ -34,15 +34,13 @@ public class CharacterController extends AbstractAuthController {
             oldCell.removeContent(character);
             Online.notifier.notifyByCharacter(
                     oldCell.getCharacters(),
-                    new Response(true, true, "cell-update").appendData("cell", oldCell)
-            );
+                    new Response(true, true, "cell-update").appendData("cell", oldCell));
 
             // Уведомляем персонажей на новой клетке
             character.setCell(newCell.addContent(character));
             Online.notifier.notifyByCharacter(
                     newCell.getCharacters(),
-                    new Response(true, true, "cell-update").appendData("cell", newCell)
-            );
+                    new Response(true, true, "cell-update").appendData("cell", newCell));
 
             DaoFactory.getInstance().characterDao.update(character);
 
@@ -53,7 +51,7 @@ public class CharacterController extends AbstractAuthController {
     }
 
     public Response setAction(Request request, User user) {
-        int id = (int)(double)request.getArgs().get("id");
+        int id = Double.valueOf(request.getArgs().get("id").toString()).intValue();
         Character c = null;
 
         // Удаляем всех персонажей пользователя с карты
@@ -82,13 +80,14 @@ public class CharacterController extends AbstractAuthController {
             return new Response(false);
         }
 
-        return new Response(true, true, "set-character-success").
-            appendData("character", c);
+        return new Response(true, true, "set-character-success").appendData("character", c);
     }
 
     public Response createAction(Request request, User user) {
-        Object name = request.getArgs().get("name");
-        Object image = request.getArgs().get("image");
+        Map<String, Object> args = request.getArgs();
+
+        Object name = args.get("name");
+        Object image = args.get("image");
 
         if (null == name || "".equals((String)name)) {
             return new Response(false, "Не введено имя");
@@ -98,9 +97,9 @@ public class CharacterController extends AbstractAuthController {
             return new Response(false, "Не загружена аватарка");
         }
 
-        double stat1 = (double)request.getArgs().get("stat1");
-        double stat2 = (double)request.getArgs().get("stat2");
-        double stat3 = (double)request.getArgs().get("stat3");
+        int stat1 = Double.valueOf(args.get("stat1").toString()).intValue();
+        int stat2 = Double.valueOf(args.get("stat2").toString()).intValue();
+        int stat3 = Double.valueOf(args.get("stat3").toString()).intValue();
 
         Character ch = new Character()
             .setIdUser(user.getId())
@@ -122,9 +121,9 @@ public class CharacterController extends AbstractAuthController {
             .setMaxDamage(5)
             .setImage((String)image)
             .setBiography((String)request.getArgs().get("biography"))
-            .setStat1((int)stat1)
-            .setStat2((int)stat2)
-            .setStat3((int)stat3)
+            .setStat1(stat1)
+            .setStat2(stat2)
+            .setStat3(stat3)
             .setExperience(0);
 
         user.addCharacter(ch);
