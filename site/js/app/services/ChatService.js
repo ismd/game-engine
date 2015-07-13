@@ -1,7 +1,8 @@
 (function() {
     'use strict';
 
-    window.mainModule.factory('Chat', ['Ws', '$q', 'Common', function(Ws, $q, Common) {
+    window.mainModule.factory('Chat', ['$q', '$rootScope', 'Ws', 'Common',
+                                       function($q, $rootScope, Ws, Common) {
         var service = {};
 
         var $chatMessages = $('.js-chat-messages'),
@@ -61,6 +62,14 @@
 
         service.scrollMessages = function() {
             $chatMessages.scrollTo('max');
+        };
+
+        service.addMessage = function(message) {
+            service.addMessages([message]);
+        };
+
+        service.addMessages = function(messages) {
+            $rootScope.$broadcast('chat-add-new-messages', messages);
         };
 
         return service;

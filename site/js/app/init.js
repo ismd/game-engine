@@ -32,6 +32,10 @@
                 .when('/world/inventory', {
                     templateUrl: '/partial/world/inventory.html'
                 })
+                .when('/world/fight', {
+                    controller: 'FightCtrl',
+                    templateUrl: '/partial/world/fight.html'
+                })
                 .otherwise({
                     redirectTo: '/'
                 });

@@ -1,8 +1,8 @@
 (function() {
     'use strict';
 
-    window.mainModule.controller('WorldCtrl', ['$scope', '$timeout', '$document', '$location', 'World', 'Ws', 'Character', 'Chat',
-                                               function($scope, $timeout, $document, $location, World, Ws, Character, Chat) {
+    window.mainModule.controller('WorldCtrl', ['$scope', '$timeout', '$document', '$location', 'World', 'Ws', 'Character', 'Chat', 'Fight',
+                                               function($scope, $timeout, $document, $location, World, Ws, Character, Chat, Fight) {
         $scope.selectedItem    = null;
         $scope.movingInProcess = false;
 
@@ -86,6 +86,10 @@
 
             $scope.$apply();
         });
+
+        $scope.fight = function(item) {
+            Fight.killMob(item.item.id);
+        };
 
         $scope.talk = function(item) {
             if (null === item) {

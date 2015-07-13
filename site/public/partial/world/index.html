@@ -49,16 +49,20 @@
                     <tbody>
                         <tr>
                             <td>
-                                <button ng-class="{disabled: 'mob' !== selectedItem.type}"
-                                        class="btn btn-sm btn-danger">Убить</button>
+                                <a href="javascript:void(0)"
+                                   ng-click="fight(selectedItem)"
+                                   ng-class="{disabled: 'mob' !== selectedItem.type}"
+                                   class="btn btn-sm btn-danger">Убить</a>
                             </td>
                             <td>
-                                <button ng-class="{disabled: 'npc' !== selectedItem.type && 'character' !== selectedItem.type}"
-                                        ng-click="talk(selectedItem)"
-                                        class="btn btn-sm btn-success">Общаться</button>
+                                <a href="javascript:void(0)"
+                                   ng-click="talk(selectedItem)"
+                                   ng-class="{disabled: 'npc' !== selectedItem.type && 'character' !== selectedItem.type}"
+                                   class="btn btn-sm btn-success">Общаться</a>
                             </td>
                             <td>
-                                <button class="btn btn-sm btn-warning disabled">Подобрать</button>
+                                <a href="javascript:void(0)"
+                                   class="btn btn-sm btn-warning disabled">Подобрать</a>
                             </td>
                         </tr>
                         <tr>
@@ -153,8 +157,12 @@
                     <td class="sended">{{message.sended | date: 'H:mm:ss'}}</td>
 
                     <td class="sender">
-                        <a href="javascript:void(0)"
-                           ng-click="answerMember(message.sender)">{{message.sender.name}}</a>:
+                        <span ng-show="'system' !== message.sender.type">
+                            <a href="javascript:void(0)"
+                               ng-click="answerMember(message.sender)">{{message.sender.name}}</a>:
+                        </span>
+
+                        <span ng-show="'system' === message.sender.type">Система:</span>
                     </td>
 
                     <td class="message">{{message.message}}</td>

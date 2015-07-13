@@ -64,7 +64,7 @@ public class RequestRouter {
                 return new Response(false, true, "logout-success");
             }
         } catch (NullPointerException e) {
-            return new Response(false, "Ошибка");
+            return new Response(false, "Неизвестное действие");
         }
 
         User user = null;

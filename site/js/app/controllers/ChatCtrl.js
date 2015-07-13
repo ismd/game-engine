@@ -31,6 +31,22 @@
             });
         });
 
+        $scope.$on('chat-add-new-messages', function(e, messages) {
+            for (var i = 0; i < messages.length; i++) {
+                var message = messages[i];
+
+                messages[i] = {
+                    message: message,
+                    sended: Date.now(),
+                    sender: {
+                        type: 'system'
+                    }
+                };
+            }
+
+            setMessages(messages);
+        });
+
         $scope.$on('chat-update-members', function(e, data) {
             $scope.chat.members = data.members;
             $scope.$apply();
