@@ -1,8 +1,8 @@
 (function() {
     'use strict';
 
-    window.mainModule.factory('Common', ['$location', '$route', '$timeout',
-                                         function($location, $route, $timeout) {
+    window.mainModule.factory('Common', ['$location', '$route', '$timeout', '$rootScope',
+                                         function($location, $route, $timeout, $rootScope) {
         var service = {};
 
         service.redirect = function(url) {
@@ -11,6 +11,8 @@
             } else {
                 $location.path(url);
             }
+
+            $rootScope.$apply();
         };
 
         service.focus = function(element, value) {

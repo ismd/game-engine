@@ -22,10 +22,6 @@
                     controller: 'CharacterCreateCtrl',
                     templateUrl: '/partial/character/create.html'
                 })
-                .when('/world', {
-                    controller: 'WorldCtrl',
-                    templateUrl: '/partial/world/index.html'
-                })
                 .when('/world/character', {
                     templateUrl: '/partial/world/character.html'
                 })
@@ -35,6 +31,10 @@
                 .when('/world/fight', {
                     controller: 'FightCtrl',
                     templateUrl: '/partial/world/fight.html'
+                })
+                .when('/world', {
+                    controller: 'WorldCtrl',
+                    templateUrl: '/partial/world/index.html'
                 })
                 .otherwise({
                     redirectTo: '/'

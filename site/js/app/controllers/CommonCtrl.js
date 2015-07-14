@@ -14,5 +14,9 @@
         $scope.characterArchetype = function(firstStat, stat) {
             return Stat.archetypeName(firstStat, stat);
         };
+
+        $scope.$on('start-fight', function(e) {
+            Common.redirect('/world/fight');
+        });
     }]);
 })();

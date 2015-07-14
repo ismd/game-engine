@@ -1,6 +1,7 @@
 package game.layout;
 
 import game.character.Character;
+import game.fight.FightMember;
 import game.mob.Mob;
 import game.npc.Npc;
 

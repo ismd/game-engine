@@ -1,20 +1,22 @@
 package game.world;
 
 import com.google.gson.Gson;
+import game.Online;
 import game.dao.DaoFactory;
 import game.dao.MobDao;
+import game.layout.Cell;
 import game.layout.Layout;
 import game.mob.Mob;
 import game.mob.MobAvailableCell;
 import game.mob.MobInfo;
 import game.npc.Npc;
+import game.server.response.Response;
 import game.world.exceptions.BadCoordinatesException;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Random;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +27,8 @@ public class World {
 
     private Logger log = LoggerFactory.getLogger(World.class);
     private Map<Integer, Layout> layouts;
+
+    private static Map<Integer, Mob> mobs = new HashMap<>();
 
     public World(String dir) throws FileNotFoundException {
         log.info("Initializing world");
@@ -55,8 +59,6 @@ public class World {
         log.info("Initializing mobs");
 
         MobDao mobDao = DaoFactory.getInstance().mobDao;
-        mobDao.removeAllFromWorld();
-
         Random random = new Random(System.currentTimeMillis());
 
         for (MobInfo mob : mobDao.getAllAvailable()) {
@@ -93,9 +95,9 @@ public class World {
                 );
 
                 try {
-                    Mob m = new Mob(mob);
+                    Mob m = new Mob(mobs.size(), mob);
                     layouts.get(idLayout).getCell(x, y).addContent(m);
-                    mobDao.add(m);
+                    mobs.put(m.getId(), m);
                 } catch (BadCoordinatesException e) {
                     log.error("Can't place mob");
                 }
@@ -125,5 +127,21 @@ public class World {
 
     public Layout getLayout(int id) {
         return layouts.get(id);
+    }
+
+    public static Mob getMobById(int id) {
+        return mobs.get(id);
+    }
+
+    public static void removeMobById(int id) {
+        Mob mob = mobs.get(id);
+        Cell cell = mob.getCell();
+
+        cell.removeContent(mob);
+        mobs.remove(id);
+
+        Online.notifier.notifyByCharacter(
+                cell.getCharacters(),
+                new Response(true, true, "cell-update").appendData("cell", cell));
     }
 }

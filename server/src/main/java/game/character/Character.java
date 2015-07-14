@@ -1,7 +1,7 @@
 package game.character;
 
 import com.google.gson.annotations.Expose;
-import game.layout.CellContent;
+import game.fight.FightMember;
 import game.user.User;
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -14,7 +14,7 @@ import javax.persistence.Transient;
  * @author ismd
  */
 @Entity
-public class Character extends CellContent implements Serializable {
+public class Character extends FightMember implements Serializable {
 
     @Transient
     private User user;

@@ -18,7 +18,7 @@ public class ChatController extends AbstractAuthController {
 
     public Response sendAction(Request request, User user) {
         Character receiverCharacter = null;
-        String msg = (String)request.getArgs().get("message");
+        String msg = request.getArgs().get("message").toString();
 
         if (null == msg) {
             return new Response(false);

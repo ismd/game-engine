@@ -11,7 +11,7 @@ import org.hibernate.criterion.Restrictions;
  */
 public class MobDao extends Dao {
 
-    MobDao() {
+    public MobDao() {
     }
 
     public MobInfo getById(int id) {
@@ -36,11 +36,5 @@ public class MobDao extends Dao {
 
         session.close();
         return cells;
-    }
-
-    public void removeAllFromWorld() {
-        Session session = sessionFactory.openSession();
-        session.createSQLQuery("truncate table Mob").executeUpdate();
-        session.close();
     }
 }

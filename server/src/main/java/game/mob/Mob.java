@@ -1,27 +1,19 @@
 package game.mob;
 
 import com.google.gson.annotations.Expose;
+import game.fight.FightMember;
 import game.layout.Cell;
-import game.layout.CellContent;
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Transient;
 
 /**
  * Конкретный моб на карте
  * @author ismd
  */
-@Entity
-public class Mob extends CellContent implements Serializable {
+public class Mob extends FightMember implements Serializable {
 
-    @Expose @Transient
+    @Expose
     MobInfo mobInfo;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Expose
     private int id;
     private int idMob;
@@ -34,15 +26,11 @@ public class Mob extends CellContent implements Serializable {
     protected Mob() {
     }
 
-    public Mob(MobInfo mob) {
+    public Mob(int id, MobInfo mob) {
+        this.id = id;
         idMob = mob.getId();
         hp = mob.getMaxHp();
         mobInfo = mob;
-    }
-
-    public Mob(MobInfo mob, Cell cell) {
-        this(mob);
-        setCell(cell);
     }
 
     // Геттеры
@@ -69,6 +57,10 @@ public class Mob extends CellContent implements Serializable {
 
     public int getHp() {
         return hp;
+    }
+
+    public String getName() {
+        return mobInfo.getName();
     }
 
     // Сеттеры

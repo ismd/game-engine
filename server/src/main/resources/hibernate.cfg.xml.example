@@ -14,7 +14,6 @@
 
     <mapping class="game.character.Character"/>
     <mapping class="game.layout.Layout"/>
-    <mapping class="game.mob.Mob"/>
     <mapping class="game.mob.MobAvailableCell"/>
     <mapping class="game.mob.MobInfo"/>
     <mapping class="game.npc.Npc"/>

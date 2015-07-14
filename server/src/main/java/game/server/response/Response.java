@@ -12,7 +12,7 @@ public class Response {
     @Expose
     private int idCallback;
     @Expose
-    private Map<String, Object> data = new HashMap<>();
+    private Map<String, Object> data = new HashMap();
     @Expose
     private boolean status;
     @Expose

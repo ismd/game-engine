@@ -1,1 +1,17 @@
+<div class="col-md-6">
+    <div ng-show="0 === steps.length">Бой начнётся в течение 3 секунд</div>
 
+    <div ng-repeat="step in steps track by $index">
+        <div ng-repeat="message in step.messages track by $index">
+            {{message}}
+        </div>
+        <hr />
+    </div>
+</div>
+
+<div class="col-md-6">
+    <h3>Противник</h3>
+
+    Имя: {{enemy.name}}<br />
+    hp: {{enemy.hp}}/{{enemy.maxHp}}
+</div>
