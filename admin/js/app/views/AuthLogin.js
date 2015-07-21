@@ -21,24 +21,12 @@
             if (!this.model.isValid()) {
                 this.$errorMessage.text(this.model.validationError);
             } else {
-                app.ws.send({
-                    controller: 'User',
-                    action: 'login',
-                    args: {
-                        username: this.model.get('login'),
-                        password: this.model.get('password')
-                    }
-                }).then(function(data) {
-                    // localStorage.setItem('user', JSON.stringify(data.user));
+                var userModel = new app.models.User;
 
-                    setCookie('user_id', data.user.id, {
-                        path: '/'
-                    });
-
-                    setCookie('user_authKey', data.user.authKey, {
-                        path: '/'
-                    });
-
+                userModel.auth(
+                    this.model.get('login'),
+                    this.model.get('password')
+                ).then(function(data) {
                     window.location.href = '/';
                 }, function(error) {
                     this.$errorMessage.text(error);
