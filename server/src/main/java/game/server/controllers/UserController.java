@@ -33,6 +33,10 @@ public class UserController extends AbstractController {
             return new Response(false, "Неверный логин или пароль");
         }
 
+        if (null != args.get("admin") && (boolean)args.get("admin") && !u.getAdmin()) {
+            return new Response(false, "Неверный логин или пароль");
+        }
+
         Online.removeUserById(u.getId());
 
         u.setWebSocket(request.getWs());
@@ -92,6 +96,10 @@ public class UserController extends AbstractController {
 
         if (null == u) {
             return new Response(false);
+        }
+
+        if (null != args.get("admin") && (boolean)args.get("admin") && !u.getAdmin()) {
+            return new Response(false, "Неверный логин или пароль");
         }
 
         Online.removeUserById(id);

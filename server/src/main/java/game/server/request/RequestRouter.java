@@ -37,7 +37,7 @@ public class RequestRouter {
         String controllerName = controller.getName().substring("game.server.controllers.".length(),
             controller.getName().lastIndexOf("Controller"));
 
-        if ("common.AbstractAuth".equals(controllerName)) {
+        if ("common.AbstractAuth".equals(controllerName) || "common.AbstractAdmin".equals(controllerName)) {
             return;
         }
 
@@ -49,7 +49,7 @@ public class RequestRouter {
 
             controllers.put(controllerName, controller);
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
-            Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, controllerName, ex);
         }
     }
 

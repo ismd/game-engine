@@ -35,9 +35,14 @@ public class RequestHandler implements Runnable {
             Request request = gson.fromJson(message, Request.class);
             Response response = new RequestRouter().executeRequest(request.setWs(ws));
 
-            gson = new GsonBuilder()
-                    .excludeFieldsWithoutExposeAnnotation()
-                    .create();
+            if (request.getController().startsWith("Admin")) {
+                gson = new GsonBuilder()
+                        .create();
+            } else {
+                gson = new GsonBuilder()
+                        .excludeFieldsWithoutExposeAnnotation()
+                        .create();
+            }
 
             String json = gson.toJson(response.setIdCallback(request.getIdCallback()));
 

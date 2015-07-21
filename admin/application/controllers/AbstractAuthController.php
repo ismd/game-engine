@@ -10,6 +10,8 @@ use WebSocket\Client;
 abstract class AbstractAuthController extends PsController {
 
     public function init() {
+        $this->getHelper('index')->init($this->registry, $this->view);
+
         if (empty($_COOKIE['user_id']) || empty($_COOKIE['user_authKey'])) {
             $this->getHelper('redirector')->redirect('/auth/login');
         }
@@ -30,6 +32,7 @@ abstract class AbstractAuthController extends PsController {
             'args' => [
                 'id' => $id,
                 'authKey' => $authKey,
+                'admin' => true,
             ],
         ]));
 

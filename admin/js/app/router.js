@@ -30,6 +30,10 @@
                 model = model[urlPart];
             }
 
+            if (1 === url.length) {
+                view = view['Index'];
+            }
+
             new view({
                 el: $('body'),
                 model: noModel ? undefined : new model

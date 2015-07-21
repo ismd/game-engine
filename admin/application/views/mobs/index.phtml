@@ -1,0 +1,45 @@
+<div class="col-md-3">
+    <div class="js-mobs-list list-group"></div>
+</div>
+
+<div class="js-mob-info"></div>
+
+<script id="mobs-template" type="x-tmpl-mustache">
+{{#mobs}}
+<a href="javascript:void(0)"
+   class="js-mob list-group-item"
+   data-index="{{attributes.index}}">
+    <span class="badge"
+          title="Максимальное количество в мире">{{attributes.maxInWorld}}</span>
+
+    {{attributes.name}}
+</a>
+{{/mobs}}
+</script>
+
+<script id="mob-info-template" type="x-tmpl-mustache">
+<div class="col-md-2">
+    <p>
+        id: {{mob.attributes.id}}
+    </p>
+    <p>
+        Уровень: {{mob.attributes.level}}
+    </p>
+    <p>
+        Минимальный урон: {{mob.attributes.minDamage}}
+    </p>
+    <p>
+        Максимальный урон: {{mob.attributes.maxDamage}}
+    </p>
+    <p>
+        Максимум жизней: {{mob.attributes.maxHp}}
+    </p>
+    <p>
+        Опыт: {{mob.attributes.experience}}
+    </p>
+</div>
+
+<div class="col-md-7">
+    <img src="<?= $this->siteUrl; ?>/img/world/mobs/{{mob.attributes.image}}" />
+</div>
+</script>

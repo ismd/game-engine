@@ -11,7 +11,8 @@
                 action: 'login',
                 args: {
                     username: login,
-                    password: password
+                    password: password,
+                    admin: true
                 }
             }).then(function(data) {
                 setCookie('user_id', data.user.id, {
@@ -38,7 +39,8 @@
                 action: 'loginByAuthKey',
                 args: {
                     id: id,
-                    authKey: authKey
+                    authKey: authKey,
+                    admin: true
                 }
             }).then(function(data) {
                 setCookie('user_id', data.user.id, {
