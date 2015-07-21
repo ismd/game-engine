@@ -63,6 +63,10 @@ public class Mob extends FightMember implements Serializable {
         return mobInfo.getName();
     }
 
+    public MobInfo getMobInfo() {
+        return mobInfo;
+    }
+
     // Сеттеры
 
     public Mob setIdLayout(int idLayout) {

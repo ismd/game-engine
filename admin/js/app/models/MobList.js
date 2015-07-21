@@ -18,6 +18,7 @@
 
                     collection.trigger('sync');
                 });
+
                 break;
             }
         }

@@ -6,11 +6,18 @@
     app.views.Mobs.Index = Backbone.View.extend({
 
         mobs: new app.models.MobList,
+        $activeMob: undefined,
 
         initialize: function() {
             this.mobs.on('sync', function() {
                 for (var i = 0; i < this.mobs.length; i++) {
-                    this.mobs.at(i).set('index', i);
+                    var mob = this.mobs.at(i);
+
+                    mob.set('index', i);
+                    mob.on('sync', function() {
+                        this._updateTemplate(this.$activeMob.data('index'),
+                                             this.$el.find('#mob-info-template').html());
+                    }.bind(this));
                 }
 
                 this.render();
@@ -36,14 +43,46 @@
 
                 this.$el.find('.js-mob').removeClass('active');
                 $target.addClass('active');
+                this.$activeMob = $target;
 
-                var template = this.$el.find('#mob-info-template').html(),
-                    result = Mustache.render(template, {
-                        mob: this.mobs.at(index)
-                    });
+                this._updateTemplate(index,
+                                     this.$el.find('#mob-info-template').html());
+            },
 
-                this.$el.find('.js-mob-info').html(result);
+            'click .js-edit': function() {
+                this._updateTemplate(this.$activeMob.data('index'),
+                                     this.$el.find('#mob-edit-template').html());
+            },
+
+            'click .js-back': function() {
+                this._updateTemplate(this.$activeMob.data('index'),
+                                     this.$el.find('#mob-info-template').html());
+            },
+
+            'click .js-save': function() {
+                var index = this.$activeMob.data('index'),
+                    mob = this.mobs.at(index);
+
+                mob.set({
+                    name: this.$el.find('[name="name"]').val(),
+                    level: this.$el.find('[name="level"]').val(),
+                    minDamage: this.$el.find('[name="minDamage"]').val(),
+                    maxDamage: this.$el.find('[name="maxDamage"]').val(),
+                    maxHp: this.$el.find('[name="maxHp"]').val(),
+                    experience: this.$el.find('[name="experience"]').val(),
+                    maxInWorld: this.$el.find('[name="maxInWorld"]').val()
+                });
+
+                mob.save();
             }
+        },
+
+        _updateTemplate: function(index, template) {
+            var result = Mustache.render(template, {
+                mob: this.mobs.at(index)
+            });
+
+            this.$el.find('.js-mob-info').html(result);
         }
     });
 })();

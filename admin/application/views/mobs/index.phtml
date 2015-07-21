@@ -1,4 +1,8 @@
 <div class="col-md-3">
+    <a href="javascript:void(0)"
+       class="btn btn-primary btn-block">Добавить</a>
+    <br />
+
     <div class="js-mobs-list list-group"></div>
 </div>
 
@@ -19,6 +23,10 @@
 
 <script id="mob-info-template" type="x-tmpl-mustache">
 <div class="col-md-2">
+    <a href="javascript:void(0)"
+       class="js-edit btn btn-primary btn-block">Редактировать</a>
+    <br />
+
     <p>
         id: {{mob.attributes.id}}
     </p>
@@ -40,6 +48,67 @@
 </div>
 
 <div class="col-md-7">
-    <img src="<?= $this->siteUrl; ?>/img/world/mobs/{{mob.attributes.image}}" />
+    <img src="<?= $this->siteUrl; ?>/pictures/mobs_resized/120x120_{{mob.attributes.image}}" />
+</div>
+</script>
+
+<script id="mob-edit-template" type="x-tmpl-mustache">
+<div class="col-md-2">
+    <a href="javascript:void(0)"
+       class="js-back btn btn-default btn-block">Назад</a>
+    <br />
+
+    <p>
+        id: {{mob.attributes.id}}
+    </p>
+    <p>
+        Имя:
+        <input type="text"
+               name="name"
+               value="{{mob.attributes.name}}" />
+    </p>
+    <p>
+        Уровень:
+        <input type="text"
+               name="level"
+               value="{{mob.attributes.level}}" />
+    </p>
+    <p>
+        Минимальный урон:
+        <input type="text"
+               name="minDamage"
+               value="{{mob.attributes.minDamage}}" />
+    </p>
+    <p>
+        Максимальный урон:
+        <input type="text"
+               name="maxDamage"
+               value="{{mob.attributes.maxDamage}}" />
+    </p>
+    <p>
+        Максимум жизней:
+        <input type="text"
+               name="maxHp"
+               value="{{mob.attributes.maxHp}}" />
+    </p>
+    <p>
+        Опыт:
+        <input type="text"
+               name="experience"
+               value="{{mob.attributes.experience}}" />
+    </p>
+    <p>
+        Максимум в мире:
+        <input type="text"
+               name="maxInWorld"
+               value="{{mob.attributes.maxInWorld}}" />
+    </p>
+
+    <a href="javascript:void(0)"
+       class="js-save btn btn-primary btn-block">Сохранить</a>
+</div>
+
+<div class="col-md-7">
+    <img src="<?= $this->siteUrl; ?>/pictures/mobs_resized/120x120_{{mob.attributes.image}}" />
 </div>
 </script>

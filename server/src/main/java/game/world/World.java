@@ -29,6 +29,7 @@ public class World {
     private Map<Integer, Layout> layouts;
 
     private static Map<Integer, Mob> mobs = new HashMap<>();
+    private static Map<Integer, MobInfo> mobInfos = new HashMap<>();
 
     public World(String dir) throws FileNotFoundException {
         log.info("Initializing world");
@@ -62,6 +63,8 @@ public class World {
         Random random = new Random(System.currentTimeMillis());
 
         for (MobInfo mob : mobDao.getAllAvailable()) {
+            mobInfos.put(mob.getId(), mob);
+
             int maxInWorld = mob.getMaxInWorld();
             List<MobAvailableCell> availableCells = mobDao.getAvailableCells(mob);
 
@@ -131,6 +134,10 @@ public class World {
 
     public static Mob getMobById(int id) {
         return mobs.get(id);
+    }
+
+    public static MobInfo getMobInfoById(int id) {
+        return mobInfos.get(id);
     }
 
     public static void removeMobById(int id) {
