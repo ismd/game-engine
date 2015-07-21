@@ -46,6 +46,8 @@ public class User implements Serializable {
     @Expose
     private String authKey;
 
+    private boolean admin;
+
     public User() {
     }
 
@@ -125,6 +127,10 @@ public class User implements Serializable {
 
     public String getAuthKey() {
         return authKey;
+    }
+
+    public boolean getAdmin() {
+        return admin;
     }
     
     // Сеттеры

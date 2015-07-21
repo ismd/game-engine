@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Game Admin</title>
+
+        <link href="/css/style.css" rel="stylesheet" media="screen" />
+        <script src="/js/app.js"></script>
+
+        <script>
+        window.ws = {
+            host: '<?= $this->ws['host'] ?>',
+            port: <?= $this->ws['port'] ?>
+        };
+        </script>
+
+        <base href="/" />
+    </head>
+
+    <body class="page-<?= $this->_registry->router->getController(); ?>-<?= $this->_registry->router->getAction(); ?>">
+        <?= $this->content(); ?>
+    </body>
+</html>

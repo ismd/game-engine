@@ -2,6 +2,7 @@ package game.server.request;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import game.character.Character;
 import game.server.response.Response;
 import java.lang.reflect.InvocationTargetException;
@@ -29,9 +30,9 @@ public class RequestHandler implements Runnable {
     @Override
     public void run() {
         Gson gson = new Gson();
-        Request request = gson.fromJson(message, Request.class);
 
         try {
+            Request request = gson.fromJson(message, Request.class);
             Response response = new RequestRouter().executeRequest(request.setWs(ws));
 
             gson = new GsonBuilder()
@@ -44,6 +45,12 @@ public class RequestHandler implements Runnable {
             ws.send(json);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, e);
+        } catch (JsonSyntaxException e) {
+            Response response = new Response(false, "Неверный формат запроса");
+            String json = gson.toJson(response);
+
+            System.out.println("Sending: " + json);
+            ws.send(json);
         }
     }
 }

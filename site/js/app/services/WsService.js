@@ -16,7 +16,7 @@
 
         ws.onopen = function() {
             opened = true;
-            console.log('Socket has been opened!');
+            console.log('Успешно подключились к серверу');
 
             sendQueue();
         };
@@ -106,6 +106,7 @@
             if (!initialized) {
                 for (var i = 0; i < queue.length; i++) {
                     var request = queue[i];
+
                     if ('User' === request.controller && 'loginByAuthKey' === request.action) {
                         wsSend(request);
                         queue.splice(i, 1);

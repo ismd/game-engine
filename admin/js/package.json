@@ -1,5 +1,5 @@
 {
-  "name": "game",
+  "name": "game-admin",
   "version": "0.0.1",
   "author": "ismd",
   "dependencies": {
@@ -11,6 +11,6 @@
     "gulp-uglify": "^1.2.0",
     "less-plugin-autoprefix": "^1.4.2",
     "less-plugin-clean-css": "^1.5.0",
-    "main-bower-files": "^2.8.2"
+    "main-bower-files": "^2.9.0"
   }
 }
