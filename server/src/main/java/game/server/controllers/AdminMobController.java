@@ -60,8 +60,7 @@ public class AdminMobController extends AbstractAdminController {
         }
 
         DaoFactory.getInstance().mobDao.add(mobInfo);
-        //World.addMobInfo(mobInfo);
-        System.out.println(mobInfo.getId());
+        World.addMobInfo(mobInfo);
 
         return new Response(true);
     }

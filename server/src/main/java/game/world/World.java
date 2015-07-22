@@ -62,16 +62,16 @@ public class World {
         MobDao mobDao = DaoFactory.getInstance().mobDao;
         Random random = new Random(System.currentTimeMillis());
 
-        for (MobInfo mob : mobDao.getAllAvailable()) {
-            mobInfos.put(mob.getId(), mob);
+        for (MobInfo mobInfo : mobDao.getAllAvailable()) {
+            addMobInfo(mobInfo);
 
-            int maxInWorld = mob.getMaxInWorld();
-            List<MobAvailableCell> availableCells = mobDao.getAvailableCells(mob);
+            int maxInWorld = mobInfo.getMaxInWorld();
+            List<MobAvailableCell> availableCells = mobDao.getAvailableCells(mobInfo);
 
             if (0 == availableCells.size()) {
                 log.warn("No available cells for mob `{}' ({})",
-                        mob.getName(),
-                        mob.getId()
+                        mobInfo.getName(),
+                        mobInfo.getId()
                 );
                 continue;
             }
@@ -90,17 +90,17 @@ public class World {
                 int y = mobCell.getY();
 
                 log.info("Placing mob `{}' ({}) on layout {} (x: {}, y: {})",
-                        mob.getName(),
-                        mob.getId(),
+                        mobInfo.getName(),
+                        mobInfo.getId(),
                         idLayout,
                         x,
                         y
                 );
 
                 try {
-                    Mob m = new Mob(mobs.size(), mob);
-                    layouts.get(idLayout).getCell(x, y).addContent(m);
-                    mobs.put(m.getId(), m);
+                    Mob mob = new Mob(mobs.size(), mobInfo);
+                    layouts.get(idLayout).getCell(x, y).addContent(mob);
+                    mobs.put(mob.getId(), mob);
                 } catch (BadCoordinatesException e) {
                     log.error("Can't place mob");
                 }
