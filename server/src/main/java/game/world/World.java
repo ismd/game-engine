@@ -155,4 +155,8 @@ public class World {
     public static void addMobInfo(MobInfo mobInfo) {
         mobInfos.put(mobInfo.getId(), mobInfo);
     }
+
+    public static void deleteMobInfo(MobInfo mobInfo) {
+        mobInfos.remove(mobInfo.getId());
+    }
 }

@@ -76,6 +76,19 @@
                 this._initUploader(mob);
             },
 
+            'click .js-delete': function() {
+                var index = this.$activeMob.data('index'),
+                    mob = this.mobs.at(index);
+
+                mob.destroy({
+                    success: function() {
+                        this.$activeMob = undefined;
+                        this.$el.find('.js-mob-info').html('');
+                        this.mobs.fetch();
+                    }.bind(this)
+                });
+            },
+
             'click .js-back': function() {
                 this._updateTemplate('undefined' !== typeof this.$activeMob ? this.$activeMob.data('index') : undefined,
                                      this.$el.find('#mob-info-template').html());

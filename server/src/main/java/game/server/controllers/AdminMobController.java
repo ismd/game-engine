@@ -64,4 +64,18 @@ public class AdminMobController extends AbstractAdminController {
 
         return new Response(true);
     }
+
+    public Response deleteAction(Request request, User user) {
+        Map<String, Object> args = request.getArgs();
+        MobInfo mobInfo = World.getMobInfoById(Double.valueOf(args.get("id").toString()).intValue());
+
+        if (null == mobInfo) {
+            return new Response(false, "Mob not found");
+        }
+
+        DaoFactory.getInstance().mobDao.delete(mobInfo);
+        World.deleteMobInfo(mobInfo);
+
+        return new Response(true);
+    }
 }
