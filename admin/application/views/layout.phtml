@@ -18,7 +18,7 @@
         <base href="/" />
     </head>
 
-    <body>
+    <body class="page-<?= $this->_registry->router->getController(); ?>-<?= $this->_registry->router->getAction(); ?>">
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">

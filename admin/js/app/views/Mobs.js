@@ -25,6 +25,9 @@
             }.bind(this));
 
             this.mobs.fetch();
+            new app.views.Map({
+                el: this.$el.find('.js-map')
+            });
         },
 
         render: function() {
@@ -52,6 +55,7 @@
 
             'click .js-add': function() {
                 this.$activeMob = undefined;
+                this.$el.find('.js-mob').removeClass('active');
 
                 var template = this.$el.find('#mob-add-template').html(),
                     result = Mustache.render(template);

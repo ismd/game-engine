@@ -1,15 +1,26 @@
 (function() {
     'use strict';
 
-    window.mainModule.factory('World', ['Ws', 'Common', function(Ws, Common) {
+    window.mainModule.factory('World', ['$q', 'Ws', 'Common',
+                                        function($q, Ws, Common) {
         var service = {};
 
         var ctx         = null,
-            cellsSprite = new Image(),
-            hero        = new Image();
+            cellsSprite = new Image,
+            hero        = new Image,
+            initialized = false,
+            needDraw    = undefined;
 
         cellsSprite.src = '/img/world/cells.png';
         hero.src        = '/img/world/hero.png';
+
+        loadManager([cellsSprite, hero]).then(function() {
+            initialized = true;
+
+            if ('undefined' !== typeof needDraw) {
+                service.drawVicinity(needDraw);
+            }
+        });
 
         service.init = function() {
             ctx = $('.js-map').get(0).getContext('2d');
@@ -28,6 +39,11 @@
             HERO_HEIGHT      = 20;
 
         service.drawVicinity = function(vicinity) {
+            if (!initialized) {
+                needDraw = vicinity;
+                return;
+            }
+
             for (var x = 0; x < CELLS_HORIZONTAL; x++) {
                 for (var y = 0; y < CELLS_VERTICAL; y++) {
                     if (null === vicinity[x][y]) {
@@ -69,6 +85,21 @@
         service.focus = function() {
             Common.focus($('.js-message-text'));
         };
+
+        function loadManager(images) {
+            var defer = $q.defer();
+
+            var loadCount = images.length;
+            for (var i = 0; i < loadCount; i++) {
+                $(images[i]).load(function() {
+                    if (0 === --loadCount) {
+                        defer.resolve();
+                    }
+                });
+            }
+
+            return defer.promise;
+        }
 
         return service;
     }]);
