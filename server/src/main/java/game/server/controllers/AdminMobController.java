@@ -2,7 +2,6 @@ package game.server.controllers;
 
 import game.dao.DaoFactory;
 import game.dao.MobDao;
-import game.mob.Mob;
 import game.mob.MobInfo;
 import game.server.controllers.common.AbstractAdminController;
 import game.server.request.Request;
@@ -39,6 +38,30 @@ public class AdminMobController extends AbstractAdminController {
         mobInfo.setImage(args.get("image").toString());
 
         DaoFactory.getInstance().mobDao.update(mobInfo);
+
+        return new Response(true);
+    }
+
+    public Response createAction(Request request, User user) {
+        Map<String, Object> args = request.getArgs();
+        MobInfo mobInfo = new MobInfo();
+
+        try {
+            mobInfo.setName(args.get("name").toString());
+            mobInfo.setLevel(Double.valueOf(args.get("level").toString()).intValue());
+            mobInfo.setMinDamage(Double.valueOf(args.get("minDamage").toString()).intValue());
+            mobInfo.setMaxDamage(Double.valueOf(args.get("maxDamage").toString()).intValue());
+            mobInfo.setMaxHp(Double.valueOf(args.get("maxHp").toString()).intValue());
+            mobInfo.setExperience(Double.valueOf(args.get("experience").toString()).intValue());
+            mobInfo.setMaxInWorld(Double.valueOf(args.get("maxInWorld").toString()).intValue());
+            mobInfo.setImage(args.get("image").toString());
+        } catch (NullPointerException e) {
+            return new Response(false, "Заполнены не все поля");
+        }
+
+        DaoFactory.getInstance().mobDao.add(mobInfo);
+        //World.addMobInfo(mobInfo);
+        System.out.println(mobInfo.getId());
 
         return new Response(true);
     }

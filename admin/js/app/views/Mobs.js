@@ -7,6 +7,7 @@
 
         mobs: new app.models.MobList,
         $activeMob: undefined,
+        newMob: undefined,
 
         initialize: function() {
             this.mobs.on('sync', function() {
@@ -49,46 +50,46 @@
                                      this.$el.find('#mob-info-template').html());
             },
 
+            'click .js-add': function() {
+                this.$activeMob = undefined;
+
+                var template = this.$el.find('#mob-add-template').html(),
+                    result = Mustache.render(template);
+
+                this.$el.find('.js-mob-info').html(result);
+
+                this.newMob = new app.models.Mob;
+                this._initUploader(this.newMob);
+
+                this.newMob.on('sync', function() {
+                    this.mobs.fetch();
+                }.bind(this));
+            },
+
             'click .js-edit': function() {
                 this._updateTemplate(this.$activeMob.data('index'),
                                      this.$el.find('#mob-edit-template').html());
 
-                this.$el.find('[name="image"]').fileupload({
-                    dataType: 'json',
-                    url: '/upload/mob',
-                    done: function (e, data) {
-                        var result = data.result;
+                var index = this.$activeMob.data('index'),
+                    mob = this.mobs.at(index);
 
-                        if ('ok' !== result.status) {
-                            alert('Ошибка при загрузке файла');
-                            return;
-                        }
-
-                        var index = this.$activeMob.data('index'),
-                            mob = this.mobs.at(index);
-
-                        mob.set('image', result.image);
-
-                        var $image = this.$el.find('.js-image'),
-                            src = $image.attr('src'),
-                            strIndex = src.indexOf('120x120_');
-
-                        $image.attr('src',
-                                    src.substr(0, strIndex)
-                                    + '120x120_'
-                                    + result.image);
-                    }.bind(this)
-                });
+                this._initUploader(mob);
             },
 
             'click .js-back': function() {
-                this._updateTemplate(this.$activeMob.data('index'),
+                this._updateTemplate('undefined' !== typeof this.$activeMob ? this.$activeMob.data('index') : undefined,
                                      this.$el.find('#mob-info-template').html());
             },
 
             'click .js-save': function() {
-                var index = this.$activeMob.data('index'),
+                var mob;
+
+                if ('undefined' !== typeof this.$activeMob) {
+                    var index = this.$activeMob.data('index');
                     mob = this.mobs.at(index);
+                } else {
+                    mob = this.newMob;
+                }
 
                 mob.set({
                     name: this.$el.find('[name="name"]').val(),
@@ -105,11 +106,44 @@
         },
 
         _updateTemplate: function(index, template) {
+            var $content = this.$el.find('.js-mob-info');
+
+            if ('undefined' === typeof index) {
+                $content.html('');
+                return;
+            }
+
             var result = Mustache.render(template, {
                 mob: this.mobs.at(index)
             });
 
-            this.$el.find('.js-mob-info').html(result);
+            $content.html(result);
+        },
+
+        _initUploader: function(mob) {
+            this.$el.find('[name="image"]').fileupload({
+                dataType: 'json',
+                url: '/upload/mob',
+                done: function (e, data) {
+                    var result = data.result;
+
+                    if ('ok' !== result.status) {
+                        alert('Ошибка при загрузке файла');
+                        return;
+                    }
+
+                    mob.set('image', result.image);
+
+                    var $image = this.$el.find('.js-image'),
+                        src = $image.attr('src'),
+                        strIndex = src.indexOf('120x120_');
+
+                    $image.attr('src',
+                                src.substr(0, strIndex)
+                                + '120x120_'
+                                + result.image);
+                }.bind(this)
+            });
         }
     });
 })();

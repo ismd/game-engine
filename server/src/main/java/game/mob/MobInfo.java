@@ -27,7 +27,7 @@ public class MobInfo implements Serializable {
     @Expose
     private String image;
 
-    protected MobInfo() {
+    public MobInfo() {
     }
 
     // Геттеры

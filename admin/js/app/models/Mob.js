@@ -5,6 +5,17 @@
 
         sync: function(method, model) {
             switch (method) {
+            case 'create':
+                app.ws.send({
+                    controller: 'AdminMob',
+                    action: 'create',
+                    args: this.attributes
+                }).then(function() {
+                    model.trigger('sync');
+                });
+
+                break;
+
             case 'update':
                 app.ws.send({
                     controller: 'AdminMob',

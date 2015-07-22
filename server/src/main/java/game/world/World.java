@@ -151,4 +151,8 @@ public class World {
                 cell.getCharacters(),
                 new Response(true, true, "cell-update").appendData("cell", cell));
     }
+
+    public static void addMobInfo(MobInfo mobInfo) {
+        mobInfos.put(mobInfo.getId(), mobInfo);
+    }
 }
