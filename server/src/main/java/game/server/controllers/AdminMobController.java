@@ -36,6 +36,7 @@ public class AdminMobController extends AbstractAdminController {
         mobInfo.setMaxHp(Double.valueOf(args.get("maxHp").toString()).intValue());
         mobInfo.setExperience(Double.valueOf(args.get("experience").toString()).intValue());
         mobInfo.setMaxInWorld(Double.valueOf(args.get("maxInWorld").toString()).intValue());
+        mobInfo.setImage(args.get("image").toString());
 
         DaoFactory.getInstance().mobDao.update(mobInfo);
 

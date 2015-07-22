@@ -109,6 +109,11 @@
 </div>
 
 <div class="col-md-7">
-    <img src="<?= $this->siteUrl; ?>/pictures/mobs_resized/120x120_{{mob.attributes.image}}" />
+    <img class="js-image"
+         src="<?= $this->siteUrl; ?>/pictures/mobs_resized/120x120_{{mob.attributes.image}}" />
+    <br />
+
+    <input type="file"
+           name="image" />
 </div>
 </script>

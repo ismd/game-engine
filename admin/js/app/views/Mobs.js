@@ -52,6 +52,33 @@
             'click .js-edit': function() {
                 this._updateTemplate(this.$activeMob.data('index'),
                                      this.$el.find('#mob-edit-template').html());
+
+                this.$el.find('[name="image"]').fileupload({
+                    dataType: 'json',
+                    url: '/upload/mob',
+                    done: function (e, data) {
+                        var result = data.result;
+
+                        if ('ok' !== result.status) {
+                            alert('Ошибка при загрузке файла');
+                            return;
+                        }
+
+                        var index = this.$activeMob.data('index'),
+                            mob = this.mobs.at(index);
+
+                        mob.set('image', result.image);
+
+                        var $image = this.$el.find('.js-image'),
+                            src = $image.attr('src'),
+                            strIndex = src.indexOf('120x120_');
+
+                        $image.attr('src',
+                                    src.substr(0, strIndex)
+                                    + '120x120_'
+                                    + result.image);
+                    }.bind(this)
+                });
             },
 
             'click .js-back': function() {

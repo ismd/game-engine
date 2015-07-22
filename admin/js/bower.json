@@ -18,7 +18,8 @@
     "backbone": "~1.2.1",
     "bootstrap": "~3.3.5",
     "q": "~1.0.1",
-    "mustache": "~2.1.2"
+    "mustache": "~2.1.2",
+    "blueimp-file-upload": "~9.10.4"
   },
   "resolutions": {
     "q": "~1.0.1"
