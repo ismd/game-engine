@@ -9,7 +9,7 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 if [ -n "$1" ]; then
     LOG_FILE=$1
 else
-    LOG_FILE="/var/log/game.log"
+    LOG_FILE="/var/log/game_server.log"
 fi
 
 #nohup $DIR/run.sh 0<&- &> $LOG_FILE &
