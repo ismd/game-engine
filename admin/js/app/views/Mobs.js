@@ -26,7 +26,19 @@
                     }.bind(this));
                 }
 
+                var id;
+                if ('undefined' !== typeof this.$activeMob) {
+                    id = this.$activeMob.data('id');
+                }
+
                 this.render();
+
+                if ('undefined' !== typeof id) {
+                    var $el = this.$el.find('.js-mob[data-id="' + id + '"]');
+
+                    $el.addClass('active');
+                    this.$activeMob = $el;
+                }
             }.bind(this));
 
             this.mobs.fetch();

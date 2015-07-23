@@ -43,6 +43,7 @@ window.vicinity = <?= json_encode($this->vicinity); ?>;
 {{#mobs}}
 <a href="javascript:void(0)"
    class="js-mob list-group-item"
+   data-id="{{attributes.id}}"
    data-index="{{attributes.index}}">
     <span class="badge"
           title="Максимальное количество в мире">{{attributes.maxInWorld}}</span>
