@@ -26,21 +26,21 @@ abstract class AbstractAuthController extends PsController {
 
         $client = new Client('ws://' . $config->websocket->host . ':' . $config->websocket->port);
 
-        $client->send(json_encode([
-            'controller' => 'User',
-            'action' => 'loginByAuthKey',
-            'args' => [
-                'id' => $id,
-                'authKey' => $authKey,
-                'admin' => true,
-            ],
-        ]));
-
         try {
-            $json = json_decode($client->receive());
+            $client->send(json_encode([
+                'controller' => 'User',
+                'action' => 'loginByAuthKey',
+                'args' => [
+                    'id' => $id,
+                    'authKey' => $authKey,
+                    'admin' => true,
+                ],
+            ]));
         } catch (WebSocket\ConnectionException $e) {
             die('Не удалось подключиться к серверу');
         }
+
+        $json = json_decode($client->receive());
 
         if (!$json->status) {
             return false;
