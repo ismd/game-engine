@@ -10,6 +10,8 @@ import game.server.response.Response;
 import game.user.User;
 import game.util.Md5;
 import game.world.exceptions.BadCoordinatesException;
+import org.slf4j.LoggerFactory;
+
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
@@ -74,12 +76,22 @@ public class UserController extends AbstractController {
             return new Response(false, "Необходимо указать e-mail");
         }
 
+        try {
+            User existingUser = DaoFactory.getInstance().userDao.getByLogin(args.get("login").toString());
+
+            if (null != existingUser) {
+                return new Response(false, "Пользователь с таким именем уже зарегистрирован");
+            }
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         User u = new User()
-                .setLogin((String)args.get("login"))
+                .setLogin(args.get("login").toString())
                 .setPassword(Md5.get(args.get("password")))
-                .setEmail((String)args.get("email"))
-                .setInfo((String)args.get("info"))
-                .setSite((String)args.get("site"));
+                .setEmail(args.get("email").toString())
+                .setInfo(args.get("info").toString())
+                .setSite(args.get("site").toString());
 
         DaoFactory.getInstance().userDao.add(u);
         return new Response(true).appendData("user", u);
