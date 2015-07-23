@@ -12,6 +12,10 @@
 
         initialize: function() {
             this.mobs.on('sync', function() {
+                this.mobs.models = _.sortBy(this.mobs.models, function(mob) {
+                    return mob.attributes.name;
+                });
+
                 for (var i = 0; i < this.mobs.length; i++) {
                     var mob = this.mobs.at(i);
 

@@ -16,11 +16,11 @@
             this.vicinity = window.vicinity;
             this.cellsSprite = new Image;
 
-            this.cellsSprite.src = window.siteUrl + '/img/world/cells.png';
-
             $(this.cellsSprite).load(function() {
                 this.render();
             }.bind(this));
+
+            this.cellsSprite.src = window.siteUrl + '/img/world/cells.png';
         },
 
         events: {
