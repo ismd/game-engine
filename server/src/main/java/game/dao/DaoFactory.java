@@ -13,6 +13,7 @@ public class DaoFactory {
     public final NpcDao npcDao;
     public final UserDao userDao;
     public final ChatMessageDao chatMessageDao;
+    public final MobAvailableCellDao mobAvailableCellDao;
 
     private DaoFactory() {
         characterDao = new CharacterDao();
@@ -21,6 +22,7 @@ public class DaoFactory {
         npcDao = new NpcDao();
         userDao = new UserDao();
         chatMessageDao = new ChatMessageDao();
+        mobAvailableCellDao = new MobAvailableCellDao();
     }
 
     public static synchronized DaoFactory getInstance() {

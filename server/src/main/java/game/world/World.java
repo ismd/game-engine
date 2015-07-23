@@ -67,6 +67,7 @@ public class World {
 
             int maxInWorld = mobInfo.getMaxInWorld();
             List<MobAvailableCell> availableCells = mobDao.getAvailableCells(mobInfo);
+            mobInfo.setAvailableCells(availableCells);
 
             if (0 == availableCells.size()) {
                 log.warn("No available cells for mob `{}' ({})",

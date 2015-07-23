@@ -11,9 +11,6 @@
             initialized = false,
             needDraw    = undefined;
 
-        cellsSprite.src = '/img/world/cells.png';
-        hero.src        = '/img/world/hero.png';
-
         loadManager([cellsSprite, hero]).then(function() {
             initialized = true;
 
@@ -21,6 +18,9 @@
                 service.drawVicinity(needDraw);
             }
         });
+
+        cellsSprite.src = '/img/world/cells.png';
+        hero.src        = '/img/world/hero.png';
 
         service.init = function() {
             ctx = $('.js-map').get(0).getContext('2d');

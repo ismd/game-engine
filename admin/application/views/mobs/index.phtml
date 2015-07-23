@@ -16,9 +16,26 @@ window.vicinity = <?= json_encode($this->vicinity); ?>;
 </div>
 
 <div class="col-md-5">
-    <div class="js-map map">
-        <canvas width="<?= 30 * count($this->vicinity[0]); ?>"
-                height="<?= 30 * count($this->vicinity); ?>"></canvas>
+    <div class="js-map">
+        <div class="map">
+            <canvas width="<?= 30 * count($this->vicinity[0]); ?>"
+                    height="<?= 30 * count($this->vicinity); ?>"></canvas>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                Выбранные клетки:
+                <div class="js-selected-cells"></div>
+            </div>
+
+            <div class="col-md-6">
+                <a href="javascript:void(0)"
+                   class="js-save-available-cells btn btn-primary">Сохранить</a>
+                <br />
+
+                <span class="js-available-cells-saved available-cells-saved">Сохранено!</span>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -33,6 +50,14 @@ window.vicinity = <?= json_encode($this->vicinity); ?>;
     {{attributes.name}}
 </a>
 {{/mobs}}
+</script>
+
+<script id="map-cells-template" type="x-tmpl-mustache">
+<ul>
+    {{#cells}}
+    <li>Зона: {{idLayout}}, x: {{x}}, y: {{y}}</li>
+    {{/cells}}
+</ul>
 </script>
 
 <script id="mob-info-template" type="x-tmpl-mustache">
@@ -130,14 +155,10 @@ window.vicinity = <?= json_encode($this->vicinity); ?>;
          src="<?= $this->siteUrl; ?>/pictures/mobs_resized/120x120_{{mob.attributes.image}}" />
     <br /><br />
 
-    <label for="image-edit">
-        <a href="javascript:void(0)"
-           class="btn btn-default">Загрузить</a>
+    <label class="btn btn-default">
+        Загрузить
+        <input type="file" name="image" />
     </label>
-
-    <input type="file"
-           id="image-edit"
-           name="image" />
 </div>
 </script>
 
@@ -192,13 +213,9 @@ window.vicinity = <?= json_encode($this->vicinity); ?>;
          src="<?= $this->siteUrl; ?>/pictures/mobs_resized/120x120_" />
     <br /><br />
 
-    <label for="image-create">
-        <a href="javascript:void(0)"
-           class="btn btn-default">Загрузить</a>
+    <label class="btn btn-default">
+        Загрузить
+        <input type="file" name="image" />
     </label>
-
-    <input type="file"
-           id="image-create"
-           name="image" />
 </div>
 </script>

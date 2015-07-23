@@ -8,6 +8,7 @@
         mobs: new app.models.MobList,
         $activeMob: undefined,
         newMob: undefined,
+        map: undefined,
 
         initialize: function() {
             this.mobs.on('sync', function() {
@@ -25,8 +26,20 @@
             }.bind(this));
 
             this.mobs.fetch();
-            new app.views.Map({
+
+            this.map = new app.views.Map({
                 el: this.$el.find('.js-map')
+            });
+
+            this.map.on('cellsUpdated', function(cells) {
+                if ('undefined' === typeof this.$activeMob) {
+                    return;
+                }
+
+                var index = this.$activeMob.data('index'),
+                    mob = this.mobs.at(index);
+
+                mob.attributes.availableCells = cells;
             });
         },
 
@@ -51,6 +64,10 @@
 
                 this._updateTemplate(index,
                                      this.$el.find('#mob-info-template').html());
+
+                this.mobs.at(index).getAvailableCells(function(data) {
+                    this.map.fillCells(data.cells);
+                }.bind(this));
             },
 
             'click .js-add': function() {
@@ -119,6 +136,25 @@
                 });
 
                 mob.save();
+            },
+
+            'click .js-save-available-cells': function() {
+                if ('undefined' === typeof this.$activeMob) {
+                    alert('Ничего не выбрано');
+                    return;
+                }
+
+                var index = this.$activeMob.data('index'),
+                    mob = this.mobs.at(index);
+
+                mob.saveAvailableCells(function() {
+                    var $saved = this.$el.find('.js-available-cells-saved');
+
+                    $saved.show();
+                    setTimeout(function() {
+                        $saved.hide();
+                    }, 1500);
+                }.bind(this));
             }
         },
 

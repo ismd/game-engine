@@ -2,10 +2,9 @@ package game.mob;
 
 import com.google.gson.annotations.Expose;
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.*;
 
 /**
  * @author ismd
@@ -26,6 +25,9 @@ public class MobInfo implements Serializable {
     private int experience;
     @Expose
     private String image;
+
+    @Transient
+    private List<MobAvailableCell> availableCells = new ArrayList<>();
 
     public MobInfo() {
     }
@@ -68,6 +70,10 @@ public class MobInfo implements Serializable {
         return image;
     }
 
+    public List<MobAvailableCell> getAvailableCells() {
+        return availableCells;
+    }
+
     // Сеттеры
 
     public MobInfo setName(String name) {
@@ -107,6 +113,11 @@ public class MobInfo implements Serializable {
 
     public MobInfo setImage(String image) {
         this.image = image;
+        return this;
+    }
+
+    public MobInfo setAvailableCells(List<MobAvailableCell> cells) {
+        availableCells = cells;
         return this;
     }
 }

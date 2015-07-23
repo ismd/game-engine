@@ -2,7 +2,6 @@ package game.mob;
 
 import com.google.gson.annotations.Expose;
 import game.fight.FightMember;
-import game.layout.Cell;
 import java.io.Serializable;
 
 /**
