@@ -9,8 +9,8 @@ use \Eventviva\ImageResize;
 
 class UploadController extends PsController {
 
-    const UPLOAD_PATH         = APPLICATION_PATH . '/../public/pictures/avatars';
-    const UPLOAD_RESIZED_PATH = APPLICATION_PATH . '/../public/pictures/avatars_resized';
+    const AVATAR_UPLOAD_PATH         = APPLICATION_PATH . '/../public/pictures/avatars';
+    const AVATAR_UPLOAD_RESIZED_PATH = APPLICATION_PATH . '/../public/pictures/avatars_resized';
 
     public function avatarAction() {
         if ($_FILES['file']['error'] != UPLOAD_ERR_OK) {
@@ -60,13 +60,25 @@ class UploadController extends PsController {
 
             $name = $this->getHelper('generator')->alphaID($microtime);
 
-            if (!file_exists(self::UPLOAD_PATH . '/' . $name . '.' . $extension)) {
+            if (!file_exists(self::AVATAR_UPLOAD_PATH . '/' . $name . '.' . $extension)) {
                 break;
             }
         } while (true);
 
-        move_uploaded_file($tmpName, self::UPLOAD_PATH . '/' . $name . '.' . $extension);
-        $this->resizeImage($name, $extension);
+        if (!is_dir($this->AVATAR_UPLOAD_PATH)) {
+            mkdir($this->AVATAR_UPLOAD_PATH, 0700);
+        }
+
+        if (!is_dir($this->AVATAR_UPLOAD_RESIZED_PATH)) {
+            mkdir($this->AVATAR_UPLOAD_RESIZED_PATH, 0700);
+        }
+
+        move_uploaded_file($tmpName, self::AVATAR_UPLOAD_PATH . '/' . $name . '.' . $extension);
+
+        $this->resizeImage(self::AVATAR_UPLOAD_PATH,
+                           self::AVATAR_UPLOAD_RESIZED_PATH,
+                           $name,
+                           $extension);
 
         $this->view->json([
             'status' => 'ok',
@@ -74,9 +86,9 @@ class UploadController extends PsController {
         ]);
     }
 
-    private function resizeImage($name, $extension) {
-        $image = new ImageResize(self::UPLOAD_PATH . '/' . $name . '.' . $extension);
+    private function resizeImage($path, $resizedPath, $name, $extension) {
+        $image = new ImageResize($path . '/' . $name . '.' . $extension);
         $image->crop(120, 120);
-        $image->save(self::UPLOAD_RESIZED_PATH . '/120x120_' . $name . '.' . $extension);
+        $image->save($resizedPath . '/120x120_' . $name . '.' . $extension);
     }
 }

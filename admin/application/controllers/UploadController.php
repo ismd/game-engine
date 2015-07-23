@@ -71,6 +71,14 @@ class UploadController extends AbstractAuthController {
             }
         } while (true);
 
+        if (!is_dir($this->MOB_UPLOAD_PATH)) {
+            mkdir($this->MOB_UPLOAD_PATH, 0700);
+        }
+
+        if (!is_dir($this->MOB_UPLOAD_RESIZED_PATH)) {
+            mkdir($this->MOB_UPLOAD_RESIZED_PATH, 0700);
+        }
+
         move_uploaded_file($tmpName, $this->MOB_UPLOAD_PATH . '/' . $name . '.' . $extension);
 
         $this->resizeImage($this->MOB_UPLOAD_PATH,
