@@ -6,8 +6,12 @@ var less = require('gulp-less'),
 
 var LessPluginCleanCSS = require('less-plugin-clean-css'),
     LessPluginAutoPrefix = require('less-plugin-autoprefix'),
-    cleancss = new LessPluginCleanCSS({ advanced: true }),
-    autoprefix= new LessPluginAutoPrefix({ browsers: ["last 2 versions"] });
+    cleancss = new LessPluginCleanCSS({
+        advanced: true
+    }),
+    autoprefix = new LessPluginAutoPrefix({
+        browsers: ["last 2 versions"]
+    });
 
 var mainBowerFiles = require('main-bower-files'),
     uglify         = require('gulp-uglify'),

@@ -28,6 +28,15 @@ public class UserDao extends Dao {
         return 1 == result.size() ? (User)result.get(0) : null;
     }
 
+    public User getByEmail(String email) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        List result = sessionFactory.openSession().createCriteria(User.class)
+                .add(Restrictions.eq("email", email))
+                .setMaxResults(1)
+                .list();
+
+        return 1 == result.size() ? (User)result.get(0) : null;
+    }
+
     public User getByLoginAndPassword(String login, String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         List result = sessionFactory.openSession().createCriteria(User.class)
                 .add(Restrictions.eq("login", login))

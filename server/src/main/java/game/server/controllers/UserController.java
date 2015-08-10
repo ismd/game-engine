@@ -64,15 +64,23 @@ public class UserController extends AbstractController {
     public Response registerAction(Request request, User user) {
         Map args = request.getArgs();
 
-        if (null == args.get("login")) {
+        if (null == args.get("login") || "".equals(args.get("login").toString())) {
             return new Response(false, "Необходимо указать логин");
         }
 
-        if (!args.get("password").equals(args.get("password1"))) {
+        if (null == args.get("password") || "".equals(args.get("password").toString())) {
+            return new Response(false, "Необходимо указать пароль");
+        }
+
+        if (null == args.get("password1") || "".equals(args.get("password1").toString())) {
+            return new Response(false, "Необходимо указать пароль");
+        }
+
+        if (!args.get("password").toString().equals(args.get("password1").toString())) {
             return new Response(false, "Пароли не совпадают");
         }
 
-        if (null == args.get("email")) {
+        if (null == args.get("email") || "".equals(args.get("email").toString())) {
             return new Response(false, "Необходимо указать e-mail");
         }
 
@@ -82,16 +90,32 @@ public class UserController extends AbstractController {
             if (null != existingUser) {
                 return new Response(false, "Пользователь с таким именем уже зарегистрирован");
             }
+
+            existingUser = DaoFactory.getInstance().userDao.getByEmail(args.get("email").toString());
+
+            if (null != existingUser) {
+                return new Response(false, "Пользователь с таким адресом электронной почты уже зарегистрирован");
+            }
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
             e.printStackTrace();
+        }
+
+        String info = "";
+        if (null != args.get("info")) {
+            info = args.get("info").toString();
+        }
+
+        String site = "";
+        if (null != args.get("site")) {
+            info = args.get("site").toString();
         }
 
         User u = new User()
                 .setLogin(args.get("login").toString())
                 .setPassword(Md5.get(args.get("password")))
                 .setEmail(args.get("email").toString())
-                .setInfo(args.get("info").toString())
-                .setSite(args.get("site").toString());
+                .setInfo(info)
+                .setSite(site);
 
         DaoFactory.getInstance().userDao.add(u);
         return new Response(true).appendData("user", u);
