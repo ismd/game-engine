@@ -1,13 +1,13 @@
-String.prototype.trim = (function () {
+var trim = (function () {
     "use strict";
 
     function escapeRegex(string) {
         return string.replace(/[\[\](){}?*+\^$\\.|\-]/g, "\\$&");
     }
 
-    return function trim(characters, flags) {
+    return function trim(str, characters, flags) {
         flags = flags || "g";
-        if (typeof this !== "string" || typeof characters !== "string" || typeof flags !== "string") {
+        if (typeof str !== "string" || typeof characters !== "string" || typeof flags !== "string") {
             throw new TypeError("argument must be string");
         }
 
@@ -17,7 +17,7 @@ String.prototype.trim = (function () {
 
         characters = escapeRegex(characters);
 
-        return this.replace(new RegExp("^[" + characters + "]+|[" + characters + "]+$", flags), '');
+        return str.replace(new RegExp("^[" + characters + "]+|[" + characters + "]+$", flags), '');
     };
 }());
 

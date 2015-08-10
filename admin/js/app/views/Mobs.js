@@ -43,11 +43,11 @@
 
             this.mobs.fetch();
 
-            this.map = new app.views.Map({
+            this.map = new app.views.CanvasMap({
                 el: this.$el.find('.js-map')
             });
 
-            this.map.on('cellsUpdated', function(cells) {
+            this.map.on('filledCellsUpdated', function(cells) {
                 if ('undefined' === typeof this.$activeMob) {
                     return;
                 }
@@ -114,6 +114,10 @@
             },
 
             'click .js-delete': function() {
+                if (!confirm('Удалить моба?')) {
+                    return;
+                }
+
                 var index = this.$activeMob.data('index'),
                     mob = this.mobs.at(index);
 

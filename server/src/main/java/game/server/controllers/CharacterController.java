@@ -89,6 +89,13 @@ public class CharacterController extends AbstractAuthController {
         Object name = args.get("name");
         Object image = args.get("image");
 
+        String biography;
+        try {
+            biography = args.get("biography").toString();
+        } catch (NullPointerException e) {
+            biography = "";
+        }
+
         if (null == name || "".equals((String)name)) {
             return new Response(false, "Не введено имя");
         }
@@ -103,7 +110,7 @@ public class CharacterController extends AbstractAuthController {
 
         Character ch = new Character()
             .setIdUser(user.getId())
-            .setName((String)name)
+            .setName(name.toString())
             .setLevel(1)
             .setMoney(10)
             .setIdLayout(1)
@@ -119,14 +126,19 @@ public class CharacterController extends AbstractAuthController {
             .setMaxHp(20)
             .setMinDamage(3)
             .setMaxDamage(5)
-            .setImage((String)image)
-            .setBiography((String)request.getArgs().get("biography"))
+            .setImage(image.toString())
+            .setBiography(biography)
             .setStat1(stat1)
             .setStat2(stat2)
             .setStat3(stat3)
             .setExperience(0);
 
-        user.addCharacter(ch);
+        try {
+            user.addCharacter(ch);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Response(false);
+        }
 
         DaoFactory.getInstance().characterDao.add(ch);
         return new Response(true).appendData("character", ch);

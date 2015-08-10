@@ -42,7 +42,7 @@
             return true;
 
             function parse(path) {
-                return path.trim('/').split('/');
+                return trim(path, '/').split('/');
             }
         }
     });

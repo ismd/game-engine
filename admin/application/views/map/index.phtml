@@ -1,0 +1,63 @@
+<script>
+window.siteUrl = '<?= $this->siteUrl; ?>';
+window.vicinity = <?= json_encode($this->vicinity); ?>;
+</script>
+
+<div class="col-md-5">
+    <div class="js-map">
+        <div class="map">
+            <canvas width="<?= 30 * count($this->vicinity[0]); ?>"
+                    height="<?= 30 * count($this->vicinity); ?>"
+                id="test"></canvas>
+        </div>
+
+        <br />
+        <a href="javascript:void(0)"
+           class="js-copy-map">Скопировать карту в буфер обмена</a>
+
+        <br />
+        <a href="javascript:void(0)"
+           class="js-download-map">Скачать карту</a>
+    </div>
+</div>
+
+<div class="col-md-7">
+    <h3>Размер карты:</h3>
+
+    <div class="map-size">
+        <form class="js-map-size">
+            Ширина:
+            <input type="number"
+                   name="width"
+                   value="<?= count($this->vicinity[0]); ?>" />
+
+            &nbsp;
+            Высота:
+            <input type="number"
+                   name="height"
+                   value="<?= count($this->vicinity); ?>" />
+
+            &nbsp;
+            <input type="submit" value="Обновить" />
+        </form>
+    </div>
+
+    <h3>Тайлы:</h3>
+
+    <? $spriteSize = $this->cellsSprite->getSize(); ?>
+    <? for ($i = 0; $i < $spriteSize['height']; $i++): ?>
+        <div>
+            <? for ($j = 0; $j < $spriteSize['width']; $j++): ?>
+                <div class="js-tile tile"
+                     style="background: url('<?= $this->siteUrl; ?>/img/world/cells.png') -<?= 30 * $j; ?>px -<?= 30 * $i; ?>px no-repeat;"
+                     data-x="<?= $j; ?>"
+                     data-y="<?= $i; ?>"
+                     title="x: <?= $j; ?>, y: <?= $i; ?>"></div>
+            <? endfor; ?>
+        </div>
+    <? endfor; ?>
+</div>
+
+<div class="map-text-wrapper">
+    <textarea class="js-text" cols="50" rows="5"><?= json_encode($this->vicinity); ?></textarea>
+</div>

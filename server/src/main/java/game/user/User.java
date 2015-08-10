@@ -77,12 +77,7 @@ public class User implements Serializable {
 
     public List<Character> getCharacters() {
         if (null == characters) {
-            characters = new ArrayList<>();
-
-            for (Character character : DaoFactory.getInstance().characterDao.getByIdUser(getId())) {
-                character.setUser(this);
-                characters.add(character);
-            }
+            fillCharacters();
         }
 
         return characters;
@@ -91,8 +86,21 @@ public class User implements Serializable {
     public List<Character> addCharacter(Character character) {
         character.setUser(this);
 
+        if (null == characters) {
+            fillCharacters();
+        }
+
         characters.add(character);
         return characters;
+    }
+
+    private void fillCharacters() {
+        characters = new ArrayList<>();
+
+        for (Character character : DaoFactory.getInstance().characterDao.getByIdUser(getId())) {
+            character.setUser(this);
+            characters.add(character);
+        }
     }
 
     // Геттеры

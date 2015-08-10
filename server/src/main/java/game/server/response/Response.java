@@ -41,6 +41,19 @@ public class Response {
         this(status, message, false, null);
     }
 
+    public Response clone() throws CloneNotSupportedException{
+        Response obj = (Response)super.clone();
+
+        obj.setIdCallback(getIdCallback());
+        obj.setData(getData());
+        obj.setStatus(getStatus());
+        obj.setMessage(getMessage());
+        obj.setBroadcast(getBroadcast());
+        obj.setBroadcastName(getBroadcastName());
+
+        return obj;
+    }
+
     public int getIdCallback() {
         return idCallback;
     }
@@ -52,6 +65,22 @@ public class Response {
 
     public Map<String, Object> getData() {
         return data;
+    }
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public boolean getBroadcast() {
+        return broadcast;
+    }
+
+    public String getBroadcastName() {
+        return broadcastName;
     }
 
     public Response setData(Map<String, Object> data) {
@@ -66,6 +95,21 @@ public class Response {
 
     public Response setBroadcast(boolean broadcast) {
         this.broadcast = broadcast;
+        return this;
+    }
+
+    public Response setStatus(boolean status) {
+        this.status = status;
+        return this;
+    }
+
+    public Response setMessage(String message) {
+        this.message = message;
+        return this;
+    }
+
+    public Response setBroadcastName(String broadcastName) {
+        this.broadcastName = broadcastName;
         return this;
     }
 }

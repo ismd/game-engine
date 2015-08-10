@@ -21,22 +21,11 @@
     <body class="page-<?= $this->_registry->router->getController(); ?>-<?= $this->_registry->router->getAction(); ?>">
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button"
-                            class="navbar-toggle collapsed"
-                            data-toggle="collapse"
-                            data-target="#main-menu" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-
                 <div class="collapse navbar-collapse"
                      id="main-menu">
                     <ul class="nav navbar-nav">
                         <? $controller = $this->_registry->router->getController(); ?>
+                        <li<? 'map' == $controller ? ' class="active"' : ''; ?>><a href="/map">Карта</a></li>
                         <li<? 'mobs' == $controller ? ' class="active"' : ''; ?>><a href="/mobs">Мобы</a></li>
                     </ul>
                 </div>

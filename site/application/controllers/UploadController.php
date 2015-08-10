@@ -65,12 +65,12 @@ class UploadController extends PsController {
             }
         } while (true);
 
-        if (!is_dir($this->AVATAR_UPLOAD_PATH)) {
-            mkdir($this->AVATAR_UPLOAD_PATH, 0700);
+        if (!is_dir(self::AVATAR_UPLOAD_PATH)) {
+            mkdir(self::AVATAR_UPLOAD_PATH, 0700);
         }
 
-        if (!is_dir($this->AVATAR_UPLOAD_RESIZED_PATH)) {
-            mkdir($this->AVATAR_UPLOAD_RESIZED_PATH, 0700);
+        if (!is_dir(self::AVATAR_UPLOAD_RESIZED_PATH)) {
+            mkdir(self::AVATAR_UPLOAD_RESIZED_PATH, 0700);
         }
 
         move_uploaded_file($tmpName, self::AVATAR_UPLOAD_PATH . '/' . $name . '.' . $extension);
