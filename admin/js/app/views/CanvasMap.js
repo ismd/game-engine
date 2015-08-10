@@ -206,11 +206,6 @@
                                   cell.y * this.CELL_HEIGHT, 30, 30);
             }
 
-            var html = Mustache.render($('#map-cells-template').html(), {
-                cells: this.filledCells
-            });
-
-            this.$el.find('.js-selected-cells').html(html);
             return this;
         },
 
