@@ -43,22 +43,6 @@ gulp.task('less', function () {
 gulp.task('js', function() {
     var jsFiles = mainBowerFiles('**/*.js');
 
-    jsFiles = jsFiles.filter(function(file) {
-        if (-1 !== file.indexOf('blueimp')) {
-            if (-1 !== file.indexOf('jquery.fileupload.js')) {
-                return true;
-            }
-
-            if (-1 !== file.indexOf('jquery.ui.widget.js')) {
-                return true;
-            }
-
-            return false;
-        }
-
-        return true;
-    });
-
     console.log('Bower js files: ', jsFiles);
     jsFiles.push('app/**/*.js');
 

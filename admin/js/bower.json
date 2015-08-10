@@ -20,7 +20,8 @@
     "q": "~1.0.1",
     "mustache": "~2.1.2",
     "blueimp-file-upload": "~9.10.4",
-    "hammer.js": "~2.0.4"
+    "hammer.js": "~2.0.4",
+    "jquery-ui": "~1.11.4"
   },
   "resolutions": {
     "q": "~1.0.1"
