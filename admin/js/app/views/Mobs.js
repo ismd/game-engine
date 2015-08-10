@@ -48,6 +48,12 @@
             });
 
             this.map.on('filledCellsUpdated', function(cells) {
+                var html = Mustache.render($('#map-cells-template').html(), {
+                    cells: cells
+                });
+
+                this.$el.find('.js-selected-cells').html(html);
+
                 if ('undefined' === typeof this.$activeMob) {
                     return;
                 }
@@ -56,12 +62,6 @@
                     mob = this.mobs.at(index);
 
                 mob.attributes.availableCells = cells;
-
-                var html = Mustache.render($('#map-cells-template').html(), {
-                    cells: cells
-                });
-
-                this.$el.find('.js-selected-cells').html(html);
             });
         },
 
