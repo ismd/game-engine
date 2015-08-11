@@ -3,7 +3,7 @@
 
     app.models.Index = Backbone.Model.extend({
 
-        getInfo: function(callback) {
+        getInfo: function() {
             var defer = Q.defer();
 
             app.ws.send({

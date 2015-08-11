@@ -1,0 +1,18 @@
+<div class="col-md-3">
+    <a href="javascript:void(0)"
+       class="js-add btn btn-success btn-block">Добавить</a>
+    <br />
+
+    <div class="js-npc-list list-group"></div>
+</div>
+
+<script id="npc-list-template" type="x-tmpl-mustache">
+{{#npcs}}
+<a href="javascript:void(0)"
+   class="js-npc list-group-item"
+   data-id="{{attributes.id}}"
+   data-index="{{attributes.index}}">
+    {{attributes.name}}
+</a>
+{{/npcs}}
+</script>
