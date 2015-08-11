@@ -25,8 +25,10 @@
                      id="main-menu">
                     <ul class="nav navbar-nav">
                         <? $controller = $this->_registry->router->getController(); ?>
-                        <li<? 'map' == $controller ? ' class="active"' : ''; ?>><a href="/map">Карта</a></li>
-                        <li<? 'mobs' == $controller ? ' class="active"' : ''; ?>><a href="/mobs">Мобы</a></li>
+
+                        <li<?= 'Index' == $controller ? ' class="active"' : ''; ?>><a href="/">Главная</a></li>
+                        <li<?= 'Map' == $controller ? ' class="active"' : ''; ?>><a href="/map">Карта</a></li>
+                        <li<?= 'Mobs' == $controller ? ' class="active"' : ''; ?>><a href="/mobs">Мобы</a></li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">

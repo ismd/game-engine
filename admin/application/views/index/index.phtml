@@ -1,1 +1,12 @@
+<div class="col-md-12">
+    <h3>Персонажи онлайн (<span class="js-characters-count"></span>):</h3>
+    <div class="js-characters"></div>
+</div>
 
+<script id="characters-list-template" type="x-tmpl-mustache">
+<ul>
+    {{#characters}}
+    <li title="Имя пользователя: {{user_login}}">{{name}}</li>
+    {{/characters}}
+</ul>
+</script>

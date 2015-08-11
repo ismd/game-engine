@@ -17,6 +17,16 @@
                 var urlPart = url[i].capitalizeFirstLetter();
 
                 if ('undefined' === typeof view[urlPart]) {
+                    if (1 === url.length && '' === urlPart) {
+                        // Главная страница
+                        new app.views.Index.Index({
+                            el: $('body'),
+                            model: 'undefined' !== typeof app.models.Index ? new app.models.Index : undefined
+                        });
+
+                        return true;
+                    }
+
                     return false;
                 }
 
