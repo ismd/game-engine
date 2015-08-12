@@ -134,7 +134,7 @@
 
         fillCells: function(cells) {
             this.filledCells = cells;
-            this.trigger('cellsUpdated', this.vicinity);
+            this.trigger('filledCellsUpdated', this.filledCells);
             this.render();
         },
 
