@@ -49,7 +49,7 @@ gulp.task('js', function() {
     var stream = gulp.src(jsFiles);
 
     if ('production' === environment) {
-        stream.pipe(uglify());
+        stream = stream.pipe(uglify());
     }
 
     return stream
