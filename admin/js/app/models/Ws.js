@@ -20,6 +20,10 @@
                 self._sendQueue();
             };
 
+            this._ws.onclose = function() {
+                alert('Подключение с сервером разорвано');
+            };
+
             this._ws.onerror = function() {
                 self._opened = false;
                 self._initialized = false;

@@ -21,6 +21,11 @@
             sendQueue();
         };
 
+        ws.onclose = function() {
+            alert('Подключение с сервером разорвано');
+            Common.redirect('/');
+        };
+
         ws.onmessage = function(message) {
             var data = angular.fromJson(message.data);
             console.log('Received response:', data);
