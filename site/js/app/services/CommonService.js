@@ -12,7 +12,7 @@
                 $location.path(url);
             }
 
-            $rootScope.$apply();
+            //$rootScope.$apply();
         };
 
         service.focus = function(element, value) {
