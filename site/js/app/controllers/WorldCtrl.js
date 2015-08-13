@@ -1,138 +1,118 @@
 (function() {
     'use strict';
 
-    window.mainModule.controller('WorldCtrl', ['$scope', '$timeout', '$document', '$location', 'World', 'Ws', 'Character', 'Chat', 'Fight',
-                                               function($scope, $timeout, $document, $location, World, Ws, Character, Chat, Fight) {
-        $scope.selectedItem    = null;
-        $scope.movingInProcess = false;
+    window.mainModule.controller('WorldCtrl', ['$scope', '$timeout', '$location', 'World', 'Ws', 'Character', 'Chat', 'Fight', 'Events',
+        function($scope, $timeout, $location, World, Ws, Character, Chat, Fight, Events) {
+            $scope.selectedItem    = null;
+            $scope.movingInProcess = false;
 
-        World.focus();
+            World.focus();
 
-        $scope.cell = {
-            layout: {
-                id: null,
-                title: '...'
-            },
-            idLayout: '...',
-            x: '...',
-            y: '...',
-            content: {
-                npcs: [],
-                characters: [],
-                mobs: []
-            }
-        };
-
-        $timeout(function() {
-            World.init();
-        });
-
-        $scope.selectItem = function(type, item) {
-            $scope.selectedItem = {
-                type: type,
-                item: item
+            $scope.cell = {
+                layout: {
+                    id: null,
+                    title: '...'
+                },
+                idLayout: '...',
+                x: '...',
+                y: '...',
+                content: {
+                    npcs: [],
+                    characters: [],
+                    mobs: []
+                }
             };
-        };
 
-        $scope.move = function(direction) {
-            if ($scope.movingInProcess) {
-                return;
-            }
-
-            $scope.movingInProcess = true;
-
-            var newX = $scope.cell.x;
-            var newY = $scope.cell.y;
-
-            switch (direction) {
-            case 'up':
-                newY--;
-                break;
-
-            case 'right':
-                newX++;
-                break;
-
-            case 'down':
-                newY++;
-                break;
-
-            case 'left':
-                newX--;
-                break;
-            }
-
-            Character.move($scope.cell.idLayout, newX, newY).then(function() {
-                $scope.selectedItem = null;
-                $scope.movingInProcess = false;
-            }, function() {
-                $scope.movingInProcess = false;
+            $timeout(function() {
+                World.init();
             });
-        };
 
-        $scope.$on('cell-update', function(e, data) {
-            var cell = data.cell;
+            $scope.selectItem = function(type, item) {
+                $scope.selectedItem = {
+                    type: type,
+                    item: item
+                };
+            };
 
-            $scope.cell.layout = cell.layout;
-            $scope.cell.idLayout = cell.idLayout;
-            $scope.cell.x = cell.x;
-            $scope.cell.y = cell.y;
+            $scope.move = function(direction) {
+                if ($scope.movingInProcess) {
+                    return;
+                }
 
-            World.drawVicinity(cell.vicinity);
+                $scope.movingInProcess = true;
 
-            $scope.cell.content.npcs = cell.content.NPC;
-            $scope.cell.content.characters = cell.content.CHARACTER;
-            $scope.cell.content.mobs = cell.content.MOB;
+                var newX = $scope.cell.x;
+                var newY = $scope.cell.y;
 
-            $scope.$apply();
-        });
+                switch (direction) {
+                case 'up':
+                    newY--;
+                    break;
 
-        $scope.fight = function(item) {
-            Fight.killMob(item.item.id);
-        };
+                case 'right':
+                    newX++;
+                    break;
 
-        $scope.talk = function(item) {
-            if (null === item) {
-                return;
-            }
+                case 'down':
+                    newY++;
+                    break;
 
-            if ('npc' === item.type) {
-                talkToNpc(item.item);
-            } else if ('character' === item.type) {
-                talkToCharacter(item.item);
-            }
+                case 'left':
+                    newX--;
+                    break;
+                }
 
-            function talkToNpc(npc) {
-                alert(npc.greeting);
-            }
+                Character.move($scope.cell.idLayout, newX, newY).then(function() {
+                    $scope.selectedItem = null;
+                    $scope.movingInProcess = false;
+                }, function() {
+                    $scope.movingInProcess = false;
+                });
+            };
 
-            function talkToCharacter(character) {
-                Chat.focus(character.name + ', ');
-            }
-        };
+            $scope.$on('cell-update', function(e, data) {
+                var cell = data.cell;
 
-        $document.keydown(function(e) {
-            if ('/world' !== $location.path()) {
-                return;
-            }
+                $scope.cell.layout = cell.layout;
+                $scope.cell.idLayout = cell.idLayout;
+                $scope.cell.x = cell.x;
+                $scope.cell.y = cell.y;
 
-            switch (e.keyCode) {
-            case 38:
-                $scope.move('up');
-                break;
+                World.drawVicinity(cell.vicinity);
 
-            case 39:
-                $scope.move('right');
-                break;
+                $scope.cell.content.npcs = cell.content.NPC;
+                $scope.cell.content.characters = cell.content.CHARACTER;
+                $scope.cell.content.mobs = cell.content.MOB;
 
-            case 40:
-                $scope.move('down');
-                break;
+                $scope.$apply();
+            });
 
-            case 37:
-                $scope.move('left');
-                break;
-            }
-        });
-    }]);
+            $scope.fight = function(item) {
+                Fight.killMob(item.item.id);
+            };
+
+            $scope.talk = function(item) {
+                if (null === item) {
+                    return;
+                }
+
+                if ('npc' === item.type) {
+                    talkToNpc(item.item);
+                } else if ('character' === item.type) {
+                    talkToCharacter(item.item);
+                }
+
+                function talkToNpc(npc) {
+                    alert(npc.greeting);
+                }
+
+                function talkToCharacter(character) {
+                    Chat.focus(character.name + ', ');
+                }
+            };
+
+            $scope.$on('keydown', function(e, direction) {
+                $scope.move(direction);
+            });
+        }]);
 })();

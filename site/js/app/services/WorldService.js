@@ -1,8 +1,8 @@
 (function() {
     'use strict';
 
-    window.mainModule.factory('World', ['$q', 'Ws', 'Common',
-                                        function($q, Ws, Common) {
+    window.mainModule.factory('World', ['$q', 'Ws', 'Common', 'LoadManager',
+                                        function($q, Ws, Common, LoadManager) {
         var service = {};
 
         var ctx         = null,
@@ -11,7 +11,7 @@
             initialized = false,
             needDraw    = undefined;
 
-        loadManager([cellsSprite, hero]).then(function() {
+        LoadManager.load([cellsSprite, hero]).then(function() {
             initialized = true;
 
             if ('undefined' !== typeof needDraw) {
@@ -85,21 +85,6 @@
         service.focus = function() {
             Common.focus($('.js-message-text'));
         };
-
-        function loadManager(images) {
-            var defer = $q.defer();
-
-            var loadCount = images.length;
-            for (var i = 0; i < loadCount; i++) {
-                $(images[i]).load(function() {
-                    if (0 === --loadCount) {
-                        defer.resolve();
-                    }
-                });
-            }
-
-            return defer.promise;
-        }
 
         return service;
     }]);
