@@ -42,7 +42,6 @@ public class AdminMobController extends AbstractAdminController {
         mobInfo.setImage(args.get("image").toString());
 
         DaoFactory.getInstance().mobDao.update(mobInfo);
-
         return new Response(true);
     }
 

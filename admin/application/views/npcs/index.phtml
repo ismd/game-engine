@@ -1,0 +1,102 @@
+<script>
+    window.siteUrl = '<?= $this->siteUrl; ?>';
+    window.vicinity = <?= json_encode($this->vicinity); ?>;
+</script>
+
+<div class="col-md-3">
+    <a href="javascript:void(0)"
+       class="js-add btn btn-success btn-block">Добавить</a>
+    <br />
+
+    <div class="js-npc-list list-group"></div>
+</div>
+
+<div class="col-md-4">
+    <div class="js-npc-info row"></div>
+</div>
+
+<div class="col-md-5">
+    <div class="js-map">
+        <div class="map">
+            <canvas width="<?= 30 * count($this->vicinity[0]); ?>"
+                    height="<?= 30 * count($this->vicinity); ?>"></canvas>
+        </div>
+    </div>
+</div>
+
+<script id="npc-list-template" type="x-tmpl-mustache">
+{{#npcs}}
+<a href="javascript:void(0)"
+   class="js-npc list-group-item"
+   data-id="{{attributes.id}}"
+   data-index="{{attributes.index}}">
+    {{attributes.name}}
+</a>
+{{/npcs}}
+</script>
+
+<script id="npc-info-template" type="x-tmpl-mustache">
+<div class="col-md-7">
+    <a href="javascript:void(0)"
+       class="js-edit btn btn-primary btn-block">Редактировать</a>
+    <br />
+
+    <p>
+        id: {{npc.attributes.id}}
+    </p>
+    <p>
+        Приветствие: {{npc.attributes.greeting}}
+    </p>
+
+    <a href="javascript:void(0)"
+       class="js-delete btn btn-danger btn-block">Удалить</a>
+</div>
+
+<div class="col-md-5">
+    <img src="<?= $this->siteUrl; ?>/pictures/npcs_resized/120x120_{{npc.attributes.image}}" />
+</div>
+</script>
+
+<script id="npc-edit-template" type="x-tmpl-mustache">
+<div class="col-md-7">
+    <a href="javascript:void(0)"
+       class="js-back btn btn-default btn-block">Назад</a>
+    <br />
+
+    <p>
+        id: {{npc.attributes.id}}
+    </p>
+    <p>
+        Имя:<br />
+        <input type="text"
+               name="name"
+               value="{{npc.attributes.name}}" />
+    </p>
+    <p>
+        Приветствие:<br />
+        <textarea name="greeting">{{npc.attributes.greeting}}</textarea>
+    </p>
+
+    <a href="javascript:void(0)"
+       class="js-save btn btn-primary btn-block">Сохранить</a>
+</div>
+
+<div class="col-md-5">
+    <img class="js-image"
+         src="<?= $this->siteUrl; ?>/pictures/npcs_resized/120x120_{{npc.attributes.image}}" />
+    <br /><br />
+
+    <label class="btn btn-default">
+        Загрузить
+        <input type="file" name="image" />
+    </label>
+</div>
+</script>
+
+<script id="map-cells-template" type="x-tmpl-mustache">
+<ul>
+    {{#cells}}
+    <li>Зона: {{idLayout}}, x: {{x}}, y: {{y}}</li>
+    {{/cells}}
+</ul>
+</script>

@@ -25,11 +25,13 @@ import org.slf4j.LoggerFactory;
  */
 public class World {
 
-    private Logger log = LoggerFactory.getLogger(World.class);
-    private Map<Integer, Layout> layouts;
+    private static Logger log = LoggerFactory.getLogger(World.class);
+    public static Map<Integer, Layout> layouts;
 
     private static Map<Integer, Mob> mobs = new HashMap<>();
     private static Map<Integer, MobInfo> mobInfos = new HashMap<>();
+
+    private static Map<Integer, Npc> npcs = new HashMap<>();
 
     public World(String dir) throws FileNotFoundException {
         log.info("Initializing world");
@@ -113,19 +115,7 @@ public class World {
         log.info("Initializing NPCs");
 
         for (Npc npc : DaoFactory.getInstance().npcDao.getAll()) {
-            log.info("Placing NPC `{}' ({}) on layout {} (x: {}, y: {})",
-                    npc.getName(),
-                    npc.getId(),
-                    npc.getIdLayout(),
-                    npc.getX(),
-                    npc.getY()
-            );
-
-            try {
-                layouts.get(npc.getIdLayout()).getCell(npc.getX(), npc.getY()).addContent(npc);
-            } catch (BadCoordinatesException e) {
-                log.error("Can't place mob");
-            }
+            addNpc(npc);
         }
     }
 
@@ -159,5 +149,36 @@ public class World {
 
     public static void deleteMobInfo(MobInfo mobInfo) {
         mobInfos.remove(mobInfo.getId());
+    }
+
+    public static void addNpc(Npc npc) {
+        log.info("Placing NPC `{}' ({}) on layout {} (x: {}, y: {})",
+                npc.getName(),
+                npc.getId(),
+                npc.getIdLayout(),
+                npc.getX(),
+                npc.getY()
+        );
+
+        try {
+            layouts.get(npc.getIdLayout()).getCell(npc.getX(), npc.getY()).addContent(npc);
+            npcs.put(npc.getId(), npc);
+        } catch (BadCoordinatesException e) {
+            log.error("Can't place npc");
+        }
+    }
+
+    public static Npc getNpcById(int id) {
+        return npcs.get(id);
+    }
+
+    public static void deleteNpc(Npc npc) {
+        try {
+            layouts.get(npc.getIdLayout()).getCell(npc.getX(), npc.getY()).removeContent(npc);
+        } catch (BadCoordinatesException e) {
+            e.printStackTrace();
+        }
+
+        npcs.remove(npc.getId());
     }
 }

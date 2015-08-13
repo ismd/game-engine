@@ -31,7 +31,6 @@ public class Npc extends CellContent implements Serializable {
     }
 
     // Геттеры
-
     public int getId() {
         return id;
     }
@@ -61,6 +60,20 @@ public class Npc extends CellContent implements Serializable {
     }
 
     // Сеттеры
+    public Npc setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public Npc setGreeting(String greeting) {
+        this.greeting = greeting;
+        return this;
+    }
+
+    public Npc setImage(String image) {
+        this.image = image;
+        return this;
+    }
 
     public Npc setIdLayout(int idLayout) {
         this.idLayout = idLayout;

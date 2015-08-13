@@ -74,6 +74,7 @@ class UploadController extends PsController {
         }
 
         move_uploaded_file($tmpName, self::AVATAR_UPLOAD_PATH . '/' . $name . '.' . $extension);
+        chmod(self::AVATAR_UPLOAD_PATH . '/' . $name . '.' . $extension, 400);
 
         $this->resizeImage(self::AVATAR_UPLOAD_PATH,
                            self::AVATAR_UPLOAD_RESIZED_PATH,
@@ -90,5 +91,6 @@ class UploadController extends PsController {
         $image = new ImageResize($path . '/' . $name . '.' . $extension);
         $image->crop(120, 120);
         $image->save($resizedPath . '/120x120_' . $name . '.' . $extension);
+        chmod($resizedPath . '/120x120_' . $name . '.' . $extension, 400);
     }
 }

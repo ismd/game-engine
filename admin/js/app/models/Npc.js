@@ -1,22 +1,48 @@
 (function() {
     'use strict';
 
-    app.models.Npc = Backbone.Collection.extend({
+    app.models.Npc = Backbone.Model.extend({
 
-        sync: function(method, collection) {
+        sync: function(method, model, options) {
             switch (method) {
-                case 'read':
-                    app.ws.send({
-                        controller: 'AdminNpc',
-                        action: 'readAll'
-                    }).then(function(data) {
-                        collection.add(_.sortBy(data.npcs, function(npc) {
-                            return npc.name;
-                        }));
+            case 'create':
+                app.ws.send({
+                    controller: 'AdminNpc',
+                    action: 'create',
+                    args: this.attributes
+                }).then(function() {
+                    model.trigger('sync');
+                }, function(message) {
+                    alert(message);
+                });
 
-                        collection.trigger('sync');
-                    });
-                    break;
+                break;
+
+            case 'update':
+                app.ws.send({
+                    controller: 'AdminNpc',
+                    action: 'update',
+                    args: this.attributes
+                }).then(function() {
+                    model.trigger('sync');
+                }, function(message) {
+                    alert(message);
+                });
+
+                break;
+
+            case 'delete':
+                app.ws.send({
+                    controller: 'AdminNpc',
+                    action: 'delete',
+                    args: this.attributes
+                }).then(function() {
+                    options.success();
+                }, function() {
+                    options.error();
+                });
+
+                break;
             }
         }
     });
