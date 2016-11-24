@@ -24,7 +24,7 @@
             this.vicinity = window.vicinity;
             this.cellsSprite = new Image;
 
-            $(this.cellsSprite).load(function() {
+            $(this.cellsSprite).on('load', function() {
                 this.render();
             }.bind(this));
 

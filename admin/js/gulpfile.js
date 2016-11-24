@@ -54,7 +54,7 @@ gulp.task('js', function() {
 
     return stream
         .pipe(concat('app.js'))
-        .pipe(chmod(666))
+        //.pipe(chmod(666))
         .pipe(gulp.dest('../public/js'));
 });
 

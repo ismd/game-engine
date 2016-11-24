@@ -15,15 +15,31 @@
     "tests"
   ],
   "dependencies": {
-    "backbone": "~1.2.1",
+    "backbone": "~1.2.3",
     "bootstrap": "~3.3.5",
     "q": "~1.0.1",
     "mustache": "~2.1.2",
     "blueimp-file-upload": "~9.10.4",
+    "blueimp-load-image": "^2.9.0",
+    "blueimp-canvas-to-blob": "^3.5.0",
     "hammer.js": "~2.0.4",
     "jquery-ui": "~1.11.4"
   },
   "resolutions": {
     "q": "~1.0.1"
+  },
+  "overrides": {
+    "blueimp-load-image": {
+      "main": [
+        "js/load-image.js",
+        "js/load-image-orientation.js",
+        "js/load-image-meta.js",
+        "js/load-image-exif.js",
+        "js/load-image-exif-map.js"
+      ]
+    },
+    "blueimp-canvas-to-blob": {
+      "main": "./js/canvas-to-blob.min.js"
+    }
   }
 }
