@@ -1,8 +1,10 @@
-var gulp        = require('gulp'),
+var gulp = require('gulp'),
     environment = 'undefined' !== typeof process.env.NODE_ENV ? process.env.NODE_ENV : 'development';
 
 var less = require('gulp-less'),
-    path = require('path');
+    path = require('path'),
+    uglify = require('gulp-uglify'),
+    concat = require('gulp-concat');
 
 var LessPluginCleanCSS = require('less-plugin-clean-css'),
     LessPluginAutoPrefix = require('less-plugin-autoprefix'),
@@ -10,30 +12,20 @@ var LessPluginCleanCSS = require('less-plugin-clean-css'),
         advanced: true
     }),
     autoprefix = new LessPluginAutoPrefix({
-        browsers: ["last 2 versions"]
+        browsers: ['last 2 versions']
     });
-
-var mainBowerFiles = require('main-bower-files'),
-    uglify         = require('gulp-uglify'),
-    concat         = require('gulp-concat'),
-    chmod          = require('gulp-chmod');
 
 // Less
 gulp.task('less', function () {
-    var lessFiles   = mainBowerFiles('**/*.less'),
-        includePath = [];
+    var files = [
+        'node_modules/bootstrap/less/bootstrap.less',
+        '../less/style.less'
+    ];
 
-    for (var i = 0; i < lessFiles.length; i++) {
-        includePath.push(path.dirname(lessFiles[i]));
-    }
-
-    console.log('Bower less files: ', lessFiles);
-    lessFiles.push('../less/style.less');
-
-    return gulp.src(lessFiles)
+    return gulp.src(files)
         .pipe(concat('style.less'))
         .pipe(less({
-            paths: includePath,
+            paths: ['node_modules/bootstrap/less'],
             plugins: 'production' === environment ? [autoprefix, cleancss] : [autoprefix]
         }))
         .pipe(gulp.dest('../public/css'));
@@ -41,12 +33,18 @@ gulp.task('less', function () {
 
 // JavaScript
 gulp.task('js', function() {
-    var jsFiles = mainBowerFiles('**/*.js');
+    var files = [
+        'node_modules/jquery/dist/jquery.js',
+        'node_modules/jquery.scrollto/jquery.scrollTo.js',
+        'node_modules/bootstrap/dist/js/bootstrap.js',
+        'node_modules/angular/angular.js',
+        'node_modules/angular-bootstrap/ui-bootstrap-tpls.js',
+        'node_modules/angular-file-upload/dist/angular-file-upload.js',
+        'node_modules/angular-route/angular-route.js',
+        'app/**/*.js'
+    ];
 
-    console.log('Bower js files: ', jsFiles);
-    jsFiles.push('app/**/*.js');
-
-    var stream = gulp.src(jsFiles);
+    var stream = gulp.src(files);
 
     if ('production' === environment) {
         stream = stream.pipe(uglify());
@@ -54,13 +52,12 @@ gulp.task('js', function() {
 
     return stream
         .pipe(concat('app.js'))
-        .pipe(chmod(666))
         .pipe(gulp.dest('../public/js'));
 });
 
 // Fonts
 gulp.task('fonts', function() {
-    return gulp.src('bower_components/bootstrap/fonts/**/*')
+    return gulp.src('node_modules/bootstrap/dist/fonts/**/*')
         .pipe(gulp.dest('../public/fonts'));
 });
 

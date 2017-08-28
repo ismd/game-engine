@@ -12,5 +12,4 @@ fi
 
 cd $JS_PATH
 npm update
-node_modules/.bin/bower update
-NODE_ENV=production node_modules/.bin/gulp
+NODE_ENV=production npm run build
